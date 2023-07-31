@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">wea</string>
+    <string name="label_text">label</string>
+    <string name="empty_text" />
+    <string name="login_icon_desc_text">lg btn logo</string>
+    <string name="text_find_id">아이디 찾기</string>
+    <string name="text_find_pwd">비밀번호 찾기</string>
+    <string name="text_regist">회원가입</string>
+    <string name="text_login_welcome">Welcome</string>
+    <string name="text_login_btn">로그인</string>
+    <string name="text_id_label">아이디</string>
+    <string name="text_pwd_label">비밀번호</string>
+    <string name="text_login_btn_naver">네이버 로그인</string>
+    <string name="text_login_btn_kakao">카카오 로그인</string>
 </resources>
