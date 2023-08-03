@@ -1,2 +1,76 @@
 package com.artist.wea.pages
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.artist.wea.R
+import com.artist.wea.components.DuplicateCheckInputForm
+import com.artist.wea.components.EmailGuidText
+import com.artist.wea.components.LargeButton
+import com.artist.wea.components.VerifyInputForm
+import com.artist.wea.constants.PageRoutes
+import com.artist.wea.constants.getDefTextStyle
+
+@Composable
+fun ChangeEmailPage(
+    navController: NavController,
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(16.dp, 12.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        // 입력 값 저장할 변수
+        var emailText = remember { mutableStateOf("") }
+        var codeText = remember { mutableStateOf("") }
+
+        // guideText
+        Text(text = stringResource(id = R.string.text_change_email_page_guide),
+            modifier = Modifier
+                .wrapContentWidth()
+                .wrapContentHeight()
+                .padding(start = 16.dp, top = 32.dp, end = 16.dp, bottom = 32.dp),
+            style = getDefTextStyle().copy(color= colorResource(id = R.color.mono700))
+        )
+
+        emailText.value = DuplicateCheckInputForm(
+            titleText = stringResource(id = R.string.text_email_label),
+            hintText = stringResource(id = R.string.text_email_guide),
+            btnText = stringResource(id = R.string.text_verify_email)
+        )
+
+        if(emailText.value.isNotEmpty()){
+            codeText.value = VerifyInputForm(
+                verifyText = stringResource(id = R.string.text_value_verify),
+                hintText = stringResource(id = R.string.text_verify_code_guide),
+                btnText = stringResource(id = R.string.text_value_verify)
+            )
+        }
+        EmailGuidText();
+        Spacer(modifier = Modifier.height(32.dp))
+        LargeButton(
+            btnText = stringResource(id = R.string.text_btn_change_email),
+            navController = navController,
+            nextPage = PageRoutes.Login.route )
+
+    }
+}

@@ -1,2 +1,117 @@
 package com.artist.wea.constants
 
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CheckboxColors
+import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.TextFieldColors
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
+import com.artist.wea.R
+
+
+
+// 소셜 로그인 버튼 용 페인터 가져오는 메서드
+@Composable
+fun getSocialIcon(idx:Int=0): Painter {
+    // 1 : 네이버
+    // 2 : 카카오
+    when(idx){
+        1 -> return painterResource(id = R.drawable.ic_launcher_foreground) // to edit
+        2 -> return painterResource(id = R.drawable.ic_launcher_foreground) // to edit
+        else -> return painterResource(id = R.drawable.ic_launcher_foreground) // default
+    }
+}
+
+// 소셜 버튼 index에 따라 버튼 컬러 스타일 가져오는 메서드
+@Composable
+fun getBtnColorByIdx(idx:Int=0):ButtonColors{
+    when(idx){
+        1 -> return getNaverBtnColor()
+        2 -> return getKaKaoBtnColor()
+        else -> return getButtonColor()
+    }
+}
+
+// 버튼 기본 스타일 속성
+@Composable
+fun getButtonColor():ButtonColors{
+    return ButtonDefaults.buttonColors(
+        containerColor = colorResource(id = R.color.dark_orange300),
+        contentColor = colorResource(id = R.color.white),
+        disabledContainerColor = colorResource(id = R.color.mono300),
+        disabledContentColor = colorResource(id = R.color.mono100),
+    )
+}
+@Composable
+fun getNaverBtnColor():ButtonColors{
+    return ButtonDefaults.buttonColors(
+        containerColor = colorResource(id = R.color.naver_green),
+        contentColor = colorResource(id = R.color.white),
+        disabledContainerColor = colorResource(id = R.color.mono300),
+        disabledContentColor = colorResource(id = R.color.mono100),
+    )
+}
+
+@Composable
+fun getKaKaoBtnColor():ButtonColors{
+    return ButtonDefaults.buttonColors(
+        containerColor = colorResource(id = R.color.kakao_yellow),
+        contentColor = colorResource(id = R.color.kakao_brown),
+        disabledContainerColor = colorResource(id = R.color.mono300),
+        disabledContentColor = colorResource(id = R.color.mono100),
+    )
+}
+
+// 폰트 스타일 속성
+@Composable
+fun get12TextStyle():TextStyle{
+    return getDefTextStyle().copy(fontSize = 12.sp)
+}
+
+@Composable
+fun get14TextStyle():TextStyle{
+    return getDefTextStyle().copy(fontSize = 14.sp);
+}
+
+@Composable
+fun getDefTextStyle():TextStyle{
+    return TextStyle(
+        fontSize = 16.sp,
+        // fontFamily = FontFamily(Font(R.font.inter)),
+        fontWeight = FontWeight(400),
+        color = colorResource(id = R.color.black),
+    )
+}
+
+// 기본 체크박스 스타일
+@Composable
+fun getDefCheckBoxColor():CheckboxColors{
+    return CheckboxDefaults.colors(
+        checkedColor = colorResource(id = R.color.dark_orange300),
+        uncheckedColor = colorResource(id = R.color.mono300),
+        checkmarkColor = colorResource(id = R.color.white)
+    )
+}
+
+// input text 기본 스타일
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun getDefTextFiledStyle():TextFieldColors{
+    return  TextFieldDefaults.textFieldColors(
+        textColor = colorResource(id = R.color.black),
+        containerColor = colorResource(id = R.color.mono50),
+        cursorColor = colorResource(id = R.color.black),
+        focusedIndicatorColor = colorResource(id = R.color.dark_orange300),
+        unfocusedIndicatorColor = colorResource(id = R.color.mono300)
+    )
+}
+
+

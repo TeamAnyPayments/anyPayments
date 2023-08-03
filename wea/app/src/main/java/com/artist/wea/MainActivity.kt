@@ -5,12 +5,19 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.artist.wea.constants.PageRoutes
+import com.artist.wea.pages.ChangeEmailPage
+import com.artist.wea.pages.ChangePwdPage
+import com.artist.wea.pages.FindIdPage
+import com.artist.wea.pages.FindPwdPage
 import com.artist.wea.pages.HomePage
 import com.artist.wea.pages.LoginPage
+import com.artist.wea.pages.UserRegisterPage
 import com.artist.wea.ui.theme.WeaTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,14 +28,26 @@ class MainActivity : ComponentActivity() {
             NavHost(navController = navController, startDestination = PageRoutes.Login.route) {
                 composable(PageRoutes.Login.route) { LoginPage(navController = navController) }
                 composable(PageRoutes.Home.route) { HomePage(navController = navController) }
+                composable("register/{type}",
+                    arguments = listOf(navArgument("type"){
+                        type = NavType.StringType
+                        defaultValue = "common"
+                    }))
+                {
+                    navBackStackEntry ->
+                    UserRegisterPage(
+                        navController = navController,
+                        navBackStackEntry.arguments?.getString("type")
+                    )
+                }
+                composable(PageRoutes.FindId.route) { FindIdPage(navController=navController) }
+                composable(PageRoutes.FindPwd.route) { FindPwdPage(navController=navController)}
+                composable(PageRoutes.ChangePwd.route) {ChangePwdPage(navController=navController)}
+                composable(PageRoutes.ChangeEmail.route) { ChangeEmailPage(navController = navController)}
             }
-
         }
     }
- 
 }
-
-
 
 
 @Preview(showBackground = true)
@@ -36,6 +55,6 @@ class MainActivity : ComponentActivity() {
 fun MainPreview() {
     val navController = rememberNavController()
     WeaTheme {
-        LoginPage(navController = navController);
+        LoginPage(navController = navController)
     }
 }
