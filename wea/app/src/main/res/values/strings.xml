@@ -43,5 +43,6 @@
     <string name="text_save_pwd_change">변경사항 저장</string>
     <string name="text_change_email_page_guide">이메일을 재설정합니다.</string>
     <string name="text_btn_change_email">이메일 변경하기</string>
+    <string name="text_user_greeting">안녕하세요!</string>
 
 </resources>
