@@ -2,21 +2,49 @@ package com.artist.wea.constants
 
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
 import androidx.compose.material3.CheckboxColors
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.artist.wea.R
 
+// card 명암용 속성
+@Composable
+fun getCardDefElevation(dpSize: Dp = 4.dp): CardElevation {
+    return CardDefaults.cardElevation(
+        defaultElevation = dpSize,
+        pressedElevation = dpSize,
+        focusedElevation = dpSize,
+        hoveredElevation = dpSize,
+        draggedElevation = dpSize,
+        disabledElevation = dpSize
+    )
+}
 
+// 홈 페이지 카드 메뉴 기본 속성
+@Composable
+fun getCardDefColors():CardColors{
+    return CardDefaults.cardColors(
+        containerColor = colorResource(id = R.color.mono50),
+        contentColor = colorResource(id = R.color.red300),
+        disabledContainerColor = colorResource(id = R.color.mono300),
+        disabledContentColor = colorResource(id = R.color.mono100)
+    )
+}
 
 // 소셜 로그인 버튼 용 페인터 가져오는 메서드
 @Composable
@@ -82,12 +110,12 @@ fun get14TextStyle():TextStyle{
 }
 
 @Composable
-fun getDefTextStyle():TextStyle{
+fun getDefTextStyle(textColor: Color = colorResource(id = R.color.black)):TextStyle{
     return TextStyle(
         fontSize = 16.sp,
         // fontFamily = FontFamily(Font(R.font.inter)),
         fontWeight = FontWeight(400),
-        color = colorResource(id = R.color.black),
+        color = textColor,
     )
 }
 
