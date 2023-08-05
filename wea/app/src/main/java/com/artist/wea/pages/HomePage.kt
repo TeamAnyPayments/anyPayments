@@ -253,7 +253,7 @@ fun homePage(navController: NavHostController, modifier: Modifier){
                         .wrapContentHeight()
                         .padding(4.dp)
                         .weight(1f)
-                        .clickable { navController.navigate(PageRoutes.Login.route) },
+                        .clickable { navController.navigate(PageRoutes.SearchConcert.route) },
                     menuTitle = "내 주변 공연 찾기",
                     tagName = "GPS",
                     badgeColor = colorResource(id = R.color.sky_blue400),

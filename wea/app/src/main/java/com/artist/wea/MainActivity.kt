@@ -17,13 +17,18 @@ import com.artist.wea.pages.FindIdPage
 import com.artist.wea.pages.FindPwdPage
 import com.artist.wea.pages.HomePage
 import com.artist.wea.pages.LoginPage
+import com.artist.wea.pages.SearchConcertPage
 import com.artist.wea.pages.UserRegisterPage
 import com.artist.wea.ui.theme.WeaTheme
+import com.naver.maps.map.NaverMapSdk
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            NaverMapSdk.getInstance(this).client =
+                NaverMapSdk.NaverCloudPlatformClient(BuildConfig.NAVER_CLIENT_ID)
+
             val navController = rememberNavController()
             NavHost(navController = navController, startDestination = PageRoutes.Login.route) {
                 composable(PageRoutes.Login.route) { LoginPage(navController = navController) }
@@ -44,6 +49,7 @@ class MainActivity : ComponentActivity() {
                 composable(PageRoutes.FindPwd.route) { FindPwdPage(navController=navController)}
                 composable(PageRoutes.ChangePwd.route) {ChangePwdPage(navController=navController)}
                 composable(PageRoutes.ChangeEmail.route) { ChangeEmailPage(navController = navController)}
+                composable(PageRoutes.SearchConcert.route){ SearchConcertPage(navController = navController)}
             }
         }
     }
