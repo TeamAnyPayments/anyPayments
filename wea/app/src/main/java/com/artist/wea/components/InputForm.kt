@@ -30,7 +30,7 @@ fun InputForm(
 ):String{
     var text by remember { mutableStateOf("") }
     Column(
-        modifier = Modifier
+        modifier = modifier
     ){
 //            OutlinedTextField(
 //                value = text,
@@ -41,7 +41,7 @@ fun InputForm(
         TextField(
             value = text,
             onValueChange = { text = it },
-            modifier = modifier,
+            modifier = Modifier.fillMaxWidth().wrapContentHeight(),
             colors = getDefTextFiledStyle(),
             textStyle = textStyle,
             placeholder = {

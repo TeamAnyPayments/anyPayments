@@ -11,12 +11,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.artist.wea.constants.PageRoutes
+import com.artist.wea.pages.ArtistRankPage
 import com.artist.wea.pages.ChangeEmailPage
 import com.artist.wea.pages.ChangePwdPage
 import com.artist.wea.pages.FindIdPage
 import com.artist.wea.pages.FindPwdPage
 import com.artist.wea.pages.HomePage
 import com.artist.wea.pages.LoginPage
+import com.artist.wea.pages.NotifyPage
 import com.artist.wea.pages.SearchConcertPage
 import com.artist.wea.pages.UserRegisterPage
 import com.artist.wea.ui.theme.WeaTheme
@@ -50,6 +52,8 @@ class MainActivity : ComponentActivity() {
                 composable(PageRoutes.ChangePwd.route) {ChangePwdPage(navController=navController)}
                 composable(PageRoutes.ChangeEmail.route) { ChangeEmailPage(navController = navController)}
                 composable(PageRoutes.SearchConcert.route){ SearchConcertPage(navController = navController)}
+                composable(PageRoutes.ArtistRank.route) {ArtistRankPage(navController = navController) }
+                composable(PageRoutes.Notify.route) { NotifyPage(navController = navController) }
             }
         }
     }

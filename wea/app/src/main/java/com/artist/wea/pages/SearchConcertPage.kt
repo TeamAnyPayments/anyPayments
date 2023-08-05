@@ -2,12 +2,12 @@ package com.artist.wea.pages
 
 import android.os.Bundle
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -29,7 +29,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -68,7 +67,7 @@ fun SearchConcertPage(
 
     // 지도찾기 페이지 본체
     Column (
-        modifier = Modifier.padding(8.dp)
+        modifier = modifier
     ) {
         PageTopBar(
             navController = navController,
@@ -90,11 +89,12 @@ fun SearchConcertPage(
                 Tab(
                     selected = index == pagerState.currentPage,
                     text = { Text(text = item.title) },
-                    icon = { Icon(item.icon,  "")},
+                    icon = { item.icon?.let { Icon(it,  "") } },
                     onClick = { coroutineScope.launch { pagerState.animateScrollToPage(index) } },
                     selectedContentColor = colorResource(id = R.color.black),
                     unselectedContentColor = colorResource(id = R.color.mono700),
-                    interactionSource = remember { MutableInteractionSource() }
+                    interactionSource = remember { MutableInteractionSource() },
+                    modifier = Modifier.background(colorResource(id = R.color.mono50))
                 )
             }
         }
@@ -164,7 +164,7 @@ fun NaverMapComposable(
 
 @Composable
 fun TabScreen(
-    content: String
+    content: String,
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
