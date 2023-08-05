@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.artist.wea.R
 import com.artist.wea.components.DuplicateCheckInputForm
 import com.artist.wea.components.EmailGuidText
@@ -28,7 +28,7 @@ import com.artist.wea.constants.getDefTextStyle
 
 @Composable
 fun ChangeEmailPage(
-    navController: NavController,
+    navController: NavHostController,
 ) {
     Column(
         modifier = Modifier
@@ -55,7 +55,8 @@ fun ChangeEmailPage(
         emailText.value = DuplicateCheckInputForm(
             titleText = stringResource(id = R.string.text_email_label),
             hintText = stringResource(id = R.string.text_email_guide),
-            btnText = stringResource(id = R.string.text_verify_email)
+            btnText = stringResource(id = R.string.text_verify_email),
+            navController = navController
         )
 
         if(emailText.value.isNotEmpty()){

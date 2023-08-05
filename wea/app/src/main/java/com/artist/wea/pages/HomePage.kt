@@ -20,6 +20,8 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.KeyboardArrowLeft
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -78,7 +80,7 @@ fun HomePage(
                         if(!navController.currentDestination?.route.equals("home")){
                             // 뒤로가기 아이콘
                             Icon(
-                                painter = painterResource(id = R.drawable.icon_angle_left),
+                                Icons.Rounded.KeyboardArrowLeft,
                                 contentDescription = "logo",
                                 modifier = Modifier
                                     .size(24.dp)
@@ -95,9 +97,10 @@ fun HomePage(
                         )
                     }
                 },
-                // backgroundColor = AppColors.white,
+                // 우측 메뉴들
                 actions = {
                     IconButton(onClick = {
+                        navController.navigate(PageRoutes.Notify.route) // 알림 페이지 이동
                     }) {
                         Icon(
                             painter = painterResource(id = R.drawable.icon_notify),
@@ -291,7 +294,7 @@ fun homePage(navController: NavHostController, modifier: Modifier){
                             .fillMaxWidth()
                             .wrapContentHeight()
                             .weight(1f)
-                            .clickable { navController.navigate(PageRoutes.Login.route) },
+                            .clickable { navController.navigate(PageRoutes.ArtistRank.route) },
                         menuTitle = "ARTIST BOARD",
                         tagName = "HOT",
                         badgeColor = colorResource(id = R.color.red300),

@@ -70,10 +70,13 @@ fun getBtnColorByIdx(idx:Int=0):ButtonColors{
 
 // 버튼 기본 스타일 속성
 @Composable
-fun getButtonColor():ButtonColors{
+fun getButtonColor(
+    mainColor:Color = colorResource(id = R.color.dark_orange300),
+    contentColor: Color = colorResource(id = R.color.white)
+):ButtonColors{
     return ButtonDefaults.buttonColors(
-        containerColor = colorResource(id = R.color.dark_orange300),
-        contentColor = colorResource(id = R.color.white),
+        containerColor = mainColor,
+        contentColor = contentColor,
         disabledContainerColor = colorResource(id = R.color.mono300),
         disabledContentColor = colorResource(id = R.color.mono100),
     )

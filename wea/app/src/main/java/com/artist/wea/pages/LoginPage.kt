@@ -1,5 +1,6 @@
 package com.artist.wea.pages
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -31,8 +32,9 @@ import com.artist.wea.constants.PageRoutes
 fun LoginPage(
     navController: NavController,
     modifier: Modifier =
-                  Modifier
-                      .fillMaxSize()) {
+        Modifier
+            .fillMaxSize()
+            .background(colorResource(id = R.color.mono50))) {
 
     var idText = remember { mutableStateOf("") }
     var pwdText = remember { mutableStateOf("") }

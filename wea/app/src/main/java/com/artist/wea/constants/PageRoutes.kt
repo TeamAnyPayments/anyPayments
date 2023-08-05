@@ -9,5 +9,7 @@ sealed class PageRoutes(val route:String){
     object ChangePwd: PageRoutes("change-pwd")
     object ChangeEmail: PageRoutes("change-email")
     object SearchConcert: PageRoutes("search-concert")
+    object ArtistRank: PageRoutes("artist-rank")
+    object Notify: PageRoutes("notify")
 
 }
