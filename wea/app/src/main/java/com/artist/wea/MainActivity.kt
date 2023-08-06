@@ -20,6 +20,7 @@ import com.artist.wea.pages.HomePage
 import com.artist.wea.pages.LoginPage
 import com.artist.wea.pages.NotifyPage
 import com.artist.wea.pages.SearchConcertPage
+import com.artist.wea.pages.SettingPage
 import com.artist.wea.pages.UserRegisterPage
 import com.artist.wea.ui.theme.WeaTheme
 import com.naver.maps.map.NaverMapSdk
@@ -28,11 +29,17 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            // 네이버 지도를 위한 SDK Client 등록!
             NaverMapSdk.getInstance(this).client =
-                NaverMapSdk.NaverCloudPlatformClient(BuildConfig.NAVER_CLIENT_ID)
-
+                NaverMapSdk.NaverCloudPlatformClient(BuildConfig.NAVER_CLIENT_ID) // local.properties로부터 읽어들임
+            // 로그인 시 로그인 페이지로 이동하지 않도록, 자동로그인을 위한 변수 /* TODO */
+            val isLogin = true
             val navController = rememberNavController()
-            NavHost(navController = navController, startDestination = PageRoutes.Login.route) {
+            NavHost(
+                navController = navController,
+                startDestination = if(isLogin) PageRoutes.Home.route
+                                    else PageRoutes.Login.route )
+            {
                 composable(PageRoutes.Login.route) { LoginPage(navController = navController) }
                 composable(PageRoutes.Home.route) { HomePage(navController = navController) }
                 composable("register/{type}",
@@ -54,6 +61,7 @@ class MainActivity : ComponentActivity() {
                 composable(PageRoutes.SearchConcert.route){ SearchConcertPage(navController = navController)}
                 composable(PageRoutes.ArtistRank.route) {ArtistRankPage(navController = navController) }
                 composable(PageRoutes.Notify.route) { NotifyPage(navController = navController) }
+                composable(PageRoutes.Setting.route) { SettingPage(navController = navController) }
             }
         }
     }

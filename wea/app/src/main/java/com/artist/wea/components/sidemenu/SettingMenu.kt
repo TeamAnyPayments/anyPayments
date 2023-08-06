@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.artist.wea.constants.PageRoutes
 
 @Composable
 fun SettingMenu(
@@ -25,7 +26,9 @@ fun SettingMenu(
             modifier = Modifier
                 .wrapContentWidth()
                 .wrapContentHeight()
-                .clickable { }
+                .clickable {
+                    navController.navigate(PageRoutes.Setting.route)
+                }
         )
     }
 }

@@ -24,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
+import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.constants.getDefTextStyle
 
 @Composable
@@ -32,6 +33,7 @@ fun PageTopBar(
     modifier:Modifier = Modifier,
     pageTitle:String = stringResource(id = R.string.empty_text),
     singleIcon:Painter? = null,
+    rightMenuText:String = stringResource(id = R.string.empty_text),
     rightMenuAction:()-> Unit = {},
     disableBack:Boolean = false
 ){
@@ -73,12 +75,13 @@ fun PageTopBar(
                 text = pageTitle,
                 style = getDefTextStyle()
             )
-            // 아이콘
-            if(singleIcon == null){
-                Spacer(
-                    modifier = Modifier.size(24.dp)
+            // 오른쪽 탑바 메뉴
+            if(rightMenuText.isNotEmpty()){ // 텍스트 메뉴인 경우
+                Text(
+                    text = rightMenuText,
+                    style = get14TextStyle()
                 )
-            }else {
+            } else if( singleIcon != null){ // 아이콘 메뉴인 경우
                 Icon(
                     painter = singleIcon,
                     contentDescription = "right-menu",
@@ -87,6 +90,10 @@ fun PageTopBar(
                         .clickable {
                             rightMenuAction()
                         }
+                )
+            }else { // 뒤로 가기만 있는 경우
+                Spacer(
+                    modifier = Modifier.size(24.dp)
                 )
             }
         }

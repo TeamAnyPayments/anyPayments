@@ -21,6 +21,8 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.rounded.KeyboardArrowLeft
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -103,7 +105,7 @@ fun HomePage(
                         navController.navigate(PageRoutes.Notify.route) // 알림 페이지 이동
                     }) {
                         Icon(
-                            painter = painterResource(id = R.drawable.icon_notify),
+                            Icons.Filled.Notifications,
                             contentDescription = "Alert",
                             modifier = Modifier.size(24.dp),
                              tint = colorResource(id = R.color.mono900)
@@ -113,7 +115,7 @@ fun HomePage(
                         menuOpen.value = !menuOpen.value // 사이드 메뉴 열기
                     }) {
                         Icon(
-                            painter = painterResource(id = R.drawable.icon_hambug),
+                            Icons.Filled.Menu,
                             contentDescription = "Menu",
                             modifier = Modifier.size(24.dp),
                             tint = colorResource(id = R.color.mono900)

@@ -8,6 +8,8 @@ import androidx.compose.material3.CardElevation
 import androidx.compose.material3.CheckboxColors
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SwitchColors
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -21,6 +23,26 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.artist.wea.R
+
+
+//토글버튼 기본 세팅
+@Composable
+fun getToggleButtonColors(
+    checkedTrackColor: Color = colorResource(id = R.color.dark_orange300),
+    thumbColor:Color = colorResource(id = R.color.white),
+    uncheckedTrackColor:Color = colorResource(id = R.color.mono200)
+): SwitchColors {
+    return SwitchDefaults.colors(
+        checkedThumbColor = thumbColor,
+        checkedTrackColor = checkedTrackColor,
+        // checkedBorderColor = checkedTrackColor,
+        // checkedIconColor = checkedIconColor,
+        uncheckedThumbColor = thumbColor,
+        uncheckedTrackColor = uncheckedTrackColor,
+        uncheckedBorderColor = uncheckedTrackColor,
+        // uncheckedIconColor = colorResource(id = R.color.red300),
+    )
+}
 
 // card 명암용 속성
 @Composable
