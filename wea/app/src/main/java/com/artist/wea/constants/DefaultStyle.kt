@@ -25,6 +25,24 @@ import androidx.compose.ui.unit.sp
 import com.artist.wea.R
 
 
+// OutLinedText 기본 세팅
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun getOutlinedTextFieldColors():TextFieldColors{
+    return TextFieldDefaults
+        .outlinedTextFieldColors(
+            textColor = colorResource(id = R.color.black),
+            cursorColor = colorResource(id = R.color.dark_orange300),
+            errorCursorColor = colorResource(id = R.color.red500),
+            focusedBorderColor = colorResource(id = R.color.dark_orange300),
+            unfocusedBorderColor = colorResource(id = R.color.mono800),
+            placeholderColor = colorResource(id = R.color.mono600),
+            errorBorderColor = colorResource(id = R.color.red500),
+            errorLabelColor = colorResource(id = R.color.red500),
+            focusedLabelColor = colorResource(id = R.color.dark_orange600)
+        )
+}
+
 //토글버튼 기본 세팅
 @Composable
 fun getToggleButtonColors(

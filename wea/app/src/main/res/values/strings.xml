@@ -44,5 +44,6 @@
     <string name="text_change_email_page_guide">이메일을 재설정합니다.</string>
     <string name="text_btn_change_email">이메일 변경하기</string>
     <string name="text_user_greeting">안녕하세요!</string>
+    <string name="text_concert_benefit_detail">*공연 수익은 WE:A에서 관객에 회원님께 지불한 후원금의 총액을 기준으로 산정됩니다. 현재 페이지에서 제공하는 총 금액과 실제 금액에는 차이가 있을 수 있으니, 자세한 내용은 홈페이지 내 [ FAQ - 결제/정산 방법 ]을 참고해주세요.</string>
 
 </resources>
