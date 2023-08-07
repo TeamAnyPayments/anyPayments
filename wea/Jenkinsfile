@@ -1,0 +1,46 @@
+pipeline {
+    agent any
+
+    tools {
+        jdk 'openjdk-17'
+    }
+
+    environment {
+        NAVER_CLIENT_ID = credentials('NAVER_CLIENT_ID')
+    }
+
+    stages {
+
+        stage('git-clone') {
+            steps {
+                git(
+                    url: "https://github.com/TeamAnyPayments/anyPayments.git",
+                    credentialsId: "mygit",
+                    branch: "android"
+                )
+            }
+        }
+
+        stage('build-with-gradle') {
+            steps {
+                dir ('wea') {
+                    sh('echo NAVER_CLIENT_ID=$NAVER_CLIENT_ID > local.properties')
+                    sh('chmod +x gradlew')
+                    sh('./gradlew clean assemble') // 일반 APK 빌드
+                    // sh('./gradlew clean app:assembleDebug') // DEBUG APK 빌드
+                    // sh('./gradlew clean app:assembleRelease') // RELEASE APK 빌드
+                }
+            }
+        }
+    }
+
+    post {
+            success {
+                archiveArtifacts artifacts: '**/*.apk'
+                cleanWs()
+            }
+            failure {
+                cleanWs()
+            }
+        }
+}
