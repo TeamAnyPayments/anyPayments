@@ -8,6 +8,8 @@ import androidx.compose.material3.CardElevation
 import androidx.compose.material3.CheckboxColors
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MenuDefaults
+import androidx.compose.material3.MenuItemColors
 import androidx.compose.material3.SwitchColors
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.TextFieldColors
@@ -24,6 +26,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.artist.wea.R
 
+
+// 메뉴아이템 기본 세팅
+@Composable
+fun getMenuItemColors(): MenuItemColors {
+    return MenuDefaults.itemColors(
+        textColor = colorResource(id = R.color.black),
+    )
+}
 
 // OutLinedText 기본 세팅
 @OptIn(ExperimentalMaterial3Api::class)

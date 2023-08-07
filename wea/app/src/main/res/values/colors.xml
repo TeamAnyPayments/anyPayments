@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+<!--    <color name="colorPrimary">@color/dark_orange300</color>-->
+<!--    <color name="colorPrimaryDark">@color/mono300</color>-->
+<!--    <color name="colorAccent">@color/red200</color>-->
+<!--    <color name="colorOnSurfaceVariant">@color/beige100</color>-->
     <color name="red50">#FFEDED</color>
     <color name="red100">#FFC5C4</color>
     <color name="red200">#FF9D9C</color>
