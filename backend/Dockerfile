@@ -1,3 +1,3 @@
 FROM openjdk:17-alpine
 COPY build/libs/*.jar app.jar
-ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=server", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
