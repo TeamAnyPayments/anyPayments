@@ -34,7 +34,11 @@ fun LargeButton(
     btnIdx:Int = 0, // 버튼 종류 index, 소셜인지 일반인지 구분용
     hasIcon:Boolean = btnIdx != 0, // 아이콘이 필요한 버튼인지 for 소셜 로그인,
     btnColors: ButtonColors = getBtnColorByIdx(btnIdx),
-    imgPainter:Painter = getSocialIcon(btnIdx)
+    imgPainter:Painter = getSocialIcon(btnIdx),
+    modifier: Modifier = Modifier
+        .fillMaxWidth()
+        .wrapContentHeight()
+        .padding(8.dp)
     ) {
 
 
@@ -43,10 +47,7 @@ fun LargeButton(
             navController?.navigate(nextPage)
         },
         colors = btnColors,
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .padding(8.dp),
+        modifier = modifier,
     ) {
         Row(modifier = Modifier.fillMaxWidth().wrapContentHeight(),
             verticalAlignment = Alignment.CenterVertically,
