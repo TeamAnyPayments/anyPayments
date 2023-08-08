@@ -35,8 +35,8 @@ import androidx.compose.ui.zIndex
 import androidx.navigation.NavHostController
 import com.artist.wea.R
 import com.artist.wea.components.ArtistInfoItem
-import com.artist.wea.components.ArtistInfoUnit
 import com.artist.wea.components.ConcertSearchItem
+import com.artist.wea.components.InfoUnit
 import com.artist.wea.components.PageTopBar
 import com.artist.wea.components.uidtclass.SearchArtistInfo
 import com.artist.wea.constants.getDefTextStyle
@@ -171,7 +171,7 @@ fun ArtistInfoPage(
         }
 
         // 프로필 소개
-        ArtistInfoUnit(
+        InfoUnit(
            modifier = Modifier.padding(16.dp, 12.dp),
             titleText = "프로필 소개",
             screen = {
@@ -201,12 +201,13 @@ fun ArtistInfoPage(
             )
         )
 
-        ArtistInfoUnit(
+        InfoUnit(
             modifier = Modifier.padding(16.dp, 12.dp),
             titleText = "Member",
             screen = {
                 artistInfoList.forEachIndexed { index, artistInfo ->
                     ArtistInfoItem(
+                        navController = navController,
                         artistInfo = artistInfo,
                         hasLine = false
                     )
@@ -265,13 +266,14 @@ fun ArtistInfoPage(
             .verticalScroll(scrollState)
 
         // History
-        ArtistInfoUnit(
+        InfoUnit(
             modifier = Modifier.padding(16.dp, 12.dp),
             titleText = "History",
             screen = {
                 concertList.forEach {
                         item ->
                     ConcertSearchItem(
+                        navController = navController,
                         content = item,
                         modifier = Modifier
                             .fillMaxWidth()

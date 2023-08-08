@@ -38,7 +38,8 @@ const val AUTO_PAGE_CHANGE_DELAY = 1700L // 초
 @Composable
 fun InfiniteLoopPager(
     modifier: Modifier = Modifier,
-    list: List<String> = listOf()
+    list: List<String> = listOf(),
+    height:Dp = 144.dp
 ) {
     val pagerState = rememberPagerState()
 
@@ -93,7 +94,7 @@ fun InfiniteLoopPager(
                     error = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(144.dp)
+                        .height(height)
                 )
             }
         }
