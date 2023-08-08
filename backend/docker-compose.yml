@@ -14,6 +14,7 @@ services:
     container_name: wea-spring
     environment:
       TZ: "Asia/Seoul"
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - /var/wea/server:/var/wea/server
     restart: always
