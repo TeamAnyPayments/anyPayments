@@ -47,14 +47,10 @@ pipeline {
 
     post {
         success {
-            archiveArtifacts artifacts: 'backend/build/libs/*.jar'
             cleanWs()
         }
-//         success {
-//             cleanWs()
-//         }
-//         failure {
-//             cleanWs()
-//         }
+        failure {
+            cleanWs()
+        }
     }
 }

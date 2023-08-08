@@ -1,5 +1,7 @@
 # Server Configuration
 server:
+  servlet:
+    context-path: /
   port: 8080
 
 # Spring Configuration
