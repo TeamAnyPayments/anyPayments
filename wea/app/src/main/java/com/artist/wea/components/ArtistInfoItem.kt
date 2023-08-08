@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,7 +24,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.artist.wea.R
 import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.data.ArtistInfo
@@ -34,15 +32,14 @@ import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
 fun ArtistInfoItem(
-    navController: NavHostController,
     artistInfo: ArtistInfo = ArtistInfo(),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    hasLine:Boolean = true
 ){
 
     Column(modifier = modifier
         .fillMaxWidth()
         .wrapContentHeight()
-        .padding(16.dp, 8.dp)
     ){
         Spacer(modifier = Modifier.height(8.dp))
         Row(
@@ -116,7 +113,9 @@ fun ArtistInfoItem(
             }
         }
         Spacer(modifier = Modifier.height(8.dp))
-        Divider(thickness = 1.dp, color = colorResource(id = R.color.mono300))
+        if(hasLine){
+            Divider(thickness = 1.dp, color = colorResource(id = R.color.mono300))
+        }
     }
 
 }
