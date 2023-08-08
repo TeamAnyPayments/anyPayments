@@ -97,6 +97,7 @@ fun ConcertListComponent(
             artistList.forEach {
                     item ->
                 ConcertSearchItem(
+                    navController = navController,
                     content = item
                 )
             }

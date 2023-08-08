@@ -1,6 +1,7 @@
 package com.artist.wea.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,8 +25,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.artist.wea.R
 import com.artist.wea.components.uidtclass.SearchArtistInfo
+import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get12TextStyle
 import com.artist.wea.constants.get14TextStyle
 import com.skydoves.landscapist.CircularReveal
@@ -33,6 +36,7 @@ import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
 fun ConcertSearchItem(
+    navController: NavHostController,
     content: SearchArtistInfo = SearchArtistInfo(),
     modifier: Modifier = Modifier
         .fillMaxWidth()
@@ -42,7 +46,9 @@ fun ConcertSearchItem(
         .padding(8.dp, 4.dp)
 ){
     Box(
-        modifier = modifier
+        modifier = modifier.clickable {
+            navController.navigate(PageRoutes.ConcertInfo.route)
+        }
     ){
         Row(modifier = Modifier.padding(8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),

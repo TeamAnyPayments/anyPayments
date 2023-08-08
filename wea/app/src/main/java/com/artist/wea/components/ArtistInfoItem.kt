@@ -1,5 +1,6 @@
 package com.artist.wea.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,7 +25,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.artist.wea.R
+import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.data.ArtistInfo
 import com.skydoves.landscapist.CircularReveal
@@ -32,6 +35,7 @@ import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
 fun ArtistInfoItem(
+    navController: NavHostController,
     artistInfo: ArtistInfo = ArtistInfo(),
     modifier: Modifier = Modifier,
     hasLine:Boolean = true
@@ -40,6 +44,7 @@ fun ArtistInfoItem(
     Column(modifier = modifier
         .fillMaxWidth()
         .wrapContentHeight()
+        .clickable { navController.navigate(PageRoutes.ArtistInfo.route) }
     ){
         Spacer(modifier = Modifier.height(8.dp))
         Row(

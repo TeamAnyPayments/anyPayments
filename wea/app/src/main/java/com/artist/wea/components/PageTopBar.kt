@@ -36,7 +36,8 @@ fun PageTopBar(
     rightMenuText:String = stringResource(id = R.string.empty_text),
     rightMenuAction:()-> Unit = {},
     disableBack:Boolean = false,
-    hasTransparency:Boolean = false
+    hasTransparency:Boolean = false,
+    badge: @Composable () -> Unit = {},
 ){
     // TopBar Area
     Column(
@@ -99,7 +100,9 @@ fun PageTopBar(
                             rightMenuAction()
                         }
                 )
-            }else { // 뒤로 가기만 있는 경우
+            }else if(badge != {}){
+                badge()
+            } else { // 뒤로 가기만 있는 경우
                 Spacer(
                     modifier = Modifier.size(24.dp)
                 )
