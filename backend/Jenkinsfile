@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+
+    tools {
+        jdk "openjdk-17"
+    }
+
+    environment {
+        MYSQL_PASSWORD = credentials('MYSQL_PASSWORD')
+    }
+
+    stages {
+        stage('git-clone') {
+            steps {
+                git (
+                    url: "https://github.com/TeamAnyPayments/anyPayments.git",
+                    credentialsId: "mygit",
+                    branch: "backend-jenkins"
+                )
+            }
+        }
+
+        stage('build') {
+            steps {
+                dir('backend') {
+                    sh('chmod +x ./gradlew')
+                    sh('./gradlew clean build -x test')
+                }
+            }
+        }
+
+        stage('deploy') {
+            steps {
+                dir('backend') {
+                    sh('/var/jenkins_home/lib/docker-compose down')
+                    sh('/var/jenkins_home/lib/docker-compose build --no-cache && /var/jenkins_home/lib/docker-compose up -d')
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            cleanWs()
+        }
+        failure {
+            cleanWs()
+        }
+    }
+}
