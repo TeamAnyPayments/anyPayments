@@ -30,7 +30,7 @@ pipeline {
                 dir('backend') {
                     sh('/var/jenkins_home/lib/docker-compose config')
                     sh('/var/jenkins_home/lib/docker-compose down')
-                    sh('/var/jenkins_home/lib/docker-compose build --no-cache && /var/jenkins_home/lib/docker-compose up -d')
+//                     sh('/var/jenkins_home/lib/docker-compose build --no-cache && /var/jenkins_home/lib/docker-compose up -d')
                 }
             }
         }
