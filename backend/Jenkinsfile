@@ -20,7 +20,7 @@ pipeline {
                 git (
                     url: "https://github.com/TeamAnyPayments/anyPayments.git",
                     credentialsId: "mygit",
-                    branch: "backend-jenkins"
+                    branch: "backend"
                 )
             }
         }
