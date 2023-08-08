@@ -5,10 +5,6 @@ pipeline {
         jdk "openjdk-17"
     }
 
-    environment {
-        MYSQL_PASSWORD = credentials('MYSQL_PASSWORD')
-    }
-
     stages {
         stage('git-clone') {
             steps {
