@@ -40,12 +40,15 @@ pipeline {
         }
     }
 
-//     post {
+    post {
+        success {
+            archiveArtifacts artifacts: 'backend/build/libs/*.jar'
+        }
 //         success {
 //             cleanWs()
 //         }
 //         failure {
 //             cleanWs()
 //         }
-//     }
+    }
 }
