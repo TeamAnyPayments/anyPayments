@@ -23,7 +23,7 @@ services:
     environment:
       TZ: "Asia/Seoul"
       MYSQL_USER: weateam
-      MYSQL_PASSWORD: $MYSQL_PASSWORD
+      MYSQL_PASSWORD: weateam0801
       MYSQL_DATABASE: wea
       MYSQL_RANDOM_ROOT_PASSWORD: yes
     volumes:
