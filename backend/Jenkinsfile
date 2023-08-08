@@ -6,7 +6,12 @@ pipeline {
     }
 
     environment {
+        MYSQL_URL = credentials('MYSQL_URL')
+        MYSQL_PORT = 3306
+        MYSQL_USER = credentials('MYSQL_USER')
         MYSQL_PASSWORD = credentials('MYSQL_PASSWORD')
+        MYSQL_DATABASE = credentials('MYSQL_DATABASE')
+        JWT_SECRET = credentials('JWT_SECRET')
     }
 
     stages {

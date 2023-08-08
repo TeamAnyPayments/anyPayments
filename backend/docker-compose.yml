@@ -14,7 +14,12 @@ services:
     container_name: wea-spring
     environment:
       TZ: "Asia/Seoul"
+      MYSQL_URL: ${MYSQL_URL}
+      MYSQL_PORT: ${MYSQL_PORT}
+      MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      JWT_SECRET: ${JWT_SECRET}
     volumes:
       - /var/wea/server:/var/wea/server
     restart: always
