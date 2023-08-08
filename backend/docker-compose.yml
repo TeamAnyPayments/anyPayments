@@ -30,9 +30,9 @@ services:
     container_name: wea-mysql
     environment:
       TZ: "Asia/Seoul"
-      MYSQL_USER: weateam
+      MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_DATABASE: wea
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_RANDOM_ROOT_PASSWORD: yes
     volumes:
       - /var/wea/db:/var/lib/mysql
