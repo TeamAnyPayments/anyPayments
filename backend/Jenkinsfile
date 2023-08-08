@@ -22,6 +22,7 @@ pipeline {
         SMTP_SSL_TRUST = 'smtp.naver.com'
         SMTP_STARTTLS_ENABLE = 'true'
         SMTP_USERNAME = credentials('SMTP_USERNAME')
+        SMTP_PASSWORD = credentials('SMTP_PASSWORD')
         TRANSPORT_PROTOCOL = 'smtp'
     }
 
