@@ -64,7 +64,6 @@ pipeline {
                         link: env.BUILD_URL,
                         description: "Deploy 완료 약 1분후 서버가 정상 가동됩니다.",
                         thumbnail: 'https://vscjava.gallerycdn.vsassets.io/extensions/vscjava/vscode-spring-boot-dashboard/0.13.2023072200/1689984300042/Microsoft.VisualStudio.Services.Icons.Default',
-                        enableArtifactsList: true,
                         result: currentBuild.currentResult,
                         webhookURL: env.WEBHOOK_URL
             cleanWs()
