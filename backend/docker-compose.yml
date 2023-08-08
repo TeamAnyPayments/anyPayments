@@ -3,6 +3,8 @@ version: "3.8"
 networks:
   npm-nw:
     external: true
+  backend:
+    external: false
 
 services:
   wea-spring:
@@ -12,9 +14,12 @@ services:
     container_name: wea-spring
     environment:
       TZ: "Asia/Seoul"
+    volumes:
+      - /var/wea/server:/var/wea/server
     restart: always
     networks:
       - npm-nw
+      - backend
     depends_on:
       - wea-mysql
   wea-mysql:
@@ -23,9 +28,11 @@ services:
     environment:
       TZ: "Asia/Seoul"
       MYSQL_USER: weateam
-      MYSQL_PASSWORD: weateam0801
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DATABASE: wea
       MYSQL_RANDOM_ROOT_PASSWORD: yes
     volumes:
       - /var/wea/db:/var/lib/mysql
     restart: always
+    networks:
+      - backend
