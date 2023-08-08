@@ -1,16 +1,16 @@
 # Server Configuration
 server:
   servlet:
-    context-path: /api
+    context-path: /
   port: 8080
 
 # Spring Configuration
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/wea?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=yes&characterEncoding=utf8&serverTimezone=Asia/Seoul
-    username: weateam
-    password: weateam0801
+    url: jdbc:mysql://${MYSQL_URL}:${MYSQL_PORT}/${MYSQL_DATABASE}?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=yes&characterEncoding=utf8&serverTimezone=Asia/Seoul
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
 
   jackson:
     time-zone: Asia/Seoul
@@ -30,4 +30,26 @@ spring:
       max-request-size: 20MB
 
   jwt:
-    secret: aa2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbXRva2FyaW10b2thcmltdG9rYXJpbQ
+    secret: ${JWT_SECRET}
+
+  data:
+    redis:
+      password: ${REDIS_PASSWORD}
+      port: ${REDIS_PORT}
+      host: ${REDIS_HOST}
+
+# Mail Configuration
+mail:
+  transport:
+    protocol: ${TRANSPORT_PROTOCOL}
+  smtp:
+    host: ${SMTP_HOST}
+    username: ${SMTP_USERNAME}
+    password: ${SMTP_PASSWORD}
+    port: ${SMTP_PORT}
+    auth: ${SMTP_AUTH}
+    starttls:
+      enable: ${SMTP_STARTTLS_ENABLE}
+    ssl:
+      trust: ${SMTP_SSL_TRUST}
+      enable: ${SMTP_SSL_ENABLE}
