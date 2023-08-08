@@ -29,9 +29,12 @@ import com.artist.wea.R
 import com.artist.wea.components.ArtistInfoItem
 import com.artist.wea.components.Badge
 import com.artist.wea.components.BuskingDetailTable
+import com.artist.wea.components.GuideBubble
 import com.artist.wea.components.InfiniteLoopPager
 import com.artist.wea.components.InfoUnit
+import com.artist.wea.components.LargeButton
 import com.artist.wea.components.PageTopBar
+import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get12TextStyle
 import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.data.ArtistInfo
@@ -102,6 +105,7 @@ fun ConcertInfoPage(
         PageTopBar(
             navController = navController,
             pageTitle = buskingInfo.buskingTitle,
+            hasBadge =  true,
             badge = {
                 Badge(
                     text = "LIVE",
@@ -109,127 +113,148 @@ fun ConcertInfoPage(
                 )
             }
         )
-        val scrollState = rememberScrollState()
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .verticalScroll(scrollState),
-        ) {
-            // 공연 이미지
-            InfiniteLoopPager(
-                list = buskingInfo.buskingImgList,
-                height = 196.dp
-            )
-            Spacer(modifier = Modifier.height(16.dp)) // 여백
+        Box(modifier = Modifier
+            .fillMaxSize()){
+
+            // 공연 body
+            val scrollState = rememberScrollState()
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight()
-                    .padding(16.dp, 12.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                    .verticalScroll(scrollState),
             ) {
-                // 공연 소개
-                InfoUnit(
-                    titleText="공연 소개",
-                    screen = {
-                        Text(
-                            text = buskingInfo.buskingIntroduce,
-                            style = getDefTextStyle()
-                        )
-                    }
+                // 공연 이미지
+                InfiniteLoopPager(
+                    list = buskingInfo.buskingImgList,
+                    height = 196.dp
                 )
                 Spacer(modifier = Modifier.height(16.dp)) // 여백
-
-                val screenModifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                // 공연 위치
-                InfoUnit(
-                    icon = Icons.Filled.Place,
-                    modifier = Modifier,
-                    titleText = "공연 장소",
-                    screen = {
-                        Text(
-                            text = buskingInfo.locations,
-                            style = getDefTextStyle()
-                                .copy(textAlign = TextAlign.Start),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .wrapContentHeight()
-                        )
-                        Spacer(modifier = Modifier.height(16.dp)) // 여백
-                        // 네이버 맵 올 부분
-                        Box(modifier = Modifier
-                            .fillMaxWidth()
-                            .height(128.dp)
-                            .background(color = colorResource(id = R.color.mono100))
-                        ){
-                            Text(
-                                text = "네이버 지도",
-                                style = get12TextStyle(),
-                                modifier = Modifier.align(Alignment.Center)
-                            )
-                        }
-                    },
-                    screenModifier =  screenModifier
-                )
-                Spacer(modifier = Modifier.height(16.dp)) // 여백
-
-                // 상세 정보
-                val detailInfoMap:MutableMap<String, String> = mutableMapOf();
-                detailInfoMap["장르"] = buskingInfo.genre
-                detailInfoMap["시작일"] = buskingInfo.startDate.toString()
-                detailInfoMap["종료일"] = buskingInfo.endDate.toString()
-                detailInfoMap["공연 시간"] = buskingInfo.buskingTime.toString()
-                detailInfoMap["최소 후원금$"] = buskingInfo.minSupportAccount.toString()+" 원"
-                detailInfoMap["누적 관람객$"] = buskingInfo.cumulativeAudience.toString()
-
-                BuskingDetailTable(
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .wrapContentHeight(),
-                    dataMap = detailInfoMap
-                )
-                Spacer(modifier = Modifier.height(16.dp)) // 여백
-                // tags
+                        .fillMaxHeight()
+                        .padding(16.dp, 12.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    // 공연 소개
+                    InfoUnit(
+                        titleText="공연 소개",
+                        screen = {
+                            Text(
+                                text = buskingInfo.buskingIntroduce,
+                                style = getDefTextStyle()
+                            )
+                        }
+                    )
+                    Spacer(modifier = Modifier.height(16.dp)) // 여백
 
-                val hScrollState = rememberScrollState();
-                Row(
-                    modifier = Modifier
+                    val screenModifier = Modifier
                         .fillMaxWidth()
                         .wrapContentHeight()
-                        .horizontalScroll(hScrollState),
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    buskingInfo.tags.forEach { tagName ->
-                        Badge(
-                            text = "#".plus(tagName),
-                            color = colorResource(id = R.color.pastel_yellow100),
-                            txtColor = colorResource(id = R.color.black)
-                        )
-                    }
-                }
+                    // 공연 위치
+                    InfoUnit(
+                        icon = Icons.Filled.Place,
+                        modifier = Modifier,
+                        titleText = "공연 장소",
+                        screen = {
+                            Text(
+                                text = buskingInfo.locations,
+                                style = getDefTextStyle()
+                                    .copy(textAlign = TextAlign.Start),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .wrapContentHeight()
+                            )
+                            Spacer(modifier = Modifier.height(16.dp)) // 여백
+                            // 네이버 맵 올 부분
+                            Box(modifier = Modifier
+                                .fillMaxWidth()
+                                .height(128.dp)
+                                .background(color = colorResource(id = R.color.mono100))
+                            ){
+                                Text(
+                                    text = "네이버 지도",
+                                    style = get12TextStyle(),
+                                    modifier = Modifier.align(Alignment.Center)
+                                )
+                            }
+                        },
+                        screenModifier =  screenModifier
+                    )
+                    Spacer(modifier = Modifier.height(16.dp)) // 여백
 
-                Spacer(modifier = Modifier.height(16.dp)) // 여백
-                //members
-                InfoUnit(
-                    modifier = Modifier,
-                    titleText = "Member",
-                    screen = {
-                        buskingInfo.memberList.forEachIndexed { index, artistInfo ->
-                            ArtistInfoItem(
-                                navController = navController,
-                                artistInfo = artistInfo,
-                                hasLine = false
+                    // 상세 정보
+                    val detailInfoMap:MutableMap<String, String> = mutableMapOf();
+                    detailInfoMap["장르"] = buskingInfo.genre
+                    detailInfoMap["시작일"] = buskingInfo.startDate.toString()
+                    detailInfoMap["종료일"] = buskingInfo.endDate.toString()
+                    detailInfoMap["공연 시간"] = buskingInfo.buskingTime.toString()
+                    detailInfoMap["최소 후원금$"] = buskingInfo.minSupportAccount.toString()+" 원"
+                    detailInfoMap["누적 관람객$"] = buskingInfo.cumulativeAudience.toString()
+
+                    BuskingDetailTable(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight(),
+                        dataMap = detailInfoMap
+                    )
+                    Spacer(modifier = Modifier.height(16.dp)) // 여백
+                    // tags
+
+                    val hScrollState = rememberScrollState();
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight()
+                            .horizontalScroll(hScrollState),
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        buskingInfo.tags.forEach { tagName ->
+                            Badge(
+                                text = "#".plus(tagName),
+                                color = colorResource(id = R.color.pastel_yellow100),
+                                txtColor = colorResource(id = R.color.black)
                             )
                         }
-                    },
-                )
-                Spacer(modifier = Modifier.height(32.dp)) // 여백
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp)) // 여백
+                    //members
+                    InfoUnit(
+                        modifier = Modifier,
+                        titleText = "Member",
+                        screen = {
+                            buskingInfo.memberList.forEachIndexed { index, artistInfo ->
+                                ArtistInfoItem(
+                                    navController = navController,
+                                    artistInfo = artistInfo,
+                                    hasLine = false
+                                )
+                            }
+                        },
+                    )
+                    Spacer(modifier = Modifier.height(16.dp)) // 여백
+                    // GuideBubble
+                    GuideBubble()
+                    Spacer(modifier = Modifier.height(64.dp)) // 여백
+                }
             }
+
+            // 후원 버튼
+            LargeButton(
+                btnText = "후원하기",
+                navController = navController,
+                nextPage = PageRoutes.Home.route,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(8.dp)
+                    .align(Alignment.BottomEnd)
+            )
         }
+
     }
 }

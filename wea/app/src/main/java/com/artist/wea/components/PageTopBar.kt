@@ -37,7 +37,9 @@ fun PageTopBar(
     rightMenuAction:()-> Unit = {},
     disableBack:Boolean = false,
     hasTransparency:Boolean = false,
+    hasBadge:Boolean = false,
     badge: @Composable () -> Unit = {},
+
 ){
     // TopBar Area
     Column(
@@ -100,7 +102,7 @@ fun PageTopBar(
                             rightMenuAction()
                         }
                 )
-            }else if(badge != {}){
+            }else if(hasBadge){
                 badge()
             } else { // 뒤로 가기만 있는 경우
                 Spacer(
