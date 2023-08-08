@@ -1,4 +1,4 @@
-package com.artist.wea.db.entity;
+package com.artist.wea.db.entity.base;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
