@@ -14,20 +14,17 @@ services:
     container_name: wea-spring
     environment:
       TZ: "Asia/Seoul"
-      MYSQL_URL: ${MYSQL_URL}
-      MYSQL_PORT: ${MYSQL_PORT}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      JWT_SECRET: ${JWT_SECRET}
     volumes:
       - /var/wea/server:/var/wea/server
     restart: always
+    env_file:
+      - ./wea-spring.env
     networks:
       - npm-nw
       - backend
     depends_on:
       - wea-mysql
+      - wea-redis
   wea-mysql:
     image: mysql:latest
     container_name: wea-mysql
@@ -40,5 +37,16 @@ services:
     volumes:
       - /var/wea/db:/var/lib/mysql
     restart: always
+    networks:
+      - backend
+  wea-redis:
+    image: redis:latest
+    container_name: wea-redis
+    command:
+      - /bin/sh
+      - -c
+      - redis-server --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - /var/wea/redis:/var/lib/redis/data
     networks:
       - backend

@@ -7,11 +7,22 @@ pipeline {
 
     environment {
         MYSQL_URL = credentials('MYSQL_URL')
-        MYSQL_PORT = 3306
+        MYSQL_PORT = credentials('MYSQL_PORT')
         MYSQL_USER = credentials('MYSQL_USER')
         MYSQL_PASSWORD = credentials('MYSQL_PASSWORD')
         MYSQL_DATABASE = credentials('MYSQL_DATABASE')
         JWT_SECRET = credentials('JWT_SECRET')
+        REDIS_HOST = credentials('REDIS_HOST')
+        REDIS_PORT = credentials('REDIS_PORT')
+        REDIS_PASSWORD = credentials('REDIS_PASSWORD')
+        SMTP_AUTH = 'true'
+        SMTP_HOST = 'smtp.naver.com'
+        SMTP_PORT = 465
+        SMTP_SSL_ENABLE = 'true'
+        SMTP_SSL_TRUST = 'smtp.naver.com'
+        SMTP_STARTTLS_ENABLE = 'true'
+        SMTP_USERNAME = credentials('SMTP_USERNAME')
+        TRANSPORT_PROTOCOL = 'smtp'
     }
 
     stages {
