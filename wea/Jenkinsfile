@@ -7,6 +7,7 @@ pipeline {
 
     environment {
         NAVER_CLIENT_ID = credentials('NAVER_CLIENT_ID')
+        WEBHOOK_URL = credentials('DISCORD_WEBHOOK_URL')
     }
 
     stages {
@@ -37,9 +38,22 @@ pipeline {
     post {
             success {
                 archiveArtifacts artifacts: '**/*.apk'
+                discordSend title: "WE:A 안드로이드 앱 빌드 Job #${env.BUILD_NUMBER}",
+                            link: env.BUILD_URL,
+                            description: "빌드가 성공했습니다.",
+                            thumbnail: 'https://miro.medium.com/v2/resize:fit:640/format:webp/1*cxZhQbf-KuKU_wM8RGgofg.jpeg',
+                            enableArtifactsList: true,
+                            result: currentBuild.currentResult,
+                            webhookURL: env.WEBHOOK_URL
                 cleanWs()
             }
             failure {
+                discordSend title: "WE:A 안드로이드 앱 빌드 Job #${env.BUILD_NUMBER}",
+                            link: env.BUILD_URL,
+                            description: "빌드가 실패했습니다. 로그를 확인해주세요.",
+                            thumbnail: 'https://www.geeky-gadgets.com/wp-content/uploads/2011/04/Sad-Android.jpg',
+                            result: 'FAILURE',
+                            webhookURL: env.WEBHOOK_URL
                 cleanWs()
             }
         }
