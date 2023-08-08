@@ -1,112 +1,64 @@
 package com.artist.wea.config.security;
 
+import com.artist.wea.api.service.Impl.UserDetailsServiceImpl;
 import io.jsonwebtoken.*;
-import jakarta.annotation.PostConstruct;
-import jakarta.servlet.http.HttpServletRequest;
-import lombok.RequiredArgsConstructor;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
+import java.security.Key;
 import java.util.Date;
+import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
 @Component
 public class JwtProvider {
 
     private final Logger LOGGER = LoggerFactory.getLogger(JwtProvider.class);
-    private final UserDetailsService userDetailsService;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
+    private final Key key;
+    private static final String AUTHORITIES_KEY = "auth";
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30; //access 30분
 
-
-    @Value("${spring.jwt.secret}")
-    private String secretKey = "secretKey";
-
-    /**
-     * secretKey 인코딩 수행
-     */
-    @PostConstruct
-    protected void init() {
-        LOGGER.info("[init] secretKey 초기화 시작");
-        LOGGER.info("{} before encoding", secretKey);
-
-        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes(StandardCharsets.UTF_8));
-
-        LOGGER.info("[init] secretKey 초기화 완료");
-        LOGGER.info("{} after encoding", secretKey);
+    public JwtProvider(@Value("${spring.jwt.secret}") String secretKey, UserDetailsServiceImpl userDetailsServiceImpl) {
+        this.userDetailsServiceImpl = userDetailsServiceImpl;
+        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+        this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
+    public String generateToken(Authentication authentication) {
+        String authorities = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
 
-    public String createToken(String userId) {
-        LOGGER.info("[createToken] 토큰 생성 시작");
-        Claims claims = Jwts.claims().setSubject(userId);
-
-        Date now = new Date();
-        String token = Jwts.builder()
-                .setClaims(claims)
-                .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + ACCESS_TOKEN_EXPIRE_TIME)) // set Expire Time 해당 옵션 안넣으면 expire안함
-                .signWith(SignatureAlgorithm.HS256, secretKey) // 사용할 암호화 알고리즘과 , signature 에 들어갈 secret값 세팅
+        //Access Token 생성
+        return Jwts.builder()
+                .setSubject(authentication.getName())
+                .claim(AUTHORITIES_KEY, authorities)
+                .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRE_TIME))
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
-
-        LOGGER.info("[createToken] 토큰 생성 완료");
-        return token;
     }
 
-    /**
-     * JWT 토큰을 받아 인증 정보 조회
-     *
-     * @param token
-     * @return Authentication
-     */
-    public Authentication getAuthentication(String token) {
-        LOGGER.info("[getAuthentication] 토큰 인증 정보 조회 시작");
-        UserDetails userDetails = userDetailsService.loadUserByUsername(getUsername(token));
-        LOGGER.info("[getAuthentication] 토큰 인증 정보 조회 완료. id : {}", userDetails.getUsername());
-        return new UsernamePasswordAuthenticationToken(userDetails.getUsername(), "", userDetails.getAuthorities());
+    public Authentication getAuthentication(String accessToken) {
+        //토큰 복호화
+        Claims claims = parseClaims(accessToken);
+
+        UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(claims.getSubject());
+
+        return new UsernamePasswordAuthenticationToken(userDetails, accessToken, userDetails.getAuthorities());
     }
 
-    /**
-     * JWT 토큰에서 회원 구별 정보 추출
-     *
-     * @param token
-     * @return email;
-     */
-    private String getUsername(String token) {
-        LOGGER.info("[getUsername] 토큰 기반 회원 구별 정보 추출 시작");
-        String id = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
-        LOGGER.info("[getUsername] 토큰 기반 회원 구별 정보 추출 완료. id : {}", id);
-        return id;
-    }
-
-    /**
-     * HTTP Request Header에 설정된 토큰 값을 가져옴
-     *
-     * @param request
-     * @return token
-     */
-    public String resolveToken(HttpServletRequest request) {
-        LOGGER.info("[resolveToken] HTTP 헤더에서 Token 값 추출");
-        return request.getHeader("X-AUTH-TOKEN");
-    }
-
-    /**
-     * JWT 토큰 유효성, 만료일 체크
-     *
-     * @param token
-     * @return boolean
-     */
     public boolean validateToken(String token) {
         LOGGER.info("[validateToken] 토큰 유효성 체크 시작");
         try {
-            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             LOGGER.info("[validateToken] 토큰 유효성 체크 완료");
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
@@ -119,6 +71,28 @@ public class JwtProvider {
             LOGGER.info("[validateToken] JWT 토큰이 잘못되었습니다.");
         }
         return false;
+    }
+
+
+    private Claims parseClaims(String accessToken) {
+        try {
+            return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody();
+        } catch (ExpiredJwtException e) {
+            return e.getClaims();
+        }
+    }
+
+    public Long getExpiration(String accessToken) {
+        // accessToken 남은 유효시간
+        Date expiration = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(accessToken)
+                .getBody()
+                .getExpiration();
+        // 현재 시간
+        Long now = new Date().getTime();
+        return (expiration.getTime() - now);
     }
 
 }
