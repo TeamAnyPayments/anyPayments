@@ -1,0 +1,44 @@
+version: "3.8"
+
+networks:
+  npm-nw:
+    external: true
+  backend:
+    external: false
+
+services:
+  wea-spring:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: wea-spring
+    environment:
+      TZ: "Asia/Seoul"
+      MYSQL_URL: ${MYSQL_URL}
+      MYSQL_PORT: ${MYSQL_PORT}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      JWT_SECRET: ${JWT_SECRET}
+    volumes:
+      - /var/wea/server:/var/wea/server
+    restart: always
+    networks:
+      - npm-nw
+      - backend
+    depends_on:
+      - wea-mysql
+  wea-mysql:
+    image: mysql:latest
+    container_name: wea-mysql
+    environment:
+      TZ: "Asia/Seoul"
+      MYSQL_USER: weateam
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: wea
+      MYSQL_RANDOM_ROOT_PASSWORD: yes
+    volumes:
+      - /var/wea/db:/var/lib/mysql
+    restart: always
+    networks:
+      - backend
