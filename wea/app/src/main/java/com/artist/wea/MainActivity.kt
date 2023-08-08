@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.artist.wea.constants.PageRoutes
+import com.artist.wea.pages.ArtistInfoPage
 import com.artist.wea.pages.ArtistRankPage
 import com.artist.wea.pages.ChangeEmailPage
 import com.artist.wea.pages.ChangePwdPage
@@ -68,6 +69,7 @@ class MainActivity : ComponentActivity() {
                 composable(PageRoutes.ClientService.route) { ClientServicePage(navController = navController)}
                 composable(PageRoutes.ConcertBenefit.route) { ConcertBenefitPage(navController = navController) }
                 composable(PageRoutes.SearchArtist.route) { SearchArtistPage(navController = navController)}
+                composable(PageRoutes.ArtistInfo.route) { ArtistInfoPage(navController = navController) }
             }
         }
     }

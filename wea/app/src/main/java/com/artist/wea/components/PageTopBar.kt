@@ -35,12 +35,17 @@ fun PageTopBar(
     singleIcon:Painter? = null,
     rightMenuText:String = stringResource(id = R.string.empty_text),
     rightMenuAction:()-> Unit = {},
-    disableBack:Boolean = false
+    disableBack:Boolean = false,
+    hasTransparency:Boolean = false
 ){
     // TopBar Area
     Column(
         modifier = modifier
-            .background(colorResource(id = R.color.mono50))
+            .background(
+                color =
+                if (hasTransparency) colorResource(id = R.color.color_transparency)
+                else colorResource(id = R.color.mono50),
+            )
             .height(64.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -63,7 +68,10 @@ fun PageTopBar(
                         .size(24.dp)
                         .clickable {
                             navController.popBackStack()
-                        }
+                        },
+                    tint =
+                    if(hasTransparency) colorResource(id = R.color.white)
+                    else colorResource(id = R.color.mono900)
                 )
             }else {
                 Spacer(

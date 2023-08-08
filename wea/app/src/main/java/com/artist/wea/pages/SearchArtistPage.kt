@@ -1,6 +1,7 @@
 package com.artist.wea.pages
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -20,6 +21,7 @@ import com.artist.wea.R
 import com.artist.wea.components.ArtistInfoItem
 import com.artist.wea.components.PageTopBar
 import com.artist.wea.components.SearchBar
+import com.artist.wea.constants.PageRoutes
 import com.artist.wea.data.ArtistInfo
 
 @Composable
@@ -104,12 +106,12 @@ fun SearchArtistPage(
         ) {
             artistInfoList.forEachIndexed{index, artistInfo ->
                 ArtistInfoItem(
-                    navController = navController,
-                    artistInfo = artistInfo
+                    artistInfo = artistInfo,
+                    modifier = Modifier
+                        .padding(16.dp, 8.dp)
+                        .clickable { navController.navigate(PageRoutes.ArtistInfo.route) }
                 )
             }
-
         }
     }
-
 }
