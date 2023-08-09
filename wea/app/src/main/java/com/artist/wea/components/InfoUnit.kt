@@ -1,5 +1,6 @@
 package com.artist.wea.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -76,7 +77,9 @@ fun InfoUnit(
                 Icon(
                     rightMenuIcon,
                     contentDescription = "아이콘",
-                    modifier = Modifier.size(20.dp)
+                    modifier = Modifier.size(20.dp).clickable {
+                        rightMenuAction()
+                    }
                 )
             }
         }
