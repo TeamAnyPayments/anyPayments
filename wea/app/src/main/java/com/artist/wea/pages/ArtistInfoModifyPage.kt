@@ -18,10 +18,14 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,16 +35,15 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavHostController
 import com.artist.wea.R
 import com.artist.wea.components.ArtistInfoItem
 import com.artist.wea.components.ConcertSearchItem
 import com.artist.wea.components.InfoUnit
+import com.artist.wea.components.ModifyForm
 import com.artist.wea.components.PageTopBar
 import com.artist.wea.components.uidtclass.SearchArtistInfo
-import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.data.ArtistInfo
@@ -48,14 +51,12 @@ import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
-fun ArtistInfoPage(
+fun ArtistInfoModifyPage(
     navController: NavHostController
 ){
-    // TODO 현재 사용자가 아티스트 프로필을 수정할 권한이 있는지 판단할 boolean 변수
-    val isEditable = true;
 
     // TODO navController를 통해서 아티스트 데이터를 추출해서 렌더링 하도록 설계
-    val artistInfo = ArtistInfo(
+    var artistInfo = ArtistInfo(
         profileImgURL = "https://image.kmib.co.kr/online_image/2014/1015/201410152053_61170008765071_1.jpg",
         bgImgURL = "https://img.hankyung.com/photo/202205/01.29843403.1.jpg",
         artistName = "ENJOY",
@@ -78,6 +79,13 @@ fun ArtistInfoPage(
                 "인스타그램\n" +
                 "@abc_123_heart",
     )
+
+    val mProfileImgURL = remember { mutableStateOf(artistInfo.profileImgURL) }
+    val mBgImgURL = remember { mutableStateOf(artistInfo.bgImgURL) }
+    val mArtistName = remember { mutableStateOf(artistInfo.artistName) }
+    val mComment = remember { mutableStateOf(artistInfo.comment) }
+    val mMainIntroduce = remember { mutableStateOf(artistInfo.mainIntroduce) }
+
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
@@ -91,63 +99,30 @@ fun ArtistInfoPage(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(312.dp)
+                .height(328.dp)
         ){
             // 상단 바
-
-            if(!isEditable){ // 일반사용자?
-                PageTopBar(
-                    navController = navController,
-                    modifier = Modifier
-                        .align(Alignment.TopStart)
-                        .zIndex(2f),
-                    hasTransparency = true)
-
-            }else { // 아티스트 본인?
-                PageTopBar(
-                    navController = navController,
-                    modifier = Modifier
-                        .align(Alignment.TopStart)
-                        .zIndex(2f),
-                    hasTransparency = true,
-                    rightMenuText = "수정",
-                    rightMenuAction = { navController.navigate(PageRoutes.ArtistInfoModify.route)},
-                    rightMenuTextStyle = get14TextStyle()
-                        .copy(color = colorResource(id = R.color.white)),
-                )
-            }
-
-            // 배경 이미지
-            GlideImage(
-                imageModel = artistInfo.bgImgURL.ifEmpty { R.drawable.icon_def_user_img },
-                // Crop, Fit, Inside, FillHeight, FillWidth, None
-                contentScale = ContentScale.Crop,
-                // shows an image with a circular revealed animation.
-                circularReveal = CircularReveal(duration = 200),
-                // shows a placeholder ImageBitmap when loading.
-                placeHolder = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
-                // shows an error ImageBitmap when the request failed.
-                error = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
+            PageTopBar(
+                navController = navController,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(156.dp)
                     .align(Alignment.TopStart)
+                    .zIndex(2f),
+                hasTransparency = true,
+                rightMenuText = "저장",
+                rightMenuAction = { navController.popBackStack() },
+                rightMenuTextStyle = get14TextStyle()
+                    .copy(color = colorResource(id = R.color.white)),
             )
 
-            // 아티스트 정보 layer
-            Column(
+            Box(
                 modifier = Modifier
-                    .wrapContentWidth()
-                    .wrapContentHeight()
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 24.dp)
-                    .zIndex(2f),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                // 아티스트 프로필
+                    .fillMaxWidth()
+                    .height(144.dp)
+                    .align(Alignment.TopStart)
+            ){
+                // 배경 이미지
                 GlideImage(
-                    imageModel = artistInfo.profileImgURL.ifEmpty { R.drawable.icon_def_user_img } ,
+                    imageModel = artistInfo.bgImgURL.ifEmpty { R.drawable.icon_def_user_img },
                     // Crop, Fit, Inside, FillHeight, FillWidth, None
                     contentScale = ContentScale.Crop,
                     // shows an image with a circular revealed animation.
@@ -157,11 +132,64 @@ fun ArtistInfoPage(
                     // shows an error ImageBitmap when the request failed.
                     error = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
                     modifier = Modifier
-                        .width(144.dp)
+                        .fillMaxWidth()
                         .height(144.dp)
-                        //.size(144.dp)
-                        .clip(shape = RoundedCornerShape(72.dp))
+                        .align(Alignment.TopStart)
                 )
+                Icon(
+                    Icons.Filled.Edit,
+                    contentDescription = "이미지 수정",
+                    modifier = Modifier
+                        .size(48.dp)
+                        .align(Alignment.BottomEnd)
+                        .padding(16.dp),
+                    tint = colorResource(id = R.color.white)
+                )
+            }
+
+
+            // 아티스트 정보 layer
+            Column(
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .wrapContentHeight()
+                    .align(Alignment.BottomCenter)
+                    .zIndex(2f),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                // 아티스트 프로필
+                Box(
+                    modifier = Modifier.size(144.dp)
+                ) {
+                    GlideImage(
+                        imageModel = artistInfo.profileImgURL.ifEmpty { R.drawable.icon_def_user_img } ,
+                        // Crop, Fit, Inside, FillHeight, FillWidth, None
+                        contentScale = ContentScale.Crop,
+                        // shows an image with a circular revealed animation.
+                        circularReveal = CircularReveal(duration = 200),
+                        // shows a placeholder ImageBitmap when loading.
+                        placeHolder = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
+                        // shows an error ImageBitmap when the request failed.
+                        error = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .width(144.dp)
+                            .height(144.dp)
+                            //.size(144.dp)
+                            .clip(shape = RoundedCornerShape(72.dp))
+                    )
+                    Icon(
+                        Icons.Filled.Add,
+                        contentDescription = "이미지 수정",
+                        modifier = Modifier
+                            .size(64.dp)
+                            .align(Alignment.BottomEnd)
+                            .padding(16.dp),
+                        tint = colorResource(id = R.color.white)
+                    )
+                }
+
                 // 아티스트 이름
                 Row(
                     modifier = Modifier
@@ -170,31 +198,41 @@ fun ArtistInfoPage(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    Text(
-                        text = artistInfo.artistName,
-                        style = getDefTextStyle().copy(fontSize = 20.sp),
+                    mArtistName.value = ModifyForm(
+                        hintText = mArtistName.value,
+                        modifier = Modifier
+                            .width(128.dp)
+                            .wrapContentHeight(),
+                        textStyle = get14TextStyle().copy(
+                            textAlign = TextAlign.Center,
+                            color = colorResource(id = R.color.mono800)
+                        )
                     )
                     Icon(
-                        Icons.Filled.Star, 
+                        Icons.Filled.Star,
                         contentDescription = "북마크",
                         modifier = Modifier.size(24.dp),
                         tint = colorResource(id = R.color.kakao_yellow) // TODO 북마크 조건부 분기 처리
                     )
                 }
-                // 아티스트 한줄 소개
-                Text(
-                    text = artistInfo.comment,
-                    style = getDefTextStyle().copy(
-                        textAlign = TextAlign.Center
-                    ),
-                    modifier = Modifier.fillMaxWidth().height(32.dp)
+                mComment.value = ModifyForm(
+                    hintText = mComment.value,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp)
+                        .padding(24.dp, 0.dp)
+                    ,
+                    textStyle = get14TextStyle().copy(
+                        textAlign = TextAlign.Start,
+                        color = colorResource(id = R.color.mono800)
+                    )
                 )
             }
 
             // bottom layer
             Spacer(modifier = Modifier
                 .fillMaxWidth()
-                .height(156.dp)
+                .height(144.dp)
                 .background(color = colorResource(id = R.color.mono50))
                 .align(Alignment.BottomEnd)
             )
@@ -202,12 +240,16 @@ fun ArtistInfoPage(
 
         // 프로필 소개
         InfoUnit(
-           modifier = Modifier.padding(16.dp, 12.dp),
+            modifier = Modifier.padding(16.dp, 12.dp),
             titleText = "프로필 소개",
             screen = {
-                Text(
-                    text = artistInfo.mainIntroduce,
-                    style = getDefTextStyle()
+                mMainIntroduce.value = ModifyForm(
+                    hintText = mMainIntroduce.value,
+                    textStyle = getDefTextStyle()
+                        .copy(color = colorResource(id = R.color.mono800)),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight(),
                 )
             },
         )
@@ -239,10 +281,12 @@ fun ArtistInfoPage(
                     ArtistInfoItem(
                         navController = navController,
                         artistInfo = artistInfo,
-                        hasLine = false
+                        hasLine = false,
+                        isActive = false
                     )
                 }
             },
+            rightMenuIcon = Icons.Filled.AddCircle
         )
 
         // 공연 이력
@@ -307,14 +351,14 @@ fun ArtistInfoPage(
                         content = item,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .wrapContentHeight()
-                            //.background(color = colorResource(id = R.color.mono50))
+                            .wrapContentHeight(),
+                        isActive = false
                     )
                 }
             },
             screenModifier = if(isLongList) defModifier else minModifier
         )
-        
+
         Spacer(modifier = Modifier.height(64.dp))
 
     }

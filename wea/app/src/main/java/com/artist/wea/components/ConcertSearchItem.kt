@@ -43,11 +43,14 @@ fun ConcertSearchItem(
         .wrapContentHeight()
         .clip(shape = RoundedCornerShape(4.dp))
         .background(color = colorResource(id = R.color.mono50))
-        .padding(8.dp, 4.dp)
+        .padding(8.dp, 4.dp),
+    isActive:Boolean = true,
 ){
     Box(
         modifier = modifier.clickable {
-            navController.navigate(PageRoutes.ConcertInfo.route)
+            if(isActive){
+                navController.navigate(PageRoutes.ConcertInfo.route)
+            }
         }
     ){
         Row(modifier = Modifier.padding(8.dp),
