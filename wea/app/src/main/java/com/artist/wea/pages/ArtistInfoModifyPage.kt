@@ -289,7 +289,7 @@ fun ArtistInfoModifyPage(
             },
             rightMenuIcon = Icons.Filled.AddCircle,
             rightMenuAction = {
-                navController.navigate(PageRoutes.ManageAdd.route)
+                navController.navigate(PageRoutes.MemberAdd.route)
             }
         )
 

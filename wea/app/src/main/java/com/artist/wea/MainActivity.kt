@@ -23,7 +23,7 @@ import com.artist.wea.pages.FindIdPage
 import com.artist.wea.pages.FindPwdPage
 import com.artist.wea.pages.HomePage
 import com.artist.wea.pages.LoginPage
-import com.artist.wea.pages.ManageAddPage
+import com.artist.wea.pages.MemberAddPage
 import com.artist.wea.pages.MyArtistPage
 import com.artist.wea.pages.NotifyPage
 import com.artist.wea.pages.SearchArtistPage
@@ -77,7 +77,7 @@ class MainActivity : ComponentActivity() {
                 composable(PageRoutes.ConcertInfo.route) { ConcertInfoPage(navController = navController) }
                 composable(PageRoutes.MyArtist.route) { MyArtistPage(navController = navController) }
                 composable(PageRoutes.ArtistInfoModify.route) { ArtistInfoModifyPage(navController = navController) }
-                composable(PageRoutes.ManageAdd.route) { ManageAddPage(navController = navController) }
+                composable(PageRoutes.MemberAdd.route) { MemberAddPage(navController = navController) }
             }
         }
     }
