@@ -1,5 +1,6 @@
 package com.artist.wea.pages
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -38,10 +40,16 @@ fun ClientServicePage(
         .background(color = colorResource(id = R.color.mono50)))
     {
         var text by remember { mutableStateOf("") }
+        val context = LocalContext.current;
 
         PageTopBar(
             navController = navController,
             pageTitle = "고객 센터",
+            rightMenuText = "전송",
+            rightMenuAction = {
+                Toast.makeText(context, "문의가 접수 되었습니다", Toast.LENGTH_SHORT).show()
+                navController.popBackStack()
+            }
         )
         // guide Banner
         ClientGuideBanner()

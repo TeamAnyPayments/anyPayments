@@ -3,9 +3,12 @@ package com.artist.wea.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -27,7 +30,9 @@ fun InfoUnit(
     screenModifier: Modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight(),
-    icon:ImageVector? = null
+    icon:ImageVector? = null,
+    rightMenuIcon:ImageVector? = null,
+    rightMenuAction:()-> Unit = {}
 ){
 
     // 프로필 풀 소개
@@ -42,20 +47,38 @@ fun InfoUnit(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight(),
+                .wrapContentHeight()
+                .padding(bottom = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
         ){
-            if(icon != null){
-                Icon(icon,
-                    contentDescription = "",
-                    modifier = Modifier.size(16.dp)
+            Row(
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .wrapContentHeight(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ){
+                if(icon != null){
+                    Icon(icon,
+                        contentDescription = "",
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
+                Text(
+                    text = titleText,
+                    style = getDefTextStyle().copy(fontSize = 20.sp),
                 )
             }
-            Text(
-                text = titleText,
-                style = getDefTextStyle().copy(fontSize = 20.sp),
-            )
+            if(rightMenuIcon == null){
+                Spacer(modifier = Modifier.size(8.dp))
+            }else {
+                Icon(
+                    rightMenuIcon,
+                    contentDescription = "아이콘",
+                    modifier = Modifier.size(20.dp)
+                )
+            }
         }
         Divider(
             thickness = 1.dp,

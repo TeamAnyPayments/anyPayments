@@ -8,4 +8,4 @@ data class ArtistInfo(
     val comment:String = "",
     val mainIntroduce:String = "",
 
-)
+    )

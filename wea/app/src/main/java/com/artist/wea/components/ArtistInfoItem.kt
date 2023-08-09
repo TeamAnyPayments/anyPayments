@@ -38,13 +38,17 @@ fun ArtistInfoItem(
     navController: NavHostController,
     artistInfo: ArtistInfo = ArtistInfo(),
     modifier: Modifier = Modifier,
-    hasLine:Boolean = true
+    hasLine:Boolean = true,
+    isActive:Boolean = true
 ){
-
     Column(modifier = modifier
         .fillMaxWidth()
         .wrapContentHeight()
-        .clickable { navController.navigate(PageRoutes.ArtistInfo.route) }
+        .clickable {
+            if(isActive) {
+                navController.navigate(PageRoutes.ArtistInfo.route)
+            }
+        }
     ){
         Spacer(modifier = Modifier.height(8.dp))
         Row(
