@@ -19,6 +19,6 @@ sealed class PageRoutes(val route:String){
     object ConcertInfo: PageRoutes("concert-info")
     object MyArtist: PageRoutes("my-artist")
     object ArtistInfoModify: PageRoutes("artist-info-modify")
-    object ManageMember: PageRoutes("manage-member")
+    object ManageAdd: PageRoutes("manage-add")
 
 }

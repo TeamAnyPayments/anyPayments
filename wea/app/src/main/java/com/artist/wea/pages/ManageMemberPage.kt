@@ -29,7 +29,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ManageMemberPage(
+fun ManageAddPage(
     navController: NavHostController,
     modifier: Modifier =
         Modifier
