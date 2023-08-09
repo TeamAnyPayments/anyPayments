@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.getDefTextStyle
 
 @Composable
@@ -28,14 +29,14 @@ fun PocketMenu(
         )
         // Options...
         Text(
-            text = "MY 아티스트",
+            text = "My 아티스트",
             style = getDefTextStyle(),
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .padding(start = 4.dp)
                 .clickable {
-                    // navController.navigate(PageRoutes.Home.route)
+                    navController.navigate(PageRoutes.MyArtist.route)
                 }
         )
     }
