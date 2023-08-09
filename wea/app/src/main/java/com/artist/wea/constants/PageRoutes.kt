@@ -17,5 +17,6 @@ sealed class PageRoutes(val route:String){
     object SearchArtist: PageRoutes("search-artist")
     object ArtistInfo: PageRoutes("artist-info")
     object ConcertInfo: PageRoutes("concert-info")
+    object MyArtist: PageRoutes("my-artist")
 
 }
