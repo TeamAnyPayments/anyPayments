@@ -44,6 +44,7 @@ import com.artist.wea.components.InfoUnit
 import com.artist.wea.components.ModifyForm
 import com.artist.wea.components.PageTopBar
 import com.artist.wea.components.uidtclass.SearchArtistInfo
+import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.data.ArtistInfo
@@ -286,7 +287,10 @@ fun ArtistInfoModifyPage(
                     )
                 }
             },
-            rightMenuIcon = Icons.Filled.AddCircle
+            rightMenuIcon = Icons.Filled.AddCircle,
+            rightMenuAction = {
+                navController.navigate(PageRoutes.ManageMember.route)
+            }
         )
 
         // 공연 이력
