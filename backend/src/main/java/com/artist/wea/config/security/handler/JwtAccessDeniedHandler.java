@@ -1,4 +1,4 @@
-package com.artist.wea.config.security;
+package com.artist.wea.config.security.handler;
 
 import com.artist.wea.db.dto.util.ResponseDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,9 +33,5 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
         response.setCharacterEncoding("utf-8");
         response.getWriter().write(objectMapper.writeValueAsString(responseDTO));
     }
-
-
-
-
 
 }

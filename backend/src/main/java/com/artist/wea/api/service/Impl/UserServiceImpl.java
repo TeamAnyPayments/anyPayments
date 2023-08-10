@@ -1,7 +1,7 @@
 package com.artist.wea.api.service.Impl;
 
 import com.artist.wea.api.service.UserService;
-import com.artist.wea.config.security.JwtProvider;
+import com.artist.wea.config.security.JwtTokenProvider;
 import com.artist.wea.db.dto.request.user.JoinPostReqDTO;
 import com.artist.wea.db.dto.response.user.JoinPostResDTO;
 import com.artist.wea.db.entity.User;
@@ -24,7 +24,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtProvider jwtProvider;
+    private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final RedisTemplate<String, String> redisTemplate;
 
@@ -62,19 +62,17 @@ public class UserServiceImpl implements UserService {
     public String login(String userId, String password) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userId, password);
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        String token = jwtProvider.generateToken(authentication);
-        redisTemplate.opsForValue().set("JWT: " + userId, token, jwtProvider.getExpiration(token));
+        String token = jwtTokenProvider.generateAccessToken(authentication);
+        redisTemplate.opsForValue().set(userId, token, jwtTokenProvider.getExpiration(token));
         return token;
     }
 
     public void logout() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         if (redisTemplate.opsForValue().get("JWT:" + authentication.getName()) != null) {
-            redisTemplate.delete("JWT:" + authentication.getName());
+            redisTemplate.delete(authentication.getName());
         }
     }
-
 
     @Transactional(readOnly = true)
     public Optional<User> getUser(String userId) {

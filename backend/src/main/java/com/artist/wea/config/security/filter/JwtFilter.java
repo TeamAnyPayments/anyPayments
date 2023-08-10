@@ -1,5 +1,6 @@
-package com.artist.wea.config.security;
+package com.artist.wea.config.security.filter;
 
+import com.artist.wea.config.security.JwtTokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,7 +26,7 @@ public class JwtFilter extends OncePerRequestFilter {
     private final Logger LOGGER = LoggerFactory.getLogger(JwtFilter.class);
     public static final String AUTHORIZATION_HEADER = "Authorization";
     public static final String BEARER_PREFIX = "Bearer ";
-    private final JwtProvider jwtProvider;
+    private final JwtTokenProvider jwtTokenProvider;
     private final RedisTemplate<String, String> redisTemplate;
 
     /**
@@ -43,12 +44,12 @@ public class JwtFilter extends OncePerRequestFilter {
         String token = resolveToken(request);
         LOGGER.info("[doFilterInternal] token 값 추출 완료. token : {}", token);
 
-        LOGGER.info("[doFilterInternal] token 값 유효성 체크 시작.");
-        if (token != null && jwtProvider.validateToken(token)) {
+        if (token != null && jwtTokenProvider.validateToken(token)) {
+            LOGGER.info("[doFilterInternal] token 값 유효성 체크 시작.");
             String isLogout = (String) redisTemplate.opsForValue().get(token);
 
             if (ObjectUtils.isEmpty(isLogout)) {
-                Authentication authentication = jwtProvider.getAuthentication(token);
+                Authentication authentication = jwtTokenProvider.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 LOGGER.info("[doFilterInternal] token 값 유효성 체크 완료.");
             }

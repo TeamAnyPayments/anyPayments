@@ -2,8 +2,8 @@ package com.artist.wea.api.controller;
 
 import com.artist.wea.api.service.MailService;
 import com.artist.wea.api.service.UserService;
-import com.artist.wea.config.security.JwtFilter;
 import com.artist.wea.config.security.UserPrincipal;
+import com.artist.wea.config.security.filter.JwtFilter;
 import com.artist.wea.db.dto.request.user.JoinPostReqDTO;
 import com.artist.wea.db.dto.request.user.LoginPostReqDTO;
 import com.artist.wea.db.dto.util.ResponseDTO;

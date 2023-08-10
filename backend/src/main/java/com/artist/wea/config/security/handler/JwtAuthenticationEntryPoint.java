@@ -1,4 +1,4 @@
-package com.artist.wea.config.security;
+package com.artist.wea.config.security.handler;
 
 import com.artist.wea.db.dto.util.ResponseDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
