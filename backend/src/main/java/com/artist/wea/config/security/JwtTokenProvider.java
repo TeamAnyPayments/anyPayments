@@ -4,6 +4,7 @@ import com.artist.wea.api.service.Impl.UserDetailsServiceImpl;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,21 +19,21 @@ import java.util.Date;
 import java.util.stream.Collectors;
 
 @Component
-public class JwtProvider {
+public class JwtTokenProvider {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(JwtProvider.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(JwtTokenProvider.class);
     private final UserDetailsServiceImpl userDetailsServiceImpl;
     private final Key key;
     private static final String AUTHORITIES_KEY = "auth";
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30; //access 30분
 
-    public JwtProvider(@Value("${spring.jwt.secret}") String secretKey, UserDetailsServiceImpl userDetailsServiceImpl) {
+    public JwtTokenProvider(@Value("${spring.jwt.secret}") String secretKey, UserDetailsServiceImpl userDetailsServiceImpl) {
         this.userDetailsServiceImpl = userDetailsServiceImpl;
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String generateToken(Authentication authentication) {
+    public String generateAccessToken(Authentication authentication) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
@@ -49,9 +50,8 @@ public class JwtProvider {
     public Authentication getAuthentication(String accessToken) {
         //토큰 복호화
         Claims claims = parseClaims(accessToken);
-
+        System.out.println("getAuthentication: "+claims.getSubject());
         UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(claims.getSubject());
-
         return new UsernamePasswordAuthenticationToken(userDetails, accessToken, userDetails.getAuthorities());
     }
 
@@ -93,6 +93,14 @@ public class JwtProvider {
         // 현재 시간
         Long now = new Date().getTime();
         return (expiration.getTime() - now);
+    }
+
+
+    public void sendAccessToken(HttpServletResponse response, String accessToken) {
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setHeader("Authorization", "Bearer " + accessToken);
+        LOGGER.info("Access Token: {}", response.getHeader("Authorization"));
+        LOGGER.info("Access Token, Refresh Token 헤더 설정 완료");
     }
 
 }

@@ -2,6 +2,7 @@ package com.artist.wea.db.entity;
 
 import com.artist.wea.db.entity.base.BaseTime;
 import com.artist.wea.db.entity.base.Role;
+import com.artist.wea.db.entity.base.SocialType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -41,5 +42,10 @@ public class User extends BaseTime {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @Enumerated(EnumType.STRING)
+    private SocialType socialType; // KAKAO, NAVER
+
+    private String socialId; // 로그인한 소셜 타입의 식별자 값 (일반 로그인인 경우 null)
 
 }

@@ -1,19 +1,37 @@
 package com.artist.wea.config.security;
 
 import com.artist.wea.db.entity.User;
+import com.artist.wea.db.entity.base.Role;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
 
 @Getter
-public class UserPrincipal implements UserDetails {
+@Setter
+public class UserPrincipal implements OAuth2User, UserDetails {
     private User user;
+    private Map<String, Object> attributes;
+
 
     public UserPrincipal(User user) {
         this.user = user;
+    }
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+    @Override
+    public String getName() {
+        return this.user.getId();
     }
 
     @Override
@@ -56,4 +74,16 @@ public class UserPrincipal implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public static UserPrincipal create(User user) {
+        return new UserPrincipal(user);
+    }
+
+    public static UserPrincipal create(User user, Map<String, Object> attributes) {
+        UserPrincipal userPrincipal = create(user);
+        userPrincipal.setAttributes(attributes);
+
+        return userPrincipal;
+    }
+
 }

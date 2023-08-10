@@ -1,5 +1,10 @@
 package com.artist.wea.config.security;
 
+import com.artist.wea.api.service.Impl.OAuth2UserServiceImpl;
+import com.artist.wea.config.oauth.handler.OAuth2LoginFailureHandler;
+import com.artist.wea.config.oauth.handler.OAuth2LoginSuccessHandler;
+import com.artist.wea.config.security.handler.JwtAccessDeniedHandler;
+import com.artist.wea.config.security.handler.JwtAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,17 +15,19 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
 
-    private final JwtProvider jwtProvider;
+    private final JwtTokenProvider jwtTokenProvider;
     private final RedisTemplate redisTemplate;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+    private final OAuth2LoginFailureHandler oAuth2LoginFailureHandler;
+    private final OAuth2UserServiceImpl oAuth2UserService;
 
 
     @Bean
@@ -38,10 +45,17 @@ public class SecurityConfig {
                         .accessDeniedHandler(jwtAccessDeniedHandler)
                 )
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/user/**").permitAll() // 인증 없이 접근 가능
+                        .requestMatchers("/user/**", "/oauth/**").permitAll() // 인증 없이 접근 가능
                         .anyRequest().authenticated() // 그 외의 모든 요청은 인증 요구
                 )
-                .apply(new JwtSecurityConfig(jwtProvider, redisTemplate));
+                .oauth2Login(oauth2Login -> oauth2Login
+                        .authorizationEndpoint(authorizationEndpointConfig -> authorizationEndpointConfig.baseUri("/oauth/authorization"))
+                        .redirectionEndpoint(redirectionEndpointConfig -> redirectionEndpointConfig.baseUri("/oauth/*"))
+                        .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig.userService(oAuth2UserService))
+                        .successHandler(oAuth2LoginSuccessHandler)
+                        .failureHandler(oAuth2LoginFailureHandler)
+                )
+                .apply(new JwtSecurityConfig(jwtTokenProvider, redisTemplate));
 
         return http.build();
     }
