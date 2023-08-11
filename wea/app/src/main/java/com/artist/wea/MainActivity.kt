@@ -31,6 +31,7 @@ import com.artist.wea.pages.NotifyPage
 import com.artist.wea.pages.SearchArtistPage
 import com.artist.wea.pages.SearchConcertPage
 import com.artist.wea.pages.SettingPage
+import com.artist.wea.pages.UserProfilePage
 import com.artist.wea.pages.UserRegisterPage
 import com.artist.wea.ui.theme.WeaTheme
 import com.naver.maps.map.NaverMapSdk
@@ -82,6 +83,7 @@ class MainActivity : ComponentActivity() {
                 composable(PageRoutes.MemberAdd.route) { MemberAddPage(navController = navController) }
                 composable(PageRoutes.ArtistProfileList.route) { ArtistProfileListPage(navController = navController) }
                 composable(PageRoutes.MemberManage.route) { MemberManagePage(navController = navController) }
+                composable(PageRoutes.UserProfile.route) { UserProfilePage(navController = navController) }
             }
         }
     }

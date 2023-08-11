@@ -171,7 +171,6 @@ fun HomePage(
                 ProfileItem(
                     navController = navController,
                     modifier = defModifier,
-                    userName = "홍길동"
                 )
 
                 // 작업실 = conditional or 아티스트 등록!
