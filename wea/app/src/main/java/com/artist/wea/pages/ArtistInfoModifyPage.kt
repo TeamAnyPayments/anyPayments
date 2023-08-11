@@ -1,6 +1,10 @@
 package com.artist.wea.pages
 
+import android.widget.Toast
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,7 +23,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
@@ -31,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.text.style.TextAlign
@@ -51,6 +55,7 @@ import com.artist.wea.data.ArtistInfo
 import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.glide.GlideImage
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ArtistInfoModifyPage(
     navController: NavHostController
@@ -80,7 +85,7 @@ fun ArtistInfoModifyPage(
                 "인스타그램\n" +
                 "@abc_123_heart",
     )
-
+    val context = LocalContext.current
     val mProfileImgURL = remember { mutableStateOf(artistInfo.profileImgURL) }
     val mBgImgURL = remember { mutableStateOf(artistInfo.bgImgURL) }
     val mArtistName = remember { mutableStateOf(artistInfo.artistName) }
@@ -136,15 +141,14 @@ fun ArtistInfoModifyPage(
                         .fillMaxWidth()
                         .height(144.dp)
                         .align(Alignment.TopStart)
-                )
-                Icon(
-                    Icons.Filled.Edit,
-                    contentDescription = "이미지 수정",
-                    modifier = Modifier
-                        .size(48.dp)
-                        .align(Alignment.BottomEnd)
-                        .padding(16.dp),
-                    tint = colorResource(id = R.color.white)
+                        .combinedClickable(
+                            onClick = { },
+                            onLongClick = {
+                                Toast
+                                    .makeText(context, "배경 편집 모달 ON", Toast.LENGTH_SHORT)
+                                    .show()
+                            },
+                        )
                 )
             }
 
@@ -180,15 +184,28 @@ fun ArtistInfoModifyPage(
                             //.size(144.dp)
                             .clip(shape = RoundedCornerShape(72.dp))
                     )
-                    Icon(
-                        Icons.Filled.Add,
-                        contentDescription = "이미지 수정",
-                        modifier = Modifier
-                            .size(64.dp)
-                            .align(Alignment.BottomEnd)
-                            .padding(16.dp),
-                        tint = colorResource(id = R.color.white)
+                    Box(modifier = Modifier
+                        .wrapContentWidth()
+                        .wrapContentHeight()
+                        .padding(16.dp)
+                        .clip(shape = RoundedCornerShape(24.dp))
+                        .background(colorResource(id = R.color.white))
+                        .align(Alignment.BottomEnd)
+                        .clickable {
+                            Toast
+                                .makeText(context, "프로필 편집 모달 ON", Toast.LENGTH_SHORT)
+                                .show()
+                        }
                     )
+                    {
+                        Icon(
+                            Icons.Filled.Add,
+                            contentDescription = "이미지 수정",
+                            modifier = Modifier
+                                .size(32.dp),
+                            tint = colorResource(id = R.color.dark_orange300)
+                        )
+                    }
                 }
 
                 // 아티스트 이름
@@ -287,9 +304,9 @@ fun ArtistInfoModifyPage(
                     )
                 }
             },
-            rightMenuIcon = Icons.Filled.AddCircle,
+            rightMenuIcon = Icons.Filled.Edit,
             rightMenuAction = {
-                navController.navigate(PageRoutes.MemberAdd.route)
+                navController.navigate(PageRoutes.MemberManage.route)
             }
         )
 

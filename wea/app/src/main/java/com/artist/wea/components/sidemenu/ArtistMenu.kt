@@ -40,7 +40,7 @@ fun ArtistMenu(
                 .wrapContentHeight()
                 .padding(start = 4.dp)
                 .clickable {
-                    navController.navigate(PageRoutes.ProfileList.route)
+                    navController.navigate(PageRoutes.ArtistProfileList.route)
                 }
         )
         //
