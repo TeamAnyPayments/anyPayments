@@ -28,6 +28,7 @@ import com.artist.wea.pages.MemberAddPage
 import com.artist.wea.pages.MemberManagePage
 import com.artist.wea.pages.MyArtistPage
 import com.artist.wea.pages.NotifyPage
+import com.artist.wea.pages.PaymentsManagePage
 import com.artist.wea.pages.SearchArtistPage
 import com.artist.wea.pages.SearchConcertPage
 import com.artist.wea.pages.SettingPage
@@ -84,6 +85,7 @@ class MainActivity : ComponentActivity() {
                 composable(PageRoutes.ArtistProfileList.route) { ArtistProfileListPage(navController = navController) }
                 composable(PageRoutes.MemberManage.route) { MemberManagePage(navController = navController) }
                 composable(PageRoutes.UserProfile.route) { UserProfilePage(navController = navController) }
+                composable(PageRoutes.PaymentsManage.route) { PaymentsManagePage(navController = navController) }
             }
         }
     }
