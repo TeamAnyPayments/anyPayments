@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.getDefTextStyle
 
 @Composable
@@ -35,7 +36,7 @@ fun PaymentManageMenu(
                 .wrapContentHeight()
                 .padding(start = 4.dp)
                 .clickable {
-                    // navController.navigate(PageRoutes.Home.route)
+                    navController.navigate(PageRoutes.PaymentsManage.route)
                 }
         )
     }
