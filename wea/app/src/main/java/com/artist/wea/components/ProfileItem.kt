@@ -10,6 +10,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,18 +20,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
 import com.artist.wea.components.uidtclass.SearchArtistInfo
 import com.artist.wea.constants.PageRoutes
+import com.artist.wea.constants.get12TextStyle
 import com.artist.wea.constants.get14TextStyle
 import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
-fun MemberItem(
+fun ProfileItem(
     navController: NavHostController,
     content: SearchArtistInfo = SearchArtistInfo(),
     modifier: Modifier = Modifier
@@ -37,11 +42,12 @@ fun MemberItem(
         .padding(8.dp, 4.dp),
     isActive:Boolean = true,
     rightComposable: @Composable () -> Unit,
+    memberCnt:Int = 1
 ) {
     Box(
         modifier = modifier.clickable {
             if (isActive) {
-                navController.navigate(PageRoutes.ArtistInfo.route)
+                navController.navigate(PageRoutes.MemberManage.route)
             }
         }
     ) {
@@ -80,7 +86,24 @@ fun MemberItem(
                     horizontalAlignment = Alignment.Start
                 ) {
                     Text(text = content.userId, style = get14TextStyle())
-                    Text(text = content.email, style = get14TextStyle())
+                    Row (
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    ){
+                        Icon(
+                            Icons.Filled.Person,
+                            contentDescription = "",
+                            modifier = Modifier.size(20.dp),
+                            tint = colorResource(id = R.color.mono300)
+                        )
+                        Text(
+                            text = memberCnt.toString(),
+                            style = get12TextStyle()
+                                .copy(
+                                    color = colorResource(id = R.color.mono300)
+                                )
+                        )
+                    }
                 }
                 rightComposable()
             }

@@ -1,15 +1,18 @@
 package com.artist.wea.components
 
 import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Send
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -63,10 +66,15 @@ fun SendInviteComponent(navController: NavHostController,
                 MemberItem(
                     navController = navController,
                     content = item,
-                    rightIcon = Icons.Filled.Send,
-                    iconColor = colorResource(id = R.color.sky_blue300),
-                    rightMenuAction = {
-                        Toast.makeText(context, "${item.userId} 님에게 초대를 전송했습니다.", Toast.LENGTH_SHORT).show()
+                    rightComposable = {
+                        Icon(
+                            Icons.Filled.Send,
+                            contentDescription = "",
+                            tint = colorResource(id = R.color.sky_blue300),
+                            modifier = Modifier.size(24.dp).weight(1f).clickable {
+                                Toast.makeText(context, "${item.userId} 님에게 초대를 보냈습니다.", Toast.LENGTH_SHORT).show()
+                            }
+                        )
                     }
                 )
             }

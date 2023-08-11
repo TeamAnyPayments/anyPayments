@@ -13,6 +13,7 @@ import androidx.navigation.navArgument
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.pages.ArtistInfoModifyPage
 import com.artist.wea.pages.ArtistInfoPage
+import com.artist.wea.pages.ArtistProfileListPage
 import com.artist.wea.pages.ArtistRankPage
 import com.artist.wea.pages.ChangeEmailPage
 import com.artist.wea.pages.ChangePwdPage
@@ -27,7 +28,6 @@ import com.artist.wea.pages.MemberAddPage
 import com.artist.wea.pages.MemberManagePage
 import com.artist.wea.pages.MyArtistPage
 import com.artist.wea.pages.NotifyPage
-import com.artist.wea.pages.ProfileListPage
 import com.artist.wea.pages.SearchArtistPage
 import com.artist.wea.pages.SearchConcertPage
 import com.artist.wea.pages.SettingPage
@@ -80,7 +80,7 @@ class MainActivity : ComponentActivity() {
                 composable(PageRoutes.MyArtist.route) { MyArtistPage(navController = navController) }
                 composable(PageRoutes.ArtistInfoModify.route) { ArtistInfoModifyPage(navController = navController) }
                 composable(PageRoutes.MemberAdd.route) { MemberAddPage(navController = navController) }
-                composable(PageRoutes.ProfileList.route) { ProfileListPage(navController = navController) }
+                composable(PageRoutes.ArtistProfileList.route) { ArtistProfileListPage(navController = navController) }
                 composable(PageRoutes.MemberManage.route) { MemberManagePage(navController = navController) }
             }
         }
