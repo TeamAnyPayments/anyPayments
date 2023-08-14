@@ -27,7 +27,9 @@ import com.artist.wea.constants.getDefTextStyle
 fun VerifyInputForm(
     verifyText:String = stringResource(id = R.string.empty_text),
     hintText:String = stringResource(id = R.string.text_input_guide),
-    btnText:String = stringResource(id = R.string.text_value_verify)
+    btnText:String = stringResource(id = R.string.text_value_verify),
+    buttonActions:() -> Unit = {},
+    isDisable:Boolean = false
 ):String{
 
     var inputText = remember { mutableStateOf("") }
@@ -40,18 +42,27 @@ fun VerifyInputForm(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(text = verifyText, style = getDefTextStyle())
+        Text(
+            text = verifyText,
+            style = if(!isDisable) getDefTextStyle()
+            else getDefTextStyle()
+                .copy(color = colorResource(id = R.color.mono300))
+        )
         Spacer(modifier = Modifier.width(8.dp))
         // inputForm 으로부터 값을 받고 리턴
         inputText.value = InputForm(
             hintText = hintText,
             modifier = Modifier
                 .width(178.dp)
-                .wrapContentHeight()
+                .wrapContentHeight(),
+            isDisable = isDisable,
+            isPassword = true
         )
         Spacer(modifier = Modifier.width(8.dp))
         Button(
+            enabled = isDisable,
             onClick = {
+                buttonActions()
             },
             colors = getButtonColor(),
             modifier = Modifier
