@@ -39,6 +39,8 @@ services:
     restart: always
     networks:
       - backend
+    ports:
+      - "${MYSQL_PORT}:${MYSQL_PORT}"
   wea-redis:
     image: redis:latest
     container_name: wea-redis
