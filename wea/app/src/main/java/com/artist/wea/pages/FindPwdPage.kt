@@ -26,7 +26,6 @@ import com.artist.wea.components.LargeButton
 import com.artist.wea.components.PageTopBar
 import com.artist.wea.components.TitleInputForm
 import com.artist.wea.components.VerifyInputForm
-import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.getDefTextStyle
 
 @Composable
@@ -74,7 +73,6 @@ fun FindPwdPage(
                 titleText = stringResource(id = R.string.text_email_label),
                 hintText = stringResource(id = R.string.text_email_guide),
                 btnText = stringResource(id = R.string.text_verify_email),
-                navController = navController
             )
 
             if(emailText.value.isNotEmpty()){
@@ -88,8 +86,10 @@ fun FindPwdPage(
             Spacer(modifier = Modifier.height(32.dp))
             LargeButton(
                 btnText = stringResource(R.string.text_btn_find_pwd),
-                navController = navController,
-                nextPage = PageRoutes.ChangePwd.route )
+                buttonAction = {
+
+                }
+            )
         }
     }
 

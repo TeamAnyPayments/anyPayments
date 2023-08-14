@@ -24,7 +24,6 @@ import com.artist.wea.R
 import com.artist.wea.components.LargeButton
 import com.artist.wea.components.PageTopBar
 import com.artist.wea.components.TitleInputForm
-import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.getDefTextStyle
 
 @Composable
@@ -76,8 +75,10 @@ fun ChangePwdPage(
             Spacer(modifier = Modifier.height(32.dp))
             LargeButton(
                 btnText = stringResource(R.string.text_save_pwd_change),
-                navController = navController,
-                nextPage = PageRoutes.Login.route )
+                buttonAction = {
+
+                }
+            )
         }
     }
 

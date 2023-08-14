@@ -26,7 +26,6 @@ import com.artist.wea.components.EmailGuidText
 import com.artist.wea.components.LargeButton
 import com.artist.wea.components.PageTopBar
 import com.artist.wea.components.VerifyInputForm
-import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.getDefTextStyle
 
 @Composable
@@ -67,7 +66,6 @@ fun ChangeEmailPage(
                 titleText = stringResource(id = R.string.text_email_label),
                 hintText = stringResource(id = R.string.text_email_guide),
                 btnText = stringResource(id = R.string.text_verify_email),
-                navController = navController
             )
 
             if(emailText.value.isNotEmpty()){
@@ -81,8 +79,10 @@ fun ChangeEmailPage(
             Spacer(modifier = Modifier.height(32.dp))
             LargeButton(
                 btnText = stringResource(id = R.string.text_btn_change_email),
-                navController = navController,
-                nextPage = PageRoutes.Login.route )
+                buttonAction = {
+
+                }
+            )
 
         }
     }

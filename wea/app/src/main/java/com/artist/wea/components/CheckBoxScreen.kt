@@ -30,7 +30,7 @@ import com.artist.wea.constants.getDefCheckBoxColor
 @Composable
 fun CheckBoxScreen(
     navController: NavController,
-) {
+) :Boolean{
     // 각 항목별 레이아웃
     val (checked1, setChecked1) = remember { mutableStateOf(false) }
     val (checked2, setChecked2) = remember { mutableStateOf(false) }
@@ -65,6 +65,7 @@ fun CheckBoxScreen(
             onClick = { setChecked2(!checked2) },
             hasMore = true)
     }
+    return allChecked
 }
 
 // 약관 동의 체크박스 컴포즈 컴포넌트
