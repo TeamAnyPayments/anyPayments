@@ -11,16 +11,28 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.artist.wea.constants.PageRoutes
+import com.artist.wea.pages.ArtistInfoModifyPage
+import com.artist.wea.pages.ArtistInfoPage
+import com.artist.wea.pages.ArtistProfileListPage
 import com.artist.wea.pages.ArtistRankPage
 import com.artist.wea.pages.ChangeEmailPage
 import com.artist.wea.pages.ChangePwdPage
+import com.artist.wea.pages.ClientServicePage
+import com.artist.wea.pages.ConcertBenefitPage
+import com.artist.wea.pages.ConcertInfoPage
 import com.artist.wea.pages.FindIdPage
 import com.artist.wea.pages.FindPwdPage
 import com.artist.wea.pages.HomePage
 import com.artist.wea.pages.LoginPage
+import com.artist.wea.pages.MemberAddPage
+import com.artist.wea.pages.MemberManagePage
+import com.artist.wea.pages.MyArtistPage
 import com.artist.wea.pages.NotifyPage
+import com.artist.wea.pages.PaymentsManagePage
+import com.artist.wea.pages.SearchArtistPage
 import com.artist.wea.pages.SearchConcertPage
 import com.artist.wea.pages.SettingPage
+import com.artist.wea.pages.UserProfilePage
 import com.artist.wea.pages.UserRegisterPage
 import com.artist.wea.ui.theme.WeaTheme
 import com.naver.maps.map.NaverMapSdk
@@ -55,13 +67,25 @@ class MainActivity : ComponentActivity() {
                     )
                 }
                 composable(PageRoutes.FindId.route) { FindIdPage(navController=navController) }
-                composable(PageRoutes.FindPwd.route) { FindPwdPage(navController=navController)}
-                composable(PageRoutes.ChangePwd.route) {ChangePwdPage(navController=navController)}
-                composable(PageRoutes.ChangeEmail.route) { ChangeEmailPage(navController = navController)}
-                composable(PageRoutes.SearchConcert.route){ SearchConcertPage(navController = navController)}
+                composable(PageRoutes.FindPwd.route) { FindPwdPage(navController=navController) }
+                composable(PageRoutes.ChangePwd.route) {ChangePwdPage(navController=navController) }
+                composable(PageRoutes.ChangeEmail.route) { ChangeEmailPage(navController = navController) }
+                composable(PageRoutes.SearchConcert.route){ SearchConcertPage(navController = navController) }
                 composable(PageRoutes.ArtistRank.route) {ArtistRankPage(navController = navController) }
                 composable(PageRoutes.Notify.route) { NotifyPage(navController = navController) }
                 composable(PageRoutes.Setting.route) { SettingPage(navController = navController) }
+                composable(PageRoutes.ClientService.route) { ClientServicePage(navController = navController) }
+                composable(PageRoutes.ConcertBenefit.route) { ConcertBenefitPage(navController = navController) }
+                composable(PageRoutes.SearchArtist.route) { SearchArtistPage(navController = navController)}
+                composable(PageRoutes.ArtistInfo.route) { ArtistInfoPage(navController = navController) }
+                composable(PageRoutes.ConcertInfo.route) { ConcertInfoPage(navController = navController) }
+                composable(PageRoutes.MyArtist.route) { MyArtistPage(navController = navController) }
+                composable(PageRoutes.ArtistInfoModify.route) { ArtistInfoModifyPage(navController = navController) }
+                composable(PageRoutes.MemberAdd.route) { MemberAddPage(navController = navController) }
+                composable(PageRoutes.ArtistProfileList.route) { ArtistProfileListPage(navController = navController) }
+                composable(PageRoutes.MemberManage.route) { MemberManagePage(navController = navController) }
+                composable(PageRoutes.UserProfile.route) { UserProfilePage(navController = navController) }
+                composable(PageRoutes.PaymentsManage.route) { PaymentsManagePage(navController = navController) }
             }
         }
     }

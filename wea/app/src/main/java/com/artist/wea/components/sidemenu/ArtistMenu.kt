@@ -13,6 +13,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
+import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.getDefTextStyle
 
 @Composable
@@ -39,7 +40,7 @@ fun ArtistMenu(
                 .wrapContentHeight()
                 .padding(start = 4.dp)
                 .clickable {
-                    // navController.navigate(PageRoutes.Home.route)
+                    navController.navigate(PageRoutes.ArtistProfileList.route)
                 }
         )
         //
@@ -63,7 +64,7 @@ fun ArtistMenu(
                 .wrapContentHeight()
                 .padding(start = 4.dp)
                 .clickable {
-                    // navController.navigate(PageRoutes.Home.route)
+                    navController.navigate(PageRoutes.ConcertBenefit.route)
                 }
         )
         // 아티스트 탈퇴

@@ -26,7 +26,6 @@ import com.artist.wea.R
 import com.artist.wea.components.InputForm
 import com.artist.wea.components.LargeButton
 import com.artist.wea.components.UserInfoManageMenu
-import com.artist.wea.constants.PageRoutes
 
 @Composable
 fun LoginPage(
@@ -88,35 +87,37 @@ fun LoginPage(
         
         // 로그인 버튼들
         LargeButton(
-            navController = navController,
             btnText = stringResource(R.string.text_login_btn),
-            nextPage = PageRoutes.Home.route
+            buttonAction = {
+
+            }
         )
         Spacer(modifier = Modifier
             .fillMaxWidth()
             .height(8.dp))
 
         LargeButton(
-            navController = navController,
             btnText = stringResource(R.string.text_login_btn_naver),
-            nextPage = "register/naver",
-            btnIdx = 1 // 네이버
+            // nextPage = "register/naver",
+            btnIdx = 1, // 네이버
+            buttonAction = {
+
+            }
         )
         Spacer(modifier = Modifier
             .fillMaxWidth()
             .height(8.dp))
 
         LargeButton(
-            navController = navController,
             btnText = stringResource(R.string.text_login_btn_kakao),
-            nextPage = PageRoutes.ChangeEmail.route,
-            btnIdx = 2 // 카카오
+            btnIdx = 2, // 카카오,
+            buttonAction = {
+
+            }
         )
         Spacer(modifier = Modifier
             .fillMaxWidth()
             .height(8.dp))
-
-        Text(text = "${idText.value} | ${pwdText.value}");
 
     }
 

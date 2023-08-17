@@ -13,7 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import com.artist.wea.R
+import com.artist.wea.constants.get12TextStyle
 import com.artist.wea.constants.getDefTextFiledStyle
 import com.artist.wea.constants.getDefTextStyle
 
@@ -21,27 +26,30 @@ import com.artist.wea.constants.getDefTextStyle
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InputForm(
-    hintText:String = stringResource(id = R.string.empty_text),
-    textStyle: TextStyle = getDefTextStyle(),
+    hintText:String = stringResource(id = R.string.empty_text), // hint 텍스트
+    textStyle: TextStyle = getDefTextStyle(), // 텍스트 스타일
     modifier: Modifier =
         Modifier
             .fillMaxWidth()
-            .wrapContentHeight()
+            .wrapContentHeight(),
+    isError:Boolean = false,
+    errorText:String = stringResource(id = R.string.empty_text), // 가이드 텍스트
+    isPassword:Boolean = false,
+    isDisable:Boolean = true,
 ):String{
     var text by remember { mutableStateOf("") }
     Column(
         modifier = modifier
     ){
-//            OutlinedTextField(
-//                value = text,
-//                onValueChange = { text = it },
-//                label = { Text(labelText) },
-//                modifier = modifier,
-//            )
         TextField(
             value = text,
             onValueChange = { text = it },
-            modifier = Modifier.fillMaxWidth().wrapContentHeight(),
+            visualTransformation =
+            if (isPassword) PasswordVisualTransformation()
+            else VisualTransformation.None,
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(),
             colors = getDefTextFiledStyle(),
             textStyle = textStyle,
             placeholder = {
@@ -51,9 +59,24 @@ fun InputForm(
                         color = colorResource(id = R.color.mono300)
                     )
                 )
-            }
-
+            },
+            isError = text.isNotEmpty() && isError,
+            enabled = isDisable
         )
+
+        // 에러인 경우 가이드 텍스트를 표시함
+        if(isError&&errorText.isNotEmpty()){
+            Text(
+                text = errorText,
+                style = get12TextStyle().copy(
+                    color = colorResource(id = R.color.red500),
+                    textAlign = TextAlign.Start
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp)
+            )
+        }
     }
 
     return text.toString();

@@ -21,7 +21,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.artist.wea.R
 import com.artist.wea.constants.getBtnColorByIdx
 import com.artist.wea.constants.getSocialIcon
@@ -29,24 +28,24 @@ import com.artist.wea.constants.getSocialIcon
 @Composable
 fun LargeButton(
     btnText: String = stringResource(id = R.string.text_def_btn), // 버튼 글자
-    navController: NavController?, // 페이지 네비게이션 컨트롤러
-    nextPage:String, // 목적지, 에러페이지 만들면 그걸 기본 값으로 할 예정
     btnIdx:Int = 0, // 버튼 종류 index, 소셜인지 일반인지 구분용
     hasIcon:Boolean = btnIdx != 0, // 아이콘이 필요한 버튼인지 for 소셜 로그인,
     btnColors: ButtonColors = getBtnColorByIdx(btnIdx),
-    imgPainter:Painter = getSocialIcon(btnIdx)
+    imgPainter:Painter = getSocialIcon(btnIdx),
+    modifier: Modifier = Modifier
+        .fillMaxWidth()
+        .wrapContentHeight()
+        .padding(8.dp),
+    buttonAction:() -> Unit
     ) {
 
 
     Button(
         onClick = {
-            navController?.navigate(nextPage)
+            buttonAction()
         },
         colors = btnColors,
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .padding(8.dp),
+        modifier = modifier,
     ) {
         Row(modifier = Modifier.fillMaxWidth().wrapContentHeight(),
             verticalAlignment = Alignment.CenterVertically,

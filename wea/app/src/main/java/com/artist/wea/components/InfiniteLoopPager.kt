@@ -20,10 +20,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.artist.wea.R
+import com.skydoves.landscapist.glide.GlideImage
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -34,14 +38,8 @@ const val AUTO_PAGE_CHANGE_DELAY = 1700L // 초
 @Composable
 fun InfiniteLoopPager(
     modifier: Modifier = Modifier,
-    list: List<Color> = listOf(
-        colorResource(id = R.color.red300),
-        colorResource(id = R.color.pastel_yellow300),
-        colorResource(id = R.color.naver_green),
-        colorResource(id = R.color.sky_blue300),
-        colorResource(id = R.color.dark_orange300),
-        colorResource(id = R.color.brown700)
-    )
+    list: List<String> = listOf(),
+    height:Dp = 144.dp
 ) {
     val pagerState = rememberPagerState()
 
@@ -85,16 +83,21 @@ fun InfiniteLoopPager(
             state = pagerState,
         ) { index ->
             // index % (list.size) 나머지 값으로 인덱스 가져오기. 안전하게 getOrNull 처리.
-            list.getOrNull(index % (list.size))?.let { color ->
-                Spacer(
+            list.getOrNull(index % (list.size))?.let { url ->
+                GlideImage(
+                    imageModel = url,
+                    // Crop, Fit, Inside, FillHeight, FillWidth, None
+                    contentScale = ContentScale.Crop,
+                    // shows a placeholder ImageBitmap when loading.
+                    placeHolder = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
+                    // shows an error ImageBitmap when the request failed.
+                    error = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(172.dp)
-                        .background(color = color)
+                        .height(height)
                 )
             }
         }
-
         // 추가됨
         PagerIndicator(
             modifier = Modifier

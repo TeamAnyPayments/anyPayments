@@ -19,22 +19,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.artist.wea.R
-import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get12TextStyle
 
 @Composable
 fun SmallButton(
-    btnText: String = stringResource(id = R.string.text_def_btn), // 버튼 글자
-    navController: NavController?, // 페이지 네비게이션 컨트롤러
-    btnColor: Color = colorResource(id = R.color.dark_orange300),
+    btnText: String = stringResource(id = R.string.text_def_btn), // 버튼 텍스트
+    btnColor: Color = colorResource(id = R.color.dark_orange300), // 버튼 색상
     modifier: Modifier = Modifier
         .wrapContentWidth()
         .wrapContentHeight(),
-    roundSize: Dp = 64.dp,
-    onClick:() -> Unit = {navController?.navigate(PageRoutes.Home.route)},
-    textStyle: TextStyle = get12TextStyle().copy(color = colorResource(id = R.color.white))
+    roundSize: Dp = 64.dp, // 곡률
+    onClick:() -> Unit = {}, // 동작시킬 메서드
+    textStyle: TextStyle = get12TextStyle().copy(color = colorResource(id = R.color.white)) // 텍스트 속성
 ){
     Column(
         modifier = modifier
