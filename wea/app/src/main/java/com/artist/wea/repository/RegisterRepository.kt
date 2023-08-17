@@ -15,12 +15,17 @@ class RegisterRepository {
     }
 
     // 중복체크
-    suspend fun checkUserId(cui: CheckUserId):Response<ResponseBody>{
-        return Retrofit.Instance.api.checkUserId(cui);
+    suspend fun checkUserId(id:String):Response<ResponseBody>{
+        return Retrofit.Instance.api.checkUserId(id);
     }
 
     // 이메일 전송
-    suspend fun sendCodeToEmail(emailObj: JSONObject):Response<ResponseBody>{
-        return Retrofit.Instance.api.sendCodeToEmail(emailObj);
+    suspend fun sendCodeToEmail(email:String):Response<ResponseBody>{
+        return Retrofit.Instance.api.sendCodeToEmail(email);
+    }
+
+    // 코드 인증
+    suspend fun checkEmailByCode(email:String, code:String):Response<ResponseBody>{
+        return Retrofit.Instance.api.checkEmailByCode(email=email, code=code)
     }
 }

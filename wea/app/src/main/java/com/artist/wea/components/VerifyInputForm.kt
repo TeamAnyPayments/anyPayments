@@ -61,9 +61,7 @@ fun VerifyInputForm(
         Spacer(modifier = Modifier.width(8.dp))
         Button(
             enabled = isDisable,
-            onClick = {
-                buttonActions()
-            },
+            onClick = buttonActions,
             colors = getButtonColor(),
             modifier = Modifier
                 .wrapContentWidth()

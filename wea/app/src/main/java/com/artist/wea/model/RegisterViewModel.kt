@@ -14,60 +14,78 @@ import org.json.JSONObject
 class RegisterViewModel(val repository: RegisterRepository): ViewModel() {
 
     val joinUserRes: MutableLiveData<Boolean> = MutableLiveData(false) // 회원가입
-    val checkUserIdRes = MutableLiveData<Any>(); // 아이디 중복
-    val sendCodeToEmailRes = MutableLiveData<Any>(); // 이메일 전송
+    val checkUserIdRes = MutableLiveData<Boolean>(false); // 아이디 중복
+    val sendCodeToEmailRes = MutableLiveData<Boolean>(false); // 이메일 전송
+    val checkEmailByCodeRes = MutableLiveData<Boolean>(false); // 코드 인증 결과
+
+
+    // 휘원가입
     fun joinUser(joinUser: JoinUser){
         viewModelScope.launch(exceptionHandler) {
             val response = repository.joinUser(joinUser);
-            Log.d(RLOG, "RES :: ${response.toString()}")
 
-            if(!response.isSuccessful) throw Exception();
-            joinUserRes.value = response.isSuccessful
-
+            if(!response.isSuccessful) { // 통신 예외 처리
+                checkEmailByCodeRes.value = false;
+                throw Exception();
+            }
             val jsonString = response.body()?.string()
-            Log.d(RLOG, "${jsonString}")
-
             val jsonObject = JSONObject(jsonString)
-            // val dataArray = jsonObject.getJSONObject("data").getJSONArray("popularChallengeList")
+            val result = jsonObject.get("status").equals("OK"); // 응답결과 OK라면 true
 
-            // joinUserData.value = myState;
-            // Log.d("RESPONSE :::: ", "${myList}")
+            joinUserRes.value = result
+
         }
     }
 
     // 아이디 중복 체크
-    fun checkUserId(cui: CheckUserId){
+    fun checkUserId(id:String){
         viewModelScope.launch(exceptionHandler) {
-            val response = repository.checkUserId(cui);
-            Log.d(RLOG, "RES :: ${response.toString()}")
+            val response = repository.checkUserId(id);
 
-            if(!response.isSuccessful) throw Exception();
-
+            if(!response.isSuccessful) { // 통신 예외 처리
+                checkEmailByCodeRes.value = false;
+                throw Exception();
+            }
             val jsonString = response.body()?.string()
-            Log.d(RLOG, "${jsonString}")
-
             val jsonObject = JSONObject(jsonString)
+            val result = jsonObject.get("status").equals("OK"); // 응답결과 OK라면 true
 
-            checkUserIdRes.value = jsonObject;
-
+            checkUserIdRes.value =  result
         }
     }
 
     // 이메일 전송
-    fun sendCodeToEmail(emailObj:JSONObject){
+    fun sendCodeToEmail(email:String){
         viewModelScope.launch(exceptionHandler) {
-            val response = repository.sendCodeToEmail(emailObj)
-            Log.d(RLOG, "RES :: ${response.toString()}")
+            val response = repository.sendCodeToEmail(email)
 
-            if(!response.isSuccessful) throw Exception();
-
+            if(!response.isSuccessful) { // 통신 예외 처리
+                checkEmailByCodeRes.value = false;
+                throw Exception();
+            }
             val jsonString = response.body()?.string()
-            Log.d(RLOG, "${jsonString}")
-
             val jsonObject = JSONObject(jsonString)
+            val result = jsonObject.get("status").equals("OK"); // 응답결과 OK라면 true
 
-            sendCodeToEmailRes.value = jsonObject;
+            sendCodeToEmailRes.value = result;
 
+        }
+    }
+
+    // 코드 인증
+    fun checkEmailByCode(email:String, code:String){
+
+        viewModelScope.launch(exceptionHandler) {
+            val response = repository.checkEmailByCode(email = email, code = code) // 서버 요청 전송
+
+            if(!response.isSuccessful) { // 통신 예외 처리
+                checkEmailByCodeRes.value = false;
+                throw Exception();
+            }
+            val jsonString = response.body()?.string()
+            val jsonObject = JSONObject(jsonString)
+            val result = jsonObject.get("status").equals("OK"); // 응답결과 OK라면 true
+            checkEmailByCodeRes.value = result; // 결과 리턴
         }
     }
 
