@@ -1,0 +1,81 @@
+pipeline {
+    agent any
+
+    tools {
+        jdk "openjdk-17"
+    }
+
+    environment {
+        WEBHOOK_URL = credentials('DISCORD_WEBHOOK_URL')
+        MYSQL_URL = credentials('MYSQL_URL')
+        MYSQL_PORT = credentials('MYSQL_PORT')
+        MYSQL_USER = credentials('MYSQL_USER')
+        MYSQL_PASSWORD = credentials('MYSQL_PASSWORD')
+        MYSQL_DATABASE = credentials('MYSQL_DATABASE')
+        JWT_SECRET = credentials('JWT_SECRET')
+        REDIS_HOST = credentials('REDIS_HOST')
+        REDIS_PORT = credentials('REDIS_PORT')
+        REDIS_PASSWORD = credentials('REDIS_PASSWORD')
+        SMTP_AUTH = 'true'
+        SMTP_HOST = 'smtp.naver.com'
+        SMTP_PORT = 465
+        SMTP_SSL_ENABLE = 'true'
+        SMTP_SSL_TRUST = 'smtp.naver.com'
+        SMTP_STARTTLS_ENABLE = 'true'
+        SMTP_USERNAME = credentials('SMTP_USERNAME')
+        SMTP_PASSWORD = credentials('SMTP_PASSWORD')
+        TRANSPORT_PROTOCOL = 'smtp'
+    }
+
+    stages {
+        stage('git-clone') {
+            steps {
+                git (
+                    url: "https://github.com/TeamAnyPayments/anyPayments.git",
+                    credentialsId: "mygit",
+                    branch: "backend"
+                )
+            }
+        }
+
+        stage('build') {
+            steps {
+                dir('backend') {
+                    sh('chmod +x ./gradlew')
+                    sh('./gradlew clean build -x test')
+                }
+            }
+        }
+
+        stage('deploy') {
+            steps {
+                dir('backend') {
+                    sh('/var/jenkins_home/lib/docker-compose config')
+                    sh('/var/jenkins_home/lib/docker-compose down')
+                    sh('/var/jenkins_home/lib/docker-compose build --no-cache && /var/jenkins_home/lib/docker-compose up -d')
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            discordSend title: "WE:A 백엔드 서버 Job #${env.BUILD_NUMBER}",
+                        link: env.BUILD_URL,
+                        description: "Deploy 완료 약 1분후 서버가 정상 가동됩니다.",
+                        thumbnail: 'https://vscjava.gallerycdn.vsassets.io/extensions/vscjava/vscode-spring-boot-dashboard/0.13.2023072200/1689984300042/Microsoft.VisualStudio.Services.Icons.Default',
+                        result: currentBuild.currentResult,
+                        webhookURL: env.WEBHOOK_URL
+            cleanWs()
+        }
+        failure {
+            discordSend title: "WE:A 백엔드 서버 Job #${env.BUILD_NUMBER}",
+                        link: env.BUILD_URL,
+                        description: "빌드가 실패했습니다. 로그를 확인해주세요.",
+                        thumbnail: 'https://camo.githubusercontent.com/fb52ea1b32dd4dfc16f436a2b1c1551fe1af00c452d536012ba79f3050c81756/68747470733a2f2f696d6775722e636f6d2f634f6342336b422e706e67',
+                        result: 'FAILURE',
+                        webhookURL: env.WEBHOOK_URL
+            cleanWs()
+        }
+    }
+}
