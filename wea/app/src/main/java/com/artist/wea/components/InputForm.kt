@@ -35,7 +35,7 @@ fun InputForm(
     isError:Boolean = false,
     errorText:String = stringResource(id = R.string.empty_text), // 가이드 텍스트
     isPassword:Boolean = false,
-    isDisable:Boolean = true
+    isDisable:Boolean = true,
 ):String{
     var text by remember { mutableStateOf("") }
     Column(
