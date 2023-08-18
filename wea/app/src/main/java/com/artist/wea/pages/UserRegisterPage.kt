@@ -241,7 +241,7 @@ fun UserRegisterPage(
                     if(isComplete){
                         viewModel.joinUser(jUser)
                         viewModel.joinUserRes.observe(mOwner, Observer {
-                            if(it){
+                            if(!it){
                                 Toast.makeText(context, WeaRegex.joinSuccessGuideText, Toast.LENGTH_SHORT).show()
                                 navController.navigate(PageRoutes.Login.route)
                             }else {

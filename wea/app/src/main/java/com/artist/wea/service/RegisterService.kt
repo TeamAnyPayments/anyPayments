@@ -2,6 +2,7 @@ package com.artist.wea.service
 
 import com.artist.wea.data.CheckUserId
 import com.artist.wea.data.JoinUser
+import com.artist.wea.data.LoginUser
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Response
@@ -11,6 +12,10 @@ import retrofit2.http.Query
 
 
 interface RegisterService {
+
+    // 로그인
+    @POST("/user/login")
+    suspend fun loginUser(@Body loginUser: LoginUser): Response<ResponseBody>
 
     // 회원 가입
     @POST("/user")

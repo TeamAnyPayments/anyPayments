@@ -2,12 +2,18 @@ package com.artist.wea.repository
 
 import com.artist.wea.data.CheckUserId
 import com.artist.wea.data.JoinUser
+import com.artist.wea.data.LoginUser
 import com.artist.wea.instance.Retrofit
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Response
 
 class RegisterRepository {
+
+    // 로그인
+    suspend fun loginUser(loginUser:LoginUser):Response<ResponseBody>{
+        return Retrofit.Instance.user.loginUser(loginUser)
+    }
 
     // 회원가입
     suspend fun joinUser (joinUser: JoinUser):Response<ResponseBody>{
