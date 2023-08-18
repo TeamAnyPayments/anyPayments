@@ -2,6 +2,7 @@ package com.artist.wea.instance
 
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.artist.wea.service.ArtistService
 import com.artist.wea.service.RegisterService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -54,7 +55,9 @@ class Retrofit : AppCompatActivity() {
         val user : RegisterService by lazy {
             retrofit.create(RegisterService::class.java)
         }
-        // val artist
+        val artist : ArtistService by lazy {
+            retrofit.create((ArtistService::class.java))
+        }
         // val concert
     }
 

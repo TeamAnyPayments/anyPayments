@@ -1,9 +1,11 @@
 package com.artist.wea
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -35,6 +37,7 @@ import com.artist.wea.pages.SettingPage
 import com.artist.wea.pages.UserProfilePage
 import com.artist.wea.pages.UserRegisterPage
 import com.artist.wea.ui.theme.WeaTheme
+import com.artist.wea.util.PreferenceUtil
 import com.naver.maps.map.NaverMapSdk
 
 class MainActivity : ComponentActivity() {
@@ -45,8 +48,15 @@ class MainActivity : ComponentActivity() {
             NaverMapSdk.getInstance(this).client =
                 NaverMapSdk.NaverCloudPlatformClient(BuildConfig.NAVER_CLIENT_ID) // local.properties로부터 읽어들임
             // 로그인 시 로그인 페이지로 이동하지 않도록, 자동로그인을 위한 변수 /* TODO */
-            val isLogin = true
+            val context = LocalContext.current;
+            val prefs = PreferenceUtil(context);
+            val token = prefs.getString("token", "");
+            val isLogin = token.isNotEmpty()
             val navController = rememberNavController()
+            if(isLogin){ // temp... : 토큰정보 확인용
+                Toast.makeText(context, "사용자 토큰 $token", Toast.LENGTH_SHORT).show()
+            }
+
             NavHost(
                 navController = navController,
                 startDestination = if(isLogin) PageRoutes.Home.route
