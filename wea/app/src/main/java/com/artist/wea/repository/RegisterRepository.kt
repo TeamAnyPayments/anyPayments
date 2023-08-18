@@ -11,21 +11,21 @@ class RegisterRepository {
 
     // 회원가입
     suspend fun joinUser (joinUser: JoinUser):Response<ResponseBody>{
-        return Retrofit.Instance.api.joinUser(joinUser)
+        return Retrofit.Instance.user.joinUser(joinUser)
     }
 
     // 중복체크
     suspend fun checkUserId(id:String):Response<ResponseBody>{
-        return Retrofit.Instance.api.checkUserId(id);
+        return Retrofit.Instance.user.checkUserId(id);
     }
 
     // 이메일 전송
     suspend fun sendCodeToEmail(email:String):Response<ResponseBody>{
-        return Retrofit.Instance.api.sendCodeToEmail(email);
+        return Retrofit.Instance.user.sendCodeToEmail(email);
     }
 
     // 코드 인증
     suspend fun checkEmailByCode(email:String, code:String):Response<ResponseBody>{
-        return Retrofit.Instance.api.checkEmailByCode(email=email, code=code)
+        return Retrofit.Instance.user.checkEmailByCode(email=email, code=code)
     }
 }

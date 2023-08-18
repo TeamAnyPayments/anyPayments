@@ -44,6 +44,8 @@ fun DuplicateCheckInputForm( // 중복체크, 코드전송에 쓰일 양식용 �
     buttonAction: () -> Unit = {},
     isSuccess:Boolean = false,
     successText:String = stringResource(id = R.string.empty_text),
+    failText:String = stringResource(id = R.string.empty_text),
+    btnFlag:Int = 0,
     onTextChange: () -> Unit = {}
 ):String{
 
@@ -79,6 +81,7 @@ fun DuplicateCheckInputForm( // 중복체크, 코드전송에 쓰일 양식용 �
                     .weight(2.5f),
                 isError = isError,
                 isDisable = isDisable,
+                onTextChange = onTextChange
             )
             Button(
                 enabled = isDisable,
@@ -117,6 +120,17 @@ fun DuplicateCheckInputForm( // 중복체크, 코드전송에 쓰일 양식용 �
                 text = successText,
                 style = get12TextStyle().copy(
                     color = colorResource(id = R.color.pastel_green300),
+                    textAlign = TextAlign.Start
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp)
+            )
+        }else if(btnFlag > 0) {
+            Text(
+                text = failText,
+                style = get12TextStyle().copy(
+                    color = colorResource(id = R.color.red500),
                     textAlign = TextAlign.Start
                 ),
                 modifier = Modifier

@@ -105,6 +105,7 @@ fun UserRegisterPage(
 
             // 아이디 중복체크 가이드 텍스트 표시 변수
             val isUsableId = remember { mutableStateOf(false) }
+            val btnFLag = remember { mutableStateOf(0) }
             // 아이디, 중복 체크 진행!
             idInputText.value = DuplicateCheckInputForm(
                 titleText = stringResource(id = R.string.text_id_label),
@@ -116,12 +117,26 @@ fun UserRegisterPage(
                     // 아이디 중복 체크
                     viewModel.checkUserId(idInputText.value)
                     viewModel.checkUserIdRes.observe(mOwner, Observer {
-                        idCheckResult.value = it
-                        isUsableId.value = it
+                        if(!it){
+                            idCheckResult.value = true
+                            isUsableId.value = true
+                            btnFLag.value = 0
+                        }else {
+                            idCheckResult.value = false
+                            isUsableId.value = false
+                            btnFLag.value = 1
+                        }
                     })
                 },
-                // isSuccess = isUsableId.value,
-                // successText = "사용할 수 있는 아이디 입니다."
+                isSuccess = isUsableId.value,
+                onTextChange = {
+                    idCheckResult.value = false
+                    isUsableId.value = false
+                    btnFLag.value = 0;
+                },
+                btnFlag = btnFLag.value,
+                successText = "사용할 수 있는 아이디 입니다.",
+                failText = "사용할 수 없는 아이디 입니다."
             )
 
             // 비밀번호 입력
@@ -162,7 +177,7 @@ fun UserRegisterPage(
                             viewModel.sendCodeToEmail(emailText.value);
                             // 이메일 전송 결과
                             viewModel.sendCodeToEmailRes.observe(mOwner, Observer {
-                                if(it){
+                                if(!it){
                                     Toast.makeText(context,"인증 코드가 발송되었습니다", Toast.LENGTH_SHORT).show()
                                 }
                             })
@@ -187,8 +202,8 @@ fun UserRegisterPage(
                             );
 
                             viewModel.checkEmailByCodeRes.observe(mOwner, Observer {
-                                if (it) {
-                                    codeVerifyResult.value = it // 코드 인증 처리
+                                if (!it) {
+                                    codeVerifyResult.value = !it // 코드 인증 처리
                                     Toast.makeText(context, "인증 성공", Toast.LENGTH_SHORT).show()
                                 }else {
                                     Toast.makeText(context, "인증 실패", Toast.LENGTH_SHORT).show()
@@ -227,12 +242,14 @@ fun UserRegisterPage(
                         viewModel.joinUser(jUser)
                         viewModel.joinUserRes.observe(mOwner, Observer {
                             if(it){
-                                Toast.makeText(context, WeaRegex.JoinSuccessGuideText, Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, WeaRegex.joinSuccessGuideText, Toast.LENGTH_SHORT).show()
                                 navController.navigate(PageRoutes.Login.route)
+                            }else {
+                                Toast.makeText(context, WeaRegex.joinFailGuideText, Toast.LENGTH_SHORT).show()
                             }
                         })
                     }else {
-                        Toast.makeText(context, WeaRegex.JoinRejectGuideText, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, WeaRegex.joinRejectGuideText, Toast.LENGTH_SHORT).show()
                     }
                 }
             )
@@ -240,3 +257,4 @@ fun UserRegisterPage(
         }
     }
 }
+

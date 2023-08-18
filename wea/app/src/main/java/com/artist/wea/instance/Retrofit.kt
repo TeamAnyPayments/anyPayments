@@ -50,9 +50,12 @@ class Retrofit : AppCompatActivity() {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }
-        val api : RegisterService by lazy {
+        // api url 도메인에 따른 분기
+        val user : RegisterService by lazy {
             retrofit.create(RegisterService::class.java)
         }
+        // val artist
+        // val concert
     }
 
     companion object {
