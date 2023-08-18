@@ -34,7 +34,6 @@ import com.artist.wea.components.InfiniteLoopPager
 import com.artist.wea.components.InfoUnit
 import com.artist.wea.components.LargeButton
 import com.artist.wea.components.PageTopBar
-import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get12TextStyle
 import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.data.ArtistInfo
@@ -246,13 +245,14 @@ fun ConcertInfoPage(
             // 후원 버튼
             LargeButton(
                 btnText = "후원하기",
-                navController = navController,
-                nextPage = PageRoutes.Home.route,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
                     .padding(8.dp)
-                    .align(Alignment.BottomEnd)
+                    .align(Alignment.BottomEnd),
+                buttonAction = {
+
+                }
             )
         }
 

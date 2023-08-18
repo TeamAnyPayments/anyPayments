@@ -1,5 +1,6 @@
 package com.artist.wea.pages
 
+import android.widget.Toast
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -35,6 +36,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -52,6 +54,7 @@ import com.artist.wea.components.sidemenu.SettingMenu
 import com.artist.wea.components.sidemenu.TicketMenu
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.getDefTextStyle
+import com.artist.wea.util.PreferenceUtil
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -171,7 +174,6 @@ fun HomePage(
                 ProfileItem(
                     navController = navController,
                     modifier = defModifier,
-                    userName = "홍길동"
                 )
 
                 // 작업실 = conditional or 아티스트 등록!

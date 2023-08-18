@@ -125,9 +125,11 @@ fun ArtistRankItem(
                     )
                     // 프로필 보기
                     SmallButton(
-                        navController = navController,
                         btnText = "프로필 보기",
                         btnColor = colorResource(id = R.color.pastel_purple100),
+                        onClick = {
+
+                        }
                     )
                 }
             }

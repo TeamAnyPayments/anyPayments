@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
@@ -39,6 +40,8 @@ import com.artist.wea.components.ConcertSearchItem
 import com.artist.wea.components.InfoUnit
 import com.artist.wea.components.PageTopBar
 import com.artist.wea.components.uidtclass.SearchArtistInfo
+import com.artist.wea.constants.PageRoutes
+import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.data.ArtistInfo
 import com.skydoves.landscapist.CircularReveal
@@ -48,6 +51,9 @@ import com.skydoves.landscapist.glide.GlideImage
 fun ArtistInfoPage(
     navController: NavHostController
 ){
+    // TODO 현재 사용자가 아티스트 프로필을 수정할 권한이 있는지 판단할 boolean 변수
+    val isEditable = true;
+
     // TODO navController를 통해서 아티스트 데이터를 추출해서 렌더링 하도록 설계
     val artistInfo = ArtistInfo(
         profileImgURL = "https://image.kmib.co.kr/online_image/2014/1015/201410152053_61170008765071_1.jpg",
@@ -85,12 +91,32 @@ fun ArtistInfoPage(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(288.dp)
+                .height(312.dp)
         ){
             // 상단 바
-            PageTopBar(navController = navController, modifier = Modifier
-                .align(Alignment.TopStart)
-                .zIndex(2f), hasTransparency = true)
+
+            if(!isEditable){ // 일반사용자?
+                PageTopBar(
+                    navController = navController,
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .zIndex(2f),
+                    hasTransparency = true)
+
+            }else { // 아티스트 본인?
+                PageTopBar(
+                    navController = navController,
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .zIndex(2f),
+                    hasTransparency = true,
+                    rightMenuText = "수정",
+                    rightMenuAction = { navController.navigate(PageRoutes.ArtistInfoModify.route)},
+                    rightMenuTextStyle = get14TextStyle()
+                        .copy(color = colorResource(id = R.color.white)),
+                )
+            }
+
             // 배경 이미지
             GlideImage(
                 imageModel = artistInfo.bgImgURL.ifEmpty { R.drawable.icon_def_user_img },
@@ -104,7 +130,7 @@ fun ArtistInfoPage(
                 error = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(144.dp)
+                    .height(156.dp)
                     .align(Alignment.TopStart)
             )
 
@@ -113,7 +139,8 @@ fun ArtistInfoPage(
                 modifier = Modifier
                     .wrapContentWidth()
                     .wrapContentHeight()
-                    .align(Alignment.Center)
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 24.dp)
                     .zIndex(2f),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -157,14 +184,17 @@ fun ArtistInfoPage(
                 // 아티스트 한줄 소개
                 Text(
                     text = artistInfo.comment,
-                    style = getDefTextStyle(),
+                    style = getDefTextStyle().copy(
+                        textAlign = TextAlign.Center
+                    ),
+                    modifier = Modifier.fillMaxWidth().height(32.dp)
                 )
             }
 
             // bottom layer
             Spacer(modifier = Modifier
                 .fillMaxWidth()
-                .height(144.dp)
+                .height(156.dp)
                 .background(color = colorResource(id = R.color.mono50))
                 .align(Alignment.BottomEnd)
             )

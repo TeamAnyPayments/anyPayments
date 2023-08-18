@@ -1,5 +1,6 @@
 package com.artist.wea.pages
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,18 +16,26 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import com.artist.wea.R
 import com.artist.wea.components.InputForm
 import com.artist.wea.components.LargeButton
 import com.artist.wea.components.UserInfoManageMenu
 import com.artist.wea.constants.PageRoutes
+import com.artist.wea.constants.getDefTextStyle
+import com.artist.wea.data.LoginUser
+import com.artist.wea.model.RegisterViewModel
+import com.artist.wea.repository.RegisterRepository
+import com.artist.wea.util.PreferenceUtil
 
 @Composable
 fun LoginPage(
@@ -36,8 +45,18 @@ fun LoginPage(
             .fillMaxSize()
             .background(colorResource(id = R.color.mono50))) {
 
-    var idText = remember { mutableStateOf("") }
-    var pwdText = remember { mutableStateOf("") }
+    // 기본 mvvm 디자인 변수 세팅
+    val context = LocalContext.current; // context
+    val mOwner = LocalLifecycleOwner.current
+    val repository = RegisterRepository()
+    val viewModel = RegisterViewModel(repository)
+
+    val idText = remember { mutableStateOf("") } // 아이디
+    val pwdText = remember { mutableStateOf("") } // 비밀번호
+    val token = remember { mutableStateOf("") } // 토큰 값
+
+    // 민감 정보 관리를 위한 sharedprefs 객체
+    val prefs = PreferenceUtil(context)
 
     Column(modifier = Modifier
         .fillMaxWidth()
@@ -48,25 +67,16 @@ fun LoginPage(
         Column(modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(16.dp, 12.dp),
+            .padding(16.dp, 44.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Spacer(modifier = Modifier
-                .fillMaxWidth()
-                .height(32.dp))
-            Text(text = stringResource(R.string.text_login_welcome),
-                fontSize = 32.sp,
-                style = TextStyle(
-                    fontSize = 24.sp,
-//                    fontFamily = FontFamily(Font(R.font.inter)),
-                    fontWeight = FontWeight(400),
-                    color = colorResource(id = R.color.black),// to edit
+            Text(
+                text = stringResource(R.string.text_login_welcome),
+                style = getDefTextStyle().copy(
+                    fontSize = 32.sp
                 )
             )
-            Spacer(modifier = Modifier
-                .fillMaxWidth()
-                .height(32.dp))
         }
         Spacer(modifier = Modifier
             .fillMaxWidth()
@@ -75,7 +85,10 @@ fun LoginPage(
         Spacer(modifier = Modifier
             .fillMaxWidth()
             .height(16.dp))
-        pwdText.value = InputForm(hintText = stringResource(R.string.text_pwd_input_guide))
+        pwdText.value = InputForm(
+            hintText = stringResource(R.string.text_pwd_input_guide),
+            isPassword = true
+        )
 
         // 회원
         Spacer(modifier = Modifier
@@ -88,35 +101,51 @@ fun LoginPage(
         
         // 로그인 버튼들
         LargeButton(
-            navController = navController,
             btnText = stringResource(R.string.text_login_btn),
-            nextPage = PageRoutes.Home.route
+            buttonAction = {
+                val loginUser = LoginUser(
+                    id = idText.value,
+                    password = pwdText.value
+                )
+                viewModel.loginUser(loginUser);
+                // 이메일 전송 결과
+                viewModel.loginUserRes.observe(mOwner, Observer {
+                    if(it.isNotEmpty()){
+                        Log.d("LOGIN RES:::", it.toString())
+                        token.value = it.toString()
+                        prefs.setString("token", token.value)
+                        navController.navigate(PageRoutes.Home.route)
+                    }
+                })
+
+            }
         )
         Spacer(modifier = Modifier
             .fillMaxWidth()
             .height(8.dp))
 
         LargeButton(
-            navController = navController,
             btnText = stringResource(R.string.text_login_btn_naver),
-            nextPage = "register/naver",
-            btnIdx = 1 // 네이버
+            // nextPage = "register/naver",
+            btnIdx = 1, // 네이버
+            buttonAction = {
+
+            }
         )
         Spacer(modifier = Modifier
             .fillMaxWidth()
             .height(8.dp))
 
         LargeButton(
-            navController = navController,
             btnText = stringResource(R.string.text_login_btn_kakao),
-            nextPage = PageRoutes.ChangeEmail.route,
-            btnIdx = 2 // 카카오
+            btnIdx = 2, // 카카오,
+            buttonAction = {
+
+            }
         )
         Spacer(modifier = Modifier
             .fillMaxWidth()
             .height(8.dp))
-
-        Text(text = "${idText.value} | ${pwdText.value}");
 
     }
 

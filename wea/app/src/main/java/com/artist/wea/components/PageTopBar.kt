@@ -18,9 +18,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
@@ -32,15 +33,16 @@ fun PageTopBar(
     navController:NavHostController,
     modifier:Modifier = Modifier,
     pageTitle:String = stringResource(id = R.string.empty_text),
-    singleIcon:Painter? = null,
+    singleIcon:ImageVector? = null,
     rightMenuText:String = stringResource(id = R.string.empty_text),
+    rightMenuTextStyle:TextStyle = get14TextStyle(),
     rightMenuAction:()-> Unit = {},
     disableBack:Boolean = false,
     hasTransparency:Boolean = false,
     hasBadge:Boolean = false,
     badge: @Composable () -> Unit = {},
 
-){
+    ){
     // TopBar Area
     Column(
         modifier = modifier
@@ -90,11 +92,12 @@ fun PageTopBar(
             if(rightMenuText.isNotEmpty()){ // 텍스트 메뉴인 경우
                 Text(
                     text = rightMenuText,
-                    style = get14TextStyle()
+                    style = rightMenuTextStyle,
+                    modifier = Modifier.clickable { rightMenuAction() }
                 )
             } else if( singleIcon != null){ // 아이콘 메뉴인 경우
                 Icon(
-                    painter = singleIcon,
+                    singleIcon,
                     contentDescription = "right-menu",
                     modifier = Modifier
                         .size(24.dp)

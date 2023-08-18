@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.artist.wea.R
 import com.artist.wea.constants.get12TextStyle
@@ -23,7 +22,6 @@ fun Badge(
     text:String = "",
     color:Color = colorResource(id = R.color.mono100),
     txtColor:Color = colorResource(id = R.color.white),
-    width: Dp = 48.dp,
 ){
 
     Box(modifier = Modifier
