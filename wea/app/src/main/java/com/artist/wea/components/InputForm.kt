@@ -36,6 +36,7 @@ fun InputForm(
     errorText:String = stringResource(id = R.string.empty_text), // 가이드 텍스트
     isPassword:Boolean = false,
     isDisable:Boolean = true,
+    onTextChange: () -> Unit = {}
 ):String{
     var text by remember { mutableStateOf("") }
     Column(
@@ -43,7 +44,10 @@ fun InputForm(
     ){
         TextField(
             value = text,
-            onValueChange = { text = it },
+            onValueChange = {
+                onTextChange()
+                text = it
+            },
             visualTransformation =
             if (isPassword) PasswordVisualTransformation()
             else VisualTransformation.None,

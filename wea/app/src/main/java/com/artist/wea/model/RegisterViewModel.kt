@@ -14,15 +14,16 @@ import org.json.JSONObject
 class RegisterViewModel(val repository: RegisterRepository): ViewModel() {
 
     val joinUserRes: MutableLiveData<Boolean> = MutableLiveData(false) // 회원가입
-    val checkUserIdRes = MutableLiveData<Boolean>(false); // 아이디 중복
-    val sendCodeToEmailRes = MutableLiveData<Boolean>(false); // 이메일 전송
-    val checkEmailByCodeRes = MutableLiveData<Boolean>(false); // 코드 인증 결과
+    val checkUserIdRes = MutableLiveData<Boolean>(); // 아이디 중복
+    val sendCodeToEmailRes = MutableLiveData<Boolean>(); // 이메일 전송
+    val checkEmailByCodeRes = MutableLiveData<Boolean>(); // 코드 인증 결과
 
 
     // 휘원가입
     fun joinUser(joinUser: JoinUser){
         viewModelScope.launch(exceptionHandler) {
             val response = repository.joinUser(joinUser);
+            Log.d(RLOG, "res = ${response.toString()}")
 
             if(!response.isSuccessful) { // 통신 예외 처리
                 checkEmailByCodeRes.value = false;
@@ -30,6 +31,7 @@ class RegisterViewModel(val repository: RegisterRepository): ViewModel() {
             }
             val jsonString = response.body()?.string()
             val jsonObject = JSONObject(jsonString)
+            Log.d(RLOG, "jsonObj = ${jsonObject.toString()}")
             val result = jsonObject.get("status").equals("OK"); // 응답결과 OK라면 true
 
             joinUserRes.value = result
@@ -43,12 +45,12 @@ class RegisterViewModel(val repository: RegisterRepository): ViewModel() {
             val response = repository.checkUserId(id);
 
             if(!response.isSuccessful) { // 통신 예외 처리
-                checkEmailByCodeRes.value = false;
                 throw Exception();
             }
             val jsonString = response.body()?.string()
             val jsonObject = JSONObject(jsonString)
-            val result = jsonObject.get("status").equals("OK"); // 응답결과 OK라면 true
+            Log.d(RLOG, "${jsonObject.toString()}")
+            val result = !jsonObject.get("status").equals("OK"); // 응답결과 OK라면 true
 
             checkUserIdRes.value =  result
         }
@@ -60,12 +62,13 @@ class RegisterViewModel(val repository: RegisterRepository): ViewModel() {
             val response = repository.sendCodeToEmail(email)
 
             if(!response.isSuccessful) { // 통신 예외 처리
-                checkEmailByCodeRes.value = false;
+                // checkEmailByCodeRes.value = false;
                 throw Exception();
             }
             val jsonString = response.body()?.string()
             val jsonObject = JSONObject(jsonString)
-            val result = jsonObject.get("status").equals("OK"); // 응답결과 OK라면 true
+            Log.d(RLOG, "${jsonObject.toString()}")
+            val result = !jsonObject.get("status").equals("OK"); // 응답결과 OK라면 true
 
             sendCodeToEmailRes.value = result;
 
@@ -84,7 +87,8 @@ class RegisterViewModel(val repository: RegisterRepository): ViewModel() {
             }
             val jsonString = response.body()?.string()
             val jsonObject = JSONObject(jsonString)
-            val result = jsonObject.get("status").equals("OK"); // 응답결과 OK라면 true
+            Log.d(RLOG, "${jsonObject.toString()}")
+            val result = !jsonObject.get("status").equals("OK"); // 응답결과 OK라면 true
             checkEmailByCodeRes.value = result; // 결과 리턴
         }
     }
