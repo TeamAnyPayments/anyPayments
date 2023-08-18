@@ -12,10 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Wea"
         tools:targetApi="31">
-        <service
-            android:name=".service.ArtistService"
-            android:enabled="true"
-            android:exported="true"></service>
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
