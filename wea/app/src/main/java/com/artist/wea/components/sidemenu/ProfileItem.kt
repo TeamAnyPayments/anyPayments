@@ -21,7 +21,8 @@ import androidx.navigation.NavHostController
 import com.artist.wea.R
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.getDefTextStyle
-import com.artist.wea.data.UserInfo
+import com.artist.wea.data.ProfileInfo
+import com.artist.wea.data.UserProfile
 import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.glide.GlideImage
 
@@ -29,14 +30,8 @@ import com.skydoves.landscapist.glide.GlideImage
 fun ProfileItem(
     navController: NavHostController,
     modifier: Modifier,
+    userProfile: UserProfile
 ){
-
-    val userInfo: UserInfo = UserInfo(
-        profileURL = "https://mblogthumb-phinf.pstatic.net/MjAyMDAyMDdfMTYw/MDAxNTgxMDg1NzUxMTUy.eV1iEw2gk2wt_YqPWe5F7SroOCkXJy2KFwmTDNzM0GQg.Z3Kd5MrDh07j86Vlb2OhAtcw0oVmGCMXtTDjoHyem9og.JPEG.7wayjeju/%EB%B0%B0%EC%9A%B0%ED%94%84%EB%A1%9C%ED%95%84%EC%82%AC%EC%A7%84_IMG7117.jpg?type=w800",
-        userName = "홍길동",
-        userId = "mansa_tired_cat",
-        email = "tired_cat@email.com"
-    )
 
     Row(
         modifier = modifier.clickable {
@@ -45,7 +40,7 @@ fun ProfileItem(
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         GlideImage(
-            imageModel = userInfo.profileURL.ifEmpty { R.drawable.icon_def_user_img },
+            imageModel = userProfile.profileURL.ifEmpty { R.drawable.icon_def_user_img },
             // Crop, Fit, Inside, FillHeight, FillWidth, None
             contentScale = ContentScale.Crop,
             circularReveal = CircularReveal(duration = 100),
@@ -65,7 +60,7 @@ fun ProfileItem(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ){
             Text(
-                text = userInfo.userName+"님",
+                text = userProfile.name+"님",
                 style = getDefTextStyle()
             )
             Text(
