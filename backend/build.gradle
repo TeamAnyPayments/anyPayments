@@ -53,6 +53,9 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
+    // Tika
+    implementation 'org.apache.tika:tika-core:1.24'
+
     // Spring Boot Devtools
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
