@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -33,6 +34,7 @@ import com.artist.wea.components.UserInfoManageMenu
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.data.LoginUser
+import com.artist.wea.instance.Retrofit
 import com.artist.wea.model.RegisterViewModel
 import com.artist.wea.repository.RegisterRepository
 import com.artist.wea.util.PreferenceUtil
@@ -45,7 +47,7 @@ fun LoginPage(
             .fillMaxSize()
             .background(colorResource(id = R.color.mono50))) {
 
-    // 기본 mvvm 디자인 변수 세팅
+    // 비동기 통신을 위한 기본 객체 settings
     val context = LocalContext.current; // context
     val mOwner = LocalLifecycleOwner.current
     val repository = RegisterRepository()
@@ -108,13 +110,17 @@ fun LoginPage(
                     password = pwdText.value
                 )
                 viewModel.loginUser(loginUser);
-                // 이메일 전송 결과
+                // 로그인 결과
                 viewModel.loginUserRes.observe(mOwner, Observer {
                     if(it.isNotEmpty()){
                         Log.d("LOGIN RES:::", it.toString())
                         token.value = it.toString()
                         prefs.setString("token", token.value)
-                        navController.navigate(PageRoutes.Home.route)
+                        Retrofit.token.value = it.toString()
+                        navController.navigate(PageRoutes.Home.route){
+                            popUpTo(0)
+                        }
+
                     }
                 })
 
@@ -146,6 +152,11 @@ fun LoginPage(
         Spacer(modifier = Modifier
             .fillMaxWidth()
             .height(8.dp))
+
+        Button(onClick = {
+            navController.navigate(PageRoutes.Home.route) }) {
+            Text("홈페이지 이동")
+        }
 
     }
 
