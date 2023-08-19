@@ -25,6 +25,7 @@ pipeline {
         SMTP_USERNAME = credentials('SMTP_USERNAME')
         SMTP_PASSWORD = credentials('SMTP_PASSWORD')
         TRANSPORT_PROTOCOL = 'smtp'
+        FILE_PATH = credentials('FILE_PATH')
     }
 
     stages {
