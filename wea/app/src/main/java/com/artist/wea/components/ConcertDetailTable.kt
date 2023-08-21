@@ -22,7 +22,7 @@ import com.artist.wea.R
 import com.artist.wea.constants.getDefTextStyle
 
 @Composable
-fun BuskingDetailTable(
+fun ConcertDetailTable(
     modifier: Modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight(),
