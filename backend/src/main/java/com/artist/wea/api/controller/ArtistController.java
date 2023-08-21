@@ -3,6 +3,7 @@ package com.artist.wea.api.controller;
 import com.artist.wea.api.service.ArtistService;
 import com.artist.wea.config.security.UserPrincipal;
 import com.artist.wea.db.dto.request.artist.AddPostReqDTO;
+import com.artist.wea.db.dto.request.artist.UpdatePutReqDTO;
 import com.artist.wea.db.dto.util.ResponseDTO;
 import com.artist.wea.db.entity.Artist;
 import com.artist.wea.db.entity.ArtistImg;
@@ -45,6 +46,18 @@ public class ArtistController {
     public ResponseEntity<?> deleteArtist(@AuthenticationPrincipal UserPrincipal userPrincipal){
         artistService.deleteArtist(userPrincipal.getUser());
         return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, "아티스트 등록 해제"));
+    }
+
+    /**
+     * 아티스트 프로필 수정 API
+     */
+    @PutMapping
+    public ResponseEntity<ResponseDTO> updateArtist(@AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody UpdatePutReqDTO updatePutReqDTO){
+        Artist artist = artistService.getArtist(userPrincipal.getUser()).get();
+        artist.setSimple(updatePutReqDTO.getSimple());
+        artist.setIntroduce(updatePutReqDTO.getIntroduce());
+        artist.setArea(updatePutReqDTO.getArea());
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, "아티스트 프로필 수정 완료", artistService.updateArtist(artist)));
     }
 
     /**
