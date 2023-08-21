@@ -58,7 +58,6 @@ import com.artist.wea.components.sidemenu.TicketMenu
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.data.UserProfile
-import com.artist.wea.instance.Retrofit
 import com.artist.wea.model.RegisterViewModel
 import com.artist.wea.repository.RegisterRepository
 import com.artist.wea.util.JSONParser
@@ -362,7 +361,7 @@ fun homePage(
                             .fillMaxWidth()
                             .wrapContentHeight()
                             .weight(1f)
-                            .clickable { navController.navigate(PageRoutes.Login.route) },
+                            .clickable { navController.navigate(PageRoutes.TicketList.route) },
                         menuTitle = "TICKET",
                         imgPainter = painterResource(id = R.drawable.icon_ticket)
                     )
@@ -386,7 +385,11 @@ fun homePage(
             Text(
                 text = "광고를 준비 중입니다...",
                 style = getDefTextStyle().copy(color = colorResource(id = R.color.white)),
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(16.dp).clickable {
+                    navController.navigate(PageRoutes.Login.route){
+                        popUpTo(0)
+                    }
+                }
             )
         }
 

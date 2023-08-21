@@ -2,7 +2,6 @@ package com.artist.wea
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
@@ -36,6 +35,8 @@ import com.artist.wea.pages.PaymentsManagePage
 import com.artist.wea.pages.SearchArtistPage
 import com.artist.wea.pages.SearchConcertPage
 import com.artist.wea.pages.SettingPage
+import com.artist.wea.pages.TicketListPage
+import com.artist.wea.pages.TicketPage
 import com.artist.wea.pages.UserProfilePage
 import com.artist.wea.pages.UserRegisterPage
 import com.artist.wea.ui.theme.WeaTheme
@@ -99,6 +100,8 @@ class MainActivity : ComponentActivity() {
                 composable(PageRoutes.MemberManage.route) { MemberManagePage(navController = navController) }
                 composable(PageRoutes.UserProfile.route) { UserProfilePage(navController = navController) }
                 composable(PageRoutes.PaymentsManage.route) { PaymentsManagePage(navController = navController) }
+                composable(PageRoutes.TicketList.route) { TicketListPage(navController = navController) }
+                composable(PageRoutes.Ticket.route) { TicketPage(navController = navController) }
             }
         }
     }

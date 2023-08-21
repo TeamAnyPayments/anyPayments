@@ -24,5 +24,7 @@ sealed class PageRoutes(val route:String){
     object MemberManage: PageRoutes("member-manage")
     object UserProfile: PageRoutes("user-profile")
     object PaymentsManage: PageRoutes("payments-manage")
+    object TicketList: PageRoutes("ticket-list")
+    object Ticket: PageRoutes("ticket")
 
 }
