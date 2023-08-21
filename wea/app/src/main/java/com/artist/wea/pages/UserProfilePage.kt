@@ -1,5 +1,8 @@
 package com.artist.wea.pages
 
+import android.content.SharedPreferences
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,36 +15,82 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
 import com.artist.wea.R
 import com.artist.wea.components.InfoUnit
 import com.artist.wea.components.PageTopBar
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.getDefTextStyle
-import com.artist.wea.data.UserInfo
+import com.artist.wea.data.UserProfile
+import com.artist.wea.model.RegisterViewModel
+import com.artist.wea.repository.RegisterRepository
+import com.artist.wea.util.JSONParser
+import com.artist.wea.util.PreferenceUtil
 import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.glide.GlideImage
+import okhttp3.Route
+import org.json.JSONObject
+
 
 @Composable
 fun UserProfilePage(
     navController: NavHostController
 ){
 
-    val userInfo:UserInfo = UserInfo(
-        profileURL = "https://mblogthumb-phinf.pstatic.net/MjAyMDAyMDdfMTYw/MDAxNTgxMDg1NzUxMTUy.eV1iEw2gk2wt_YqPWe5F7SroOCkXJy2KFwmTDNzM0GQg.Z3Kd5MrDh07j86Vlb2OhAtcw0oVmGCMXtTDjoHyem9og.JPEG.7wayjeju/%EB%B0%B0%EC%9A%B0%ED%94%84%EB%A1%9C%ED%95%84%EC%82%AC%EC%A7%84_IMG7117.jpg?type=w800",
-        userName = "홍길동",
-        userId = "mansa_tired_cat",
-        email = "tired_cat@email.com"
-    )
+    // 비동기 통신을 위한 기본 객체 settings
+    val context = LocalContext.current;
+    val mOwner = LocalLifecycleOwner.current
+    val repository = RegisterRepository()
+    val viewModel = RegisterViewModel(repository)
+
+    // prefs
+    val prefs = PreferenceUtil(context);
+    val profileJson = remember{
+        mutableStateOf(prefs.getString("profile_json", ""))
+    }
+    val userProfile = remember { mutableStateOf(UserProfile()) }
+    val jParser = JSONParser() // json parser
+
+    // 프로필 페이지 렌더링 시 사용자 정보를 가져옴
+    if(profileJson.value.isEmpty()){
+        viewModel.getUserInfo()
+        viewModel.getUserInfoRes.observe(mOwner, Observer {
+            if(it != null ){
+                Log.d("PROFILE_PAGE:::", "${it.toString()}")
+                val jsonString = it.toString()
+                prefs.setString("profile_json", "$jsonString") // prefs 저장
+                profileJson.value = jsonString // 현재 상태에도 저장
+                userProfile.value = jParser.parseJsonToUserProfile(it)
+                Log.d("PROFILE_PAGE:::", "서버 >>> ${profileJson.value}")
+
+            }else {
+                Log.d("PROFILE_PAGE:::", "토큰 만료")
+                Toast.makeText(context, "회원 정보가 만료되었습니다.", Toast.LENGTH_SHORT).show()
+                navController.navigate(PageRoutes.Login.route){
+                    popUpTo(0)
+                }
+            }
+        })
+    }else {
+        Log.d("PROFILE_PAGE:::", "캐싱 >>> ${profileJson.value}")
+
+        val json = JSONObject(profileJson.value)
+        userProfile.value = jParser.parseJsonToUserProfile(json)
+    }
 
     Column(
         modifier = Modifier
@@ -62,8 +111,9 @@ fun UserProfilePage(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
+
             GlideImage(
-                imageModel = userInfo.profileURL.ifEmpty { R.drawable.icon_def_user_img },
+                imageModel = userProfile.value.profileURL.ifEmpty { R.drawable.icon_def_user_img },
                 // Crop, Fit, Inside, FillHeight, FillWidth, None
                 contentScale = ContentScale.Crop,
                 circularReveal = CircularReveal(duration = 100),
@@ -78,17 +128,17 @@ fun UserProfilePage(
 
             // 유저 이름
             Text(
-                text = userInfo.userName,
+                text = userProfile.value.name,
                 style = getDefTextStyle().copy(fontSize = 20.sp)
             )
             // 유저 아이디
             Text(
-                text = userInfo.userId,
+                text = userProfile.value.userId,
                 style = getDefTextStyle()
             )
             // 유저 이메일
             Text(
-                text = userInfo.email,
+                text = userProfile.value.email,
                 style = getDefTextStyle()
             )
         }
@@ -130,7 +180,19 @@ fun UserProfilePage(
             Text(
                 text = "로그아웃",
                 style = getDefTextStyle(),
-                modifier = Modifier
+                modifier = Modifier.clickable {
+                    if(prefs.clearAll()){
+                        Toast.makeText(context, "로그아웃이 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                        viewModel.logout()
+                        viewModel.loginUserRes.observe(mOwner, Observer {
+                            Log.d("LOGOUT_RESULT....", "${it.toString()}")
+                        })
+                        navController.navigate(PageRoutes.Login.route){
+                            popUpTo(0)
+                        }
+                    }
+
+                }
             )
             // 로그아웃
             Text(

@@ -1,6 +1,7 @@
 package com.artist.wea
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,6 +14,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.artist.wea.constants.PageRoutes
+import com.artist.wea.instance.Retrofit
 import com.artist.wea.pages.ArtistInfoModifyPage
 import com.artist.wea.pages.ArtistInfoPage
 import com.artist.wea.pages.ArtistProfileListPage
@@ -55,7 +57,8 @@ class MainActivity : ComponentActivity() {
             val isLogin = token.isNotEmpty()
             val navController = rememberNavController()
             if(isLogin){ // temp... : 토큰정보 확인용
-                Toast.makeText(context, "사용자 토큰 $token", Toast.LENGTH_SHORT).show()
+                Log.d("MAIN_ACTIVITY:::", "토큰 정보 있음")
+                Retrofit.token.value = token
             }
 
             NavHost(

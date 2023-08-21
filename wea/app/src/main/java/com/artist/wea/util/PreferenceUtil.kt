@@ -11,8 +11,7 @@ class PreferenceUtil(context: Context) {
     private lateinit var context: Context
 
     fun init(context: Context) {
-        this.context = context.applicationContext
-    }
+        this.context = context.applicationContext }
 
     fun getString(resId: Int): String {
         return context.getString(resId)
@@ -20,6 +19,7 @@ class PreferenceUtil(context: Context) {
 
     private val prefs: SharedPreferences =
         context.getSharedPreferences("wea_prefs", Context.MODE_PRIVATE)
+    private val editer: SharedPreferences.Editor = prefs.edit()
 
     fun getString(key: String, defValue: String?): String {
         return prefs.getString(key, defValue).toString()
@@ -27,6 +27,11 @@ class PreferenceUtil(context: Context) {
 
     fun setString(key: String, str: String) {
         prefs.edit().putString(key, str).apply()
+    }
+
+    fun clearAll():Boolean{
+        editer.clear().commit()
+        return true
     }
 
 }

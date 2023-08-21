@@ -1,5 +1,6 @@
 package com.artist.wea.pages
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
@@ -37,9 +38,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
 import com.artist.wea.R
 import com.artist.wea.components.HomeMenuBox
@@ -54,7 +57,13 @@ import com.artist.wea.components.sidemenu.SettingMenu
 import com.artist.wea.components.sidemenu.TicketMenu
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.getDefTextStyle
+import com.artist.wea.data.UserProfile
+import com.artist.wea.instance.Retrofit
+import com.artist.wea.model.RegisterViewModel
+import com.artist.wea.repository.RegisterRepository
+import com.artist.wea.util.JSONParser
 import com.artist.wea.util.PreferenceUtil
+import org.json.JSONObject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -66,6 +75,47 @@ fun HomePage(
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp // 디바이스 스크린 width
     val menuOffset = animateDpAsState(if (menuOpen.value) 0.dp else screenWidth, label = "") // 애니메이션 상태
     val isArtist = true; // 아티스트인지 여부를 판단할 변수
+
+    // 비동기 통신을 위한 기본 객체 settings
+    val context = LocalContext.current;
+    val mOwner = LocalLifecycleOwner.current
+    val repository = RegisterRepository()
+    val viewModel = RegisterViewModel(repository)
+
+    // prefs
+    val prefs = PreferenceUtil(context);
+    val profileJson = remember{
+        mutableStateOf(prefs.getString("profile_json", ""))
+    }
+    val userProfile = remember { mutableStateOf(UserProfile()) }
+    val jParser = JSONParser() // json parser
+
+    // 홈페이지 렌더링 시 사용자 정보를 가져옴
+    if(profileJson.value.isEmpty()){
+        viewModel.getUserInfo()
+        viewModel.getUserInfoRes.observe(mOwner, Observer {
+            if(it != null ){
+                Log.d("GET_USER_INFO:::", "${it.toString()}")
+                val jsonString = it.toString()
+                prefs.setString("profile_json", "$jsonString") // prefs 저장
+                profileJson.value = jsonString // 현재 상태에도 저장
+                userProfile.value = jParser.parseJsonToUserProfile(it)
+                Log.d("HOME_PAGE:::", "서버 >>> ${profileJson.value}")
+            }else {
+                Log.d("PROFILE_PAGE:::", "토큰 만료")
+                Toast.makeText(context, "회원 정보가 만료되었습니다.", Toast.LENGTH_SHORT).show()
+                navController.navigate(PageRoutes.Login.route){
+                    popUpTo(0)
+                }
+            }
+        })
+    }else {
+        Log.d("HOME_PAGE:::", "캐싱 >>> ${profileJson.value}")
+        val json = JSONObject(profileJson.value)
+        userProfile.value = jParser.parseJsonToUserProfile(json)
+    }
+
+
 
     Box(modifier = Modifier
         .fillMaxWidth()
@@ -80,20 +130,6 @@ fun HomePage(
                             .wrapContentHeight(),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-//                        // 홈페이지인 경우 뒤로가기를 표현하지 않아야 함
-//                        if(!navController.currentDestination?.route.equals("home")){
-//                            // 뒤로가기 아이콘
-//                            Icon(
-//                                Icons.Rounded.KeyboardArrowLeft,
-//                                contentDescription = "logo",
-//                                modifier = Modifier
-//                                    .size(24.dp)
-//                                    .clickable {
-//                                        navController.popBackStack()
-//                                    }
-//                            )
-//                            Spacer(modifier = Modifier.width(8.dp))
-//                        }
                         // 제목
                         Text(
                             text = "우리동네 아티스트, WE:A",
@@ -174,6 +210,7 @@ fun HomePage(
                 ProfileItem(
                     navController = navController,
                     modifier = defModifier,
+                    userProfile = userProfile.value
                 )
 
                 // 작업실 = conditional or 아티스트 등록!
