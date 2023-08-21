@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -51,7 +52,8 @@ fun PageTopBar(
                 if (hasTransparency) colorResource(id = R.color.color_transparency)
                 else colorResource(id = R.color.mono50),
             )
-            .height(64.dp),
+            .wrapContentHeight()
+            .defaultMinSize(minHeight = 56.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ){
