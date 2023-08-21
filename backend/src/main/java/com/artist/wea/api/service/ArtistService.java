@@ -28,4 +28,5 @@ public interface ArtistService {
 
     void deleteImage(String email);
 
+    void deleteArtist(User user);
 }

@@ -35,7 +35,16 @@ public class ArtistController {
      */
     @PostMapping
     public ResponseEntity<ResponseDTO> addArtist(@AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody AddPostReqDTO addPostReqDTO) {
-        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, "회원 가입 완료", artistService.addArtist(userPrincipal.getUsername(), addPostReqDTO)));
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, "아티스트 등록 완료", artistService.addArtist(userPrincipal.getUsername(), addPostReqDTO)));
+    }
+
+    /**
+     * 아티스트 등록 해제 API
+     */
+    @DeleteMapping
+    public ResponseEntity<?> deleteArtist(@AuthenticationPrincipal UserPrincipal userPrincipal){
+        artistService.deleteArtist(userPrincipal.getUser());
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, "아티스트 등록 해제"));
     }
 
     /**

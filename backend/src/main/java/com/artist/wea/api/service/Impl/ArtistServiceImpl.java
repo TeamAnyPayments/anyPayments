@@ -58,6 +58,15 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     /**
+     * 아티스트 등록 해제
+     */
+    @Override
+    public void deleteArtist(User user) {
+        ArtistMember artistMember = artistMemberRepository.findByUser(user);
+        artistMemberRepository.delete(artistMember);
+    }
+
+    /**
      * 아티스트 정보 수정
      */
     @Override
@@ -81,6 +90,7 @@ public class ArtistServiceImpl implements ArtistService {
             e.printStackTrace();
         }
         return true;
+
     }
 
     @Override
