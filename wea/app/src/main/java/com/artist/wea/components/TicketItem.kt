@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -23,8 +22,7 @@ import com.artist.wea.R
 import com.artist.wea.constants.get12TextStyle
 import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.data.TicketInfo
-import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeFormatterBuilder
+import com.artist.wea.util.LDTParser
 import java.util.Locale
 
 @Composable
@@ -47,8 +45,12 @@ fun TicketItem(
             colorResource(id = R.color.mono300)
         )
         // 일자 파싱
-        val dateString = ticketInfo.dateTime
-            .format(DateTimeFormatter.ofPattern("yyyy.MM.dd (E)", Locale.KOREA))
+        val parser = LDTParser()
+        val dateString = parser.parseAsStandardString(
+            localDateTime = ticketInfo.dateTime,
+            standard = "yyyy.MM.dd (E)",
+            localeType = Locale.KOREA
+        )
 
         // 공연 명과 뱃지
         Row(
