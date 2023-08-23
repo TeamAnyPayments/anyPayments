@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -20,14 +19,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.artist.wea.R
-import com.skydoves.landscapist.glide.GlideImage
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -85,18 +80,12 @@ fun InfiniteLoopPager(
         ) { index ->
             // index % (list.size) 나머지 값으로 인덱스 가져오기. 안전하게 getOrNull 처리.
             list.getOrNull(index % (list.size))?.let { url ->
-                GlideImage(
-                    imageModel = url,
-                    // Crop, Fit, Inside, FillHeight, FillWidth, None
-                    contentScale = ContentScale.Crop,
-                    // shows a placeholder ImageBitmap when loading.
-                    placeHolder = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
-                    // shows an error ImageBitmap when the request failed.
-                    error = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(height)
+
+                WeaWideImage(
+                    imgUrl = url,
+                    height = height
                 )
+
             }
         }
         // 추가됨

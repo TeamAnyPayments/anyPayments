@@ -10,29 +10,26 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
 import com.artist.wea.R
 import com.artist.wea.components.InfoUnit
 import com.artist.wea.components.PageTopBar
+import com.artist.wea.components.WeaIconImage
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.constants.getDefTextStyle
@@ -41,8 +38,6 @@ import com.artist.wea.model.RegisterViewModel
 import com.artist.wea.repository.RegisterRepository
 import com.artist.wea.util.JSONParser
 import com.artist.wea.util.PreferenceUtil
-import com.skydoves.landscapist.CircularReveal
-import com.skydoves.landscapist.glide.GlideImage
 import org.json.JSONObject
 
 
@@ -92,9 +87,12 @@ fun UserProfilePage(
         userProfile.value = jParser.parseJsonToUserProfile(json)
     }
 
+    val scrollState = rememberScrollState()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(scrollState)
             .background(color = colorResource(id = R.color.mono50)),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -110,19 +108,13 @@ fun UserProfilePage(
             verticalArrangement = Arrangement.spacedBy(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            GlideImage(
-                imageModel = userProfile.value.profileURL.ifEmpty { R.drawable.icon_def_user_img },
-                // Crop, Fit, Inside, FillHeight, FillWidth, None
-                contentScale = ContentScale.Crop,
-                circularReveal = CircularReveal(duration = 100),
-                // shows a placeholder ImageBitmap when loading.
-                placeHolder = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
-                // shows an error ImageBitmap when the request failed.
-                error = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
-                modifier = Modifier
-                    .size(144.dp)
-                    .clip(shape = RoundedCornerShape(72.dp))
+
+            WeaIconImage(
+                imgUrl = userProfile.value.profileURL,
+                size = 144.dp,
+                isClip = true
             )
+
 
             // 유저 이름
             Text(

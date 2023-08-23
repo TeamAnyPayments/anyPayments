@@ -15,16 +15,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.artist.wea.R
 import com.artist.wea.constants.getDefTextStyle
-import com.skydoves.landscapist.CircularReveal
-import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
 fun PaymentItem(
@@ -39,31 +33,24 @@ fun PaymentItem(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ){
-        // 페이먼츠 이미지
-        GlideImage(
-            imageModel = paymentImgURL ?: R.drawable.icon_def_user_img,
-            // Crop, Fit, Inside, FillHeight, FillWidth, None
-            contentScale = ContentScale.Crop,
-            circularReveal = CircularReveal(duration = 100),
-            // shows a placeholder ImageBitmap when loading.
-            placeHolder = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
-            // shows an error ImageBitmap when the request failed.
-            error = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
-            modifier = Modifier
-                .size(48.dp)
-                .clip(shape = RoundedCornerShape(4.dp))
+        WeaIconImage(
+            modifier = Modifier.clip(shape = RoundedCornerShape(4.dp)),
+            imgUrl = (paymentImgURL?:"").toString(),
+            size = 48.dp,
+            isClip = false
         )
+
         // 페이먼츠 명
         Text(
             text = name,
-            style = getDefTextStyle().copy(fontSize = 20.sp)
+            style = getDefTextStyle()
         )
 
         // 페이먼츠 삭제 버튼
         Icon(
             Icons.Filled.Close,
             contentDescription = "삭제",
-            modifier = Modifier.size(24.dp),
+            modifier = Modifier.size(20.dp),
             tint = colorResource(id = R.color.red500)
         )
 

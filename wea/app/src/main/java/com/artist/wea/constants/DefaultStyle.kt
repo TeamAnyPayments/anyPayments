@@ -127,9 +127,9 @@ fun getSocialIcon(idx:Int=0): Painter {
     // 1 : 네이버
     // 2 : 카카오
     when(idx){
-        1 -> return painterResource(id = R.drawable.ic_launcher_foreground) // to edit
-        2 -> return painterResource(id = R.drawable.ic_launcher_foreground) // to edit
-        else -> return painterResource(id = R.drawable.ic_launcher_foreground) // default
+        1 -> return painterResource(id = R.drawable.icon_naver) // to edit
+        2 -> return painterResource(id = R.drawable.kakaotalk_sharing_btn_medium) // to edit
+        else -> return painterResource(id = R.drawable.default_image) // default
     }
 }
 

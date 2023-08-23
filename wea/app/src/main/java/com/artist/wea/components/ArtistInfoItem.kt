@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Person
@@ -19,19 +18,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.data.ArtistInfo
-import com.skydoves.landscapist.CircularReveal
-import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
 fun ArtistInfoItem(
@@ -45,7 +38,7 @@ fun ArtistInfoItem(
         .fillMaxWidth()
         .wrapContentHeight()
         .clickable {
-            if(isActive) {
+            if (isActive) {
                 navController.navigate(PageRoutes.ArtistInfo.route)
             }
         }
@@ -58,19 +51,11 @@ fun ArtistInfoItem(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ){
-            GlideImage(
-                imageModel = artistInfo.profileImgURL.ifEmpty { R.drawable.icon_def_user_img },
-                // Crop, Fit, Inside, FillHeight, FillWidth, None
-                contentScale = ContentScale.Crop,
-                // shows an image with a circular revealed animation.
-                circularReveal = CircularReveal(duration = 200),
-                // shows a placeholder ImageBitmap when loading.
-                placeHolder = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
-                // shows an error ImageBitmap when the request failed.
-                error = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
-                modifier = Modifier
-                    .size(64.dp)
-                    .clip(shape = RoundedCornerShape(32.dp))
+
+            WeaIconImage(
+                imgUrl = artistInfo.profileImgURL,
+                size = 64.dp,
+                isClip = true
             )
 
             Column(modifier = Modifier

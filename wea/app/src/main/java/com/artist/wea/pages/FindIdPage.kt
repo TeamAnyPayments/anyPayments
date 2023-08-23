@@ -1,6 +1,5 @@
 package com.artist.wea.pages
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,6 +11,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -46,8 +47,11 @@ fun FindIdPage(
     val repository = RegisterRepository()
     val viewModel = RegisterViewModel(repository)
 
+    val scrollState = rememberScrollState()
+
     Column(modifier = Modifier
         .fillMaxSize()
+        .verticalScroll(scrollState)
         .background(color = colorResource(id = R.color.mono50)))
     {
         PageTopBar(
