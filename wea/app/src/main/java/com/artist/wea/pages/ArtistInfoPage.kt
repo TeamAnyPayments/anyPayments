@@ -284,16 +284,6 @@ fun ArtistInfoPage(
                 location = "서울 마포구 와우산로21길 19-3 홍익문화공원"
             )
         )
-        val scrollState = rememberScrollState()
-        // 가변적 modifier
-        val isLongList = concertList.size > 4;
-        val minModifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-        val defModifier = Modifier
-            .fillMaxWidth()
-            .height(392.dp)
-            .verticalScroll(scrollState)
 
         // History
         InfoUnit(
@@ -312,7 +302,9 @@ fun ArtistInfoPage(
                     )
                 }
             },
-            screenModifier = if(isLongList) defModifier else minModifier
+            screenModifier =  Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
         )
         
         Spacer(modifier = Modifier.height(64.dp))

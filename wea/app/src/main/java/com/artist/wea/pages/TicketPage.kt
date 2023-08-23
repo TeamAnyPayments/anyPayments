@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -20,6 +22,7 @@ import com.artist.wea.R
 import com.artist.wea.components.PageTopBar
 import com.artist.wea.components.SponsorshipDetails
 import com.artist.wea.components.Ticket
+import com.artist.wea.components.sidemenu.GoogleAdItem
 import com.artist.wea.data.TicketInfo
 import java.time.LocalDateTime
 
@@ -43,27 +46,37 @@ fun TicketPage( navController: NavHostController
                 .fillMaxWidth()
                 .fillMaxHeight()
                 .verticalScroll(scrollState)
-                .padding(16.dp, 12.dp)
         ) {
 
-            Ticket(
-                ticketInfo = TicketInfo(
-                    serialNo = "1234-5678-1234",
-                    concertName = "무슨무슨 버스킹",
-                    teamName = "버스킹과 아이들",
-                    concertImgList = listOf(
-                        "https://img.hankyung.com/photo/202206/AKR20220622048100051_01_i_P4.jpg",
-                        "https://img.khan.co.kr/news/2022/05/13/l_20220513010016444001511313.jpg",
-                        "https://img.khan.co.kr/news/2022/05/13/l_2022051301001644400151132.jpg",
-                        "https://blog.kakaocdn.net/dn/lvIrz/btrSqGWAmW3/4D1zPsA9vcYOCroUHfKkM0/img.png"),
-                    dateTime = LocalDateTime.now(),
-                    location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞",
+            Column(
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .wrapContentHeight()
+                    .padding(16.dp, 12.dp)
+            ) {
+                Ticket(
+                    ticketInfo = TicketInfo(
+                        serialNo = "1234-5678-1234",
+                        concertName = "무슨무슨 버스킹",
+                        teamName = "버스킹과 아이들",
+                        concertImgList = listOf(
+                            "https://img.hankyung.com/photo/202206/AKR20220622048100051_01_i_P4.jpg",
+                            "https://img.khan.co.kr/news/2022/05/13/l_20220513010016444001511313.jpg",
+                            "https://img.khan.co.kr/news/2022/05/13/l_2022051301001644400151132.jpg",
+                            "https://blog.kakaocdn.net/dn/lvIrz/btrSqGWAmW3/4D1zPsA9vcYOCroUHfKkM0/img.png"),
+                        dateTime = LocalDateTime.now(),
+                        location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞",
+                    )
                 )
+
+                Spacer(modifier = Modifier.height(32.dp))
+                SponsorshipDetails()
+                Spacer(modifier = Modifier.height(32.dp))
+            }
+            // 구글 광고
+            GoogleAdItem(
+                navController = navController
             )
-
-            Spacer(modifier = Modifier.height(32.dp))
-            SponsorshipDetails()
-
         }
     }
 }

@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.artist.wea.R
 import com.artist.wea.constants.get12TextStyle
+import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.constants.getDefCardColors
 import com.artist.wea.constants.getDefCardElevation
 import com.artist.wea.constants.getDefTextStyle
@@ -70,11 +71,11 @@ fun Ticket(
                 {
                     Text(
                         text = "후원 번호",
-                        style = get12TextStyle()
+                        style = get14TextStyle()
                     )
                     Text(
                         text = ticketInfo.serialNo,
-                        style = get12TextStyle()
+                        style = get14TextStyle()
                     )
                 }
                 // 공유 버튼?
