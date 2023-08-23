@@ -1,6 +1,6 @@
 package com.artist.wea.data
 
-data class UserInfo(
+data class ProfileInfo(
     val profileURL:String = "",
     val userName:String = "",
     val userId:String = "",

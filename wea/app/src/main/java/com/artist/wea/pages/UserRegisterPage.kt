@@ -57,8 +57,8 @@ fun UserRegisterPage(
     type:String?
 ){
 
+    // 비동기 통신을 위한 기본 객체 settings
     val context = LocalContext.current;
-    // heartRate 세팅
     val mOwner = LocalLifecycleOwner.current
     val repository = RegisterRepository()
     val viewModel = RegisterViewModel(repository)
@@ -84,7 +84,7 @@ fun UserRegisterPage(
             val idInputText = remember { mutableStateOf("") }
             val pwdInputText = remember { mutableStateOf("") }
             val checkPwdText = remember { mutableStateOf("") }
-            val emailText = remember { mutableStateOf("") }
+            val emailInputText = remember { mutableStateOf("") }
             val emailCodeText = remember { mutableStateOf("") }
             val idCheckResult = remember { mutableStateOf(false) } // 아이디 중복체크
             val codeVerifyResult = remember { mutableStateOf(false) } // 코드 인증
@@ -105,6 +105,7 @@ fun UserRegisterPage(
 
             // 아이디 중복체크 가이드 텍스트 표시 변수
             val isUsableId = remember { mutableStateOf(false) }
+            val btnFLag = remember { mutableStateOf(0) }
             // 아이디, 중복 체크 진행!
             idInputText.value = DuplicateCheckInputForm(
                 titleText = stringResource(id = R.string.text_id_label),
@@ -116,12 +117,26 @@ fun UserRegisterPage(
                     // 아이디 중복 체크
                     viewModel.checkUserId(idInputText.value)
                     viewModel.checkUserIdRes.observe(mOwner, Observer {
-                        idCheckResult.value = it
-                        isUsableId.value = it
+                        if(!it){
+                            idCheckResult.value = true
+                            isUsableId.value = true
+                            btnFLag.value = 0
+                        }else {
+                            idCheckResult.value = false
+                            isUsableId.value = false
+                            btnFLag.value = 1
+                        }
                     })
                 },
-                // isSuccess = isUsableId.value,
-                // successText = "사용할 수 있는 아이디 입니다."
+                isSuccess = isUsableId.value,
+                onTextChange = {
+                    idCheckResult.value = false
+                    isUsableId.value = false
+                    btnFLag.value = 0;
+                },
+                btnFlag = btnFLag.value,
+                successText = "사용할 수 있는 아이디 입니다.",
+                failText = "사용할 수 없는 아이디 입니다."
             )
 
             // 비밀번호 입력
@@ -149,20 +164,20 @@ fun UserRegisterPage(
                 val isDisable = remember { mutableStateOf(true) }
 
                 // 이메일 입력
-                emailText.value = DuplicateCheckInputForm(
+                emailInputText.value = DuplicateCheckInputForm(
                     titleText = stringResource(R.string.text_email_label),
                     hintText = stringResource(R.string.text_email_guide),
                     btnText = if(isDisable.value) stringResource(R.string.text_verify_email) else "인증 완료",
-                    isError = emailText.value.isNotEmpty()
-                            && !Pattern.matches(WeaRegex.emailPattern.pattern(), emailText.value),
+                    isError = emailInputText.value.isNotEmpty()
+                            && !Pattern.matches(WeaRegex.emailPattern.pattern(), emailInputText.value),
                     errorText = WeaRegex.emailGuideText,
                     buttonAction = {
-                        if(Pattern.matches(WeaRegex.emailPattern.pattern(), emailText.value)){ // 이메일이 유효할 경우
+                        if(Pattern.matches(WeaRegex.emailPattern.pattern(), emailInputText.value)){ // 이메일이 유효할 경우
                             isMatched.value = true // 코드 발송 버튼 활성화
-                            viewModel.sendCodeToEmail(emailText.value);
+                            viewModel.sendCodeToEmail(emailInputText.value);
                             // 이메일 전송 결과
                             viewModel.sendCodeToEmailRes.observe(mOwner, Observer {
-                                if(it){
+                                if(!it){
                                     Toast.makeText(context,"인증 코드가 발송되었습니다", Toast.LENGTH_SHORT).show()
                                 }
                             })
@@ -182,13 +197,13 @@ fun UserRegisterPage(
                         buttonActions = {
                             // checkEmailByCode
                             viewModel.checkEmailByCode(
-                                email = emailText.value,
+                                email = emailInputText.value,
                                 code = emailCodeText.value
                             );
 
                             viewModel.checkEmailByCodeRes.observe(mOwner, Observer {
-                                if (it) {
-                                    codeVerifyResult.value = it // 코드 인증 처리
+                                if (!it) {
+                                    codeVerifyResult.value = !it // 코드 인증 처리
                                     Toast.makeText(context, "인증 성공", Toast.LENGTH_SHORT).show()
                                 }else {
                                     Toast.makeText(context, "인증 실패", Toast.LENGTH_SHORT).show()
@@ -216,7 +231,7 @@ fun UserRegisterPage(
                         id = idInputText.value,
                         password = pwdInputText.value,
                         name = nameInputText.value,
-                        email = emailText.value,
+                        email = emailInputText.value,
                         terms = isAgreeRequiredTerms.value,
                         checkId = idCheckResult.value,
                         checkEmail = codeVerifyResult.value
@@ -226,13 +241,15 @@ fun UserRegisterPage(
                     if(isComplete){
                         viewModel.joinUser(jUser)
                         viewModel.joinUserRes.observe(mOwner, Observer {
-                            if(it){
-                                Toast.makeText(context, WeaRegex.JoinSuccessGuideText, Toast.LENGTH_SHORT).show()
+                            if(!it){
+                                Toast.makeText(context, WeaRegex.joinSuccessGuideText, Toast.LENGTH_SHORT).show()
                                 navController.navigate(PageRoutes.Login.route)
+                            }else {
+                                Toast.makeText(context, WeaRegex.joinFailGuideText, Toast.LENGTH_SHORT).show()
                             }
                         })
                     }else {
-                        Toast.makeText(context, WeaRegex.JoinRejectGuideText, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, WeaRegex.joinRejectGuideText, Toast.LENGTH_SHORT).show()
                     }
                 }
             )
@@ -240,3 +257,4 @@ fun UserRegisterPage(
         }
     }
 }
+

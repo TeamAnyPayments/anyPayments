@@ -1,8 +1,12 @@
 package com.artist.wea.instance
 
+import android.content.Context
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.mutableStateOf
+import com.artist.wea.service.ArtistService
 import com.artist.wea.service.RegisterService
+import com.artist.wea.util.PreferenceUtil
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -31,12 +35,13 @@ class Retrofit : AppCompatActivity() {
             @Throws(IOException::class)
             override fun intercept(chain: Interceptor.Chain) : Response = with(chain) {
                 val newRequest = request().newBuilder()
-                    // .addHeader("Authorization", "Bearer ${}")
+                    .addHeader("Authorization", "Bearer ${token.value}")
                     .build()
                 Log.d("REQUEST:::", newRequest.toString())
                 Log.d("REQUEST:::", newRequest.method.toString())
                 Log.d("REQUEST:::", newRequest.body.toString())
                 Log.d("REQUEST:::", newRequest.headers.toString())
+                Log.d("REQUEST:::", newRequest.headers.value(0))
                 proceed(newRequest)
             }
         }
@@ -50,11 +55,17 @@ class Retrofit : AppCompatActivity() {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }
-        val api : RegisterService by lazy {
+        // api url 도메인에 따른 분기
+        val user : RegisterService by lazy {
             retrofit.create(RegisterService::class.java)
         }
+        val artist : ArtistService by lazy {
+            retrofit.create((ArtistService::class.java))
+        }
+        // val concert
     }
 
     companion object {
+        val token = mutableStateOf("")
     }
 }

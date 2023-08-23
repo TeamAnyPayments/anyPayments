@@ -41,13 +41,14 @@ fun ProfileItem(
         .wrapContentHeight()
         .padding(8.dp, 4.dp),
     isActive:Boolean = true,
+    destination:()->Unit = {navController.navigate(PageRoutes.MemberManage.route)},
     rightComposable: @Composable () -> Unit,
     memberCnt:Int = 1
 ) {
     Box(
         modifier = modifier.clickable {
             if (isActive) {
-                navController.navigate(PageRoutes.MemberManage.route)
+                destination()
             }
         }
     ) {
