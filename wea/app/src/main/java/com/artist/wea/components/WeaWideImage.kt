@@ -1,5 +1,6 @@
 package com.artist.wea.components
 
+import android.graphics.Bitmap
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
@@ -15,10 +16,14 @@ import com.skydoves.landscapist.glide.GlideImage
 fun WeaWideImage(
     modifier: Modifier = Modifier,
     imgUrl:String = "",
+    bitmap: Bitmap? = null,
     height: Dp,
 ){
+
+    val imgModel = bitmap ?: imgUrl.ifEmpty { R.drawable.icon_def_user_img }
+
     GlideImage(
-        imageModel = imgUrl.ifEmpty { R.drawable.icon_def_user_img },
+        imageModel = imgModel,
         // Crop, Fit, Inside, FillHeight, FillWidth, None
         contentScale = ContentScale.Crop,
         circularReveal = CircularReveal(duration = 100),
