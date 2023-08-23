@@ -67,8 +67,7 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     /**
-     * 아티스트 프로필
-     * \수정
+     * 아티스트 프로필 수정
      */
     @Override
     public Artist updateArtist(Artist artist) {
