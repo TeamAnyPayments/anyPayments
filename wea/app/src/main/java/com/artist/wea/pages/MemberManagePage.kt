@@ -1,5 +1,6 @@
 package com.artist.wea.pages
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -33,17 +34,18 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
+import com.artist.wea.components.LargeButton
 import com.artist.wea.components.MemberItem
 import com.artist.wea.components.PageTopBar
 import com.artist.wea.components.uidtclass.SearchArtistInfo
 import com.artist.wea.constants.PageRoutes
+import com.artist.wea.constants.getBtnColorByIdx
 import com.artist.wea.constants.getMenuItemColors
 
 @Composable
 fun MemberManagePage(
     navController: NavHostController
 ){
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -51,15 +53,19 @@ fun MemberManagePage(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        val context = LocalContext.current
+
         PageTopBar (
             navController = navController,
             pageTitle = "멤버 관리",
             singleIcon = Icons.Filled.Add,
+            rightMenuText = "저장",
             rightMenuAction = {
-                navController.navigate(PageRoutes.MemberAdd.route)
+                // navController.navigate(PageRoutes.MemberAdd.route)
+                Toast.makeText(context, "변경 사항이 저장 되었습니다", Toast.LENGTH_SHORT).show()
             }
         )
-        // RankList
+        // 멤버 관리
         val scrollState = rememberScrollState()
         Column(
             modifier = Modifier
@@ -85,8 +91,8 @@ fun MemberManagePage(
                     email = "sad_cat@daum.net"
                 )
             )
-            val context = LocalContext.current
-            val searchOptions = listOf("리더", "멤버")
+
+            val searchOptions = listOf("리더", "멤버") // TODO.. 백엔드 DTO와 함께 분류 구분해야함
             memberList.forEach {
                     item ->
                 MemberItem(
@@ -141,6 +147,15 @@ fun MemberManagePage(
                     }
                 )
             }
+            // 새로운 멤버 초대
+            LargeButton(
+                btnText = "새로운 멤버 초대",
+                btnColors = getBtnColorByIdx(3),
+                buttonAction = {
+                    navController.navigate(PageRoutes.MemberAdd.route)
+                }
+            )
+
         }
     }
 }
