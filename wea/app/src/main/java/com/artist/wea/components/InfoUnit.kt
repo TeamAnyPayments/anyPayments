@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.artist.wea.R
@@ -27,6 +28,7 @@ import com.artist.wea.constants.getDefTextStyle
 fun InfoUnit(
     modifier: Modifier = Modifier,
     titleText:String = "",
+    titleTextStyle:TextStyle = getDefTextStyle().copy(fontSize = 20.sp),
     screen: @Composable () -> Unit = {},
     screenModifier: Modifier = Modifier
         .fillMaxWidth()
@@ -36,12 +38,12 @@ fun InfoUnit(
     rightMenuAction:()-> Unit = {}
 ){
 
-    // 프로필 풀 소개
+    // 소개
     Column(
         modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight(),
-        verticalArrangement = Arrangement.spacedBy(4.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
         horizontalAlignment = Alignment.Start
     ) {
         // header
@@ -68,7 +70,7 @@ fun InfoUnit(
                 }
                 Text(
                     text = titleText,
-                    style = getDefTextStyle().copy(fontSize = 20.sp),
+                    style = titleTextStyle,
                 )
             }
             if(rightMenuIcon == null){
