@@ -1,6 +1,5 @@
 package com.artist.wea.pages
 
-import android.content.SharedPreferences
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -11,38 +10,34 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
 import com.artist.wea.R
 import com.artist.wea.components.InfoUnit
 import com.artist.wea.components.PageTopBar
+import com.artist.wea.components.WeaIconImage
 import com.artist.wea.constants.PageRoutes
+import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.data.UserProfile
 import com.artist.wea.model.RegisterViewModel
 import com.artist.wea.repository.RegisterRepository
 import com.artist.wea.util.JSONParser
 import com.artist.wea.util.PreferenceUtil
-import com.skydoves.landscapist.CircularReveal
-import com.skydoves.landscapist.glide.GlideImage
-import okhttp3.Route
 import org.json.JSONObject
 
 
@@ -92,9 +87,12 @@ fun UserProfilePage(
         userProfile.value = jParser.parseJsonToUserProfile(json)
     }
 
+    val scrollState = rememberScrollState()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(scrollState)
             .background(color = colorResource(id = R.color.mono50)),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -107,101 +105,105 @@ fun UserProfilePage(
 
         // 사용자 프로필 유닛
         Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-
-            GlideImage(
-                imageModel = userProfile.value.profileURL.ifEmpty { R.drawable.icon_def_user_img },
-                // Crop, Fit, Inside, FillHeight, FillWidth, None
-                contentScale = ContentScale.Crop,
-                circularReveal = CircularReveal(duration = 100),
-                // shows a placeholder ImageBitmap when loading.
-                placeHolder = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
-                // shows an error ImageBitmap when the request failed.
-                error = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
-                modifier = Modifier
-                    .size(156.dp)
-                    .clip(shape = RoundedCornerShape(78.dp))
+            WeaIconImage(
+                imgUrl = userProfile.value.profileURL,
+                size = 144.dp,
+                isClip = true
             )
+
 
             // 유저 이름
             Text(
                 text = userProfile.value.name,
-                style = getDefTextStyle().copy(fontSize = 20.sp)
+                style = getDefTextStyle()
             )
             // 유저 아이디
             Text(
                 text = userProfile.value.userId,
-                style = getDefTextStyle()
+                style = get14TextStyle()
             )
             // 유저 이메일
             Text(
                 text = userProfile.value.email,
-                style = getDefTextStyle()
+                style = get14TextStyle()
             )
         }
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         // 내 정보 관리
         Column(modifier = Modifier
             .padding(16.dp , 12.dp),
-            verticalArrangement = Arrangement.spacedBy(24.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
             horizontalAlignment = Alignment.Start
         ) {
             // 나의 정보 관리
             InfoUnit(
                 titleText = "나의 정보 관리",
-                screen = {}
-            )
-            // 이메일 변경
-            Text(
-                text = "이메일 변경",
-                style = getDefTextStyle(),
-                modifier = Modifier.clickable {
-                    navController.navigate(PageRoutes.ChangeEmail.route)
-                }
-            )
-            // 비밀번호 변경
-            Text(
-                text = "비밀번호 변경",
-                style = getDefTextStyle(),
-                modifier = Modifier.clickable {
-                    navController.navigate(PageRoutes.ChangePwd.route)
-                }
-            )
-            // 소셜 계정 관리
-            Text(
-                text = "소셜 계정 관리",
-                style = getDefTextStyle(),
-                modifier = Modifier
-            )
-            // 로그아웃
-            Text(
-                text = "로그아웃",
-                style = getDefTextStyle(),
-                modifier = Modifier.clickable {
-                    if(prefs.clearAll()){
-                        Toast.makeText(context, "로그아웃이 완료되었습니다.", Toast.LENGTH_SHORT).show()
-                        viewModel.logout()
-                        viewModel.loginUserRes.observe(mOwner, Observer {
-                            Log.d("LOGOUT_RESULT....", "${it.toString()}")
-                        })
-                        navController.navigate(PageRoutes.Login.route){
-                            popUpTo(0)
-                        }
-                    }
+                titleTextStyle = getDefTextStyle(),
+                screen = {
+                    Column(
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .wrapContentHeight()
+                            .padding(8.dp, 4.dp),
+                        horizontalAlignment = Alignment.Start,
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                    ){
+                        // 이메일 변경
+                        Text(
+                            text = "이메일 변경",
+                            style = get14TextStyle(),
+                            modifier = Modifier.clickable {
+                                navController.navigate(PageRoutes.ChangeEmail.route)
+                            }
+                        )
+                        // 비밀번호 변경
+                        Text(
+                            text = "비밀번호 변경",
+                            style = get14TextStyle(),
+                            modifier = Modifier.clickable {
+                                navController.navigate(PageRoutes.ChangePwd.route)
+                            }
+                        )
+                        // 소셜 계정 관리
+                        Text(
+                            text = "소셜 계정 관리",
+                            style = get14TextStyle(),
+                            modifier = Modifier
+                        )
+                        // 로그아웃
+                        Text(
+                            text = "로그아웃",
+                            style = get14TextStyle(),
+                            modifier = Modifier.clickable {
+                                if(prefs.clearAll()){
+                                    Toast.makeText(context, "로그아웃이 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                                    viewModel.logout()
+                                    viewModel.loginUserRes.observe(mOwner, Observer {
+                                        Log.d("LOGOUT_RESULT....", "${it.toString()}")
+                                    })
+                                    navController.navigate(PageRoutes.Login.route){
+                                        popUpTo(0)
+                                    }
+                                }
 
+                            }
+                        )
+                        // 로그아웃
+                        Text(
+                            text = "회원탈퇴",
+                            style = get14TextStyle()
+                                .copy(
+                                    color = colorResource(id = R.color.red500)
+                                ),
+                            modifier = Modifier
+                        )
+
+                    }
                 }
-            )
-            // 로그아웃
-            Text(
-                text = "회원탈퇴",
-                style = getDefTextStyle()
-                    .copy(
-                        color = colorResource(id = R.color.red500)
-                    ),
-                modifier = Modifier
             )
         }
 

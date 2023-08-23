@@ -28,7 +28,7 @@ import androidx.navigation.NavHostController
 import com.artist.wea.R
 import com.artist.wea.components.ArtistInfoItem
 import com.artist.wea.components.Badge
-import com.artist.wea.components.BuskingDetailTable
+import com.artist.wea.components.ConcertDetailTable
 import com.artist.wea.components.GuideBubble
 import com.artist.wea.components.InfiniteLoopPager
 import com.artist.wea.components.InfoUnit
@@ -193,7 +193,7 @@ fun ConcertInfoPage(
                     detailInfoMap["최소 후원금$"] = buskingInfo.minSupportAccount.toString()+" 원"
                     detailInfoMap["누적 관람객$"] = buskingInfo.cumulativeAudience.toString()
 
-                    BuskingDetailTable(
+                    ConcertDetailTable(
                         modifier = Modifier
                             .fillMaxWidth()
                             .wrapContentHeight(),

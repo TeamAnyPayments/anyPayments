@@ -7,13 +7,18 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.artist.wea.constants.get14TextStyle
+import com.artist.wea.constants.getDefTextStyle
 
 @Composable
 fun JoinArtistMenu(
     navController: NavHostController,
-    modifier: Modifier
+    modifier: Modifier,
+    korTextStyle: TextStyle = getDefTextStyle(),
+    engTextStyle: TextStyle = get14TextStyle(),
 ){
     Column(
         modifier = modifier,
@@ -22,6 +27,8 @@ fun JoinArtistMenu(
         SideMenuHeader(
             "아티스트 등록",
             "Be a Artist",
+            korTextStyle = korTextStyle,
+            engTextStyle = engTextStyle,
             modifier = Modifier
                 .wrapContentWidth()
                 .wrapContentHeight()
