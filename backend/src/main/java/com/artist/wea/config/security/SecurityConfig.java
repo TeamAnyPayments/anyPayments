@@ -45,7 +45,7 @@ public class SecurityConfig {
                         .accessDeniedHandler(jwtAccessDeniedHandler)
                 )
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/user/**", "/oauth/**").permitAll() // 인증 없이 접근 가능
+                        .requestMatchers("/user/**", "/oauth/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll() // 인증 없이 접근 가능
                         .anyRequest().authenticated() // 그 외의 모든 요청은 인증 요구
                 )
                 .oauth2Login(oauth2Login -> oauth2Login

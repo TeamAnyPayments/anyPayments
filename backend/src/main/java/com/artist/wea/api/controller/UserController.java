@@ -9,6 +9,8 @@ import com.artist.wea.db.dto.request.user.LoginPostReqDTO;
 import com.artist.wea.db.dto.util.ResponseDTO;
 import com.artist.wea.db.entity.User;
 import com.artist.wea.db.entity.UserImg;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.FileSystemResource;
@@ -25,6 +27,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+@Tag(name = "사용자 API")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/user")
@@ -36,6 +39,7 @@ public class UserController {
     /**
      * 회원 정보 조회 API
      */
+    @Operation(summary = "회원 정보 조회 API")
     @GetMapping
     public ResponseEntity<ResponseDTO> getUserDetail(@AuthenticationPrincipal UserPrincipal userPrincipal) {
         return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, "회원 정보 조회 완료", userService.getUser(userPrincipal.getUsername()).get()));
@@ -44,6 +48,7 @@ public class UserController {
     /**
      * 회원 가입 API
      */
+    @Operation(summary = "회원 가입 API")
     @PostMapping
     public ResponseEntity<ResponseDTO> joinUser(@RequestBody JoinPostReqDTO joinPostReqDto) {
         return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, "회원 가입 완료", userService.join(joinPostReqDto)));
@@ -52,6 +57,7 @@ public class UserController {
     /**
      * 로그인 API
      */
+    @Operation(summary = "로그인 API")
     @PostMapping("/login")
     public ResponseEntity<ResponseDTO> loginUser(@RequestBody LoginPostReqDTO loginPostReqDto) {
         String jwt = userService.login(loginPostReqDto.getId(), loginPostReqDto.getPassword());
@@ -63,6 +69,7 @@ public class UserController {
     /**
      * 로그아웃 API
      */
+    @Operation(summary = "로그아웃 API")
     @PostMapping("/logout")
     public ResponseEntity<ResponseDTO> logoutUser(HttpServletRequest servletRequest) {
         userService.logout();
@@ -72,6 +79,7 @@ public class UserController {
     /**
      * 아이디 찾기 API
      */
+    @Operation(summary = "아이디 찾기 API")
     @PostMapping("/id/find")
     public ResponseEntity<ResponseDTO> findId(@RequestParam("email") String email, @RequestParam("name") String name) throws Exception {
         mailService.findId(email, name);
@@ -81,6 +89,7 @@ public class UserController {
     /**
      * 아이디 중복 확인 API
      */
+    @Operation(summary = "아이디 중복 확인 API")
     @PostMapping("/id/check")
     public ResponseEntity<ResponseDTO> duplicateId(@RequestParam("id") String userId) {
         if (userService.duplicateId(userId))
@@ -91,6 +100,7 @@ public class UserController {
     /**
      * 비밀번호 찾기 API
      */
+    @Operation(summary = "비밀번호 찾기 API")
     @PostMapping("/pass/find")
     public ResponseEntity<ResponseDTO> findPass(@RequestParam("email") String email, @RequestParam("name") String name, @RequestParam("id") String userId) throws Exception {
         mailService.findPass(email, name, userId);
@@ -100,6 +110,7 @@ public class UserController {
     /**
      * 비밀번호 변경 API
      */
+    @Operation(summary = "비밀번호 변경 API")
     @PatchMapping("/pass/change")
     public ResponseEntity<ResponseDTO> changePass(@RequestParam("id") String userId, @RequestParam("password") String password, @RequestParam("passCheck") String passCheck) throws Exception {
         userService.changePass(userId, password, passCheck);
@@ -109,6 +120,7 @@ public class UserController {
     /**
      * 비밀번호 확인 API
      */
+    @Operation(summary = "비밀번호 확인 API")
     @PostMapping("/pass/check")
     public ResponseEntity<ResponseDTO> checkPass(@AuthenticationPrincipal UserPrincipal userPrincipal, @RequestParam("password") String password) throws Exception {
         userService.checkPass(userPrincipal.getPassword(), password);
@@ -118,6 +130,7 @@ public class UserController {
     /**
      * 이메일 인증 보내기 API
      */
+    @Operation(summary = "이메일 인증 보내기 API")
     @PostMapping("/email/send")
     public ResponseEntity<ResponseDTO> sendEmail(@RequestParam("email") String email) throws Exception {
         mailService.sendSimpleMessage(email);
@@ -127,6 +140,7 @@ public class UserController {
     /**
      * 이메일 인증 확인 API
      */
+    @Operation(summary = "이메일 인증 확인 API")
     @PostMapping("/email/check")
     public ResponseEntity<ResponseDTO> checkEmail(@RequestParam("email") String email, @RequestParam("code") String code) throws Exception {
         if (mailService.checkCode(email, code))
@@ -137,6 +151,7 @@ public class UserController {
     /**
      * 프로필 이미지 조회 API
      */
+    @Operation(summary = "프로필 이미지 조회 API")
     @GetMapping("/image")
     public ResponseEntity<?> getImage(@AuthenticationPrincipal UserPrincipal userPrincipal) throws IOException {
         UserImg userImg = userService.getImage(userPrincipal.getUsername());
@@ -153,6 +168,7 @@ public class UserController {
     /**
      * 프로필 이미지 업로드 API
      */
+    @Operation(summary = "프로필 이미지 업로드 API")
     @PostMapping("/image")
     public ResponseEntity<?> uploadImage(@AuthenticationPrincipal UserPrincipal userPrincipal,
                                          @RequestParam("image") MultipartFile multipartFile) throws IOException {
@@ -169,6 +185,7 @@ public class UserController {
     /**
      * 프로필 이미지 수정 API
      */
+    @Operation(summary = "프로필 이미지 수정 API")
     @PutMapping("/image")
     public ResponseEntity<?> updateImage(@AuthenticationPrincipal UserPrincipal userPrincipal,
                                          @RequestParam("image") MultipartFile multipartFile) throws IOException {
@@ -184,6 +201,7 @@ public class UserController {
     /**
      * 프로필 이미지 삭제 API
      */
+    @Operation(summary = "프로필 이미지 삭제 API")
     @DeleteMapping("/image")
     public ResponseEntity<?> deleteImage(@AuthenticationPrincipal UserPrincipal userPrincipal) {
         userService.deleteImage(userPrincipal.getUsername());
