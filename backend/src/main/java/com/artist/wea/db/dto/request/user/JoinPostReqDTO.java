@@ -7,6 +7,7 @@ import lombok.*;
 @Setter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class JoinPostReqDTO {
 
     private String id;
