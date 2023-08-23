@@ -11,11 +11,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
@@ -24,11 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,13 +33,13 @@ import com.artist.wea.components.ArtistInfoItem
 import com.artist.wea.components.ConcertSearchItem
 import com.artist.wea.components.InfoUnit
 import com.artist.wea.components.PageTopBar
+import com.artist.wea.components.WeaIconImage
+import com.artist.wea.components.WeaWideImage
 import com.artist.wea.components.uidtclass.SearchArtistInfo
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.data.ArtistInfo
-import com.skydoves.landscapist.CircularReveal
-import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
 fun ArtistInfoPage(
@@ -117,21 +111,10 @@ fun ArtistInfoPage(
                 )
             }
 
-            // 배경 이미지
-            GlideImage(
-                imageModel = artistInfo.bgImgURL.ifEmpty { R.drawable.icon_def_user_img },
-                // Crop, Fit, Inside, FillHeight, FillWidth, None
-                contentScale = ContentScale.Crop,
-                // shows an image with a circular revealed animation.
-                circularReveal = CircularReveal(duration = 200),
-                // shows a placeholder ImageBitmap when loading.
-                placeHolder = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
-                // shows an error ImageBitmap when the request failed.
-                error = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(156.dp)
-                    .align(Alignment.TopStart)
+            WeaWideImage(
+                modifier = Modifier.align(Alignment.TopStart),
+                imgUrl = artistInfo.bgImgURL,
+                height = 156.dp
             )
 
             // 아티스트 정보 layer
@@ -145,23 +128,13 @@ fun ArtistInfoPage(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // 아티스트 프로필
-                GlideImage(
-                    imageModel = artistInfo.profileImgURL.ifEmpty { R.drawable.icon_def_user_img } ,
-                    // Crop, Fit, Inside, FillHeight, FillWidth, None
-                    contentScale = ContentScale.Crop,
-                    // shows an image with a circular revealed animation.
-                    circularReveal = CircularReveal(duration = 200),
-                    // shows a placeholder ImageBitmap when loading.
-                    placeHolder = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
-                    // shows an error ImageBitmap when the request failed.
-                    error = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
-                    modifier = Modifier
-                        .width(144.dp)
-                        .height(144.dp)
-                        //.size(144.dp)
-                        .clip(shape = RoundedCornerShape(72.dp))
+
+                WeaIconImage(
+                    imgUrl = artistInfo.profileImgURL,
+                    size = 144.dp,
+                    isClip = true
                 )
+
                 // 아티스트 이름
                 Row(
                     modifier = Modifier
@@ -187,7 +160,9 @@ fun ArtistInfoPage(
                     style = getDefTextStyle().copy(
                         textAlign = TextAlign.Center
                     ),
-                    modifier = Modifier.fillMaxWidth().height(32.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(32.dp)
                 )
             }
 
@@ -302,7 +277,7 @@ fun ArtistInfoPage(
                     )
                 }
             },
-            screenModifier =  Modifier
+            screenModifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
         )

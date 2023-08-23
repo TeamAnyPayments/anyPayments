@@ -7,25 +7,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.artist.wea.R
 import com.artist.wea.components.uidtclass.SearchArtistInfo
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get14TextStyle
-import com.skydoves.landscapist.CircularReveal
-import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
 fun MemberItem(
@@ -50,20 +41,13 @@ fun MemberItem(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            GlideImage(
-                imageModel = content.imgURL.ifEmpty { R.drawable.icon_def_user_img },
-                // Crop, Fit, Inside, FillHeight, FillWidth, None
-                contentScale = ContentScale.Crop,
-                // shows an image with a circular revealed animation.
-                circularReveal = CircularReveal(duration = 250),
-                // shows a placeholder ImageBitmap when loading.
-                placeHolder = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
-                // shows an error ImageBitmap when the request failed.
-                error = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
-                modifier = Modifier
-                    .size(64.dp)
-                    .clip(shape = RoundedCornerShape(32.dp))
+
+            WeaIconImage(
+                imgUrl = content.imgURL,
+                size = 64.dp,
+                isClip = true
             )
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

@@ -32,11 +32,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -47,13 +44,13 @@ import com.artist.wea.components.ConcertSearchItem
 import com.artist.wea.components.InfoUnit
 import com.artist.wea.components.ModifyForm
 import com.artist.wea.components.PageTopBar
+import com.artist.wea.components.WeaIconImage
+import com.artist.wea.components.WeaWideImage
 import com.artist.wea.components.uidtclass.SearchArtistInfo
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.data.ArtistInfo
-import com.skydoves.landscapist.CircularReveal
-import com.skydoves.landscapist.glide.GlideImage
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -126,20 +123,9 @@ fun ArtistInfoModifyPage(
                     .height(144.dp)
                     .align(Alignment.TopStart)
             ){
-                // 배경 이미지
-                GlideImage(
-                    imageModel = artistInfo.bgImgURL.ifEmpty { R.drawable.icon_def_user_img },
-                    // Crop, Fit, Inside, FillHeight, FillWidth, None
-                    contentScale = ContentScale.Crop,
-                    // shows an image with a circular revealed animation.
-                    circularReveal = CircularReveal(duration = 200),
-                    // shows a placeholder ImageBitmap when loading.
-                    placeHolder = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
-                    // shows an error ImageBitmap when the request failed.
-                    error = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
+
+                WeaWideImage(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(144.dp)
                         .align(Alignment.TopStart)
                         .combinedClickable(
                             onClick = { },
@@ -148,7 +134,9 @@ fun ArtistInfoModifyPage(
                                     .makeText(context, "배경 편집 모달 ON", Toast.LENGTH_SHORT)
                                     .show()
                             },
-                        )
+                        ),
+                    imgUrl = artistInfo.bgImgURL,
+                    height = 144.dp
                 )
             }
 
@@ -167,23 +155,14 @@ fun ArtistInfoModifyPage(
                 Box(
                     modifier = Modifier.size(144.dp)
                 ) {
-                    GlideImage(
-                        imageModel = artistInfo.profileImgURL.ifEmpty { R.drawable.icon_def_user_img } ,
-                        // Crop, Fit, Inside, FillHeight, FillWidth, None
-                        contentScale = ContentScale.Crop,
-                        // shows an image with a circular revealed animation.
-                        circularReveal = CircularReveal(duration = 200),
-                        // shows a placeholder ImageBitmap when loading.
-                        placeHolder = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
-                        // shows an error ImageBitmap when the request failed.
-                        error = ImageBitmap.imageResource(R.drawable.icon_def_user_img),
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .width(144.dp)
-                            .height(144.dp)
-                            //.size(144.dp)
-                            .clip(shape = RoundedCornerShape(72.dp))
+
+                    WeaIconImage(
+                        modifier = Modifier.align(Alignment.Center),
+                        imgUrl = artistInfo.profileImgURL,
+                        size = 144.dp,
+                        isClip = true
                     )
+
                     Box(modifier = Modifier
                         .wrapContentWidth()
                         .wrapContentHeight()
