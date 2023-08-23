@@ -25,7 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavHostController
 import com.artist.wea.R
@@ -85,7 +84,8 @@ fun ArtistInfoPage(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(312.dp)
+                .height(328.dp)
+                .background(color = colorResource(id = R.color.mono50))
         ){
             // 상단 바
 
@@ -114,7 +114,15 @@ fun ArtistInfoPage(
             WeaWideImage(
                 modifier = Modifier.align(Alignment.TopStart),
                 imgUrl = artistInfo.bgImgURL,
-                height = 156.dp
+                height = 164.dp
+            )
+
+            // 아티스트 프로필
+            WeaIconImage(
+                modifier = Modifier.align(Alignment.Center),
+                imgUrl = artistInfo.profileImgURL,
+                size = 144.dp,
+                isClip = true
             )
 
             // 아티스트 정보 layer
@@ -128,24 +136,17 @@ fun ArtistInfoPage(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
-                WeaIconImage(
-                    imgUrl = artistInfo.profileImgURL,
-                    size = 144.dp,
-                    isClip = true
-                )
-
                 // 아티스트 이름
                 Row(
                     modifier = Modifier
                         .wrapContentWidth()
                         .wrapContentHeight(),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(
                         text = artistInfo.artistName,
-                        style = getDefTextStyle().copy(fontSize = 20.sp),
+                        style = getDefTextStyle(),
                     )
                     Icon(
                         Icons.Filled.Star, 
@@ -157,22 +158,14 @@ fun ArtistInfoPage(
                 // 아티스트 한줄 소개
                 Text(
                     text = artistInfo.comment,
-                    style = getDefTextStyle().copy(
+                    style = get14TextStyle().copy(
                         textAlign = TextAlign.Center
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(32.dp)
+                        .wrapContentHeight()
                 )
             }
-
-            // bottom layer
-            Spacer(modifier = Modifier
-                .fillMaxWidth()
-                .height(156.dp)
-                .background(color = colorResource(id = R.color.mono50))
-                .align(Alignment.BottomEnd)
-            )
         }
 
         // 프로필 소개
