@@ -1,5 +1,6 @@
 package com.artist.wea.pages
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -23,15 +24,16 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.artist.wea.R
 import com.artist.wea.components.InputForm
-import com.artist.wea.components.LoginButton
+import com.artist.wea.components.LargeButton
 import com.artist.wea.components.UserInfoManageMenu
 
 @Composable
 fun LoginPage(
     navController: NavController,
     modifier: Modifier =
-                  Modifier
-                      .fillMaxSize()) {
+        Modifier
+            .fillMaxSize()
+            .background(colorResource(id = R.color.mono50))) {
 
     var idText = remember { mutableStateOf("") }
     var pwdText = remember { mutableStateOf("") }
@@ -65,49 +67,57 @@ fun LoginPage(
                 .fillMaxWidth()
                 .height(32.dp))
         }
-        idText.value = InputForm(titleText = stringResource(R.string.text_id_label))
-        pwdText.value = InputForm(titleText = stringResource(R.string.text_pwd_label))
+        Spacer(modifier = Modifier
+            .fillMaxWidth()
+            .height(16.dp))
+        idText.value = InputForm(hintText = stringResource(R.string.text_id_input_guide))
+        Spacer(modifier = Modifier
+            .fillMaxWidth()
+            .height(16.dp))
+        pwdText.value = InputForm(hintText = stringResource(R.string.text_pwd_input_guide))
 
         // 회원
         Spacer(modifier = Modifier
             .fillMaxWidth()
             .height(16.dp))
-        UserInfoManageMenu()
+        UserInfoManageMenu(navController)
         Spacer(modifier = Modifier
             .fillMaxWidth()
             .height(16.dp))
         
         // 로그인 버튼들
-        LoginButton(
-            navController=navController,
-            buttonText = stringResource(R.string.text_login_btn)
-        )
-        Spacer(modifier = Modifier
-            .fillMaxWidth()
-            .height(16.dp))
+        LargeButton(
+            btnText = stringResource(R.string.text_login_btn),
+            buttonAction = {
 
-        LoginButton(
-            navController=navController,
-            buttonText = stringResource(R.string.text_login_btn_naver),
-            isIcon = true,
-            bgColor = colorResource(id = R.color.naver_green),
-            textColor = colorResource(id = R.color.white)
+            }
         )
         Spacer(modifier = Modifier
             .fillMaxWidth()
-            .height(16.dp))
+            .height(8.dp))
 
-        LoginButton(
-            navController=navController,
-            buttonText = stringResource(R.string.text_login_btn_kakao),
-            isIcon = true,
-            bgColor = colorResource(id = R.color.kakao_yellow),
-            textColor = colorResource(id = R.color.kakao_brown)
+        LargeButton(
+            btnText = stringResource(R.string.text_login_btn_naver),
+            // nextPage = "register/naver",
+            btnIdx = 1, // 네이버
+            buttonAction = {
+
+            }
         )
         Spacer(modifier = Modifier
             .fillMaxWidth()
-            .height(16.dp))
-        Text(text = "${idText.value} | ${pwdText.value}");
+            .height(8.dp))
+
+        LargeButton(
+            btnText = stringResource(R.string.text_login_btn_kakao),
+            btnIdx = 2, // 카카오,
+            buttonAction = {
+
+            }
+        )
+        Spacer(modifier = Modifier
+            .fillMaxWidth()
+            .height(8.dp))
 
     }
 

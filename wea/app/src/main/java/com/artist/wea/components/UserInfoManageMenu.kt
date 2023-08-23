@@ -1,5 +1,6 @@
 package com.artist.wea.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,20 +10,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.artist.wea.R
+import com.artist.wea.constants.PageRoutes
+import com.artist.wea.constants.get14TextStyle
 
 @Composable
-fun UserInfoManageMenu(modifier: Modifier =
-                           Modifier
-                               .fillMaxWidth()
-                               .wrapContentHeight()){
-
+fun UserInfoManageMenu(
+    navController: NavController,
+    modifier: Modifier = Modifier
+        .fillMaxWidth()
+        .wrapContentHeight()){
     Row(modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()
@@ -30,36 +30,29 @@ fun UserInfoManageMenu(modifier: Modifier =
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         ){
-
-        Text(text = stringResource(R.string.text_find_id),
-            style = TextStyle(
-                fontSize = 14.sp,
-//                    fontFamily = FontFamily(Font(R.font.inter)),
-                fontWeight = FontWeight(400),
-                color = colorResource(id = R.color.black)// to edit
-            )
+        // 아이디 찾기
+        Text(
+            modifier = Modifier.clickable {
+                navController
+                    .navigate(PageRoutes.FindId.route)},
+            text = stringResource(R.string.text_find_id),
+            style = get14TextStyle()
         )
-
-        Text(text = stringResource(R.string.text_find_pwd),
-            style = TextStyle(
-                fontSize = 14.sp,
-//                    fontFamily = FontFamily(Font(R.font.inter)),
-                fontWeight = FontWeight(400),
-                color = colorResource(id = R.color.black),// to edit
-            )
+        // 비밀번호 찾기
+        Text(
+            modifier = Modifier.clickable {
+                navController
+                    .navigate(PageRoutes.FindPwd.route)},
+            text = stringResource(R.string.text_find_pwd),
+            style =get14TextStyle()
         )
-
-
-        Text(text = stringResource(R.string.text_regist),
-            style = TextStyle(
-                fontSize = 14.sp,
-//                    fontFamily = FontFamily(Font(R.font.inter)),
-                fontWeight = FontWeight(400),
-                color = colorResource(id = R.color.black),// to edit
-            )
+        // 회원가입
+        Text(
+            modifier = Modifier.clickable {
+                navController
+                    .navigate(PageRoutes.UserRegister.route)},
+            text = stringResource(R.string.text_regist),
+            style = get14TextStyle()
         )
-
-
     }
-
 }

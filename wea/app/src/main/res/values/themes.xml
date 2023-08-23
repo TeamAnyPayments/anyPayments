@@ -1,5 +1,11 @@
-<?xml version="1.0" encoding="utf_8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <style name="Theme.Wea" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.Wea" parent="android:Theme.Material.Light.NoActionBar">
+<!--    <style name="Theme.Wea" parent="Theme.MaterialComponents.Light.DarkActionBar">-->
+        <!-- Customize your theme here. -->
+<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
+<!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+<!--        <item name="colorAccent">@color/colorAccent</item>-->
+<!--        <item name="colorOnSurfaceVariant">@color/colorOnSurfaceVariant</item>-->
+    </style>
 </resources>
