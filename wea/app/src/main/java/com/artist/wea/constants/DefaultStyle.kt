@@ -139,6 +139,7 @@ fun getBtnColorByIdx(idx:Int=0):ButtonColors{
     when(idx){
         1 -> return getNaverBtnColor()
         2 -> return getKaKaoBtnColor()
+        3 -> return getCommonBtnColor()
         else -> return getButtonColor()
     }
 }
@@ -156,6 +157,16 @@ fun getButtonColor(
         disabledContentColor = colorResource(id = R.color.mono100),
     )
 }
+@Composable
+fun getCommonBtnColor():ButtonColors{
+    return ButtonDefaults.buttonColors(
+        containerColor = colorResource(id = R.color.mono100),
+        contentColor = colorResource(id = R.color.black),
+        disabledContainerColor = colorResource(id = R.color.mono300),
+        disabledContentColor = colorResource(id = R.color.mono100),
+    )
+}
+
 @Composable
 fun getNaverBtnColor():ButtonColors{
     return ButtonDefaults.buttonColors(

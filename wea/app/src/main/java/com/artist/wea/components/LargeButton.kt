@@ -65,8 +65,10 @@ fun LargeButton(
             }
             Text(
                 text = btnText,
-                // style = getDefTextStyle().copy(color = colorResource(id = R.color.white), textAlign = TextAlign.Center),
-                modifier = if(!hasIcon) Modifier.fillMaxWidth().padding(6.dp) else Modifier.wrapContentWidth(),
+                modifier = if(!hasIcon) Modifier
+                    .fillMaxWidth()
+                    .padding(6.dp)
+                else Modifier.wrapContentWidth(),
                 textAlign = TextAlign.Center
             )
             if(hasIcon){
