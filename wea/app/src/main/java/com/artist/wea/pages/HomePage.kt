@@ -300,13 +300,9 @@ fun homePage(
                         modifier
                             .fillMaxWidth()
                             .height(height)
-                            .weight(1f),
-                        menuTitle = "공연 개설하기",
-                            .wrapContentHeight()
-                            .padding(4.dp)
                             .weight(1f)
                             .clickable { navController.navigate(PageRoutes.OpenConcert.route) },
-                    menuTitle = "공연 개설하기",
+                        menuTitle = "공연 개설하기",
                         tagName = "ARTIST",
                         badgeColor = colorResource(id = R.color.red300),
                         imgPainter = painterResource(id = R.drawable.icon_create_concert)

@@ -39,7 +39,7 @@ fun TitleDropdownForm(
         // input 컴포넌트 제목 부분
         Text(
             text = titleText,
-            style = getDefTextStyle().copy(fontSize = 20.sp)
+            style = getDefTextStyle()
         )
         Spacer(modifier = Modifier.height(16.dp))
         // DropdownTextField 로부터 값을 받고 리턴

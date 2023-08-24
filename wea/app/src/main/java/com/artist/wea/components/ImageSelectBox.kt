@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -36,7 +37,7 @@ fun ImageSelectBox(
     var imageUri by remember { mutableStateOf<Uri?>(null) }
     val context = LocalContext.current
     var (bitmap, _) = remember { mutableStateOf<Bitmap?>(null) }
-    val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) {
+    val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.PickVisualMedia()) {
         imageUri = it
     }
 
@@ -55,7 +56,7 @@ fun ImageSelectBox(
             bitmap?.let {  btm ->
                 Box(
                     modifier = Modifier.clickable {
-                        launcher.launch("image/*")
+                        launcher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                     }
                 ) {
                     Image(bitmap = btm.asImageBitmap(),
@@ -69,7 +70,7 @@ fun ImageSelectBox(
                 modifier = modifier
                     .background(colorResource(id = R.color.mono100))
                     .clickable {
-                        launcher.launch("image/*")
+                        launcher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                     },
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
