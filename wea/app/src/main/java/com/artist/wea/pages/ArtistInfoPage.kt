@@ -1,6 +1,7 @@
 package com.artist.wea.pages
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,8 +21,11 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -32,6 +36,7 @@ import com.artist.wea.components.ArtistInfoItem
 import com.artist.wea.components.ConcertSearchItem
 import com.artist.wea.components.InfoUnit
 import com.artist.wea.components.PageTopBar
+import com.artist.wea.components.ShowProfileDialog
 import com.artist.wea.components.WeaIconImage
 import com.artist.wea.components.WeaWideImage
 import com.artist.wea.components.uidtclass.SearchArtistInfo
@@ -71,6 +76,15 @@ fun ArtistInfoPage(
                 "인스타그램\n" +
                 "@abc_123_heart",
     )
+    val modalVisibleState = remember { mutableStateOf(false) }
+    ShowProfileDialog(
+        visible = modalVisibleState.value,
+        defaultImageURL = artistInfo.profileImgURL,
+        localImgBitmap = null,
+        onDismissRequest = {
+            modalVisibleState.value = false
+        })
+
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
@@ -119,10 +133,14 @@ fun ArtistInfoPage(
 
             // 아티스트 프로필
             WeaIconImage(
-                modifier = Modifier.align(Alignment.Center),
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .clickable {
+                       modalVisibleState.value = true;
+                    },
                 imgUrl = artistInfo.profileImgURL,
                 size = 144.dp,
-                isClip = true
+                isClip = true,
             )
 
             // 아티스트 정보 layer
