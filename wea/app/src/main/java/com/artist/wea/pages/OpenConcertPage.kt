@@ -1,7 +1,7 @@
 package com.artist.wea.pages
 
-import android.app.TimePickerDialog
 import android.graphics.Bitmap
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,35 +19,39 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.artist.wea.components.PageTopBar
-import com.artist.wea.components.CapsuleSearchBar
-import com.artist.wea.components.DateTimePicker
-import com.artist.wea.components.NaverMapComponent
+import com.artist.wea.R
 import com.artist.wea.components.NaverMapComponentWithMapView
+import com.artist.wea.components.PageTopBar
 import com.artist.wea.components.TitleCapsuleSearchForm
 import com.artist.wea.components.TitleDropdownForm
 import com.artist.wea.components.TitleImageForm
 import com.artist.wea.components.TitleInputForm
 import com.artist.wea.components.TitleStartEndTimeForm
+import com.artist.wea.constants.get14TextStyle
+import com.artist.wea.constants.getButtonColor
+import com.artist.wea.constants.getDefTextStyle
 import com.naver.maps.geometry.LatLng
-import com.naver.maps.map.CameraAnimation
-import com.naver.maps.map.CameraUpdate
-import com.naver.maps.map.MapView
-import com.naver.maps.map.NaverMap
 import com.naver.maps.map.overlay.Marker
 import java.time.LocalDateTime
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun OpenConcertPage(
     navController: NavHostController,
     modifier: Modifier = Modifier
         .fillMaxSize()
 ){
+    val context = LocalContext.current
+
     Column(
         modifier = modifier
     ) {
@@ -57,6 +61,7 @@ fun OpenConcertPage(
         )
 
         val scrollState = rememberScrollState()
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -74,8 +79,7 @@ fun OpenConcertPage(
             var concertLocation by remember { mutableStateOf("") }
             var detailLocation by  remember { mutableStateOf("") }
             var ticketPrice by remember { mutableStateOf("") }
-            var tag by remember { mutableStateOf("") }
-            val context = LocalContext.current
+            var tag = remember { mutableStateListOf<String>() }
 
             artist = TitleDropdownForm(
                 listItems = arrayOf("소속1", "소속2", "소속3"),
@@ -130,31 +134,6 @@ fun OpenConcertPage(
                 }
             }
 
-            Button(onClick = {
-                mapView.getMapAsync {
-                    val cameraUpdate = CameraUpdate.scrollTo(LatLng(36.355345889, 127.29842604))
-                    cameraUpdate.animate(CameraAnimation.Linear)
-                    it.moveCamera(cameraUpdate)
-                }
-            }) {
-                Text(text = "싸피로")
-            }
-
-
-//            Row(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//            ) {
-//                concertStartTime = TitleInputForm(
-//                    titleText = "시작 예정 시간",
-//                    hintText = "시작 예정 시간을 입력하세요."
-//                )
-//                concertEndTime = TitleInputForm(
-//                    titleText = "종료 예정 시간",
-//                    hintText = "종료 예정시간을 입력하세요."
-//                )
-//            }
-//
             concertLocation = TitleInputForm(
                 titleText = "공연 장소",
                 hintText = "공연 장소를 입력하세요."
@@ -167,14 +146,31 @@ fun OpenConcertPage(
 
             ticketPrice = TitleInputForm(
                 titleText = "최소 후원금",
-                hintText = "단위 : 원"
+                hintText = "단위 : 원",
+                isNumber = true
             )
-//
-//            tag = TitleInputForm(
-//                titleText = "태그",
-//                hintText = "태그 입력"
-//            )
 
+            tag = TitleCapsuleSearchForm(
+                titleText = "태그",
+                hintText = "태그 검색",
+                searchList = arrayOf(),
+                capacity = 5,
+                isTagCapsule = true
+            )
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                onClick = {
+                    Toast.makeText(context, "제출", Toast.LENGTH_SHORT).show()
+                },
+                colors = getButtonColor()
+            ) {
+                Text(
+                    text = "공연 개설하기",
+                    style = getDefTextStyle(),
+                    color = colorResource(id = R.color.white)
+                )
+            }
         }
     }
 }
