@@ -1,34 +1,50 @@
 package com.artist.wea.pages
 
+import android.app.Activity
+import android.graphics.Bitmap
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
 import com.artist.wea.R
+import com.artist.wea.components.CustomAlertDialog
 import com.artist.wea.components.InfoUnit
 import com.artist.wea.components.PageTopBar
+import com.artist.wea.components.ShowProfileDialog
 import com.artist.wea.components.WeaIconImage
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get14TextStyle
@@ -37,10 +53,13 @@ import com.artist.wea.data.UserProfile
 import com.artist.wea.model.RegisterViewModel
 import com.artist.wea.repository.RegisterRepository
 import com.artist.wea.util.JSONParser
+import com.artist.wea.util.PhotoSelector
 import com.artist.wea.util.PreferenceUtil
+import com.skydoves.landscapist.glide.GlideImage
 import org.json.JSONObject
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun UserProfilePage(
     navController: NavHostController
@@ -52,7 +71,32 @@ fun UserProfilePage(
     val repository = RegisterRepository()
     val viewModel = RegisterViewModel(repository)
 
-    // prefs
+    val profileBitmap = remember { mutableStateOf<Bitmap?>(null) } //
+    // 사진 불러오기 기능
+    val photoSelector = PhotoSelector()
+    val takePhotoFromAlbumLauncher = // 갤러리에서 사진 가져오기
+        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data?.data?.let { uri ->
+
+                    // Log.d("IMAGE:::", "${uri.toString()}")
+
+                    photoSelector.setImageToVariable(
+                        context = context,
+                        uri = uri,
+                        imageSource = profileBitmap,
+                        fileName = "user_profile"
+                    )
+
+                } ?: run {
+                    Toast.makeText(context, "이미지를 불러오던 중 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                }
+            } else if (result.resultCode != Activity.RESULT_CANCELED) {
+                // ??
+            }
+        }
+
+    // 사용자 정보를 불러오기 위한 prefs 및 관련 변수들
     val prefs = PreferenceUtil(context);
     val profileJson = remember{
         mutableStateOf(prefs.getString("profile_json", ""))
@@ -75,9 +119,9 @@ fun UserProfilePage(
             }else {
                 Log.d("PROFILE_PAGE:::", "토큰 만료")
                 Toast.makeText(context, "회원 정보가 만료되었습니다.", Toast.LENGTH_SHORT).show()
-                navController.navigate(PageRoutes.Login.route){
-                    popUpTo(0)
-                }
+//                navController.navigate(PageRoutes.Login.route){
+//                    popUpTo(0)
+//                }
             }
         })
     }else {
@@ -87,8 +131,17 @@ fun UserProfilePage(
         userProfile.value = jParser.parseJsonToUserProfile(json)
     }
 
-    val scrollState = rememberScrollState()
+    val modalVisibleState = remember { mutableStateOf(false) }
+    ShowProfileDialog(
+        visible = modalVisibleState.value,
+        defaultImageURL = userProfile.value.profileURL,
+        localImgBitmap = profileBitmap.value,
+        onDismissRequest = {
+            modalVisibleState.value = false
+        })
 
+
+    val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -112,7 +165,16 @@ fun UserProfilePage(
             WeaIconImage(
                 imgUrl = userProfile.value.profileURL,
                 size = 144.dp,
-                isClip = true
+                bitmap = profileBitmap.value,
+                isClip = true,
+                modifier = Modifier.combinedClickable(
+                    onClick = {
+                        modalVisibleState.value = true
+                    },
+                    onLongClick = {
+                        takePhotoFromAlbumLauncher.launch(photoSelector.takePhotoFromAlbumIntent)
+                    },
+                )
             )
 
 
@@ -206,7 +268,5 @@ fun UserProfilePage(
                 }
             )
         }
-
-
-    }
+   }
 }
