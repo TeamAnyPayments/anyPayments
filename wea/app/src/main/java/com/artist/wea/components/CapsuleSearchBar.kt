@@ -42,7 +42,8 @@ fun CapsuleSearchBar(
     hintText: String = "Input Placeholder",
     searchList: Array<String>,
     inputDelay: Long = 500L,
-    capacity: Int
+    capacity: Int,
+    isTagCapsule: Boolean = false
 ): SnapshotStateList<String> {
     val context = LocalContext.current
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -56,7 +57,7 @@ fun CapsuleSearchBar(
                 false
             }
             it in selectList -> {
-                Toast.makeText(context, "이미 선택된 장르입니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "이미 선택된 항목입니다.", Toast.LENGTH_SHORT).show()
                 false
             }
             else -> {
@@ -67,7 +68,7 @@ fun CapsuleSearchBar(
     }
 
     LaunchedEffect(searchText) {
-        if (searchText != "") {
+        if (searchText.trim() != "") {
             delay(inputDelay)
             expanded = true
         }
@@ -134,7 +135,7 @@ fun CapsuleSearchBar(
                         isNothing = false
                     }
                 }
-                if (isNothing) {
+                if (isNothing and searchText.isNotEmpty()) {
                     DropdownMenuItem(
                         text = { Text(text= "$searchText 추가하기")},
                         onClick = {
@@ -159,7 +160,8 @@ fun CapsuleSearchBar(
                     closeButton = true,
                     onclick = {
                         selectList.remove(tagText)
-                    }
+                    },
+                    isTagCapsule = isTagCapsule
                 )
             }
         }

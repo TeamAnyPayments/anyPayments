@@ -30,7 +30,7 @@ fun TextCapsule(
     randomColor: Boolean = false,
     closeButton: Boolean = true,
     onclick: () -> Unit = {},
-    prefix: String = ""
+    isTagCapsule: Boolean = false
 ) {
     val tagColor = remember { if (randomColor) ColorPicker.getRandomPastelColor() else color }
     Row(
@@ -47,7 +47,7 @@ fun TextCapsule(
                 .padding(PaddingValues(
                     start = 8.dp,
                 )),
-            text = prefix + text
+            text = if (isTagCapsule) "# $text" else text
         )
         if (closeButton) {
             IconButton(

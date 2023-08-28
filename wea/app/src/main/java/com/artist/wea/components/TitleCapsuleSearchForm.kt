@@ -25,7 +25,8 @@ fun TitleCapsuleSearchForm(
     hintText: String = "Input Placeholder",
     searchList: Array<String>,
     inputDelay: Long = 500L,
-    capacity: Int
+    capacity: Int,
+    isTagCapsule: Boolean = false
 ): SnapshotStateList<String> {
     var selectList = remember { mutableStateListOf<String>() }
     Column(modifier = Modifier
@@ -45,6 +46,7 @@ fun TitleCapsuleSearchForm(
             searchList = searchList,
             inputDelay = inputDelay,
             capacity = capacity,
+            isTagCapsule = isTagCapsule
         )
 
     }
