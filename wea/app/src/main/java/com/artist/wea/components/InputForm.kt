@@ -1,6 +1,7 @@
 package com.artist.wea.components
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -13,6 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -36,9 +39,20 @@ fun InputForm(
     errorText:String = stringResource(id = R.string.empty_text), // 가이드 텍스트
     isPassword:Boolean = false,
     isDisable:Boolean = true,
+    isNumber:Boolean = false,
     onTextChange: () -> Unit = {}
 ):String{
     var text by remember { mutableStateOf("") }
+    val keyboardOptions = if (isNumber) {
+        KeyboardOptions.Default.copy(
+            keyboardType = KeyboardType.Number,
+            imeAction = ImeAction.Done
+        )
+    } else {
+        KeyboardOptions.Default.copy(
+//            imeAction = ImeAction.Done
+        )
+    }
     Column(
         modifier = modifier
     ){
@@ -46,7 +60,7 @@ fun InputForm(
             value = text,
             onValueChange = {
                 onTextChange()
-                text = it
+                text = if (isNumber) it.filter { newText -> newText.isDigit() } else it
             },
             visualTransformation =
             if (isPassword) PasswordVisualTransformation()
@@ -65,7 +79,8 @@ fun InputForm(
                 )
             },
             isError = text.isNotEmpty() && isError,
-            enabled = isDisable
+            enabled = isDisable,
+            keyboardOptions = keyboardOptions
         )
 
         // 에러인 경우 가이드 텍스트를 표시함

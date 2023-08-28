@@ -28,7 +28,8 @@ fun TitleInputForm(
     hintText:String = stringResource(id = R.string.text_input_guide), // hintText
     isError:Boolean = false, // error 인가?
     errorText:String = stringResource(id = R.string.empty_text), // 가이드 텍스트
-    isPassword:Boolean = false
+    isPassword:Boolean = false,
+    isNumber:Boolean = false
 ):String{
 
     var inputText = remember { mutableStateOf("") }
@@ -52,7 +53,8 @@ fun TitleInputForm(
         inputText.value = InputForm(
             hintText = hintText,
             isError = isError,
-            isPassword = isPassword
+            isPassword = isPassword,
+            isNumber = isNumber
         )
 
         // 가이드 텍스트를 제공하는 부분
