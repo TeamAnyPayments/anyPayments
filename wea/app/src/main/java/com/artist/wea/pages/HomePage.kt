@@ -99,11 +99,11 @@ fun HomePage(
                 userProfile.value = jParser.parseJsonToUserProfile(it)
                 Log.d("HOME_PAGE:::", "서버 >>> ${profileJson.value}")
             }else {
-                Log.d("PROFILE_PAGE:::", "토큰 만료")
-                Toast.makeText(context, "회원 정보가 만료되었습니다.", Toast.LENGTH_SHORT).show()
-                navController.navigate(PageRoutes.Login.route){
-                    popUpTo(0)
-                }
+//                Log.d("PROFILE_PAGE:::", "토큰 만료")
+//                Toast.makeText(context, "회원 정보가 만료되었습니다.", Toast.LENGTH_SHORT).show()
+//                navController.navigate(PageRoutes.Login.route){
+//                    popUpTo(0)
+//                }
             }
         })
     }else {
