@@ -1,5 +1,6 @@
 package com.artist.wea.components
 
+import android.graphics.Bitmap
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -16,9 +17,11 @@ import com.skydoves.landscapist.glide.GlideImage
 fun WeaIconImage(
     modifier:Modifier = Modifier,
     imgUrl:String = "",
+    bitmap:Bitmap? = null,
     size: Dp,
     isClip:Boolean = false,
 ){
+    val imgModel = bitmap ?: imgUrl.ifEmpty { R.drawable.icon_def_user_img }
 
     val iconModifier =
         if(isClip) modifier
@@ -28,7 +31,7 @@ fun WeaIconImage(
             .size(size)
 
     GlideImage(
-        imageModel = imgUrl.ifEmpty { R.drawable.icon_def_user_img },
+        imageModel = imgModel,
         // Crop, Fit, Inside, FillHeight, FillWidth, None
         contentScale = ContentScale.Crop,
         circularReveal = CircularReveal(duration = 100),

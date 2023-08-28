@@ -1,6 +1,12 @@
 package com.artist.wea.pages
 
 import android.app.Activity
+import android.content.ContentResolver
+import android.content.Context
+import android.graphics.Bitmap
+import android.net.Uri
+import android.provider.MediaStore
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -25,6 +31,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -54,6 +61,8 @@ import com.artist.wea.util.PhotoSelector
 fun ArtistInfoModifyPage(
     navController: NavHostController
 ){
+    val context = LocalContext.current
+
     // TODO navController를 통해서 아티스트 데이터를 추출해서 렌더링 하도록 설계
     var artistInfo = ArtistInfo(
         profileImgURL = "https://image.kmib.co.kr/online_image/2014/1015/201410152053_61170008765071_1.jpg",
@@ -79,32 +88,38 @@ fun ArtistInfoModifyPage(
                 "@abc_123_heart",
     )
 
-    val context = LocalContext.current
+
+    val currentIdx = remember { mutableStateOf<Int>(0) } // 0 or 1
+    val profileBitmap = remember { mutableStateOf<Bitmap?>(null) } // 아티스트 프로필 이미지 >> LOCAL
+    val backgroundBitmap = remember { mutableStateOf<Bitmap?>(null) } // 배경화면 이미지 >> LOCAL
+
     // 사진 불러오기 기능
     val photoSelector = PhotoSelector()
     val takePhotoFromAlbumLauncher = // 갤러리에서 사진 가져오기
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data?.data?.let { uri ->
-                    // uri
-                    // onPhotoChanged(uri.parseBitmap(context))
-                    // mBgImgURL.value = uri.toString()
-                    Toast.makeText(context, "이미지 선택함", Toast.LENGTH_SHORT).show()
 
+                    Log.d("IMAGE:::", "${uri.toString()}")
+
+                    val imgSource = if(currentIdx.value == 0) backgroundBitmap else profileBitmap
+                    val fileName = if(currentIdx.value == 0) "artist_background" else "artist_profile"
+
+                    photoSelector.setImageToVariable(
+                        context = context,
+                        uri = uri,
+                        imageSource = imgSource,
+                        fileName = fileName
+                    )
 
                 } ?: run {
                     Toast.makeText(context, "이미지를 불러오던 중 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
                 }
             } else if (result.resultCode != Activity.RESULT_CANCELED) {
-                Toast.makeText(context, "창 닫기?", Toast.LENGTH_SHORT).show()
+                // ??
             }
         }
 
-//    val profBitmap = photoSelector.getBitmapFromURL(artistInfo.profileImgURL)
-//    val bgBitmap = photoSelector.getBitmapFromURL(artistInfo.bgImgURL)
-//
-//    val mProfileImgURL = remember { mutableStateOf(profBitmap?:"") }
-//    val mBgImgURL = remember { mutableStateOf(bgBitmap?:"") }
     val mArtistName = remember { mutableStateOf(artistInfo.artistName) }
     val mComment = remember { mutableStateOf(artistInfo.comment) }
     val mMainIntroduce = remember { mutableStateOf(artistInfo.mainIntroduce) }
@@ -155,6 +170,7 @@ fun ArtistInfoModifyPage(
                     modifier = Modifier
                         .align(Alignment.TopStart),
                     imgUrl = artistInfo.bgImgURL,
+                    bitmap = backgroundBitmap.value,
                     height = height
                 )
 
@@ -170,8 +186,9 @@ fun ArtistInfoModifyPage(
                     .align(Alignment.BottomEnd)
                     .clickable {
                         Toast
-                            .makeText(context, "배경 편집 모드 ON", Toast.LENGTH_SHORT)
+                            .makeText(context, "배경 사진을 변경 합니다", Toast.LENGTH_SHORT)
                             .show()
+                        currentIdx.value = 0 // index 변경
                         // 이미지 가져오기
                         takePhotoFromAlbumLauncher.launch(photoSelector.takePhotoFromAlbumIntent)
                     }
@@ -208,6 +225,7 @@ fun ArtistInfoModifyPage(
                         modifier = Modifier.align(Alignment.Center),
                         imgUrl = artistInfo.profileImgURL,
                         size = 144.dp,
+                        bitmap = profileBitmap.value,
                         isClip = true
                     )
 
@@ -223,9 +241,10 @@ fun ArtistInfoModifyPage(
                         .align(Alignment.BottomEnd)
                         .clickable {
                             Toast
-                                .makeText(context, "프로필 편집 모달 ON", Toast.LENGTH_SHORT)
+                                .makeText(context, "프로필 사진을 변경 합니다", Toast.LENGTH_SHORT)
                                 .show()
                             // 이미지 가져오기
+                            currentIdx.value = 1 // index 변경
                             takePhotoFromAlbumLauncher.launch(photoSelector.takePhotoFromAlbumIntent)
                         }
                     ) {
@@ -373,77 +392,5 @@ fun ArtistInfoModifyPage(
 
         Spacer(modifier = Modifier.height(64.dp))
 
-
-
-                ///////
-
-//                // 아티스트 이름
-//                Row(
-//                    modifier = Modifier
-//                        .wrapContentWidth()
-//                        .wrapContentHeight(),
-//                    verticalAlignment = Alignment.CenterVertically,
-//                    horizontalArrangement = Arrangement.spacedBy(4.dp)
-//                ) {
-//                    mArtistName.value = ModifyForm(
-//                        hintText = mArtistName.value,
-//                        modifier = Modifier
-//                            .width(128.dp)
-//                            .wrapContentHeight(),
-//                        textStyle = get14TextStyle().copy(
-//                            textAlign = TextAlign.Center,
-//                            color = colorResource(id = R.color.mono800)
-//                        )
-//                    )
-//                    Icon(
-//                        Icons.Filled.Star,
-//                        contentDescription = "북마크",
-//                        modifier = Modifier.size(24.dp),
-//                        tint = colorResource(id = R.color.kakao_yellow) // TODO 북마크 조건부 분기 처리
-//                    )
-//                }
-//                mComment.value = ModifyForm(
-//                    hintText = mComment.value,
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .height(48.dp)
-//                        .padding(24.dp, 0.dp)
-//                    ,
-//                    textStyle = get14TextStyle().copy(
-//                        textAlign = TextAlign.Start,
-//                        color = colorResource(id = R.color.mono800)
-//                    )
-//                )
-//
-//                /////
-//            }
-//
-//            // bottom layer
-//            Spacer(modifier = Modifier
-//                .fillMaxWidth()
-//                .height(144.dp)
-//                .background(color = colorResource(id = R.color.mono50))
-//                .align(Alignment.BottomEnd)
-//            )
-//        }
-//
-//        // 프로필 소개
-//        InfoUnit(
-//            modifier = Modifier.padding(16.dp, 12.dp),
-//            titleText = "프로필 소개",
-//            screen = {
-//                mMainIntroduce.value = ModifyForm(
-//                    hintText = mMainIntroduce.value,
-//                    textStyle = getDefTextStyle()
-//                        .copy(color = colorResource(id = R.color.mono800)),
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .wrapContentHeight(),
-//                )
-//            },
-//        )
-//
-
     }
-
 }
