@@ -1,6 +1,8 @@
 package com.artist.wea.components
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,6 +17,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -29,53 +32,69 @@ fun VerifyInputForm(
     hintText:String = stringResource(id = R.string.text_input_guide),
     btnText:String = stringResource(id = R.string.text_value_verify),
     buttonActions:() -> Unit = {},
-    isDisable:Boolean = false
+    isDisable:Boolean = false,
+    second:Int = 300
 ):String{
 
     var inputText = remember { mutableStateOf("") }
+    val context = LocalContext.current; // context
 
-    Row(modifier =
-    Modifier
-        .fillMaxWidth()
-        .wrapContentHeight()
-        .padding(8.dp, 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
     ) {
-        Text(
-            text = verifyText,
-            style = if(!isDisable) getDefTextStyle()
-            else getDefTextStyle()
-                .copy(color = colorResource(id = R.color.mono300))
-        )
-        Spacer(modifier = Modifier.width(8.dp))
-        // inputForm 으로부터 값을 받고 리턴
-        inputText.value = InputForm(
-            hintText = hintText,
-            modifier = Modifier
-                .width(178.dp)
-                .wrapContentHeight(),
-            isDisable = isDisable,
-            isPassword = true
-        )
-        Spacer(modifier = Modifier.width(8.dp))
-        Button(
-            enabled = isDisable,
-            onClick = buttonActions,
-            colors = getButtonColor(),
-            modifier = Modifier
-                .wrapContentWidth()
-                .wrapContentHeight()
-                .padding(0.dp),
-        ){
+
+        Row(modifier =
+        Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(8.dp, 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+        ) {
             Text(
-                text = btnText,
-                style = getDefTextStyle().copy(
-                    fontSize = 12.sp,
-                    color = colorResource(id = R.color.white)
-                )
+                text = verifyText,
+                style = if(!isDisable) getDefTextStyle()
+                else getDefTextStyle()
+                    .copy(color = colorResource(id = R.color.mono300))
             )
+            Spacer(modifier = Modifier.width(8.dp))
+            // inputForm 으로부터 값을 받고 리턴
+            inputText.value = InputForm(
+                hintText = hintText,
+                modifier = Modifier
+                    .width(178.dp)
+                    .wrapContentHeight(),
+                isDisable = isDisable,
+                isPassword = true
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Button(
+                enabled = isDisable,
+                onClick = {
+                  if (second > 0){
+                      buttonActions()
+                  }else {
+                      Toast.makeText(context, "유효시간이 만료되었습니다", Toast.LENGTH_SHORT).show()
+                  }
+                },
+                colors = getButtonColor(),
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .wrapContentHeight()
+                    .padding(0.dp),
+            ){
+                Text(
+                    text = btnText,
+                    style = getDefTextStyle().copy(
+                        fontSize = 12.sp,
+                        color = colorResource(id = R.color.white)
+                    )
+                )
+            }
         }
     }
+
     return inputText.value
 }

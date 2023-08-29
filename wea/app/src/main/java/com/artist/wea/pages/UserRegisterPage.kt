@@ -1,54 +1,49 @@
 package com.artist.wea.pages
 
-import android.util.Log
+// import com.artist.wea.util.WeaTimer
 import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
 import com.artist.wea.R
 import com.artist.wea.components.CheckBoxScreen
 import com.artist.wea.components.DuplicateCheckInputForm
 import com.artist.wea.components.EmailGuidText
-import com.artist.wea.components.InputForm
 import com.artist.wea.components.LargeButton
 import com.artist.wea.components.PageTopBar
 import com.artist.wea.components.TitleInputForm
 import com.artist.wea.components.VerifyInputForm
 import com.artist.wea.constants.PageRoutes
-import com.artist.wea.constants.getButtonColor
-import com.artist.wea.constants.getDefTextStyle
+import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.data.JoinUser
 import com.artist.wea.model.RegisterViewModel
 import com.artist.wea.repository.RegisterRepository
 import com.artist.wea.util.WeaRegex
+import com.artist.wea.util.WeaRegex.Companion.parseToTimeString
+import kotlinx.coroutines.delay
 import java.util.regex.Pattern
+import kotlin.time.Duration.Companion.seconds
 
 
 @Composable
@@ -90,7 +85,6 @@ fun UserRegisterPage(
             val codeVerifyResult = remember { mutableStateOf(false) } // 코드 인증
             val isAgreeRequiredTerms = remember { mutableStateOf(false) } // 약관 동의여부
 
-
             // Text(text = type.toString()) // temp
             // 이름
             nameInputText.value =
@@ -101,7 +95,6 @@ fun UserRegisterPage(
                             && !Pattern.matches(WeaRegex.namePattern.pattern(), nameInputText.value),
                     errorText = WeaRegex.nameGuideText
                 );
-
 
             // 아이디 중복체크 가이드 텍스트 표시 변수
             val isUsableId = remember { mutableStateOf(false) }
@@ -162,6 +155,8 @@ fun UserRegisterPage(
             if(type.equals("common")){
                 val isMatched = remember { mutableStateOf(false) }
                 val isDisable = remember { mutableStateOf(true) }
+                val timerDefault = 300
+                val timerSecond = remember { mutableStateOf(0) }
 
                 // 이메일 입력
                 emailInputText.value = DuplicateCheckInputForm(
@@ -174,6 +169,7 @@ fun UserRegisterPage(
                     buttonAction = {
                         if(Pattern.matches(WeaRegex.emailPattern.pattern(), emailInputText.value)){ // 이메일이 유효할 경우
                             isMatched.value = true // 코드 발송 버튼 활성화
+                            timerSecond.value = timerDefault
                             viewModel.sendCodeToEmail(emailInputText.value);
                             // 이메일 전송 결과
                             viewModel.sendCodeToEmailRes.observe(mOwner, Observer {
@@ -200,7 +196,6 @@ fun UserRegisterPage(
                                 email = emailInputText.value,
                                 code = emailCodeText.value
                             );
-
                             viewModel.checkEmailByCodeRes.observe(mOwner, Observer {
                                 if (!it) {
                                     codeVerifyResult.value = !it // 코드 인증 처리
@@ -209,7 +204,31 @@ fun UserRegisterPage(
                                     Toast.makeText(context, "인증 실패", Toast.LENGTH_SHORT).show()
                                 }
                             })
-                        })
+                        },
+                        second = timerSecond.value
+                    )
+                    // 코드발송 시 타이머 재시작 하게 하는 부분
+                    if(isMatched.value && timerSecond.value > 0){
+                        // Timer...
+                        LaunchedEffect(Unit) { // 인증 폼의 타이머
+                            while(timerSecond.value > 0 && !codeVerifyResult.value) {
+                                delay(1.seconds)
+                                timerSecond.value--
+                            }
+                        }
+                    }
+                    if(!codeVerifyResult.value){
+                        Text(
+                            text = parseToTimeString(timerSecond = timerSecond),
+                            style = get14TextStyle()
+                                .copy(
+                                    textAlign = TextAlign.Right
+                                ),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(4.dp)
+                        )
+                    }
                 }
                 // guideText
                 EmailGuidText()
@@ -257,4 +276,3 @@ fun UserRegisterPage(
         }
     }
 }
-
