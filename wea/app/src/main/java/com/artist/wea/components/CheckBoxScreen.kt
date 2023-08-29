@@ -71,15 +71,18 @@ fun CheckBoxScreen(
 // 약관 동의 체크박스 컴포즈 컴포넌트
 @Composable
 fun CheckBoxRow(
-    text: String, value: Boolean, onClick: (Any) -> Unit,
+    modifier: Modifier = Modifier
+        .fillMaxWidth()
+        .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 0.dp),
+    text: String,
+    value: Boolean,
+    onClick: (Any) -> Unit,
     hasMore:Boolean = false,
 ) {
     val defTextStyle = get14TextStyle()
         .copy(color = colorResource(id = R.color.mono800))
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 8.dp, top = 0.dp, end = 8.dp, bottom = 0.dp),
+        modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {

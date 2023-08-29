@@ -2,7 +2,6 @@ package com.artist.wea
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
@@ -18,6 +17,7 @@ import com.artist.wea.instance.Retrofit
 import com.artist.wea.pages.ArtistInfoModifyPage
 import com.artist.wea.pages.ArtistInfoPage
 import com.artist.wea.pages.ArtistProfileListPage
+import com.artist.wea.pages.ArtistQuitPage
 import com.artist.wea.pages.ArtistRankPage
 import com.artist.wea.pages.ChangeEmailPage
 import com.artist.wea.pages.ChangePwdPage
@@ -32,8 +32,8 @@ import com.artist.wea.pages.MemberAddPage
 import com.artist.wea.pages.MemberManagePage
 import com.artist.wea.pages.MyArtistPage
 import com.artist.wea.pages.NotifyPage
-import com.artist.wea.pages.PaymentsManagePage
 import com.artist.wea.pages.OpenConcertPage
+import com.artist.wea.pages.PaymentsManagePage
 import com.artist.wea.pages.SearchArtistPage
 import com.artist.wea.pages.SearchConcertPage
 import com.artist.wea.pages.SettingPage
@@ -105,6 +105,7 @@ class MainActivity : ComponentActivity() {
                 composable(PageRoutes.TicketList.route) { TicketListPage(navController = navController) }
                 composable(PageRoutes.Ticket.route) { TicketPage(navController = navController) }
                 composable(PageRoutes.OpenConcert.route) { OpenConcertPage(navController = navController)}
+                composable(PageRoutes.ArtistQuit.route) { ArtistQuitPage(navController = navController) }
             }
         }
     }
