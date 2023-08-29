@@ -44,9 +44,7 @@ fun InputForm(
     onTextChange: () -> Unit = {}
 ):String{
 
-    // var text by remember { mutableStateOf(defaultText) }
-    ////
-    var text by remember { mutableStateOf("") }
+    var text by remember { mutableStateOf(defaultText) }
     val keyboardOptions = if (isNumber) {
         KeyboardOptions.Default.copy(
             keyboardType = KeyboardType.Number,
