@@ -26,6 +26,7 @@ import com.artist.wea.constants.getDefTextStyle
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InputForm(
+    defaultText:String = stringResource(id = R.string.empty_text), // 내부 입력 값
     hintText:String = stringResource(id = R.string.empty_text), // hint 텍스트
     textStyle: TextStyle = getDefTextStyle(), // 텍스트 스타일
     modifier: Modifier =
@@ -38,7 +39,7 @@ fun InputForm(
     isDisable:Boolean = true,
     onTextChange: () -> Unit = {}
 ):String{
-    var text by remember { mutableStateOf("") }
+    var text by remember { mutableStateOf(defaultText) }
     Column(
         modifier = modifier
     ){

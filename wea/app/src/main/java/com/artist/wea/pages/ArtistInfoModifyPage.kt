@@ -1,11 +1,7 @@
 package com.artist.wea.pages
 
 import android.app.Activity
-import android.content.ContentResolver
-import android.content.Context
 import android.graphics.Bitmap
-import android.net.Uri
-import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -31,7 +27,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -124,12 +119,8 @@ fun ArtistInfoModifyPage(
     val mComment = remember { mutableStateOf(artistInfo.comment) }
     val mMainIntroduce = remember { mutableStateOf(artistInfo.mainIntroduce) }
 
-
     val scrollState = rememberScrollState()
     val height = 164.dp;
-
-
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -143,7 +134,7 @@ fun ArtistInfoModifyPage(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(height * 2)
+                .height((height.value * 1.7).toInt().dp)
                 .background(colorResource(id = R.color.mono50))
         ) {
             // 상단 바
@@ -166,6 +157,7 @@ fun ArtistInfoModifyPage(
                     .align(Alignment.TopStart)
             ) {
 
+                // 배경이미지
                 WeaWideImage(
                     modifier = Modifier
                         .align(Alignment.TopStart),
@@ -174,7 +166,7 @@ fun ArtistInfoModifyPage(
                     height = height
                 )
 
-                // 배경 이미지 수정
+                // 배경 이미지 수정 버튼
                 Box(modifier = Modifier
                     .padding(16.dp)
                     .size(32.dp)
@@ -204,8 +196,6 @@ fun ArtistInfoModifyPage(
                     )
                 }
             }
-
-
             // 아티스트 정보 layer
             Column(
                 modifier = Modifier
@@ -220,7 +210,7 @@ fun ArtistInfoModifyPage(
                 Box(
                     modifier = Modifier.size(144.dp)
                 ) {
-
+                    // 프로필 이미지
                     WeaIconImage(
                         modifier = Modifier.align(Alignment.Center),
                         imgUrl = artistInfo.profileImgURL,
@@ -229,7 +219,7 @@ fun ArtistInfoModifyPage(
                         isClip = true
                     )
 
-                    // 프로필 이미지 수정
+                    // 프로필 이미지 수정 버튼
                     Box(modifier = Modifier
                         .padding(18.dp)
                         .size(32.dp)
@@ -259,7 +249,6 @@ fun ArtistInfoModifyPage(
                         )
                     }
                 }
-
             }
         }
 
@@ -268,24 +257,25 @@ fun ArtistInfoModifyPage(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(16.dp, 12.dp)
+                .padding(bottom = 16.dp, start = 12.dp, end = 12.dp)
         ) {
             // 아티스트 이름
             mArtistName.value = TitleInputForm(
                 titleText = "아티스트 이름",
-                hintText = artistInfo.artistName
+                defaultText = artistInfo.artistName,
+                // hintText = ""
             )
 
             // 한줄 소개
             mComment.value = TitleInputForm(
                 titleText = "한줄 소개",
-                hintText = artistInfo.comment
+                defaultText = artistInfo.comment
             )
 
             // 프로필 소개
             mMainIntroduce.value = TitleInputForm(
                 titleText = "프로필 소개",
-                hintText = artistInfo.mainIntroduce
+                defaultText = artistInfo.mainIntroduce
             )
 
         }

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -37,7 +38,7 @@ fun ShowProfileDialog(
                     .wrapContentHeight()
                     .clip(RoundedCornerShape(12.dp))
                     .background(color = colorResource(id = R.color.mono50)),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
@@ -45,22 +46,20 @@ fun ShowProfileDialog(
                     Icons.Filled.Close,
                     contentDescription = "닫기",
                     modifier = Modifier
-                        .padding(16.dp)
+                        .padding(4.dp)
+                        .size(16.dp)
                         .align(Alignment.End)
                         .clickable {
                             onDismissRequest()
                         },
                     tint = colorResource(id = R.color.mono600)
-
                 )
-
-
                 WeaIconImage(
                     imgUrl = defaultImageURL,
                     size = 288.dp,
                     bitmap = localImgBitmap,
                     isClip = false,
-                    modifier = Modifier.padding(bottom = 32.dp)
+                    modifier = Modifier.padding(bottom = 18.dp)
                 )
             }
         }
