@@ -78,7 +78,7 @@ fun ArtistMenu(
                 .copy(color = colorResource(id = R.color.red400)),
             modifier = menuModifier
                 .clickable {
-                    // navController.navigate(PageRoutes.Home.route)
+                    navController.navigate(PageRoutes.ArtistQuit.route)
                 }
         )
     }
