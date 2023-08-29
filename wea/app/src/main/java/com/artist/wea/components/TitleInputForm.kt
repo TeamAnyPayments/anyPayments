@@ -17,7 +17,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.artist.wea.R
 import com.artist.wea.constants.get12TextStyle
 import com.artist.wea.constants.getDefTextStyle
@@ -25,6 +24,7 @@ import com.artist.wea.constants.getDefTextStyle
 @Composable
 fun TitleInputForm(
     titleText:String = stringResource(id = R.string.empty_text), // 제목 텍스트
+    defaultText:String = stringResource(id = R.string.empty_text), // 내부 입력값
     hintText:String = stringResource(id = R.string.text_input_guide), // hintText
     isError:Boolean = false, // error 인가?
     errorText:String = stringResource(id = R.string.empty_text), // 가이드 텍스트
@@ -51,6 +51,7 @@ fun TitleInputForm(
         Spacer(modifier = Modifier.height(16.dp))
         // inputForm 으로부터 값을 받고 리턴
         inputText.value = InputForm(
+            defaultText = defaultText,
             hintText = hintText,
             isError = isError,
             isPassword = isPassword,
