@@ -18,19 +18,21 @@ fun WeaWideImage(
     imgUrl:String = "",
     bitmap: Bitmap? = null,
     height: Dp,
+    contentScale:ContentScale = ContentScale.Crop,
+    defImgID:Int = R.drawable.default_image
 ){
 
-    val imgModel = bitmap ?: imgUrl.ifEmpty { R.drawable.icon_def_user_img }
+    val imgModel = bitmap ?: imgUrl.ifEmpty { defImgID }
 
     GlideImage(
         imageModel = imgModel,
         // Crop, Fit, Inside, FillHeight, FillWidth, None
-        contentScale = ContentScale.Crop,
+        contentScale = contentScale,
         circularReveal = CircularReveal(duration = 100),
         // shows a placeholder ImageBitmap when loading.
-        placeHolder = painterResource(id = R.drawable.default_image),
+        placeHolder = painterResource(id = defImgID),
         // shows an error ImageBitmap when the request failed.
-        error = painterResource(id = R.drawable.default_image),
+        error = painterResource(id = defImgID),
         modifier = modifier
             .fillMaxWidth()
             .height(height)
