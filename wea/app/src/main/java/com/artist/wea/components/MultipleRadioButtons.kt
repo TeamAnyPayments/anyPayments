@@ -19,6 +19,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.artist.wea.constants.getDefTextStyle
+import com.artist.wea.constants.getRadioButtonColors
 
 @Composable
 fun MultipleRadioButtons(
@@ -62,7 +63,8 @@ fun MultipleRadioButtons(
             ) {
                 RadioButton(
                     selected = isSelectedItem(item),
-                    onClick = null
+                    onClick = null,
+                    colors = getRadioButtonColors()
                 )
                 Text(
                     text = item,
