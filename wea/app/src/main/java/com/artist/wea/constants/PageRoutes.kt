@@ -27,6 +27,7 @@ sealed class PageRoutes(val route:String){
     object TicketList: PageRoutes("ticket-list")
     object Ticket: PageRoutes("ticket")
     object ArtistQuit: PageRoutes("artist-quit")
+    object UserQuit: PageRoutes("user-quit")
 
     object OpenConcert: PageRoutes("open-concert")
 }

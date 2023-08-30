@@ -10,6 +10,8 @@ import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.MenuItemColors
+import androidx.compose.material3.RadioButtonColors
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.SwitchColors
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.TextFieldColors
@@ -25,6 +27,23 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.artist.wea.R
+
+
+// 라디오 버튼 스타일 속성
+@Composable
+fun getRadioButtonColors(
+    selectedColor: Color = colorResource(id = R.color.dark_orange300),
+    unselectedColor:Color = colorResource(id = R.color.mono300),
+    disabledSelectedColor:Color = colorResource(id = R.color.mono600),
+    disabledUnselectedColor:Color = colorResource(id = R.color.mono300)
+): RadioButtonColors
+= RadioButtonDefaults.colors(
+    selectedColor = selectedColor,
+    unselectedColor = unselectedColor,
+    disabledSelectedColor = disabledSelectedColor,
+    disabledUnselectedColor = disabledUnselectedColor
+)
+
 
 // 카드 스타일 속성
 @Composable

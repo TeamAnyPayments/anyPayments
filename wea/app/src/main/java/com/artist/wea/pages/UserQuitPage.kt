@@ -31,43 +31,19 @@ import com.artist.wea.components.MultipleRadioButtons
 import com.artist.wea.components.PageTopBar
 import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.constants.getDefTextStyle
-import com.artist.wea.data.ArtistInfo
 import com.artist.wea.data.UserProfile
 
 @Composable
-fun ArtistQuitPage(
+fun UserQuitPage(
     navController: NavHostController
 ) {
-
-    // TODO prefs를 통해서 아티스트 데이터를 추출해서 렌더링 하도록 설계
-    val artistInfo = ArtistInfo(
-        profileImgURL = "https://image.kmib.co.kr/online_image/2014/1015/201410152053_61170008765071_1.jpg",
-        bgImgURL = "https://img.hankyung.com/photo/202205/01.29843403.1.jpg",
-        artistName = "ENJOY",
-        comment = "안녕하세요, 행복을 노래하는 가수입니다.",
-        mainIntroduce = "안녕하세요 Sparrow Spirit!\n" +
-                "\n" +
-                "홍대 스트릿 버스커 그룹 로드 버스킹입니다.\n" +
-                "\n" +
-                "어디서든 관객 여러분과 특별한 추억을 쌓아가기 위하여 여러 지역에서 버스킹을 하고 있습니다.\n" +
-                "\n" +
-                "음악을 사랑한다는 마음 하나라면,\n" +
-                "우리가 있는 이 곳의 온도는 뜨거울 거에요.\n" +
-                "\n" +
-                "창립일\n" +
-                "2013. 01. 16.\n" +
-                "\n" +
-                "자주 출몰하는 장소\n" +
-                "홍대입구 2번 출구, 강남역 3번 출구\n" +
-                "\n" +
-                "인스타그램\n" +
-                "@abc_123_heart",
-    )
-
-    val userProfile = remember { mutableStateOf(UserProfile(
-        userId = "test0001",
-        email = "test1234@test.com"
-    )) }
+    // TODO prefs로부터 저장된 json 사용자 정보 불러와 렌더링하기
+    val userProfile = remember { mutableStateOf(
+        UserProfile(
+            name = "홍길동",
+            userId = "test0001",
+            email = "test1234@test.com"
+            ))}
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -75,7 +51,7 @@ fun ArtistQuitPage(
     {
         PageTopBar(
             navController = navController,
-            pageTitle = "아티스트 탈퇴"
+            pageTitle = "회원 탈퇴"
         )
 
         Box(modifier = Modifier
@@ -105,7 +81,7 @@ fun ArtistQuitPage(
                         modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 16.dp)
                     )
                 }
-                
+
                 // 유의사항 체크
                 Column(
                     modifier = Modifier
@@ -116,7 +92,7 @@ fun ArtistQuitPage(
                     verticalArrangement = Arrangement.Top
                 ) {
                     Text(
-                        text = "아티스트 탈퇴 전에 아래의 유의사항을 꼭 확인해주세요.",
+                        text = "회원탈퇴를 신청하기 전에 아래의 유의사항을 확인해주세요.",
                         style = get14TextStyle()
                             .copy(
                                 color = colorResource(id = R.color.mono600)
@@ -138,7 +114,7 @@ fun ArtistQuitPage(
                 ) {
 
                     Text(
-                        text = "아래의 아티스트 정보에 대한 탈퇴 처리가 접수됩니다.",
+                        text = "아래의 회원정보에 대한 탈퇴 처리가 접수됩니다.",
                         style = get14TextStyle().copy(
                             color = colorResource(id = R.color.red400),
                             fontWeight = FontWeight.Bold
@@ -158,7 +134,7 @@ fun ArtistQuitPage(
                             color = colorResource(id = R.color.mono300)
                         )
                         Text(
-                            text = "${artistInfo.artistName}\n" +
+                            text = "${userProfile.value.name}\n" +
                                     "${userProfile.value.userId}\n" +
                                     "${userProfile.value.email}",
                             style = get14TextStyle(),
@@ -184,11 +160,7 @@ fun ArtistQuitPage(
                                 )
                         )
                         Text(
-                            text = "· 아티스트를 탈퇴하실 경우 기존의 아티스트 정보에 대해 다시 접근하실 수 없으며, 보유하신 현금성 및 디지털 자산은 소멸되어 복구가 불가능합니다.",
-                            style = get14TextStyle()
-                        )
-                        Text(
-                            text = "· 아직 정산되지 않은 공연 수익이 있다면, 반드시 탈퇴 전 정산 후 탈퇴를 진행해주시기 바랍니다.",
+                            text = "· 탈퇴 후에는 이메일, 아이디 정보로 다시 로그인할 수 없으며, 보유하신 현금성 및 디지털 자산은 모두 소멸되어 복구가 불가능합니다.",
                             style = get14TextStyle()
                         )
                         Text(
@@ -198,7 +170,7 @@ fun ArtistQuitPage(
                     }
 
                     // 탈퇴 사유 리스트
-                    val selectOptions = listOf("사용빈도 낮음", "서비스 불만", "고객응대 불만", "아티스트 정보 초기화", "기타")
+                    val selectOptions = listOf("사용빈도 낮음", "서비스 불만", "고객응대 불만", "개인정보 유출 우려", "기타")
 
                     val quitReason = MultipleRadioButtons(
                         selectOptions = selectOptions
@@ -229,7 +201,7 @@ fun ArtistQuitPage(
                         .fillMaxWidth()
                         .wrapContentHeight()
                         .padding(start = 4.dp, end = 4.dp),
-                    text = "위의 유의사항을 모두 확인하였으며, 아티스트 탈퇴시 아티스트 정보의 소멸에 동의합니다.",
+                    text = "위의 유의사항을 모두 확인하였으며, 회원 탈퇴 시 보유하신 현금성 및 디지털 자산에 대한 소멸에 동의합니다.",
                     value = isAgreement.value,
                     onClick = {
                         isAgreement.value = !isAgreement.value

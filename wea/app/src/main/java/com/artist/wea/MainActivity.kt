@@ -40,6 +40,7 @@ import com.artist.wea.pages.SettingPage
 import com.artist.wea.pages.TicketListPage
 import com.artist.wea.pages.TicketPage
 import com.artist.wea.pages.UserProfilePage
+import com.artist.wea.pages.UserQuitPage
 import com.artist.wea.pages.UserRegisterPage
 import com.artist.wea.ui.theme.WeaTheme
 import com.artist.wea.util.PreferenceUtil
@@ -106,6 +107,7 @@ class MainActivity : ComponentActivity() {
                 composable(PageRoutes.Ticket.route) { TicketPage(navController = navController) }
                 composable(PageRoutes.OpenConcert.route) { OpenConcertPage(navController = navController)}
                 composable(PageRoutes.ArtistQuit.route) { ArtistQuitPage(navController = navController) }
+                composable(PageRoutes.UserQuit.route) { UserQuitPage(navController = navController) }
             }
         }
     }
