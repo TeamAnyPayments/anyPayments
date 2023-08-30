@@ -1,7 +1,6 @@
 package com.artist.wea.pages
 
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -259,48 +258,116 @@ fun homePage(
 ){
     val scrollState = rememberScrollState()
     Column(
-        modifier = modifier
-            .background(colorResource(id = R.color.mono100))
-            .verticalScroll(scrollState),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+            .verticalScroll(scrollState)
+            .background(colorResource(id = R.color.mono100)) // temp
+        ,
+        verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-        val height = 128.dp
-
-        // 무한 스크롤 배너
-        InfiniteLoopPager(
-            list = listOf(
-                "https://thumbs.dreamstime.com/b/login-banner-template-ribbon-label-sign-177646419.jpg",
-                "https://blog.kakaocdn.net/dn/HUGVj/btrJloRg451/mctRUnHYAgTKvocX1HxXiK/img.jpg",
-                "https://as1.ftcdn.net/v2/jpg/04/86/66/48/1000_F_486664896_TxOuOR9WcKdvle5uG4kCZVnL80QyWp1t.jpg",
-                "https://img.freepik.com/free-vector/best-sale-abstract-horizontal-banner-design_1017-31300.jpg",
-                "https://png.pngtree.com/png-vector/20220530/ourmid/pngtree-photo-camera-horizontal-banner-png-image_4762429.png")
-        )
-        // 메인 메뉴, main Menu
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(4.dp),
+                .fillMaxHeight(),
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // top Menu Layer
-            Row(
-                modifier = Modifier
+            // 무한 스크롤 배너
+            InfiniteLoopPager(
+                list = listOf(
+                    "https://thumbs.dreamstime.com/b/login-banner-template-ribbon-label-sign-177646419.jpg",
+                    "https://blog.kakaocdn.net/dn/HUGVj/btrJloRg451/mctRUnHYAgTKvocX1HxXiK/img.jpg",
+                    "https://as1.ftcdn.net/v2/jpg/04/86/66/48/1000_F_486664896_TxOuOR9WcKdvle5uG4kCZVnL80QyWp1t.jpg",
+                    "https://img.freepik.com/free-vector/best-sale-abstract-horizontal-banner-design_1017-31300.jpg",
+                    "https://png.pngtree.com/png-vector/20220530/ourmid/pngtree-photo-camera-horizontal-banner-png-image_4762429.png")
+            )
+
+            val height = 128.dp
+            // 메인 메뉴, main Menu
+            Column(
+                modifier = modifier
                     .fillMaxWidth()
-                    .wrapContentHeight(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    .fillMaxHeight()
+                    .padding(4.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // 공연 개설하기, 아티스트인지에 따라 가변적임
-                if (isArtist) {
+                // top Menu Layer
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    // 내 주변 공연 찾기
                     HomeMenuBox(
-                        modifier
+                        Modifier
                             .fillMaxWidth()
                             .height(height)
                             .weight(1f)
+                            .clickable { navController.navigate(PageRoutes.SearchConcert.route) },
+                        menuTitle = "내 주변 공연 찾기",
+                        tagName = "GPS",
+                        badgeColor = colorResource(id = R.color.sky_blue400),
+                        imgPainter = painterResource(id = R.drawable.icon_find_concert)
+                    )
+                    // 티켓 조회
+                    HomeMenuBox(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .height(height)
+                            .clickable { navController.navigate(PageRoutes.TicketList.route) },
+                        menuTitle = "TICKET",
+                        imgPainter = painterResource(id = R.drawable.icon_ticket),
+                        imgSize = 96.dp,
+                        imgPadVer = 8.dp,
+                        imgPadHor = 16.dp
+                    )
+                }
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    // 아티스트 검색
+                    HomeMenuBox(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(height)
+                            .weight(1f)
+                            .clickable { navController.navigate(PageRoutes.SearchArtist.route) },
+                        menuTitle = "아티스트 검색",
+                        imgPainter = painterResource(id = R.drawable.icon_search_artist)
+                    )
+
+                    // 아티스트 순위 조회
+                    HomeMenuBox(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(height)
+                            .weight(1f)
+                            .clickable { navController.navigate(PageRoutes.ArtistRank.route) },
+                        menuTitle = "ARTIST BOARD",
+                        tagName = "HOT",
+                        badgeColor = colorResource(id = R.color.red300),
+                        imgPainter = painterResource(id = R.drawable.icon_artist_rank)
+                    )
+
+                }
+                // 공연 개설하기, 아티스트인지에 따라 가변적임
+                if (isArtist) {
+                    HomeMenuBox(
+                        Modifier
+                            .fillMaxWidth()
+                            .height(height)
+                            // .weight(1f)
                             .clickable { navController.navigate(PageRoutes.OpenConcert.route) },
                         menuTitle = "공연 개설하기",
                         tagName = "ARTIST",
@@ -308,73 +375,8 @@ fun homePage(
                         imgPainter = painterResource(id = R.drawable.icon_create_concert)
                     );
                 }
-                // 내 주변 공연 찾기
-                HomeMenuBox(
-                    modifier
-                        .fillMaxWidth()
-                        .height(height)
-                        .weight(1f)
-                        .clickable { navController.navigate(PageRoutes.SearchConcert.route) },
-                    menuTitle = "내 주변 공연 찾기",
-                    tagName = "GPS",
-                    badgeColor = colorResource(id = R.color.sky_blue400),
-                    imgPainter = painterResource(id = R.drawable.icon_find_concert)
-                );
-
             }
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                // 아티스트 검색
-                HomeMenuBox(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(height)
-                        .weight(1f)
-                        .clickable { navController.navigate(PageRoutes.SearchArtist.route) },
-                    menuTitle = "아티스트 검색",
-                    imgPainter = painterResource(id = R.drawable.icon_search_artist)
-                )
-
-                // 아티스트 순위 조회
-                HomeMenuBox(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(height)
-                        .weight(1f)
-                        .clickable { navController.navigate(PageRoutes.ArtistRank.route) },
-                    menuTitle = "ARTIST BOARD",
-                    tagName = "HOT",
-                    badgeColor = colorResource(id = R.color.red300),
-                    imgPainter = painterResource(id = R.drawable.icon_artist_rank)
-                )
-
-            }
-            // 티켓 조회
-            HomeMenuBox(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(height)
-                    .clickable { navController.navigate(PageRoutes.TicketList.route) },
-                menuTitle = "TICKET",
-                imgPainter = painterResource(id = R.drawable.icon_ticket),
-                imgSize = 96.dp,
-                imgPadVer = 8.dp,
-                imgPadHor = 16.dp
-            )
-
         }
-        Spacer(
-            modifier = Modifier
-                .height(32.dp)
-                .fillMaxWidth()
-        )
-
         // 구글 광고
         GoogleAdItem(
             navController = navController,

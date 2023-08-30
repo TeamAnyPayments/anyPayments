@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.constants.getDefTextStyle
 
@@ -32,7 +33,9 @@ fun JoinArtistMenu(
             modifier = Modifier
                 .wrapContentWidth()
                 .wrapContentHeight()
-                .clickable { }
+                .clickable {
+                    navController.navigate(PageRoutes.ArtistJoin.route)
+                }
         )
     }
 }

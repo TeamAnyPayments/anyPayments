@@ -37,8 +37,7 @@ fun TitleInputForm(
     Column(modifier =
     Modifier
         .fillMaxWidth()
-        .wrapContentHeight()
-        .padding(8.dp, 8.dp),
+        .wrapContentHeight(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.Start
     ) {

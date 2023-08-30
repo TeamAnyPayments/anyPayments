@@ -16,6 +16,7 @@ import com.artist.wea.constants.PageRoutes
 import com.artist.wea.instance.Retrofit
 import com.artist.wea.pages.ArtistInfoModifyPage
 import com.artist.wea.pages.ArtistInfoPage
+import com.artist.wea.pages.ArtistJoinPage
 import com.artist.wea.pages.ArtistProfileListPage
 import com.artist.wea.pages.ArtistQuitPage
 import com.artist.wea.pages.ArtistRankPage
@@ -108,6 +109,7 @@ class MainActivity : ComponentActivity() {
                 composable(PageRoutes.OpenConcert.route) { OpenConcertPage(navController = navController)}
                 composable(PageRoutes.ArtistQuit.route) { ArtistQuitPage(navController = navController) }
                 composable(PageRoutes.UserQuit.route) { UserQuitPage(navController = navController) }
+                composable(PageRoutes.ArtistJoin.route) { ArtistJoinPage(navController = navController) }
             }
         }
     }
