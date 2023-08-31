@@ -16,7 +16,9 @@ import com.artist.wea.constants.PageRoutes
 import com.artist.wea.instance.Retrofit
 import com.artist.wea.pages.ArtistInfoModifyPage
 import com.artist.wea.pages.ArtistInfoPage
+import com.artist.wea.pages.ArtistJoinPage
 import com.artist.wea.pages.ArtistProfileListPage
+import com.artist.wea.pages.ArtistQuitPage
 import com.artist.wea.pages.ArtistRankPage
 import com.artist.wea.pages.ChangeEmailPage
 import com.artist.wea.pages.ChangePwdPage
@@ -31,6 +33,7 @@ import com.artist.wea.pages.MemberAddPage
 import com.artist.wea.pages.MemberManagePage
 import com.artist.wea.pages.MyArtistPage
 import com.artist.wea.pages.NotifyPage
+import com.artist.wea.pages.OpenConcertPage
 import com.artist.wea.pages.PaymentsManagePage
 import com.artist.wea.pages.SearchArtistPage
 import com.artist.wea.pages.SearchConcertPage
@@ -38,6 +41,7 @@ import com.artist.wea.pages.SettingPage
 import com.artist.wea.pages.TicketListPage
 import com.artist.wea.pages.TicketPage
 import com.artist.wea.pages.UserProfilePage
+import com.artist.wea.pages.UserQuitPage
 import com.artist.wea.pages.UserRegisterPage
 import com.artist.wea.ui.theme.WeaTheme
 import com.artist.wea.util.PreferenceUtil
@@ -102,6 +106,10 @@ class MainActivity : ComponentActivity() {
                 composable(PageRoutes.PaymentsManage.route) { PaymentsManagePage(navController = navController) }
                 composable(PageRoutes.TicketList.route) { TicketListPage(navController = navController) }
                 composable(PageRoutes.Ticket.route) { TicketPage(navController = navController) }
+                composable(PageRoutes.OpenConcert.route) { OpenConcertPage(navController = navController)}
+                composable(PageRoutes.ArtistQuit.route) { ArtistQuitPage(navController = navController) }
+                composable(PageRoutes.UserQuit.route) { UserQuitPage(navController = navController) }
+                composable(PageRoutes.ArtistJoin.route) { ArtistJoinPage(navController = navController) }
             }
         }
     }

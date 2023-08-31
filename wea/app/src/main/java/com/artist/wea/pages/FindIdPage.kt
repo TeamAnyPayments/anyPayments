@@ -1,6 +1,5 @@
 package com.artist.wea.pages
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -11,7 +10,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -46,8 +46,11 @@ fun FindIdPage(
     val repository = RegisterRepository()
     val viewModel = RegisterViewModel(repository)
 
+    val scrollState = rememberScrollState()
+
     Column(modifier = Modifier
         .fillMaxSize()
+        .verticalScroll(scrollState)
         .background(color = colorResource(id = R.color.mono50)))
     {
         PageTopBar(
@@ -59,8 +62,8 @@ fun FindIdPage(
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .padding(16.dp, 12.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalAlignment = Alignment.Start
         ) {
             // 입력 값 저장할 변수
             var nameInputText = remember { mutableStateOf("") }
@@ -69,10 +72,14 @@ fun FindIdPage(
             // guideText
             Text(text = stringResource(R.string.text_find_id_page_guide),
                 modifier = Modifier
-                    .wrapContentWidth()
+                    .fillMaxWidth()
                     .wrapContentHeight()
                     .padding(start = 16.dp, top = 32.dp, end = 16.dp, bottom = 32.dp),
-                style = getDefTextStyle().copy(color= colorResource(id = R.color.mono700)),
+                style = getDefTextStyle()
+                    .copy(
+                        color= colorResource(id = R.color.mono700),
+                        textAlign = TextAlign.Center
+                    ),
                 textAlign = TextAlign.Center
             )
 

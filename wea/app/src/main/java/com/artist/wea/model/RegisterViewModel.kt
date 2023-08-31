@@ -120,6 +120,7 @@ class RegisterViewModel(val repository: RegisterRepository): ViewModel() {
     // 회원가입
     fun joinUser(joinUser: JoinUser){
         viewModelScope.launch(exceptionHandler) {
+            // Log.d(RLOG, joinUser.toString())
             val response = repository.joinUser(joinUser);
             Log.d(RLOG, "res = ${response.toString()}")
 

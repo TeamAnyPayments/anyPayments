@@ -7,12 +7,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Entity
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "user")
+@Entity
 public class User extends BaseTime {
 
     @Id
@@ -44,8 +45,12 @@ public class User extends BaseTime {
     private Role role;
 
     @Enumerated(EnumType.STRING)
-    private SocialType socialType; // KAKAO, NAVER
+    private SocialType socialType;
 
-    private String socialId; // 로그인한 소셜 타입의 식별자 값 (일반 로그인인 경우 null)
+    private String socialId;
+
+    @OneToOne
+    @JoinColumn(name = "user_img_id", referencedColumnName = "user_img_id")
+    private UserImg userImg; // 유저 이미지
 
 }

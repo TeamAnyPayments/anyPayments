@@ -29,16 +29,15 @@ import com.artist.wea.constants.getSocialIcon
 fun LargeButton(
     btnText: String = stringResource(id = R.string.text_def_btn), // 버튼 글자
     btnIdx:Int = 0, // 버튼 종류 index, 소셜인지 일반인지 구분용
-    hasIcon:Boolean = btnIdx != 0, // 아이콘이 필요한 버튼인지 for 소셜 로그인,
     btnColors: ButtonColors = getBtnColorByIdx(btnIdx),
-    imgPainter:Painter = getSocialIcon(btnIdx),
     modifier: Modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()
         .padding(8.dp),
     buttonAction:() -> Unit
     ) {
-
+    val hasIcon:Boolean = btnIdx != 0; // 아이콘이 필요한 버튼인지 for 소셜 로그인,
+    val imgPainter:Painter = getSocialIcon(btnIdx)
 
     Button(
         onClick = {
