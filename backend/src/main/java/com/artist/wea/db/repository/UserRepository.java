@@ -1,7 +1,6 @@
 package com.artist.wea.db.repository;
 
 import com.artist.wea.db.entity.User;
-import com.artist.wea.db.entity.base.SocialType;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -19,6 +19,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -28,7 +30,8 @@ import androidx.navigation.NavHostController
 import com.artist.wea.R
 import com.artist.wea.components.ArtistInfoItem
 import com.artist.wea.components.Badge
-import com.artist.wea.components.BuskingDetailTable
+import com.artist.wea.components.CompleteTicketDialog
+import com.artist.wea.components.ConcertDetailTable
 import com.artist.wea.components.GuideBubble
 import com.artist.wea.components.InfiniteLoopPager
 import com.artist.wea.components.InfoUnit
@@ -92,6 +95,14 @@ fun ConcertInfoPage(
             )
         ),
         locations = "경기 고양시 일산서구 경의로 855-13 올리브영 앞",
+    )
+
+    val modalVisibleState = remember { mutableStateOf(false) }
+    CompleteTicketDialog(
+        visible = modalVisibleState.value,
+        onDismissRequest = {
+            modalVisibleState.value = false
+        }
     )
 
     Column(
@@ -193,7 +204,7 @@ fun ConcertInfoPage(
                     detailInfoMap["최소 후원금$"] = buskingInfo.minSupportAccount.toString()+" 원"
                     detailInfoMap["누적 관람객$"] = buskingInfo.cumulativeAudience.toString()
 
-                    BuskingDetailTable(
+                    ConcertDetailTable(
                         modifier = Modifier
                             .fillMaxWidth()
                             .wrapContentHeight(),
@@ -251,7 +262,7 @@ fun ConcertInfoPage(
                     .padding(8.dp)
                     .align(Alignment.BottomEnd),
                 buttonAction = {
-
+                    modalVisibleState.value = true
                 }
             )
         }

@@ -1,5 +1,6 @@
 package com.artist.wea.util
 
+import androidx.compose.runtime.MutableState
 import java.util.regex.Pattern
 
 class WeaRegex {
@@ -31,10 +32,16 @@ class WeaRegex {
         val phoneGuideText = "전화번호를 올바르게 입력해주세요"
         // 비밀번호 문자열 일치 여부
         val pwdDiffText = "비밀번호가 같지 않습니다"
-        val pwdSameText = "비밀번호가 동일합니다"
-        var hasId:Boolean = false; // 중복 확인 flag
-        val JoinSuccessGuideText = "회원 가입이 완료되었습니다!"
-        val JoinRejectGuideText = "회원가입 양식을 다시 확인해주세요!"
+        // val pwdSameText = "비밀번호가 동일합니다"
+        val joinSuccessGuideText = "회원 가입이 완료되었습니다!"
+        val joinRejectGuideText = "회원가입 양식을 다시 확인해주세요!"
+        val joinFailGuideText = "회원 가입에 실패하였습니다.\n관리자에게 문의해주세요."
+
+        // 타이머 파싱 함수
+        fun parseToTimeString(
+            timerSecond:MutableState<Int>
+        ):String = if(timerSecond.value/60 > 0) "${timerSecond.value/60}분 ${timerSecond.value%60}초" else "${timerSecond.value % 60}초"
 
     }
+
 }

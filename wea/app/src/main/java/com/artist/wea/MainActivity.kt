@@ -1,9 +1,11 @@
 package com.artist.wea
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -11,9 +13,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.artist.wea.constants.PageRoutes
+import com.artist.wea.instance.Retrofit
 import com.artist.wea.pages.ArtistInfoModifyPage
 import com.artist.wea.pages.ArtistInfoPage
+import com.artist.wea.pages.ArtistJoinPage
 import com.artist.wea.pages.ArtistProfileListPage
+import com.artist.wea.pages.ArtistQuitPage
 import com.artist.wea.pages.ArtistRankPage
 import com.artist.wea.pages.ChangeEmailPage
 import com.artist.wea.pages.ChangePwdPage
@@ -28,13 +33,18 @@ import com.artist.wea.pages.MemberAddPage
 import com.artist.wea.pages.MemberManagePage
 import com.artist.wea.pages.MyArtistPage
 import com.artist.wea.pages.NotifyPage
+import com.artist.wea.pages.OpenConcertPage
 import com.artist.wea.pages.PaymentsManagePage
 import com.artist.wea.pages.SearchArtistPage
 import com.artist.wea.pages.SearchConcertPage
 import com.artist.wea.pages.SettingPage
+import com.artist.wea.pages.TicketListPage
+import com.artist.wea.pages.TicketPage
 import com.artist.wea.pages.UserProfilePage
+import com.artist.wea.pages.UserQuitPage
 import com.artist.wea.pages.UserRegisterPage
 import com.artist.wea.ui.theme.WeaTheme
+import com.artist.wea.util.PreferenceUtil
 import com.naver.maps.map.NaverMapSdk
 
 class MainActivity : ComponentActivity() {
@@ -45,8 +55,16 @@ class MainActivity : ComponentActivity() {
             NaverMapSdk.getInstance(this).client =
                 NaverMapSdk.NaverCloudPlatformClient(BuildConfig.NAVER_CLIENT_ID) // local.properties로부터 읽어들임
             // 로그인 시 로그인 페이지로 이동하지 않도록, 자동로그인을 위한 변수 /* TODO */
-            val isLogin = true
+            val context = LocalContext.current;
+            val prefs = PreferenceUtil(context);
+            val token = prefs.getString("token", "");
+            val isLogin = token.isNotEmpty()
             val navController = rememberNavController()
+            if(isLogin){ // temp... : 토큰정보 확인용
+                Log.d("MAIN_ACTIVITY:::", "토큰 정보 있음")
+                Retrofit.token.value = token
+            }
+
             NavHost(
                 navController = navController,
                 startDestination = if(isLogin) PageRoutes.Home.route
@@ -86,6 +104,12 @@ class MainActivity : ComponentActivity() {
                 composable(PageRoutes.MemberManage.route) { MemberManagePage(navController = navController) }
                 composable(PageRoutes.UserProfile.route) { UserProfilePage(navController = navController) }
                 composable(PageRoutes.PaymentsManage.route) { PaymentsManagePage(navController = navController) }
+                composable(PageRoutes.TicketList.route) { TicketListPage(navController = navController) }
+                composable(PageRoutes.Ticket.route) { TicketPage(navController = navController) }
+                composable(PageRoutes.OpenConcert.route) { OpenConcertPage(navController = navController)}
+                composable(PageRoutes.ArtistQuit.route) { ArtistQuitPage(navController = navController) }
+                composable(PageRoutes.UserQuit.route) { UserQuitPage(navController = navController) }
+                composable(PageRoutes.ArtistJoin.route) { ArtistJoinPage(navController = navController) }
             }
         }
     }

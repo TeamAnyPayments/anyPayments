@@ -6,7 +6,7 @@
     <string name="text_find_id">아이디 찾기</string>
     <string name="text_find_pwd">비밀번호 찾기</string>
     <string name="text_regist">회원가입</string>
-    <string name="text_login_welcome">Welcome</string>
+    <string name="text_login_welcome">WE:A</string>
     <string name="text_login_btn">로그인</string>
     <string name="text_id_label">아이디</string>
     <string name="text_pwd_label">비밀번호</string>
@@ -37,7 +37,7 @@
     <string name="text_btn_find_id">아이디 찾기</string>
     <string name="text_find_id_page_guide">회원가입 시 등록하신 이름과\n이메일로 아이디를 찾습니다</string>
     <string name="text_btn_find_pwd">비밀번호 찾기</string>
-    <string name="text_find_pwd_page_guide">회원가입 시 등록한 이메일과\n아이디로 비밀번호를 변경합니다.</string>
+    <string name="text_find_pwd_page_guide">회원가입 시 등록한 이름, 이메일, 아이디로\n비밀번호를 변경합니다.</string>
     <string name="text_change_pwd_page_guide">비밀번호를 재설정 합니다.</string>
     <string name="text_new_pwd_label">새로운 비밀번호</string>
     <string name="text_save_pwd_change">변경사항 저장</string>
