@@ -11,7 +11,8 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "artist")
+@Table(name = "artist", indexes = {@Index(name = "idx_artist_name", columnList = "artist_name")})
+//@Table(name = "artist")
 @Entity
 public class Artist {
 

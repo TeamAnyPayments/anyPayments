@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -91,6 +92,11 @@ public class ArtistServiceImpl implements ArtistService {
         }
         return true;
 
+    }
+
+    @Override
+    public List<Artist> searchArtist(String artistName) {
+        return artistRepository.findByNameContaining(artistName);
     }
 
     @Override
