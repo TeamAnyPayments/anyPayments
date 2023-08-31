@@ -4,7 +4,10 @@ import com.artist.wea.api.service.ArtistService;
 import com.artist.wea.common.util.FileValidator;
 import com.artist.wea.db.dto.request.artist.AddPostReqDTO;
 import com.artist.wea.db.dto.response.artist.AddPostResDTO;
-import com.artist.wea.db.entity.*;
+import com.artist.wea.db.entity.Artist;
+import com.artist.wea.db.entity.ArtistImg;
+import com.artist.wea.db.entity.ArtistMember;
+import com.artist.wea.db.entity.User;
 import com.artist.wea.db.repository.ArtistImgRepository;
 import com.artist.wea.db.repository.ArtistMemberRepository;
 import com.artist.wea.db.repository.ArtistRepository;
@@ -44,9 +47,10 @@ public class ArtistServiceImpl implements ArtistService {
                 .simple(addPostReqDto.getSimple())
                 .introduce(addPostReqDto.getIntroduce())
                 .area(addPostReqDto.getArea())
+                .activated(true)
                 .build();
         artistRepository.save(artist);
-        artistMemberRepository.save(new ArtistMember(user, artist));
+        artistMemberRepository.save(new ArtistMember(user, artist, true));
 
         AddPostResDTO addPostResDto = AddPostResDTO.builder()
                 .name(addPostReqDto.getName())
@@ -59,11 +63,45 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     /**
-     * 아티스트 등록 해제
+     * 아티스트 등록 해제(탈퇴)
      */
     @Override
-    public void deleteArtist(User user) {
-        ArtistMember artistMember = artistMemberRepository.findByUser(user);
+    public void deleteArtist(User user, Long artistId) {
+        Artist artist = artistRepository.findById(artistId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 아티스트입니다."));
+        ArtistMember artistMember = artistMemberRepository.findByUserAndArtist(user, artist);
+        artistMemberRepository.delete(artistMember);
+    }
+
+    /**
+     * 아티스트 멤버 초대
+     */
+    @Override
+    public void inviteArtist(User user, String userId) {
+        User inviteUser = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+        Artist artist = artistMemberRepository.findByUser(user).getArtist();
+        ArtistMember artistMember = artistMemberRepository.findByUserAndArtist(inviteUser, artist);
+        if(artistMember != null) throw new IllegalArgumentException("이미 등록된 멤버입니다.");
+        artistMemberRepository.save(new ArtistMember(inviteUser, artist, false));
+    }
+
+    /**
+     * 아티스트 멤버 초대 요청 수락
+     */
+    @Override
+    public void acceptArtist(User user, Long artistId) {
+        Artist artist = artistRepository.findById(artistId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 아티스트입니다."));
+        ArtistMember artistMember = artistMemberRepository.findByUserAndArtist(user, artist);
+        artistMember.setActivated(true);
+        artistMemberRepository.save(artistMember);
+    }
+
+    /**
+     * 아티스트 멤버 초대 요청 거절
+     */
+    @Override
+    public void refuseArtist(User user, Long artistId) {
+        Artist artist = artistRepository.findById(artistId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 아티스트입니다."));
+        ArtistMember artistMember = artistMemberRepository.findByUserAndArtist(user, artist);
         artistMemberRepository.delete(artistMember);
     }
 
