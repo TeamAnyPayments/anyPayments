@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Map;
 
 @Tag(name = "사용자 API")
 @RequiredArgsConstructor
@@ -71,8 +72,8 @@ public class UserController {
      */
     @Operation(summary = "로그아웃 API")
     @PostMapping("/logout")
-    public ResponseEntity<ResponseDTO> logoutUser(HttpServletRequest servletRequest) {
-        userService.logout();
+    public ResponseEntity<ResponseDTO> logoutUser(@RequestBody Map<String, String> tokenMap) {
+        userService.logout(tokenMap.get("token"));
         return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, "로그아웃 완료"));
     }
 

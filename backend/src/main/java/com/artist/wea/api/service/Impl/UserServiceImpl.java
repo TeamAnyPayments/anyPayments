@@ -81,18 +81,14 @@ public class UserServiceImpl implements UserService {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userId, password);
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         String token = jwtTokenProvider.generateAccessToken(authentication);
-        redisTemplate.opsForValue().set(userId, token, jwtTokenProvider.getExpiration(token));
         return token;
     }
 
     /**
      * 로그아웃
      */
-    public void logout() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (redisTemplate.opsForValue().get("JWT:" + authentication.getName()) != null) {
-            redisTemplate.delete(authentication.getName());
-        }
+    public void logout(String token) {
+        redisTemplate.opsForValue().set(token, "logout", jwtTokenProvider.getExpiration(token));
     }
 
     /**

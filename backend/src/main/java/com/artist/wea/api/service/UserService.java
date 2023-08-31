@@ -15,7 +15,7 @@ public interface UserService {
 
     String login(String userId, String password);
 
-    void logout();
+    void logout(String token);
 
     Optional<User> getUser(String userId);
 
