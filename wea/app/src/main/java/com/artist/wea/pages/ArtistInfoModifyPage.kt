@@ -257,7 +257,9 @@ fun ArtistInfoModifyPage(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(bottom = 16.dp, start = 12.dp, end = 12.dp)
+                .padding(bottom = 16.dp, start = 12.dp, end = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalAlignment = Alignment.Start
         ) {
             // 아티스트 이름
             mArtistName.value = TitleInputForm(
