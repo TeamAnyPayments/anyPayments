@@ -13,7 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.rounded.AddCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,6 +25,7 @@ import com.artist.wea.R
 import com.artist.wea.components.InfoUnit
 import com.artist.wea.components.PageTopBar
 import com.artist.wea.components.PaymentItem
+import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.data.PaymentInfo
 
 @Composable
@@ -49,18 +50,19 @@ fun PaymentsManagePage(
         val paymentInfoList = listOf<PaymentInfo>(
             PaymentInfo(
                 name = "카카오 페이",
-                paymentImgURL = R.drawable.kakaotalk_sharing_btn_medium
+                paymentImgURL = "https://play-lh.googleusercontent.com/Ob9Ys8yKMeyKzZvl3cB9JNSTui1lJwjSKD60IVYnlvU2DsahysGENJE-txiRIW9_72Vd"
             ),
             PaymentInfo(
                 name = "네이버 페이",
-                paymentImgURL = R.drawable.icon_naver
+                paymentImgURL = "https://mir-s3-cdn-cf.behance.net/project_modules/1400/3393f738210507.575900b317fb4.png"
             ),
         )
 
         InfoUnit(
             modifier = Modifier.padding(16.dp, 12.dp),
             titleText = "간편결제 ${paymentInfoList.size} 개",
-            rightMenuIcon = Icons.Filled.AddCircle,
+            titleTextStyle = getDefTextStyle(),
+            rightMenuIcon = Icons.Rounded.AddCircle,
             rightMenuAction = {
                 Toast.makeText(context, "간편결제 등록...", Toast.LENGTH_SHORT).show()
             },
