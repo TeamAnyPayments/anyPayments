@@ -33,13 +33,14 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-const val AUTO_PAGE_CHANGE_DELAY = 1700L // 초
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun InfiniteLoopPager(
     modifier: Modifier = Modifier,
     list: List<String> = listOf(),
-    height:Dp = 144.dp
+    height:Dp = 144.dp,
+    posIdx:Int = 0,
+    delay:Long = 2500L
 ) {
     val pagerState = rememberPagerState()
 
@@ -60,7 +61,7 @@ fun InfiniteLoopPager(
     LaunchedEffect(key1 = pagerState.currentPage) {
         launch {
             while (true) {
-                delay(AUTO_PAGE_CHANGE_DELAY)
+                delay(delay)
                 // 페이지 바뀌었다고 애니메이션이 멈추면 어색하니 NonCancellable
                 withContext(NonCancellable) {
                     // 일어날린 없지만 유저가 약 10억번 스크롤할지 몰라.. 하는 사람을 위해..
@@ -108,7 +109,8 @@ fun InfiniteLoopPager(
             dotSize = 6.dp,
             currentPage = pagerState.currentPage % list.size,
             selectedColor = colorResource(id = R.color.white),
-            unSelectedColor = colorResource(id = R.color.mono300)
+            unSelectedColor = colorResource(id = R.color.mono300),
+            posIdx = posIdx
         )
     }
 }
@@ -120,9 +122,18 @@ fun PagerIndicator(
     dotSize: Dp,
     currentPage: Int,
     selectedColor: Color,
-    unSelectedColor: Color
+    unSelectedColor: Color,
+    posIdx:Int = 0,
 ) {
-    Row(modifier = modifier, horizontalArrangement = Arrangement.Center) {
+    val pos:Arrangement.Horizontal = when (posIdx) {
+        1 -> Arrangement.Start
+        2 -> Arrangement.End
+        else -> Arrangement.Center
+    }
+
+    Row(modifier = modifier
+        .padding(horizontal = 8.dp),
+        horizontalArrangement = pos ) {
         (0 until count).forEach { index ->
             Spacer(modifier = Modifier.width(2.dp))
             Box(

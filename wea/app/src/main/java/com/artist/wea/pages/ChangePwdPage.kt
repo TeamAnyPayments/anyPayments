@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
@@ -58,7 +59,8 @@ fun ChangePwdPage(
                     .wrapContentWidth()
                     .wrapContentHeight()
                     .padding(start = 16.dp, top = 32.dp, end = 16.dp, bottom = 32.dp),
-                style = getDefTextStyle().copy(color= colorResource(id = R.color.mono700))
+                style = getDefTextStyle().copy(color= colorResource(id = R.color.mono700)),
+                textAlign = TextAlign.Center
             )
 
             Spacer(modifier = Modifier.height(16.dp))

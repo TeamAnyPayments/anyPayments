@@ -31,10 +31,10 @@ class WeaRegex {
         val phoneGuideText = "전화번호를 올바르게 입력해주세요"
         // 비밀번호 문자열 일치 여부
         val pwdDiffText = "비밀번호가 같지 않습니다"
-        val pwdSameText = "비밀번호가 동일합니다"
-        var hasId:Boolean = false; // 중복 확인 flag
-        val JoinSuccessGuideText = "회원 가입이 완료되었습니다!"
-        val JoinRejectGuideText = "회원가입 양식을 다시 확인해주세요!"
+        // val pwdSameText = "비밀번호가 동일합니다"
+        val joinSuccessGuideText = "회원 가입이 완료되었습니다!"
+        val joinRejectGuideText = "회원가입 양식을 다시 확인해주세요!"
+        val joinFailGuideText = "회원 가입에 실패하였습니다.\n관리자에게 문의해주세요."
 
     }
 }
