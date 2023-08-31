@@ -284,6 +284,7 @@ fun homePage(
                     "https://png.pngtree.com/png-vector/20220530/ourmid/pngtree-photo-camera-horizontal-banner-png-image_4762429.png")
             )
 
+            val imgSize = 64.dp
             val height = 128.dp
             // 메인 메뉴, main Menu
             Column(
@@ -313,7 +314,7 @@ fun homePage(
                         tagName = "GPS",
                         badgeColor = colorResource(id = R.color.sky_blue400),
                         imgPainter = painterResource(id = R.drawable.icon_find_concert),
-                        imgSize = 96.dp
+                        imgSize = imgSize
                     )
                     // 티켓 조회
                     HomeMenuBox(
@@ -324,7 +325,7 @@ fun homePage(
                             .clickable { navController.navigate(PageRoutes.TicketList.route) },
                         menuTitle = "TICKET",
                         imgPainter = painterResource(id = R.drawable.icon_ticket),
-                        imgSize = 96.dp,
+                        imgSize = imgSize,
                     )
                 }
 
@@ -344,7 +345,7 @@ fun homePage(
                             .clickable { navController.navigate(PageRoutes.SearchArtist.route) },
                         menuTitle = "아티스트 검색",
                         imgPainter = painterResource(id = R.drawable.icon_search_artist),
-                        imgSize = 96.dp
+                        imgSize = imgSize
                     )
 
                     // 아티스트 순위 조회
@@ -358,7 +359,7 @@ fun homePage(
                         tagName = "HOT",
                         badgeColor = colorResource(id = R.color.red300),
                         imgPainter = painterResource(id = R.drawable.icon_artist_rank),
-                        imgSize = 96.dp
+                        imgSize = imgSize
                     )
 
                 }
@@ -374,7 +375,7 @@ fun homePage(
                         tagName = "ARTIST",
                         badgeColor = colorResource(id = R.color.red300),
                         imgPainter = painterResource(id = R.drawable.icon_create_concert),
-                        imgSize = 96.dp
+                        imgSize = imgSize
                     );
                 }
             }
