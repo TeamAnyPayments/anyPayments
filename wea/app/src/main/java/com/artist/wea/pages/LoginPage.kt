@@ -5,11 +5,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,8 +23,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Observer
@@ -41,11 +41,7 @@ import com.artist.wea.util.PreferenceUtil
 
 @Composable
 fun LoginPage(
-    navController: NavController,
-    modifier: Modifier =
-        Modifier
-            .fillMaxSize()
-            .background(colorResource(id = R.color.mono50))) {
+    navController: NavController) {
 
     // 비동기 통신을 위한 기본 객체 settings
     val context = LocalContext.current; // context
@@ -60,10 +56,14 @@ fun LoginPage(
     // 민감 정보 관리를 위한 sharedprefs 객체
     val prefs = PreferenceUtil(context)
 
+    val scrollState = rememberScrollState()
+
     Column(modifier = Modifier
         .fillMaxWidth()
-        .wrapContentHeight()
-        .padding(16.dp, 12.dp)){
+        .fillMaxHeight()
+        .verticalScroll(scrollState)
+        .padding(16.dp, 12.dp)
+        .background(color = colorResource(id = R.color.mono50))){
 
         //title
         Column(modifier = Modifier
@@ -152,6 +152,7 @@ fun LoginPage(
         Spacer(modifier = Modifier
             .fillMaxWidth()
             .height(8.dp))
+
 
         Button(onClick = {
             navController.navigate(PageRoutes.Home.route) }) {

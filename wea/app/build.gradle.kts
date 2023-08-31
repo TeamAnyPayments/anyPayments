@@ -105,9 +105,6 @@ dependencies {
 //    implementation("com.google.firebase:firebase-analytics-ktx")
 //    implementation("com.google.firebase:firebase-messaging:21.1.0")
 
-
-
-
 }
 
 fun getApiKey(propertyKey: String): String {

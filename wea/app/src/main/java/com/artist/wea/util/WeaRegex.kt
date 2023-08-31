@@ -1,5 +1,6 @@
 package com.artist.wea.util
 
+import androidx.compose.runtime.MutableState
 import java.util.regex.Pattern
 
 class WeaRegex {
@@ -36,5 +37,11 @@ class WeaRegex {
         val joinRejectGuideText = "회원가입 양식을 다시 확인해주세요!"
         val joinFailGuideText = "회원 가입에 실패하였습니다.\n관리자에게 문의해주세요."
 
+        // 타이머 파싱 함수
+        fun parseToTimeString(
+            timerSecond:MutableState<Int>
+        ):String = if(timerSecond.value/60 > 0) "${timerSecond.value/60}분 ${timerSecond.value%60}초" else "${timerSecond.value % 60}초"
+
     }
+
 }
