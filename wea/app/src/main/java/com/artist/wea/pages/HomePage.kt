@@ -284,6 +284,7 @@ fun homePage(
                     "https://png.pngtree.com/png-vector/20220530/ourmid/pngtree-photo-camera-horizontal-banner-png-image_4762429.png")
             )
 
+            val imgSize = 64.dp
             val height = 128.dp
             // 메인 메뉴, main Menu
             Column(
@@ -312,7 +313,8 @@ fun homePage(
                         menuTitle = "내 주변 공연 찾기",
                         tagName = "GPS",
                         badgeColor = colorResource(id = R.color.sky_blue400),
-                        imgPainter = painterResource(id = R.drawable.icon_find_concert)
+                        imgPainter = painterResource(id = R.drawable.icon_find_concert),
+                        imgSize = imgSize
                     )
                     // 티켓 조회
                     HomeMenuBox(
@@ -323,9 +325,7 @@ fun homePage(
                             .clickable { navController.navigate(PageRoutes.TicketList.route) },
                         menuTitle = "TICKET",
                         imgPainter = painterResource(id = R.drawable.icon_ticket),
-                        imgSize = 96.dp,
-                        imgPadVer = 8.dp,
-                        imgPadHor = 16.dp
+                        imgSize = imgSize,
                     )
                 }
 
@@ -344,7 +344,8 @@ fun homePage(
                             .weight(1f)
                             .clickable { navController.navigate(PageRoutes.SearchArtist.route) },
                         menuTitle = "아티스트 검색",
-                        imgPainter = painterResource(id = R.drawable.icon_search_artist)
+                        imgPainter = painterResource(id = R.drawable.icon_search_artist),
+                        imgSize = imgSize
                     )
 
                     // 아티스트 순위 조회
@@ -357,7 +358,8 @@ fun homePage(
                         menuTitle = "ARTIST BOARD",
                         tagName = "HOT",
                         badgeColor = colorResource(id = R.color.red300),
-                        imgPainter = painterResource(id = R.drawable.icon_artist_rank)
+                        imgPainter = painterResource(id = R.drawable.icon_artist_rank),
+                        imgSize = imgSize
                     )
 
                 }
@@ -372,7 +374,8 @@ fun homePage(
                         menuTitle = "공연 개설하기",
                         tagName = "ARTIST",
                         badgeColor = colorResource(id = R.color.red300),
-                        imgPainter = painterResource(id = R.drawable.icon_create_concert)
+                        imgPainter = painterResource(id = R.drawable.icon_create_concert),
+                        imgSize = imgSize
                     );
                 }
             }
