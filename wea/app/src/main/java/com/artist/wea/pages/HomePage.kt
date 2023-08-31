@@ -2,9 +2,11 @@ package com.artist.wea.pages
 
 import android.util.Log
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,6 +30,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -70,7 +73,7 @@ fun HomePage(
     val menuOpen = remember { mutableStateOf(false) } // 메뉴 상태를 기억하는 변수
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp // 디바이스 스크린 width
     val menuOffset = animateDpAsState(if (menuOpen.value) 0.dp else screenWidth, label = "") // 애니메이션 상태
-    val isArtist = true; // 아티스트인지 여부를 판단할 변수
+    val isArtist = remember { mutableStateOf(true) }; // 아티스트인지 여부를 판단할 변수
 
     // 비동기 통신을 위한 기본 객체 settings
     val context = LocalContext.current;
@@ -161,7 +164,8 @@ fun HomePage(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(),
-            isArtist = isArtist)
+            isArtist = isArtist
+        )
     }
     // Side Menu Area
     Row{
@@ -209,7 +213,7 @@ fun HomePage(
             )
 
             // 작업실 = conditional or 아티스트 등록!
-            if(isArtist){
+            if(isArtist.value){
                 ArtistMenu(
                     navController = navController,
                     modifier = defModifier
@@ -250,11 +254,12 @@ fun HomePage(
 }
 
 // 홈 페이지 컴포저블들
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun homePage(
     navController: NavHostController,
     modifier: Modifier,
-    isArtist:Boolean = false
+    isArtist:MutableState<Boolean>
 ){
     val scrollState = rememberScrollState()
     Column(
@@ -262,7 +267,15 @@ fun homePage(
             .fillMaxWidth()
             .fillMaxHeight()
             .verticalScroll(scrollState)
-            .background(colorResource(id = R.color.mono100)) // temp
+            .background(colorResource(id = R.color.mono100))
+            .combinedClickable (
+                onClick = {
+
+                },
+                onLongClick = {
+                    isArtist.value = !isArtist.value
+                }
+            )
         ,
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -364,7 +377,7 @@ fun homePage(
 
                 }
                 // 공연 개설하기, 아티스트인지에 따라 가변적임
-                if (isArtist) {
+                if (isArtist.value) {
                     HomeMenuBox(
                         Modifier
                             .fillMaxWidth()
