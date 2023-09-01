@@ -1,4 +1,4 @@
-package com.artist.wea.components.uidtclass
+package com.artist.wea.components.data
 
 import com.artist.wea.R
 

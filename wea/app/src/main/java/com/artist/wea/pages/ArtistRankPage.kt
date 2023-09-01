@@ -35,8 +35,9 @@ import androidx.navigation.NavHostController
 import com.artist.wea.R
 import com.artist.wea.components.ArtistRankItem
 import com.artist.wea.components.PageTopBar
-import com.artist.wea.components.uidtclass.ArtistRankData
-import com.artist.wea.components.uidtclass.TabItem
+import com.artist.wea.components.data.ArtistRankData
+import com.artist.wea.components.data.TabItem
+import com.artist.wea.constants.DummyValues
 import com.artist.wea.constants.get12TextStyle
 import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.glide.GlideImage
@@ -54,45 +55,7 @@ fun ArtistRankPage(
 ){
 
     // 랭크 아이템 (테스트)
-    val rankList = mutableListOf<ArtistRankData>(
-        ArtistRankData(
-            no = 1,
-            artistName = "무슨무슨 아티스트",
-            artistAddress = "경기 고양시 일산서구",
-            artistImgURL = "https://cdnimage.dailian.co.kr/news/202002/news_1581993821_869287_m_1.jpeg"
-        ),
-        ArtistRankData(
-            no = 2,
-            artistName = "블라블라 아티스트",
-            artistAddress = "서울 특별시 강남구",
-            artistImgURL = "https://cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/2Z3MD7RDMQIRSUWM5ASEVKSKAY.jpg"
-
-        ),
-        ArtistRankData(
-            no = 3,
-            artistName = "룰라룰라 아티스트",
-            artistAddress = "인천광역시 서구",
-            artistImgURL = "https://www.kyongbuk.co.kr/news/photo/202105/2076224_500129_3236.jpg"
-        ),
-        ArtistRankData(
-            no = 4,
-            artistName = "훌라훌라 아티스트",
-            artistAddress = "경기 안산시 단원구",
-            artistImgURL = "https://cdn.dkilbo.com/news/photo/202103/328795_222527_1909.jpg"
-        ),
-        ArtistRankData(
-            no = 5,
-            artistName = "눈누난나 아티스트",
-            artistAddress = "경기 수원시 권선구",
-            artistImgURL = "https://news.tbs.seoul.kr/Upload/Image/20221202/00000000000001308345.jpg"
-        ),
-        ArtistRankData(
-            no = 6,
-            artistName = "우리동네 아티스트",
-            artistAddress = "서을 특별시 관악구",
-            artistImgURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyemqDmEPapQHDeVBwwFuMZeTkp97FvTryJA&usqp=CAU"
-        )
-    )
+    val rankList = DummyValues().rankList
 
     // 탭 items
     val tabs = listOf(

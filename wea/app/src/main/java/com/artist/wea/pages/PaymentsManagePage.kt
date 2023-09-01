@@ -25,8 +25,8 @@ import com.artist.wea.R
 import com.artist.wea.components.InfoUnit
 import com.artist.wea.components.PageTopBar
 import com.artist.wea.components.PaymentItem
+import com.artist.wea.constants.DummyValues
 import com.artist.wea.constants.getDefTextStyle
-import com.artist.wea.data.PaymentInfo
 
 @Composable
 fun PaymentsManagePage(
@@ -47,16 +47,7 @@ fun PaymentsManagePage(
 
         val context = LocalContext.current;
         val scrollState = rememberScrollState()
-        val paymentInfoList = listOf<PaymentInfo>(
-            PaymentInfo(
-                name = "카카오 페이",
-                paymentImgURL = "https://play-lh.googleusercontent.com/Ob9Ys8yKMeyKzZvl3cB9JNSTui1lJwjSKD60IVYnlvU2DsahysGENJE-txiRIW9_72Vd"
-            ),
-            PaymentInfo(
-                name = "네이버 페이",
-                paymentImgURL = "https://mir-s3-cdn-cf.behance.net/project_modules/1400/3393f738210507.575900b317fb4.png"
-            ),
-        )
+        val paymentInfoList = DummyValues().paymentInfoList
 
         InfoUnit(
             modifier = Modifier.padding(16.dp, 12.dp),

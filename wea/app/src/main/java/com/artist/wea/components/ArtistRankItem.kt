@@ -22,7 +22,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
-import com.artist.wea.components.uidtclass.ArtistRankData
+import com.artist.wea.components.data.ArtistRankData
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.constants.getCardDefColors
