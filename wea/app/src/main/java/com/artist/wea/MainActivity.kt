@@ -1,6 +1,7 @@
 package com.artist.wea
 
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -45,15 +46,29 @@ import com.artist.wea.pages.UserQuitPage
 import com.artist.wea.pages.UserRegisterPage
 import com.artist.wea.ui.theme.WeaTheme
 import com.artist.wea.util.PreferenceUtil
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.RequestConfiguration
 import com.naver.maps.map.NaverMapSdk
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            MobileAds.initialize(this) // 구글 광고 ADMOBS INIT...
+            // Use RequestConfiguration.Builder().setTestDeviceIds(Arrays.asList("05E33EEFCCB837287D76B284E267267F")) to get test ads on this device.
+            val androidId = Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)
+            Log.d("MAIN_ACTIVITY:::", "your device ID : $androidId")
+            val testDeviceIds: List<String> = mutableListOf(androidId)
+            val configuration =
+                RequestConfiguration.Builder().setTestDeviceIds(testDeviceIds).build()
+            MobileAds.setRequestConfiguration(configuration)
+
             // 네이버 지도를 위한 SDK Client 등록!
             NaverMapSdk.getInstance(this).client =
                 NaverMapSdk.NaverCloudPlatformClient(BuildConfig.NAVER_CLIENT_ID) // local.properties로부터 읽어들임
+
+
             // 로그인 시 로그인 페이지로 이동하지 않도록, 자동로그인을 위한 변수 /* TODO */
             val context = LocalContext.current;
             val prefs = PreferenceUtil(context);
