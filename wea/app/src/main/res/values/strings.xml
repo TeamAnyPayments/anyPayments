@@ -46,5 +46,7 @@
     <string name="text_user_greeting">안녕하세요!</string>
     <string name="text_concert_benefit_detail">*공연 수익은 WE:A에서 관객에 회원님께 지불한 후원금의 총액을 기준으로 산정됩니다. 현재 페이지에서 제공하는 총 금액과 실제 금액에는 차이가 있을 수 있으니, 자세한 내용은 홈페이지 내 [ FAQ - 결제/정산 방법 ]을 참고해주세요.</string>
     <string name="base_url">https://api.kabserv.xyz/api</string>
+    <string name="admob_id">ca-app-pub-8275486832718942~6510692827</string>
+    <string name="sample_banner_id">ca-app-pub-8275486832718942/7047833152</string>
 
 </resources>

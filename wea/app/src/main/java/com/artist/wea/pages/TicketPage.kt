@@ -75,7 +75,7 @@ fun TicketPage( navController: NavHostController
             }
             // 구글 광고
             GoogleAdItem(
-                navController = navController
+                height = 50.dp
             )
         }
     }

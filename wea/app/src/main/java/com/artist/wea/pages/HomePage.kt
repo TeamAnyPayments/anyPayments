@@ -395,8 +395,7 @@ fun homePage(
         }
         // 구글 광고
         GoogleAdItem(
-            navController = navController,
-            height = 96.dp
+            height = 50.dp
         )
     }
 }
