@@ -14,14 +14,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.artist.wea.components.uidtclass.SearchArtistInfo
+import com.artist.wea.data.ConcertInfo
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get14TextStyle
 
 @Composable
 fun MemberItem(
     navController: NavHostController,
-    content: SearchArtistInfo = SearchArtistInfo(),
+    content: ConcertInfo = ConcertInfo(),
     modifier: Modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()

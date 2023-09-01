@@ -18,10 +18,9 @@ import androidx.navigation.NavHostController
 import com.artist.wea.R
 import com.artist.wea.components.PageTopBar
 import com.artist.wea.components.TicketItem
+import com.artist.wea.constants.DummyValues
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get12TextStyle
-import com.artist.wea.data.TicketInfo
-import java.time.LocalDateTime
 
 @Composable
 fun TicketListPage(
@@ -58,45 +57,16 @@ fun TicketListPage(
             )
         }
 
-        TicketItem(ticketInfo =
-            TicketInfo(
-                serialNo = "1234-5678-1234",
-                concertName = "무슨무슨 버스킹",
-                teamName = "버스킹과 아이들",
-                dateTime = LocalDateTime.now(),
-                location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞",
-                isOnAir = true,
-            ),
-            modifier = Modifier.clickable {
-                navController.navigate(PageRoutes.Ticket.route)
-            }
-        )
-        TicketItem(ticketInfo =
-            TicketInfo(
-                serialNo = "1234-5678-1234",
-                concertName = "무슨무슨 버스킹",
-                teamName = "버스킹과 아이들",
-                dateTime = LocalDateTime.now(),
-                location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞",
+        val ticketInfoList = DummyValues().ticketInfoList
+
+        ticketInfoList.forEach{ ticketInfo ->
+            TicketItem(
+                ticketInfo = ticketInfo,
+                modifier = Modifier.clickable {
+                    navController.navigate(PageRoutes.Ticket.route)
+                }
             )
-        )
-        TicketItem(ticketInfo =
-            TicketInfo(
-                serialNo = "1234-5678-1234",
-                concertName = "무슨무슨 버스킹",
-                teamName = "버스킹과 아이들",
-                dateTime = LocalDateTime.now(),
-                location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞",
-            )
-        )
-        TicketItem(ticketInfo =
-            TicketInfo(
-                serialNo = "1234-5678-1234",
-                concertName = "무슨무슨 버스킹",
-                teamName = "버스킹과 아이들",
-                dateTime = LocalDateTime.now(),
-                location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞",
-            )
-        )
+        }
+
     }
 }

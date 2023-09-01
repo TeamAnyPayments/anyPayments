@@ -84,12 +84,12 @@ fun ConcertInfoPage(
         tags = listOf("로드버스킹", "스트릿", "홍대"),
         memberList = listOf(
             ArtistInfo(
-                "https://images.ctfassets.net/lnhrh9gqejzl/4a2YAZ0WkM4AcsYciUQMWA/15a089fc77c7dc9953ace8a3b23fdcde/2018-03-07.gif?fm=jpg",
+                profileImgURL = "https://images.ctfassets.net/lnhrh9gqejzl/4a2YAZ0WkM4AcsYciUQMWA/15a089fc77c7dc9953ace8a3b23fdcde/2018-03-07.gif?fm=jpg",
                 artistName = "블라블라 아티스트",
                 comment = "좋은 음악 함께 공유해요"
             ),
             ArtistInfo(
-                "https://c8.alamy.com/comp/HYY9TT/profile-of-a-girl-and-crayons-HYY9TT.jpg",
+                profileImgURL = "https://c8.alamy.com/comp/HYY9TT/profile-of-a-girl-and-crayons-HYY9TT.jpg",
                 artistName = "무슨무슨 아티스트",
                 comment = "이번 생은 처음이라... 모든걸 다 잘할 순 없잖아"
             )

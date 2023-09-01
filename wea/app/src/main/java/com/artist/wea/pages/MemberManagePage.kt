@@ -37,10 +37,10 @@ import com.artist.wea.R
 import com.artist.wea.components.LargeButton
 import com.artist.wea.components.MemberItem
 import com.artist.wea.components.PageTopBar
-import com.artist.wea.components.uidtclass.SearchArtistInfo
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.getBtnColorByIdx
 import com.artist.wea.constants.getMenuItemColors
+import com.artist.wea.data.ConcertInfo
 
 @Composable
 fun MemberManagePage(
@@ -61,7 +61,6 @@ fun MemberManagePage(
             singleIcon = Icons.Filled.Add,
             rightMenuText = "저장",
             rightMenuAction = {
-                // navController.navigate(PageRoutes.MemberAdd.route)
                 Toast.makeText(context, "변경 사항이 저장 되었습니다", Toast.LENGTH_SHORT).show()
             }
         )
@@ -74,18 +73,18 @@ fun MemberManagePage(
                 .verticalScroll(scrollState),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            val memberList = arrayOf<SearchArtistInfo>(
-                SearchArtistInfo(
+            val memberList = arrayOf<ConcertInfo>(
+                ConcertInfo(
                     imgURL = "https://www.pinkvilla.com/images/2023-01/167366856_ariana-grande-1_1280*720.jpg",
                     userId = "tired_cat",
                     email = "tired_cat@naver.com"
                 ),
-                SearchArtistInfo(
+                ConcertInfo(
                     imgURL = "https://ichef.bbci.co.uk/news/1536/cpsprodpb/98B4/production/_130129093_winner.png",
                     userId = "swag_cat",
                     email = "swag_cat@gmail.com"
                 ),
-                SearchArtistInfo(
+                ConcertInfo(
                     imgURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8jKhRZVaPp-lAxLEiHwl7CBosQM1G2HXrqA&usqp=CAU",
                     userId = "sad_cat",
                     email = "sad_cat@daum.net"

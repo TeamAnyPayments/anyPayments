@@ -28,7 +28,7 @@ import com.artist.wea.R
 import com.artist.wea.components.ConcertListComponent
 import com.artist.wea.components.NaverMapComponent
 import com.artist.wea.components.PageTopBar
-import com.artist.wea.components.uidtclass.TabItem
+import com.artist.wea.components.data.TabItem
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)

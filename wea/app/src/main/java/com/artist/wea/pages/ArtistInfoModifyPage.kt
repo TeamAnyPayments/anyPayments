@@ -45,10 +45,11 @@ import com.artist.wea.components.PageTopBar
 import com.artist.wea.components.TitleInputForm
 import com.artist.wea.components.WeaIconImage
 import com.artist.wea.components.WeaWideImage
-import com.artist.wea.components.uidtclass.SearchArtistInfo
+import com.artist.wea.constants.DummyValues
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.data.ArtistInfo
+import com.artist.wea.data.ConcertInfo
 import com.artist.wea.util.PhotoSelector
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -283,23 +284,7 @@ fun ArtistInfoModifyPage(
         }
 
         // 멤버 소개
-        val artistInfoList = arrayOf<ArtistInfo>(
-            ArtistInfo(
-                "https://images.ctfassets.net/lnhrh9gqejzl/4a2YAZ0WkM4AcsYciUQMWA/15a089fc77c7dc9953ace8a3b23fdcde/2018-03-07.gif?fm=jpg",
-                artistName = "블라블라 아티스트",
-                comment = "좋은 음악 함께 공유해요"
-            ),
-            ArtistInfo(
-                "https://c8.alamy.com/comp/HYY9TT/profile-of-a-girl-and-crayons-HYY9TT.jpg",
-                artistName = "무슨무슨 아티스트",
-                comment = "이번 생은 처음이라... 모든걸 다 잘할 순 없잖아"
-            ),
-            ArtistInfo(
-                "https://i.pinimg.com/236x/38/9a/77/389a77c6b7f44bab5d3076365b306527--vektor-scarlett-ohara.jpg",
-                artistName = "쏼라쏼라 아티스트",
-                comment = "무더운 여름 밤, 한강 공원에서 함께 힐링할래요?"
-            )
-        )
+        val artistInfoList = DummyValues().memberList
 
         InfoUnit(
             modifier = Modifier.padding(16.dp, 12.dp),
@@ -321,38 +306,38 @@ fun ArtistInfoModifyPage(
         )
 
         // 공연 이력
-        val concertList = arrayOf<SearchArtistInfo>(
-            SearchArtistInfo(
+        val concertList = arrayOf<ConcertInfo>(
+            ConcertInfo(
                 imgURL = "https://www.pinkvilla.com/images/2023-01/167366856_ariana-grande-1_1280*720.jpg",
                 artistName = "무슨무슨 아티스트",
                 concertIntroduce = "우리는 모두 이번 생은 처음이니까 지금이..",
                 location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞"
             ),
-            SearchArtistInfo(
+            ConcertInfo(
                 imgURL = "https://ichef.bbci.co.uk/news/1536/cpsprodpb/98B4/production/_130129093_winner.png",
                 artistName = "블라블라 아티스트",
                 concertIntroduce = "Drippin Your Self!, 감성 힙합 공연",
                 location = "서울 서대문구 신촌역로 17 GS 25 앞"
             ),
-            SearchArtistInfo(
+            ConcertInfo(
                 imgURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8jKhRZVaPp-lAxLEiHwl7CBosQM1G2HXrqA&usqp=CAU",
                 artistName = "울라울라 아티스트",
                 concertIntroduce = "무더운 밤 잠이 오지 않는 그대를 위한 감성 힐링콘...",
                 location = "서울 마포구 와우산로21길 19-3 홍익문화공원"
             ),
-            SearchArtistInfo(
+            ConcertInfo(
                 imgURL = "https://www.pinkvilla.com/images/2023-01/167366856_ariana-grande-1_1280*720.jpg",
                 artistName = "무슨무슨 아티스트",
                 concertIntroduce = "우리는 모두 이번 생은 처음이니까 지금이..",
                 location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞"
             ),
-            SearchArtistInfo(
+            ConcertInfo(
                 imgURL = "https://ichef.bbci.co.uk/news/1536/cpsprodpb/98B4/production/_130129093_winner.png",
                 artistName = "블라블라 아티스트",
                 concertIntroduce = "Drippin Your Self!, 감성 힙합 공연",
                 location = "서울 서대문구 신촌역로 17 GS 25 앞"
             ),
-            SearchArtistInfo(
+            ConcertInfo(
                 imgURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8jKhRZVaPp-lAxLEiHwl7CBosQM1G2HXrqA&usqp=CAU",
                 artistName = "울라울라 아티스트",
                 concertIntroduce = "무더운 밤 잠이 오지 않는 그대를 위한 감성 힐링콘...",

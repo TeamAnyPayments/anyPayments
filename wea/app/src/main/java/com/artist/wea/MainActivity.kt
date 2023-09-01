@@ -96,7 +96,7 @@ class MainActivity : ComponentActivity() {
                     navBackStackEntry ->
                     UserRegisterPage(
                         navController = navController,
-                        navBackStackEntry.arguments?.getString("type")
+                        type = navBackStackEntry.arguments?.getString("type")
                     )
                 }
                 composable(PageRoutes.FindId.route) { FindIdPage(navController=navController) }
@@ -110,7 +110,19 @@ class MainActivity : ComponentActivity() {
                 composable(PageRoutes.ClientService.route) { ClientServicePage(navController = navController) }
                 composable(PageRoutes.ConcertBenefit.route) { ConcertBenefitPage(navController = navController) }
                 composable(PageRoutes.SearchArtist.route) { SearchArtistPage(navController = navController)}
-                composable(PageRoutes.ArtistInfo.route) { ArtistInfoPage(navController = navController) }
+                composable(PageRoutes.ArtistInfo.route+"/{id}",
+                    arguments = listOf(navArgument("id"){
+                        type = NavType.IntType
+                        defaultValue = -1
+                    })
+                    ) {
+                        navBackStackEntry ->
+                    ArtistInfoPage(
+                        navController = navController,
+                        id = navBackStackEntry.arguments?.getInt("id")?:-1
+
+                    )
+                }
                 composable(PageRoutes.ConcertInfo.route) { ConcertInfoPage(navController = navController) }
                 composable(PageRoutes.MyArtist.route) { MyArtistPage(navController = navController) }
                 composable(PageRoutes.ArtistInfoModify.route) { ArtistInfoModifyPage(navController = navController) }

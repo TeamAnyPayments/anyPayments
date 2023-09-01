@@ -1,6 +1,7 @@
-package com.artist.wea.components.uidtclass
+package com.artist.wea.data
 
-data class SearchArtistInfo(
+// ConcertInfo
+data class ConcertInfo(
     val imgURL: String = "",
     val artistName: String = "-",
     val concertIntroduce:String = "-",

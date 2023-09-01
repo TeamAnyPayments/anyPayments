@@ -19,7 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.artist.wea.components.uidtclass.AlarmData
+import com.artist.wea.components.data.AlarmData
 import com.artist.wea.constants.get14TextStyle
 
 @Composable
