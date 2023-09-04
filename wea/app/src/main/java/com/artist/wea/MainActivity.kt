@@ -110,16 +110,16 @@ class MainActivity : ComponentActivity() {
                 composable(PageRoutes.ClientService.route) { ClientServicePage(navController = navController) }
                 composable(PageRoutes.ConcertBenefit.route) { ConcertBenefitPage(navController = navController) }
                 composable(PageRoutes.SearchArtist.route) { SearchArtistPage(navController = navController)}
-                composable(PageRoutes.ArtistInfo.route+"/{id}",
-                    arguments = listOf(navArgument("id"){
-                        type = NavType.IntType
-                        defaultValue = -1
+                composable(PageRoutes.ArtistInfo.route+"/{userId}",
+                    arguments = listOf(navArgument("userId"){
+                        type = NavType.StringType
+                        defaultValue = "abc000"
                     })
                     ) {
                         navBackStackEntry ->
                     ArtistInfoPage(
                         navController = navController,
-                        id = navBackStackEntry.arguments?.getInt("id")?:-1
+                        userId = navBackStackEntry.arguments?.getString("userId")?:"abc000"
 
                     )
                 }

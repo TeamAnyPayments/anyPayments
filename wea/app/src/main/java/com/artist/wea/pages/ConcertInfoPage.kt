@@ -189,7 +189,7 @@ fun ConcertInfoPage(
                         modifier = Modifier,
                         titleText = "Member",
                         screen = {
-                            concertInfo.memberList.forEachIndexed { index, artistInfo ->
+                            concertInfo.memberList.forEach { artistInfo ->
                                 ArtistInfoItem(
                                     navController = navController,
                                     artistInfo = artistInfo,

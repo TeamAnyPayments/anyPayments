@@ -39,20 +39,23 @@ import com.artist.wea.components.ShowProfileDialog
 import com.artist.wea.components.WeaIconImage
 import com.artist.wea.components.WeaWideImage
 import com.artist.wea.constants.DummyValues
+import com.artist.wea.constants.GlobalState.Companion.currentArtistInfo
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.constants.getDefTextStyle
+import com.artist.wea.data.ArtistInfo
 
 @Composable
 fun ArtistInfoPage(
     navController: NavHostController,
-    id:Int = -1
+    userId:String,
 ){
     // TODO 현재 사용자가 아티스트 프로필을 수정할 권한이 있는지 판단할 boolean 변수
     val isEditable = true;
 
-    // TODO navController를 통해서 아티스트 데이터를 추출해서 렌더링 하도록 설계
-    val artistInfo = DummyValues().aritstSearchList[id-1]
+    val artistInfo = DummyValues().aritstSearchList[userId]?: ArtistInfo()
+    currentArtistInfo.value = artistInfo
+
 
     val modalVisibleState = remember { mutableStateOf(false) }
     ShowProfileDialog(
@@ -183,7 +186,7 @@ fun ArtistInfoPage(
             modifier = Modifier.padding(16.dp, 12.dp),
             titleText = "Member",
             screen = {
-                artistInfoList.forEachIndexed { index, artistInfo ->
+                artistInfoList.forEach { artistInfo ->
                     ArtistInfoItem(
                         navController = navController,
                         artistInfo = artistInfo,
@@ -208,8 +211,8 @@ fun ArtistInfoPage(
                         content = item,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .wrapContentHeight()
-                            //.background(color = colorResource(id = R.color.mono50))
+                            .wrapContentHeight(),
+                        isActive = item.concertId == DummyValues().defConcertInfo.concertId // TODO 지우기 .. temp..
                     )
                 }
             },
