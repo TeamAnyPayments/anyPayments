@@ -57,13 +57,15 @@ fun TicketListPage(
             )
         }
 
-        val ticketInfoList = DummyValues().ticketInfoList
+        val ticketInfoList = DummyValues().ticketInfoList.values
 
         ticketInfoList.forEach{ ticketInfo ->
             TicketItem(
                 ticketInfo = ticketInfo,
                 modifier = Modifier.clickable {
-                    navController.navigate(PageRoutes.Ticket.route)
+                    if(ticketInfo.isOnAir){ // TODO.. 나중에 완성되면 지우기!
+                        navController.navigate(PageRoutes.Ticket.route+"/${ticketInfo.serialNo}")
+                    }
                 }
             )
         }

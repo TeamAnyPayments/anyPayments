@@ -123,7 +123,18 @@ class MainActivity : ComponentActivity() {
 
                     )
                 }
-                composable(PageRoutes.ConcertInfo.route) { ConcertInfoPage(navController = navController) }
+                composable(PageRoutes.ConcertInfo.route,
+                    // "/{id}"
+//                    arguments = listOf(navArgument("id"){
+//                        type = NavType.StringType
+//                        defaultValue = "1"
+//                    })
+                ) { navBackStackEntry ->
+                    ConcertInfoPage(
+                        navController = navController,
+                        id = navBackStackEntry.arguments?.getString("id")?:""
+                    )
+                }
                 composable(PageRoutes.MyArtist.route) { MyArtistPage(navController = navController) }
                 composable(PageRoutes.ArtistInfoModify.route) { ArtistInfoModifyPage(navController = navController) }
                 composable(PageRoutes.MemberAdd.route) { MemberAddPage(navController = navController) }
@@ -132,7 +143,19 @@ class MainActivity : ComponentActivity() {
                 composable(PageRoutes.UserProfile.route) { UserProfilePage(navController = navController) }
                 composable(PageRoutes.PaymentsManage.route) { PaymentsManagePage(navController = navController) }
                 composable(PageRoutes.TicketList.route) { TicketListPage(navController = navController) }
-                composable(PageRoutes.Ticket.route) { TicketPage(navController = navController) }
+                composable(PageRoutes.Ticket.route+"/{ticketId}",
+                    arguments = listOf(navArgument("ticketId"){
+                        type = NavType.StringType
+                        defaultValue = getString(R.string.text_default_ticket_no)
+                    })
+                ) {
+                    navBackStackEntry ->
+                    TicketPage(
+                        navController = navController,
+                        ticketId = navBackStackEntry.arguments?.getString("ticketId")?:
+                                        getString(R.string.text_default_ticket_no)
+                    )
+                }
                 composable(PageRoutes.OpenConcert.route) { OpenConcertPage(navController = navController)}
                 composable(PageRoutes.ArtistQuit.route) { ArtistQuitPage(navController = navController) }
                 composable(PageRoutes.UserQuit.route) { UserQuitPage(navController = navController) }

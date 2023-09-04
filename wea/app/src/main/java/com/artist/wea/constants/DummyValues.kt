@@ -255,35 +255,54 @@ class DummyValues {
     )
 
 
-    val ticketInfoList = listOf<TicketInfo>(
-        TicketInfo(
-            serialNo = "1234-5678-1234",
-            concertName = "무슨무슨 버스킹",
-            teamName = "버스킹과 아이들",
-            dateTime = LocalDateTime.now(),
-            location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞",
-            isOnAir = true,
+    val ticketInfoList = mutableMapOf<String, TicketInfo>(
+        "0000-0000-0001" to
+                TicketInfo(
+                    serialNo = "0000-0000-0001",
+                    concertName = "무슨무슨 버스킹",
+                    teamName = "버스킹과 아이들",
+                    concertImgList = listOf(
+                        "https://img.hankyung.com/photo/202206/AKR20220622048100051_01_i_P4.jpg",
+                        "https://img.khan.co.kr/news/2022/05/13/l_20220513010016444001511313.jpg",
+                        "https://img.khan.co.kr/news/2022/05/13/l_2022051301001644400151132.jpg",
+                        "https://blog.kakaocdn.net/dn/lvIrz/btrSqGWAmW3/4D1zPsA9vcYOCroUHfKkM0/img.png"),
+                    dateTime = LocalDateTime.now(),
+                    location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞",
+                    isOnAir = true
+                ),
+        Pair(
+            "0000-0000-0002",
+            TicketInfo(
+                serialNo = "0000-0000-0002",
+                concertName = "무슨무슨 버스킹",
+                teamName = "버스킹과 아이들",
+                dateTime = LocalDateTime.now(),
+                location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞",
+            )
         ),
-        TicketInfo(
-            serialNo = "1234-5678-1234",
-            concertName = "무슨무슨 버스킹",
-            teamName = "버스킹과 아이들",
-            dateTime = LocalDateTime.now(),
-            location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞",
+        Pair(
+            "0000-0000-0003",
+            TicketInfo(
+                serialNo = "0000-0000-0003",
+                concertName = "무슨무슨 버스킹",
+                teamName = "버스킹과 아이들",
+                dateTime = LocalDateTime.now(),
+                location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞",
+            )
         ),
-        TicketInfo(
-            serialNo = "1234-5678-1234",
-            concertName = "무슨무슨 버스킹",
-            teamName = "버스킹과 아이들",
-            dateTime = LocalDateTime.now(),
-            location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞",
-        ),
-        TicketInfo(
-            serialNo = "1234-5678-1234",
-            concertName = "무슨무슨 버스킹",
-            teamName = "버스킹과 아이들",
-            dateTime = LocalDateTime.now(),
-            location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞",
+        Pair(
+            "0000-0000-0004",
+            TicketInfo(
+                serialNo = "0000-0000-0004",
+                concertName = "무슨무슨 버스킹",
+                teamName = "버스킹과 아이들",
+                dateTime = LocalDateTime.now(),
+                location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞",
+            )
         )
     )
+
+
+    // concert
+
 }

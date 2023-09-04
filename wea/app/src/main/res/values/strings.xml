@@ -48,5 +48,6 @@
     <string name="base_url">https://api.kabserv.xyz/api</string>
     <string name="admob_id">ca-app-pub-8275486832718942~6510692827</string>
     <string name="sample_banner_id">ca-app-pub-8275486832718942/7047833152</string>
+    <string name="text_default_ticket_no">0000-0000-0000</string>
 
 </resources>

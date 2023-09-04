@@ -44,7 +44,8 @@ import com.artist.wea.data.BuskingInfo
 
 @Composable
 fun ConcertInfoPage(
-    navController: NavHostController
+    navController: NavHostController,
+    id:String
 ){
     // TODO navController를 통해서 공연 데이터를 추출해서 렌더링 하도록 설계
     val buskingInfo = BuskingInfo(
