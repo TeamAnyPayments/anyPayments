@@ -1,6 +1,8 @@
 package com.artist.wea.api.service.Impl;
 
 import com.artist.wea.api.service.ArtistService;
+import com.artist.wea.common.exception.CommonApiException;
+import com.artist.wea.common.exception.errorcode.CommonErrorCode;
 import com.artist.wea.common.util.FileValidator;
 import com.artist.wea.db.dto.request.artist.AddPostReqDTO;
 import com.artist.wea.db.dto.response.artist.AddPostResDTO;
@@ -40,7 +42,7 @@ public class ArtistServiceImpl implements ArtistService {
      */
     @Override
     public AddPostResDTO addArtist(String userId, AddPostReqDTO addPostReqDto) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+        User user = userRepository.findById(userId).orElseThrow(() -> new CommonApiException(CommonErrorCode.USER_NOT_FOUND));
 
         Artist artist = Artist.builder()
                 .name(addPostReqDto.getName())
@@ -67,7 +69,7 @@ public class ArtistServiceImpl implements ArtistService {
      */
     @Override
     public void deleteArtist(User user, Long artistId) {
-        Artist artist = artistRepository.findById(artistId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 아티스트입니다."));
+        Artist artist = artistRepository.findById(artistId).orElseThrow(() -> new CommonApiException(CommonErrorCode.ARTIST_NOT_FOUND));
         ArtistMember artistMember = artistMemberRepository.findByUserAndArtist(user, artist);
         artistMemberRepository.delete(artistMember);
     }
@@ -77,10 +79,10 @@ public class ArtistServiceImpl implements ArtistService {
      */
     @Override
     public void inviteArtist(User user, String userId) {
-        User inviteUser = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+        User inviteUser = userRepository.findById(userId).orElseThrow(() -> new CommonApiException(CommonErrorCode.USER_NOT_FOUND));
         Artist artist = artistMemberRepository.findByUser(user).getArtist();
         ArtistMember artistMember = artistMemberRepository.findByUserAndArtist(inviteUser, artist);
-        if(artistMember != null) throw new IllegalArgumentException("이미 등록된 멤버입니다.");
+        if (artistMember != null) throw new CommonApiException(CommonErrorCode.ARTIST_DUPLICATE_MEMBER);
         artistMemberRepository.save(new ArtistMember(inviteUser, artist, false));
     }
 
@@ -89,7 +91,7 @@ public class ArtistServiceImpl implements ArtistService {
      */
     @Override
     public void acceptArtist(User user, Long artistId) {
-        Artist artist = artistRepository.findById(artistId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 아티스트입니다."));
+        Artist artist = artistRepository.findById(artistId).orElseThrow(() -> new CommonApiException(CommonErrorCode.ARTIST_NOT_FOUND));
         ArtistMember artistMember = artistMemberRepository.findByUserAndArtist(user, artist);
         artistMember.setActivated(true);
         artistMemberRepository.save(artistMember);
@@ -100,7 +102,7 @@ public class ArtistServiceImpl implements ArtistService {
      */
     @Override
     public void refuseArtist(User user, Long artistId) {
-        Artist artist = artistRepository.findById(artistId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 아티스트입니다."));
+        Artist artist = artistRepository.findById(artistId).orElseThrow(() -> new CommonApiException(CommonErrorCode.ARTIST_NOT_FOUND));
         ArtistMember artistMember = artistMemberRepository.findByUserAndArtist(user, artist);
         artistMemberRepository.delete(artistMember);
     }
@@ -147,7 +149,7 @@ public class ArtistServiceImpl implements ArtistService {
      */
     @Override
     public ArtistImg getImage(String userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+        User user = userRepository.findById(userId).orElseThrow(() -> new CommonApiException(CommonErrorCode.USER_NOT_FOUND));
         Artist artist = artistMemberRepository.findByUser(user).getArtist();
         ArtistImg artistImg = (artist.getArtistImg() != null) ? artistImgRepository.findById(artist.getArtistImg().getId()).get() : null;
         return artistImg;
@@ -194,7 +196,7 @@ public class ArtistServiceImpl implements ArtistService {
      * 프로필 이미지 삭제
      */
     public void deleteImage(String userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+        User user = userRepository.findById(userId).orElseThrow(() -> new CommonApiException(CommonErrorCode.USER_NOT_FOUND));
         Artist artist = artistMemberRepository.findByUser(user).getArtist();
         ArtistImg artistImg = artistImgRepository.findById(artist.getArtistImg().getId()).get();
 

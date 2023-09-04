@@ -1,6 +1,8 @@
 package com.artist.wea.api.service.Impl;
 
 import com.artist.wea.api.service.UserService;
+import com.artist.wea.common.exception.CommonApiException;
+import com.artist.wea.common.exception.errorcode.CommonErrorCode;
 import com.artist.wea.common.util.FileValidator;
 import com.artist.wea.config.security.JwtTokenProvider;
 import com.artist.wea.db.dto.request.user.JoinPostReqDTO;
@@ -16,7 +18,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,10 +47,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public JoinPostResDTO join(JoinPostReqDTO joinPostReqDto) {
         if (!joinPostReqDto.isCheckId()) {
-            throw new IllegalArgumentException("아이디 중복 확인이 필요합니다.");
+            throw new CommonApiException(CommonErrorCode.USER_NOT_CHECK_ID);
         }
         if (!joinPostReqDto.isCheckEmail()) {
-            throw new IllegalArgumentException("이메일 중복 확인이 필요합니다.");
+            throw new CommonApiException(CommonErrorCode.USER_NOT_CHECK_EMAIL);
         }
 
         User user = User.builder()
@@ -113,7 +114,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void changePass(String userId, String password, String passCheck) {
         User user = userRepository.findById(userId).get();
-        if (!password.equals(passCheck)) throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        if (!password.equals(passCheck)) throw new CommonApiException(CommonErrorCode.USER_INVALID_PASSWORD);
         user.setPassword(passwordEncoder.encode(password));
     }
 
@@ -157,7 +158,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public UserImg getImage(String userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+        User user = userRepository.findById(userId).orElseThrow(() -> new CommonApiException(CommonErrorCode.USER_NOT_FOUND));
         UserImg userImg = (user.getUserImg() != null) ? userImgRepository.findById(user.getUserImg().getId()).get() : null;
         return userImg;
     }
@@ -203,7 +204,7 @@ public class UserServiceImpl implements UserService {
      * 프로필 이미지 삭제
      */
     public void deleteImage(String userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+        User user = userRepository.findById(userId).orElseThrow(() -> new CommonApiException(CommonErrorCode.USER_NOT_FOUND));
         UserImg userImg = userImgRepository.findById(user.getUserImg().getId()).get();
 
         user.setUserImg(null);
