@@ -1,5 +1,7 @@
 package com.artist.wea.components
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,19 +21,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
-import com.artist.wea.data.ConcertInfo
+import com.artist.wea.constants.DummyValues
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get12TextStyle
 import com.artist.wea.constants.get14TextStyle
+import com.artist.wea.data.ConcertListInfo
 
 @Composable
 fun ConcertSearchItem(
     navController: NavHostController,
-    content: ConcertInfo = ConcertInfo(),
+    content: ConcertListInfo = ConcertListInfo(),
     modifier: Modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()
@@ -40,10 +44,17 @@ fun ConcertSearchItem(
         .padding(8.dp, 4.dp),
     isActive:Boolean = true,
 ){
+    val context = LocalContext.current
+
     Box(
         modifier = modifier.clickable {
             if(isActive){
-                navController.navigate(PageRoutes.ConcertInfo.route)
+                navController.navigate(PageRoutes.ConcertInfo.route+"/${content.concertId}")
+            }else {
+                Toast.makeText(context, "공연 정보를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show()
+                Log.d(
+                    "REJECT_MOVE_PAGE::", "페이지 이동할 수 없음 : ${"${content.concertId} | ${DummyValues().defConcertInfo.concertId}"}"
+                )
             }
         }
     ){

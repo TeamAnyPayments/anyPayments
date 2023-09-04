@@ -110,29 +110,28 @@ class MainActivity : ComponentActivity() {
                 composable(PageRoutes.ClientService.route) { ClientServicePage(navController = navController) }
                 composable(PageRoutes.ConcertBenefit.route) { ConcertBenefitPage(navController = navController) }
                 composable(PageRoutes.SearchArtist.route) { SearchArtistPage(navController = navController)}
-                composable(PageRoutes.ArtistInfo.route+"/{id}",
-                    arguments = listOf(navArgument("id"){
-                        type = NavType.IntType
-                        defaultValue = -1
+                composable(PageRoutes.ArtistInfo.route+"/{userId}",
+                    arguments = listOf(navArgument("userId"){
+                        type = NavType.StringType
+                        defaultValue = "abc000"
                     })
                     ) {
                         navBackStackEntry ->
                     ArtistInfoPage(
                         navController = navController,
-                        id = navBackStackEntry.arguments?.getInt("id")?:-1
+                        userId = navBackStackEntry.arguments?.getString("userId")?:"abc000"
 
                     )
                 }
-                composable(PageRoutes.ConcertInfo.route,
-                    // "/{id}"
-//                    arguments = listOf(navArgument("id"){
-//                        type = NavType.StringType
-//                        defaultValue = "1"
-//                    })
+                composable(PageRoutes.ConcertInfo.route+"/{concertId}",
+                    arguments = listOf(navArgument("concertId"){
+                        type = NavType.StringType
+                        defaultValue = "0000-0000-0000"
+                    })
                 ) { navBackStackEntry ->
                     ConcertInfoPage(
                         navController = navController,
-                        id = navBackStackEntry.arguments?.getString("id")?:""
+                        concertId = navBackStackEntry.arguments?.getString("id")?:""
                     )
                 }
                 composable(PageRoutes.MyArtist.route) { MyArtistPage(navController = navController) }

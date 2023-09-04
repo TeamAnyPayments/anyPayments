@@ -37,10 +37,10 @@ import com.artist.wea.R
 import com.artist.wea.components.LargeButton
 import com.artist.wea.components.MemberItem
 import com.artist.wea.components.PageTopBar
+import com.artist.wea.constants.DummyValues
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.getBtnColorByIdx
 import com.artist.wea.constants.getMenuItemColors
-import com.artist.wea.data.ConcertInfo
 
 @Composable
 fun MemberManagePage(
@@ -73,23 +73,7 @@ fun MemberManagePage(
                 .verticalScroll(scrollState),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            val memberList = arrayOf<ConcertInfo>(
-                ConcertInfo(
-                    imgURL = "https://www.pinkvilla.com/images/2023-01/167366856_ariana-grande-1_1280*720.jpg",
-                    userId = "tired_cat",
-                    email = "tired_cat@naver.com"
-                ),
-                ConcertInfo(
-                    imgURL = "https://ichef.bbci.co.uk/news/1536/cpsprodpb/98B4/production/_130129093_winner.png",
-                    userId = "swag_cat",
-                    email = "swag_cat@gmail.com"
-                ),
-                ConcertInfo(
-                    imgURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8jKhRZVaPp-lAxLEiHwl7CBosQM1G2HXrqA&usqp=CAU",
-                    userId = "sad_cat",
-                    email = "sad_cat@daum.net"
-                )
-            )
+            val memberList = DummyValues().crewList
 
             val searchOptions = listOf("리더", "멤버") // TODO.. 백엔드 DTO와 함께 분류 구분해야함
             memberList.forEach {

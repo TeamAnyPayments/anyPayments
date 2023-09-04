@@ -46,10 +46,9 @@ import com.artist.wea.components.TitleInputForm
 import com.artist.wea.components.WeaIconImage
 import com.artist.wea.components.WeaWideImage
 import com.artist.wea.constants.DummyValues
+import com.artist.wea.constants.GlobalState.Companion.currentArtistInfo
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get14TextStyle
-import com.artist.wea.data.ArtistInfo
-import com.artist.wea.data.ConcertInfo
 import com.artist.wea.util.PhotoSelector
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -59,31 +58,8 @@ fun ArtistInfoModifyPage(
 ){
     val context = LocalContext.current
 
-    // TODO navController를 통해서 아티스트 데이터를 추출해서 렌더링 하도록 설계
-    var artistInfo = ArtistInfo(
-        profileImgURL = "https://image.kmib.co.kr/online_image/2014/1015/201410152053_61170008765071_1.jpg",
-        bgImgURL = "https://img.hankyung.com/photo/202205/01.29843403.1.jpg",
-        artistName = "ENJOY",
-        comment = "안녕하세요, 행복을 노래하는 가수입니다.",
-        mainIntroduce = "안녕하세요 Sparrow Spirit!\n" +
-                "\n" +
-                "홍대 스트릿 버스커 그룹 로드 버스킹입니다.\n" +
-                "\n" +
-                "어디서든 관객 여러분과 특별한 추억을 쌓아가기 위하여 여러 지역에서 버스킹을 하고 있습니다.\n" +
-                "\n" +
-                "음악을 사랑한다는 마음 하나라면,\n" +
-                "우리가 있는 이 곳의 온도는 뜨거울 거에요.\n" +
-                "\n" +
-                "창립일\n" +
-                "2013. 01. 16.\n" +
-                "\n" +
-                "자주 출몰하는 장소\n" +
-                "홍대입구 2번 출구, 강남역 3번 출구\n" +
-                "\n" +
-                "인스타그램\n" +
-                "@abc_123_heart",
-    )
-
+    // Companion State 클래스의 값을 통해 현재 보고 있었던 프로필 정보의 값을 init
+    var artistInfo = currentArtistInfo.value
 
     val currentIdx = remember { mutableStateOf<Int>(0) } // 0 or 1
     val profileBitmap = remember { mutableStateOf<Bitmap?>(null) } // 아티스트 프로필 이미지 >> LOCAL
@@ -306,45 +282,7 @@ fun ArtistInfoModifyPage(
         )
 
         // 공연 이력
-        val concertList = arrayOf<ConcertInfo>(
-            ConcertInfo(
-                imgURL = "https://www.pinkvilla.com/images/2023-01/167366856_ariana-grande-1_1280*720.jpg",
-                artistName = "무슨무슨 아티스트",
-                concertIntroduce = "우리는 모두 이번 생은 처음이니까 지금이..",
-                location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞"
-            ),
-            ConcertInfo(
-                imgURL = "https://ichef.bbci.co.uk/news/1536/cpsprodpb/98B4/production/_130129093_winner.png",
-                artistName = "블라블라 아티스트",
-                concertIntroduce = "Drippin Your Self!, 감성 힙합 공연",
-                location = "서울 서대문구 신촌역로 17 GS 25 앞"
-            ),
-            ConcertInfo(
-                imgURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8jKhRZVaPp-lAxLEiHwl7CBosQM1G2HXrqA&usqp=CAU",
-                artistName = "울라울라 아티스트",
-                concertIntroduce = "무더운 밤 잠이 오지 않는 그대를 위한 감성 힐링콘...",
-                location = "서울 마포구 와우산로21길 19-3 홍익문화공원"
-            ),
-            ConcertInfo(
-                imgURL = "https://www.pinkvilla.com/images/2023-01/167366856_ariana-grande-1_1280*720.jpg",
-                artistName = "무슨무슨 아티스트",
-                concertIntroduce = "우리는 모두 이번 생은 처음이니까 지금이..",
-                location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞"
-            ),
-            ConcertInfo(
-                imgURL = "https://ichef.bbci.co.uk/news/1536/cpsprodpb/98B4/production/_130129093_winner.png",
-                artistName = "블라블라 아티스트",
-                concertIntroduce = "Drippin Your Self!, 감성 힙합 공연",
-                location = "서울 서대문구 신촌역로 17 GS 25 앞"
-            ),
-            ConcertInfo(
-                imgURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8jKhRZVaPp-lAxLEiHwl7CBosQM1G2HXrqA&usqp=CAU",
-                artistName = "울라울라 아티스트",
-                concertIntroduce = "무더운 밤 잠이 오지 않는 그대를 위한 감성 힐링콘...",
-                location = "서울 마포구 와우산로21길 19-3 홍익문화공원"
-            )
-        )
-
+        val concertList = DummyValues().concertLogList
 
         // History
         InfoUnit(
