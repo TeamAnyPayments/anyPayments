@@ -39,4 +39,6 @@ public interface ArtistService {
 
     void refuseArtist(User user, Long artistId);
 
+    Artist getOneArtist(Long artistId);
+
 }

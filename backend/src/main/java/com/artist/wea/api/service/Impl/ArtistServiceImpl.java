@@ -108,6 +108,14 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     /**
+     * 아티스트 상세 조회
+     */
+    @Override
+    public Artist getOneArtist(Long artistId) {
+        return artistRepository.findById(artistId).orElseThrow(() -> new CommonApiException(CommonErrorCode.ARTIST_NOT_FOUND));
+    }
+
+    /**
      * 아티스트 프로필 수정
      */
     @Override

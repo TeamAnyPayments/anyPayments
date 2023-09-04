@@ -52,6 +52,15 @@ public class ArtistController {
     }
 
     /**
+     * 아티스트 상세 조회 API
+     */
+    @Operation(summary = "아티스트 상세 조회 API")
+    @GetMapping("/detail")
+    public ResponseEntity<ResponseDTO> searchArtist(@RequestParam("id") Long artistId) {
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, "아티스트 상세 조회 완료", artistService.getOneArtist(artistId)));
+    }
+
+    /**
      * 아티스트 등록 해제(탈퇴) API
      */
     @Operation(summary = "아티스트 등록 해제(탈퇴) API")
