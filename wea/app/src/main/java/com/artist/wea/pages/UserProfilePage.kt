@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
@@ -143,7 +144,7 @@ fun UserProfilePage(
 
         PageTopBar(
             navController = navController,
-            pageTitle = "내 프로필"
+            pageTitle = stringResource(R.string.text_pgname_user_profile)
         )
 
         // 사용자 프로필 유닛
@@ -192,7 +193,7 @@ fun UserProfilePage(
         ) {
             // 나의 정보 관리
             InfoUnit(
-                titleText = "나의 정보 관리",
+                titleText = stringResource(R.string.text_title_profile_menu),
                 titleTextStyle = getDefTextStyle(),
                 screen = {
                     Column(
@@ -205,7 +206,7 @@ fun UserProfilePage(
                     ){
                         // 이메일 변경
                         Text(
-                            text = "이메일 변경",
+                            text = stringResource(R.string.text_menu_change_email),
                             style = get14TextStyle(),
                             modifier = Modifier.clickable {
                                 navController.navigate(PageRoutes.ChangeEmail.route)
@@ -213,7 +214,7 @@ fun UserProfilePage(
                         )
                         // 비밀번호 변경
                         Text(
-                            text = "비밀번호 변경",
+                            text = stringResource(R.string.text_menu_change_pwd),
                             style = get14TextStyle(),
                             modifier = Modifier.clickable {
                                 navController.navigate(PageRoutes.ChangePwd.route)
@@ -221,13 +222,13 @@ fun UserProfilePage(
                         )
                         // 소셜 계정 관리
                         Text(
-                            text = "소셜 계정 관리",
+                            text = stringResource(R.string.text_menu_edit_social_account),
                             style = get14TextStyle(),
                             modifier = Modifier
                         )
                         // 로그아웃
                         Text(
-                            text = "로그아웃",
+                            text = stringResource(R.string.text_menu_logout),
                             style = get14TextStyle(),
                             modifier = Modifier.clickable {
                                 if(prefs.clearAll()){
@@ -245,7 +246,7 @@ fun UserProfilePage(
                         )
                         // 로그아웃
                         Text(
-                            text = "회원탈퇴",
+                            text = stringResource(R.string.text_menu_user_quit),
                             style = get14TextStyle()
                                 .copy(
                                     color = colorResource(id = R.color.red500)

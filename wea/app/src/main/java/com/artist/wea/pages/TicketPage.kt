@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
@@ -38,7 +39,7 @@ fun TicketPage(
     ) {
         PageTopBar(
             navController = navController,
-            pageTitle = "모바일 티켓"
+            pageTitle = stringResource(R.string.text_pgname_ticket)
         )
         // body frame
         val scrollState = rememberScrollState()

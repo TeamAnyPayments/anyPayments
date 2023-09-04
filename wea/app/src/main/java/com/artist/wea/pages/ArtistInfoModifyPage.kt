@@ -6,7 +6,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -34,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavHostController
@@ -51,7 +51,6 @@ import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.util.PhotoSelector
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ArtistInfoModifyPage(
     navController: NavHostController
@@ -67,6 +66,7 @@ fun ArtistInfoModifyPage(
 
     // 사진 불러오기 기능
     val photoSelector = PhotoSelector()
+    val errorText = stringResource(id = R.string.text_err_load_img)
     val takePhotoFromAlbumLauncher = // 갤러리에서 사진 가져오기
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -85,7 +85,7 @@ fun ArtistInfoModifyPage(
                     )
 
                 } ?: run {
-                    Toast.makeText(context, "이미지를 불러오던 중 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, errorText, Toast.LENGTH_SHORT).show()
                 }
             } else if (result.resultCode != Activity.RESULT_CANCELED) {
                 // ??
@@ -95,6 +95,10 @@ fun ArtistInfoModifyPage(
     val mArtistName = remember { mutableStateOf(artistInfo.artistName) }
     val mComment = remember { mutableStateOf(artistInfo.comment) }
     val mMainIntroduce = remember { mutableStateOf(artistInfo.mainIntroduce) }
+
+    // String values
+    val notifyChooseBgImg = stringResource(id = R.string.text_notify_choose_bg_img)
+    val notifyChooseProfImg = stringResource(R.string.text_notify_choose_profile_img)
 
     val scrollState = rememberScrollState()
     val height = 164.dp;
@@ -117,6 +121,7 @@ fun ArtistInfoModifyPage(
             // 상단 바
             PageTopBar(
                 navController = navController,
+                pageTitle = stringResource(R.string.text_pgname_artist_profile_modify),
                 modifier = Modifier
                     .align(Alignment.TopStart)
                     .zIndex(2f),
@@ -155,7 +160,11 @@ fun ArtistInfoModifyPage(
                     .align(Alignment.BottomEnd)
                     .clickable {
                         Toast
-                            .makeText(context, "배경 사진을 변경 합니다", Toast.LENGTH_SHORT)
+                            .makeText(
+                                context,
+                                notifyChooseBgImg,
+                                Toast.LENGTH_SHORT
+                            )
                             .show()
                         currentIdx.value = 0 // index 변경
                         // 이미지 가져오기
@@ -208,7 +217,7 @@ fun ArtistInfoModifyPage(
                         .align(Alignment.BottomEnd)
                         .clickable {
                             Toast
-                                .makeText(context, "프로필 사진을 변경 합니다", Toast.LENGTH_SHORT)
+                                .makeText(context, notifyChooseProfImg, Toast.LENGTH_SHORT)
                                 .show()
                             // 이미지 가져오기
                             currentIdx.value = 1 // index 변경

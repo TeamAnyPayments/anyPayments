@@ -7,8 +7,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.artist.wea.R
 import com.artist.wea.components.AlarmItem
 import com.artist.wea.components.PageTopBar
 import com.artist.wea.constants.DummyValues
@@ -29,7 +31,7 @@ fun NotifyPage(
     Column(modifier = modifier) {
         PageTopBar(
             navController = navController,
-            pageTitle = "알림 센터",
+            pageTitle = stringResource(R.string.text_pgname_notify),
         )
         Column(
             modifier = Modifier

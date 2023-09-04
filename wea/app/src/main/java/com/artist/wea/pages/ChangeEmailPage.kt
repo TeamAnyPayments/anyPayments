@@ -44,7 +44,7 @@ fun ChangeEmailPage(
     {
         PageTopBar(
             navController = navController,
-            pageTitle = "이메일 찾기",
+            pageTitle = stringResource(R.string.text_pgname_change_email),
         )
         Column(
             modifier = Modifier

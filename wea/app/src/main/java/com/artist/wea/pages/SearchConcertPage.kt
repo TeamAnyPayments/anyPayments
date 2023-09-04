@@ -23,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.artist.wea.R
 import com.artist.wea.components.ConcertListComponent
@@ -42,7 +43,7 @@ fun SearchConcertPage(
     // 탭 items
     val tabs = listOf(
         TabItem(
-            title = "지도 보기",
+            title = stringResource(R.string.text_tab_see_map),
             icon = Icons.Filled.Place,
             screen = {
                 NaverMapComponent(
@@ -52,7 +53,7 @@ fun SearchConcertPage(
             }
         ),
         TabItem(
-            title = "목록 보기",
+            title = stringResource(R.string.text_tab_see_list),
             icon = Icons.Filled.List,
             screen = {
                 ConcertListComponent(
@@ -71,7 +72,7 @@ fun SearchConcertPage(
     ) {
         PageTopBar(
             navController = navController,
-            pageTitle = "네이버 지도",
+            pageTitle = stringResource(R.string.text_pgname_find_concert),
         )
         TabRow(
             selectedTabIndex = pagerState.currentPage,

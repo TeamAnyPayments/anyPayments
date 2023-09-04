@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -51,7 +52,7 @@ fun UserQuitPage(
     {
         PageTopBar(
             navController = navController,
-            pageTitle = "회원 탈퇴"
+            pageTitle = stringResource(R.string.text_pgname_user_quit)
         )
 
         Box(modifier = Modifier
@@ -74,7 +75,7 @@ fun UserQuitPage(
                         .background(colorResource(id = R.color.mono100))
                 ) {
                     Text(
-                        text = "탈퇴 시 유의사항 안내",
+                        text = stringResource(R.string.text_guide_title_user_quit),
                         style = getDefTextStyle().copy(
                             fontWeight = FontWeight.Bold,
                         ),
@@ -92,7 +93,7 @@ fun UserQuitPage(
                     verticalArrangement = Arrangement.Top
                 ) {
                     Text(
-                        text = "회원탈퇴를 신청하기 전에 아래의 유의사항을 확인해주세요.",
+                        text = stringResource(R.string.text_guide_notify),
                         style = get14TextStyle()
                             .copy(
                                 color = colorResource(id = R.color.mono600)
@@ -114,7 +115,7 @@ fun UserQuitPage(
                 ) {
 
                     Text(
-                        text = "아래의 회원정보에 대한 탈퇴 처리가 접수됩니다.",
+                        text = stringResource(R.string.text_user_quit01),
                         style = get14TextStyle().copy(
                             color = colorResource(id = R.color.red400),
                             fontWeight = FontWeight.Bold
@@ -153,18 +154,18 @@ fun UserQuitPage(
                         horizontalAlignment = Alignment.Start
                     ) {
                         Text(
-                            text = "개인정보 삭제 안내",
+                            text = stringResource(R.string.text_user_quit02),
                             style = getDefTextStyle()
                                 .copy(
                                     fontWeight = FontWeight.Bold
                                 )
                         )
                         Text(
-                            text = "· 탈퇴 후에는 이메일, 아이디 정보로 다시 로그인할 수 없으며, 보유하신 현금성 및 디지털 자산은 모두 소멸되어 복구가 불가능합니다.",
+                            text = stringResource(R.string.text_user_quit03),
                             style = get14TextStyle()
                         )
                         Text(
-                            text = "· 탈퇴는 신청 접수 후 평균 1주일 이내에 처리되며, 탈퇴 처리에 대한 내용은 상기 이메일 주소로 전송됩니다.",
+                            text = stringResource(R.string.text_user_quit04),
                             style = get14TextStyle()
                         )
                     }
@@ -201,7 +202,7 @@ fun UserQuitPage(
                         .fillMaxWidth()
                         .wrapContentHeight()
                         .padding(start = 4.dp, end = 4.dp),
-                    text = "위의 유의사항을 모두 확인하였으며, 회원 탈퇴 시 보유하신 현금성 및 디지털 자산에 대한 소멸에 동의합니다.",
+                    text = stringResource(R.string.text_user_quit_check_btn),
                     value = isAgreement.value,
                     onClick = {
                         isAgreement.value = !isAgreement.value
@@ -222,7 +223,7 @@ fun UserQuitPage(
                         horizontalArrangement = Arrangement.Center
                     ){
                         Text(
-                            text =  "탈퇴 신청",
+                            text = stringResource(R.string.text_user_quit_btn),
                             style = get14TextStyle()
                                 .copy(colorResource(id = R.color.white)),
                             modifier = Modifier.padding(16.dp)
@@ -238,7 +239,7 @@ fun UserQuitPage(
                         horizontalArrangement = Arrangement.Center
                     ){
                         Text(
-                            text =  "취소",
+                            text = stringResource(R.string.text_cancel_btn),
                             style = get14TextStyle()
                                 .copy(colorResource(id = R.color.white)),
                             modifier = Modifier.padding(16.dp)

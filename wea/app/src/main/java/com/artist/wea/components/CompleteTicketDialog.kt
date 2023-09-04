@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -70,7 +71,7 @@ fun CompleteTicketDialog(
 
                 // 제목
                 Text(
-                   text =  "티켓 발급 완료",
+                   text = stringResource(R.string.text_complete_create_ticket),
                     style = getDefTextStyle()
                         .copy(
                             fontSize = 24.sp,
@@ -91,9 +92,7 @@ fun CompleteTicketDialog(
                 )
 
                 Text(
-                    text = "후원이 정상적으로 완료되었어요. \uD83C\uDF89\n" +
-                            "이번 공연에 처음으로 후원해주셨군요 \uD83D\uDC40\n" +
-                            "회원님이 후원한 아티스트와 함께할 특별한 순간을 위해 티켓이 발급되었어요. \uD83D\uDE0D\n",
+                    text = stringResource(id = R.string.text_complete_ticket_greet),
                     style = get14TextStyle()
                         .copy(
                             textAlign = TextAlign.Center
@@ -105,7 +104,7 @@ fun CompleteTicketDialog(
                 )
 
                 Text(
-                    text = "*본 메세지는 첫 후원 시 1회만 노출됩니다.",
+                    text = stringResource(R.string.text_tickt_guide1),
                     style = get12TextStyle()
                         .copy(
                             color = colorResource(id = R.color.mono300),
@@ -118,7 +117,7 @@ fun CompleteTicketDialog(
                 )
 
                 Text(
-                    text = "발급된 티켓은 메인 화면 > TICKETS 메뉴를 통해 확인하실 수 있습니다.",
+                    text = stringResource(R.string.text_tickt_guide2),
                     style = get12TextStyle()
                         .copy(
                             color = colorResource(id = R.color.mono300),

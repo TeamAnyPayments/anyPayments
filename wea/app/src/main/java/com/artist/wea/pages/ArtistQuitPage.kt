@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -75,7 +76,7 @@ fun ArtistQuitPage(
     {
         PageTopBar(
             navController = navController,
-            pageTitle = "아티스트 탈퇴"
+            pageTitle = stringResource(R.string.text_pgname_artist_quit)
         )
 
         Box(modifier = Modifier

@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
@@ -51,13 +52,19 @@ fun SendInviteComponent(navController: NavHostController,
                     navController = navController,
                     content = item,
                     rightComposable = {
+                        val resultText = "${item.userId}" + stringResource(R.string.text_invite_member)
                         Icon(
                             Icons.Filled.Send,
                             contentDescription = "",
                             tint = colorResource(id = R.color.sky_blue300),
-                            modifier = Modifier.size(24.dp).weight(1f).clickable {
-                                Toast.makeText(context, "${item.userId} 님에게 초대를 보냈습니다.", Toast.LENGTH_SHORT).show()
-                            }
+                            modifier = Modifier
+                                .size(24.dp)
+                                .weight(1f)
+                                .clickable {
+                                    Toast
+                                        .makeText(context, resultText, Toast.LENGTH_SHORT)
+                                        .show()
+                                }
                         )
                     }
                 )

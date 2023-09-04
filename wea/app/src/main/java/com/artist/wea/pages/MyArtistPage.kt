@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
@@ -38,7 +39,7 @@ fun MyArtistPage(
     ) {
         PageTopBar (
             navController = navController,
-            pageTitle = "My 아티스트"
+            pageTitle = stringResource(R.string.text_pgname_my_artist)
         )
         val userName:String = "홍길동" // TODO prefs로부터 사용자 이름 불러오기
 
@@ -54,6 +55,8 @@ fun MyArtistPage(
                 .verticalScroll(scrollState),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+
+            val bookmarkGuideText = "$userName ${stringResource(R.string.text_book_mark_guide_tail)}"
             // 배너
             Box(modifier = Modifier
                 .fillMaxWidth()
@@ -61,7 +64,7 @@ fun MyArtistPage(
                 .background(color = colorResource(id = R.color.sky_blue300))
             ){
                 Text(
-                    text = "$userName 님이 북마크한 아티스트 목록입니다.",
+                    text = bookmarkGuideText,
                     style = get14TextStyle()
                         .copy(
                             color = colorResource(id = R.color.white)

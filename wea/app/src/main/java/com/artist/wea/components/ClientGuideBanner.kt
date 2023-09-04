@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.artist.wea.R
 import com.artist.wea.constants.get12TextStyle
@@ -53,12 +54,12 @@ fun ClientGuideBanner(
              */
             // 페이지 명
             Text(
-                text = "서비스를 사용하시면서 불편한 점이 있으셨나요?",
+                text = stringResource(R.string.text_cs_guide_header),
                 style = get14TextStyle()
                     .copy(color = colorResource(id = R.color.mono100))
             )
             Text(
-                text = "아래의 입력창으로 문의하실 내용을 보내주시면 담당자가 확인 후 빠른 시일 내에 답변 드리도록하겠습니다.",
+                text = stringResource(R.string.text_cs_guide_comment),
                 style = get12TextStyle()
                     .copy(color = colorResource(id = R.color.mono100))
             )

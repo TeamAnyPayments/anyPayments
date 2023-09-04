@@ -42,7 +42,7 @@ fun ArtistJoinPage(
     {
         PageTopBar(
             navController = navController,
-            pageTitle = "아티스트 등록"
+            pageTitle = stringResource(R.string.text_pgname_artist_join)
         )
         val scrollState = rememberScrollState()
         Column(
@@ -62,37 +62,37 @@ fun ArtistJoinPage(
             ) {
                 // 아티스트 예명
                 TitleInputForm(
-                    titleText = "사용하실 예명은 무엇인가요? *",
-                    hintText = "사용하실 예명을 입력해주세요"
+                    titleText = stringResource(R.string.text_title_artist_name),
+                    hintText = stringResource(R.string.text_hint_artist_name)
                 )
                 // 아티스트 한 줄 소개
                 TitleInputForm(
-                    titleText = "자신을 소개할 한 줄 소개를 작성해주세요. *",
-                    hintText = "한 줄로 자신을 소개하는 한마디를 작성해보세요."
+                    titleText = stringResource(R.string.text_title_artist_introduce),
+                    hintText = stringResource(R.string.text_hint_artist_introduce)
                 )
 
                 // 프로필 등록
                 TitleImageInputForm(
-                    titleText = "프로필 사진을 등록해주세요. *",
+                    titleText = stringResource(R.string.text_title_artist_profile_img),
                     size = 128.dp
                 )
 
                 // 배경 이미지 등록
                 TitleGuideImageInputForm(
-                    titleText = "배경 이미지를 등록해주세요.",
-                    guideText = "배경 이미지 미등록 시 기본 이미지로 대체됩니다.",
+                    titleText = stringResource(R.string.text_title_artist_backrground_img),
+                    guideText = stringResource(R.string.text_guide_artist_backrground),
                     size = 144.dp
                 )
 
                 // 아티스트 소개 (긴 소개글)
                 TitleInputForm(
-                    titleText = "자신을 소개해주세요. *",
-                    hintText = "이곳에 작성한 소개는 다른 사용자가 회원님의 정보를 조회할 때 노출됩니다."
+                    titleText = stringResource(R.string.text_title_artist_full_introduce),
+                    hintText = stringResource(R.string.text_hint_artist_full_introduce)
                 )
 
                 // 활동지역
                 LocationInputForm(
-                    titleText = "주로 활동하시는 지역은 어디인가요?"
+                    titleText = stringResource(R.string.text_title_location)
                 )
                 Spacer(modifier = Modifier.height(64.dp))
 

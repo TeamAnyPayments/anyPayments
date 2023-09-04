@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
@@ -41,13 +42,15 @@ fun ClientServicePage(
     {
         var text by remember { mutableStateOf("") }
         val context = LocalContext.current;
+        val sendCompleteText = stringResource(R.string.text_complete_sumbmit_cs)
 
         PageTopBar(
             navController = navController,
-            pageTitle = "고객 센터",
+            pageTitle = stringResource(R.string.text_pgname_cs),
             rightMenuText = "전송",
             rightMenuAction = {
-                Toast.makeText(context, "문의가 접수 되었습니다", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context,
+                    sendCompleteText, Toast.LENGTH_SHORT).show()
                 navController.popBackStack()
             }
         )

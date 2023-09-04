@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
@@ -39,14 +40,14 @@ fun SearchArtistPage(
 
         PageTopBar(
             navController = navController,
-            pageTitle = "아티스트 검색"
+            pageTitle = stringResource(R.string.text_pgname_artist_search)
         )
         SearchBar(
             searchOptions = arrayOf("선택안함","인기순","이름순","등록일순"),
-            modifier =  Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .padding(8.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(8.dp)
         )
 
         // list..

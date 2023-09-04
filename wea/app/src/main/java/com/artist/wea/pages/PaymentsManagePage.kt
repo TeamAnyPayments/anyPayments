@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
@@ -42,7 +43,7 @@ fun PaymentsManagePage(
 
         PageTopBar(
             navController = navController,
-            pageTitle = "결제수단 관리"
+            pageTitle = stringResource(R.string.text_title_payments_manage)
         )
 
         val context = LocalContext.current;
