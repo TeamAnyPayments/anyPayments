@@ -53,6 +53,7 @@ fun VerifyInputForm(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
         ) {
+            val timerEndText = stringResource(R.string.text_end_of_timer)
             Text(
                 text = verifyText,
                 style = if(!isDisable) getDefTextStyle()
@@ -76,7 +77,8 @@ fun VerifyInputForm(
                   if (second > 0){
                       buttonActions()
                   }else {
-                      Toast.makeText(context, "유효시간이 만료되었습니다", Toast.LENGTH_SHORT).show()
+                      Toast.makeText(context,
+                          timerEndText, Toast.LENGTH_SHORT).show()
                   }
                 },
                 colors = getButtonColor(),

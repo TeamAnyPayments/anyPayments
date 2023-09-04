@@ -55,7 +55,7 @@ fun FindIdPage(
     {
         PageTopBar(
             navController = navController,
-            pageTitle = "아이디 찾기"
+            pageTitle = stringResource(R.string.text_pgname_find_id)
         )
         Column(
             modifier = Modifier
@@ -99,6 +99,10 @@ fun FindIdPage(
                 errorText = WeaRegex.emailGuideText
             )
             Spacer(modifier = Modifier.height(32.dp))
+
+            val sendEmailText = stringResource(R.string.text_send_id_to_email)
+            val errorEmailText = stringResource(R.string.text_err_send_email)
+
             LargeButton(
                 btnText = stringResource(R.string.text_btn_find_id),
                 buttonAction = {
@@ -107,13 +111,13 @@ fun FindIdPage(
                     viewModel.findUserId(name = name, email = email)
                     viewModel.findUserIdRes.observe(mOwner, Observer {
                         if(!it){
-                           Toast.makeText(context, "입력하신 이메일로 아이디가 발송되었습니다.", Toast.LENGTH_SHORT).show()
+                           Toast.makeText(context,
+                               sendEmailText, Toast.LENGTH_SHORT).show()
                             navController.popBackStack()
                         }else {
-                            Toast.makeText(context, "회원 정보를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, errorEmailText, Toast.LENGTH_SHORT).show()
                         }
                     })
-
                 }
             )
         }

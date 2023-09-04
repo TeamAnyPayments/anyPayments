@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -238,10 +239,10 @@ fun Ticket(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 TicketGuideText(
-                    text = "실제 공연 시간은 현장 및 기상 상황에 따라 유동적일 수 있으니 이점 참고해 주시기 바랍니다."
+                    text = stringResource(id = R.string.text_concert_notify)
                 )
                 TicketGuideText(
-                    text = "우리동네 버스킹 플랫폼 WE:A는 건전한 문화 생활을 응원합니다. 아름다운 공연 문화 정착을 위해 에티켓을 꼭 지켜주세요."
+                    text = stringResource(id = R.string.text_manner_notify)
                 )
             }
 

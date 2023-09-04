@@ -45,7 +45,7 @@ fun ConcertBenefitPage(
 
         PageTopBar(
             navController = navController,
-            pageTitle = "공연 수익"
+            pageTitle = stringResource(R.string.text_pgname_concert_benefit)
         )
         Text(
             text = "$artistName 님의",

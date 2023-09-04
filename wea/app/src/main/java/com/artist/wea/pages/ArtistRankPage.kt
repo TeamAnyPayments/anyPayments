@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -60,7 +61,7 @@ fun ArtistRankPage(
     // 탭 items
     val tabs = listOf(
         TabItem(
-            title = "실시간 베스트",
+            title = stringResource(R.string.text_tab_real_rank),
             screen = {
                 RankTabScreen(
                     navController = navController,
@@ -71,7 +72,7 @@ fun ArtistRankPage(
             }
         ),
         TabItem(
-            title = "주간 베스트",
+            title = stringResource(R.string.text_tab_week_rank),
             screen = {
                 RankTabScreen(
                     navController = navController,

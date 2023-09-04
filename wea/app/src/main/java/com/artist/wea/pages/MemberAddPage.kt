@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.artist.wea.R
 import com.artist.wea.components.PageTopBar
@@ -38,7 +39,7 @@ fun MemberAddPage(
     // 탭 items
     val tabs = listOf(
         TabItem(
-            title = "멤버 초대",
+            title = stringResource(R.string.text_member_add_title),
             screen = {
                 SendInviteComponent(
                     navController = navController
@@ -46,7 +47,7 @@ fun MemberAddPage(
             }
         ),
         TabItem(
-            title = "초대 현황",
+            title = stringResource(R.string.text_member_add_status),
             screen = {
                 SeeInviteComponent(
                     navController = navController
@@ -63,7 +64,7 @@ fun MemberAddPage(
     ) {
         PageTopBar(
             navController = navController,
-            pageTitle = "멤버 추가",
+            pageTitle = stringResource(R.string.text_pgname_member_add),
         )
         TabRow(
             selectedTabIndex = pagerState.currentPage,

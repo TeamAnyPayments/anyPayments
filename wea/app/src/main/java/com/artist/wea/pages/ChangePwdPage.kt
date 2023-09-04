@@ -41,7 +41,7 @@ fun ChangePwdPage(
     {
         PageTopBar(
             navController = navController,
-            pageTitle = "비밀번호 변경",
+            pageTitle = stringResource(R.string.text_pgname_change_pwd),
             disableBack = true
         )
         Column(

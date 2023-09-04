@@ -15,9 +15,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.artist.wea.R
 import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.constants.getRadioButtonColors
 
@@ -81,7 +83,7 @@ fun MultipleRadioButtons(
                     .fillMaxWidth()
                     .wrapContentHeight()
                     .padding(start = 16.dp, end = 16.dp),
-                hintText = "사유를 입력해주세요"
+                hintText = stringResource(R.string.text_other_reason)
             )
         }
     }

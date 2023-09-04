@@ -31,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
@@ -54,6 +55,7 @@ fun MemberManagePage(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         val context = LocalContext.current
+        val completeSaveText = stringResource(R.string.text_complete_save)
 
         PageTopBar (
             navController = navController,
@@ -61,7 +63,7 @@ fun MemberManagePage(
             singleIcon = Icons.Filled.Add,
             rightMenuText = "저장",
             rightMenuAction = {
-                Toast.makeText(context, "변경 사항이 저장 되었습니다", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, completeSaveText, Toast.LENGTH_SHORT).show()
             }
         )
         // 멤버 관리
@@ -132,7 +134,7 @@ fun MemberManagePage(
             }
             // 새로운 멤버 초대
             LargeButton(
-                btnText = "새로운 멤버 초대",
+                btnText = stringResource(R.string.text_invite_member_btn),
                 btnColors = getBtnColorByIdx(3),
                 buttonAction = {
                     navController.navigate(PageRoutes.MemberAdd.route)

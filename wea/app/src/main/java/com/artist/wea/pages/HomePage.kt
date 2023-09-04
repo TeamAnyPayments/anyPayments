@@ -1,6 +1,7 @@
 package com.artist.wea.pages
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -41,6 +42,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
@@ -88,8 +90,10 @@ fun HomePage(
     }
     val userProfile = remember { mutableStateOf(UserProfile()) }
     val jParser = JSONParser() // json parser
+    val expirationUserText = stringResource(R.string.text_expiration_user)
 
     // 홈페이지 렌더링 시 사용자 정보를 가져옴
+
     if(profileJson.value.isEmpty()){
         viewModel.getUserInfo()
         viewModel.getUserInfoRes.observe(mOwner, Observer {
@@ -101,11 +105,11 @@ fun HomePage(
                 userProfile.value = jParser.parseJsonToUserProfile(it)
                 Log.d("HOME_PAGE:::", "서버 >>> ${profileJson.value}")
             }else {
-//                Log.d("PROFILE_PAGE:::", "토큰 만료")
-//                Toast.makeText(context, "회원 정보가 만료되었습니다.", Toast.LENGTH_SHORT).show()
-//                navController.navigate(PageRoutes.Login.route){
-//                    popUpTo(0)
-//                }
+                Log.d("PROFILE_PAGE:::", "토큰 만료")
+                Toast.makeText(context, expirationUserText, Toast.LENGTH_SHORT).show()
+                navController.navigate(PageRoutes.Login.route){
+                    popUpTo(0)
+                }
             }
         })
     }else {
@@ -130,7 +134,7 @@ fun HomePage(
                 ) {
                     // 제목
                     Text(
-                        text = "우리동네 아티스트, WE:A",
+                        text = stringResource(R.string.text_pgname_home),
                         style = getDefTextStyle()
                     )
                 }
@@ -268,7 +272,7 @@ fun homePage(
             .fillMaxHeight()
             .verticalScroll(scrollState)
             .background(colorResource(id = R.color.mono100))
-            .combinedClickable (
+            .combinedClickable(
                 onClick = {
 
                 },

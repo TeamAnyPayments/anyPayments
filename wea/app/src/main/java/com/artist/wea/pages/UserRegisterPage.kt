@@ -66,7 +66,7 @@ fun UserRegisterPage(
     {
         PageTopBar(
             navController = navController,
-            pageTitle = "회원 가입"
+            pageTitle = stringResource(R.string.text_user_regist)
         )
 
         val scrollState = rememberScrollState()
@@ -132,8 +132,8 @@ fun UserRegisterPage(
                     btnFLag.value = 0;
                 },
                 btnFlag = btnFLag.value,
-                successText = "사용할 수 있는 아이디 입니다.",
-                failText = "사용할 수 없는 아이디 입니다."
+                successText = stringResource(R.string.text_use_id_possiible),
+                failText = stringResource(R.string.text_use_id_impossiible)
             )
 
             // 비밀번호 입력
@@ -161,12 +161,14 @@ fun UserRegisterPage(
                 val isDisable = remember { mutableStateOf(true) }
                 val timerDefault = 300
                 val timerSecond = remember { mutableStateOf(0) }
+                val sendCodeText = stringResource(id = R.string.text_send_code)
+
 
                 // 이메일 입력
                 emailInputText.value = DuplicateCheckInputForm(
                     titleText = stringResource(R.string.text_email_label),
                     hintText = stringResource(R.string.text_email_guide),
-                    btnText = if(isDisable.value) stringResource(R.string.text_verify_email) else "인증 완료",
+                    btnText = if(isDisable.value) stringResource(R.string.text_verify_email) else stringResource(id = R.string.text_verified_code),
                     isError = emailInputText.value.isNotEmpty()
                             && !Pattern.matches(WeaRegex.emailPattern.pattern(), emailInputText.value),
                     errorText = WeaRegex.emailGuideText,
@@ -178,7 +180,7 @@ fun UserRegisterPage(
                             // 이메일 전송 결과
                             viewModel.sendCodeToEmailRes.observe(mOwner, Observer {
                                 if(!it){
-                                    Toast.makeText(context,"인증 코드가 발송되었습니다", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context,sendCodeText, Toast.LENGTH_SHORT).show()
                                 }
                             })
                         } else { // 이메일이 유효하지 않을 경우
@@ -187,6 +189,10 @@ fun UserRegisterPage(
                     },
                     isDisable = !codeVerifyResult.value
                 )
+
+                val completeText = stringResource(id = R.string.text_verify_success)
+                val rejectText = stringResource(id = R.string.text_verify_rejected)
+
 
                 // 이메일 인증 트리거 발생시 UI 동적으로 렌더링
                 if(isMatched.value) {
@@ -203,9 +209,9 @@ fun UserRegisterPage(
                             viewModel.checkEmailByCodeRes.observe(mOwner, Observer {
                                 if (!it) {
                                     codeVerifyResult.value = !it // 코드 인증 처리
-                                    Toast.makeText(context, "인증 성공", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, completeText, Toast.LENGTH_SHORT).show()
                                 }else {
-                                    Toast.makeText(context, "인증 실패", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, rejectText, Toast.LENGTH_SHORT).show()
                                 }
                             })
                         },

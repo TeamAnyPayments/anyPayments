@@ -18,13 +18,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.artist.wea.R
 import com.artist.wea.constants.get12TextStyle
 
 @Composable
 fun GuideBubble(
-    guideText:String = "실제 공연 시간은 현장 및 기상 상황에 따라 유동적일 수 있으니 이점 참고해 주시기 바랍니다.",
+    guideText:String = stringResource(R.string.text_concert_notify),
     modifier: Modifier = Modifier
         .wrapContentWidth()
         .wrapContentHeight()

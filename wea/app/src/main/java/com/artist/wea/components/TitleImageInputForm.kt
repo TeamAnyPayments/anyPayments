@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.artist.wea.R
@@ -37,6 +38,7 @@ fun TitleImageInputForm(
 
     val context = LocalContext.current
     val imageBitmap = remember { mutableStateOf<Bitmap?>(null) } //
+    val errorText = stringResource(R.string.text_err_load_img)
     // 사진 불러오기 기능
     val photoSelector = PhotoSelector()
     val takePhotoFromAlbumLauncher = // 갤러리에서 사진 가져오기
@@ -54,7 +56,8 @@ fun TitleImageInputForm(
                     )
 
                 } ?: run {
-                    Toast.makeText(context, "이미지를 불러오던 중 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,
+                        errorText, Toast.LENGTH_SHORT).show()
                 }
             } else if (result.resultCode != Activity.RESULT_CANCELED) {
                 // ??

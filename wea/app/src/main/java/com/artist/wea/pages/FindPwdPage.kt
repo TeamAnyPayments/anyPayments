@@ -58,7 +58,7 @@ fun FindPwdPage(
     {
         PageTopBar(
             navController = navController,
-            pageTitle = "비밀번호 찾기"
+            pageTitle = stringResource(R.string.text_pgname_find_pwd)
         )
         Column(
             modifier = Modifier
@@ -113,12 +113,15 @@ fun FindPwdPage(
             val isMatched = remember { mutableStateOf(false) }
             val isDisable = remember { mutableStateOf(true) }
             val codeVerifyResult = remember { mutableStateOf(false) } // 코드 인증
+            val sendCodeText = stringResource(R.string.text_send_code)
 
             // 이메일 입력
             emailInputText.value = DuplicateCheckInputForm(
                 titleText = stringResource(R.string.text_email_label),
                 hintText = stringResource(R.string.text_email_guide),
-                btnText = if(isDisable.value) stringResource(R.string.text_verify_email) else "인증 완료",
+                btnText = if(isDisable.value) stringResource(R.string.text_verify_email) else stringResource(
+                    R.string.text_verified_code
+                ),
                 isError = emailInputText.value.isNotEmpty()
                         && !Pattern.matches(WeaRegex.emailPattern.pattern(), emailInputText.value),
                 errorText = WeaRegex.emailGuideText,
@@ -129,7 +132,7 @@ fun FindPwdPage(
                         // 이메일 전송 결과
                         viewModel.sendCodeToEmailRes.observe(mOwner, Observer {
                             if(!it){
-                                Toast.makeText(context,"인증 코드가 발송되었습니다", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context,sendCodeText, Toast.LENGTH_SHORT).show()
                             }
                         })
                     } else { // 이메일이 유효하지 않을 경우
@@ -138,6 +141,9 @@ fun FindPwdPage(
                 },
                 isDisable = !codeVerifyResult.value
             )
+
+            val verifySuccess = stringResource(R.string.text_verify_success)
+            val verifyRejected = stringResource(R.string.text_verify_rejected)
 
             // 이메일 인증 트리거 발생시 UI 동적으로 렌더링
             if(isMatched.value) {
@@ -155,9 +161,9 @@ fun FindPwdPage(
                         viewModel.checkEmailByCodeRes.observe(mOwner, Observer {
                             if (!it) {
                                 codeVerifyResult.value = !it // 코드 인증 처리
-                                Toast.makeText(context, "인증 성공", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, verifySuccess, Toast.LENGTH_SHORT).show()
                             }else {
-                                Toast.makeText(context, "인증 실패", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, verifyRejected, Toast.LENGTH_SHORT).show()
                             }
                         })
                     })
