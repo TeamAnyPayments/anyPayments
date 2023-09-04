@@ -16,8 +16,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.artist.wea.R
+import com.artist.wea.constants.get12TextStyle
 import com.artist.wea.constants.getDefTextStyle
 
 /**
@@ -27,6 +31,8 @@ import com.artist.wea.constants.getDefTextStyle
 @Composable
 fun TitleImageForm(
     titleText:String,
+    description:String = "",
+    contentScale: ContentScale = ContentScale.None,
     modifier:Modifier = Modifier
         .fillMaxWidth()
         .height(200.dp)
@@ -46,10 +52,19 @@ fun TitleImageForm(
             text = titleText,
             style = getDefTextStyle()
         )
+        if (description.isNotEmpty()) {
+            Text(
+                text = description,
+                style = get12TextStyle().copy(
+                    color = colorResource(id = R.color.mono300)
+                )
+            )
+        }
         Spacer(modifier = Modifier.height(16.dp))
         // DropdownTextField 로부터 값을 받고 리턴
         bitmap = ImageSelectBox(
-            modifier = modifier
+            modifier = modifier,
+            contentScale = contentScale
         )
     }
     return bitmap

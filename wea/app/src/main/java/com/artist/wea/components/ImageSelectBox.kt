@@ -8,7 +8,6 @@ import android.provider.MediaStore
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,17 +21,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import com.artist.wea.R
+import com.skydoves.landscapist.glide.GlideImage
 
 /**
    modifier는 imageBox의 modifier이며 width와 height를 지정해주어야한다.
  */
 @Composable
 fun ImageSelectBox(
-    modifier:Modifier
+    modifier:Modifier,
+    contentScale: ContentScale
 ):Bitmap? {
     var imageUri by remember { mutableStateOf<Uri?>(null) }
     val context = LocalContext.current
@@ -43,6 +44,8 @@ fun ImageSelectBox(
 
     Column {
         imageUri?.let {
+            // 이전에 들고있는 비트맵이 있다면 free
+            bitmap?.recycle()
             bitmap = if (Build.VERSION.SDK_INT < 28) {
                 MediaStore.Images
                     .Media.getBitmap(context.contentResolver,it)
@@ -59,9 +62,10 @@ fun ImageSelectBox(
                         launcher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                     }
                 ) {
-                    Image(bitmap = btm.asImageBitmap(),
-                        contentDescription =null,
-                        modifier = modifier
+                    GlideImage(
+                        modifier = modifier,
+                        imageModel = imageUri,
+                        contentScale = contentScale
                     )
                 }
             }
