@@ -110,20 +110,30 @@ class MainActivity : ComponentActivity() {
                 composable(PageRoutes.ClientService.route) { ClientServicePage(navController = navController) }
                 composable(PageRoutes.ConcertBenefit.route) { ConcertBenefitPage(navController = navController) }
                 composable(PageRoutes.SearchArtist.route) { SearchArtistPage(navController = navController)}
-                composable(PageRoutes.ArtistInfo.route+"/{id}",
-                    arguments = listOf(navArgument("id"){
-                        type = NavType.IntType
-                        defaultValue = -1
+                composable(PageRoutes.ArtistInfo.route+"/{userId}",
+                    arguments = listOf(navArgument("userId"){
+                        type = NavType.StringType
+                        defaultValue = "abc000"
                     })
                     ) {
                         navBackStackEntry ->
                     ArtistInfoPage(
                         navController = navController,
-                        id = navBackStackEntry.arguments?.getInt("id")?:-1
+                        userId = navBackStackEntry.arguments?.getString("userId")?:"abc000"
 
                     )
                 }
-                composable(PageRoutes.ConcertInfo.route) { ConcertInfoPage(navController = navController) }
+                composable(PageRoutes.ConcertInfo.route+"/{concertId}",
+                    arguments = listOf(navArgument("concertId"){
+                        type = NavType.StringType
+                        defaultValue = "0000-0000-0000"
+                    })
+                ) { navBackStackEntry ->
+                    ConcertInfoPage(
+                        navController = navController,
+                        concertId = navBackStackEntry.arguments?.getString("id")?:""
+                    )
+                }
                 composable(PageRoutes.MyArtist.route) { MyArtistPage(navController = navController) }
                 composable(PageRoutes.ArtistInfoModify.route) { ArtistInfoModifyPage(navController = navController) }
                 composable(PageRoutes.MemberAdd.route) { MemberAddPage(navController = navController) }
@@ -132,7 +142,19 @@ class MainActivity : ComponentActivity() {
                 composable(PageRoutes.UserProfile.route) { UserProfilePage(navController = navController) }
                 composable(PageRoutes.PaymentsManage.route) { PaymentsManagePage(navController = navController) }
                 composable(PageRoutes.TicketList.route) { TicketListPage(navController = navController) }
-                composable(PageRoutes.Ticket.route) { TicketPage(navController = navController) }
+                composable(PageRoutes.Ticket.route+"/{ticketId}",
+                    arguments = listOf(navArgument("ticketId"){
+                        type = NavType.StringType
+                        defaultValue = getString(R.string.text_default_ticket_no)
+                    })
+                ) {
+                    navBackStackEntry ->
+                    TicketPage(
+                        navController = navController,
+                        ticketId = navBackStackEntry.arguments?.getString("ticketId")?:
+                                        getString(R.string.text_default_ticket_no)
+                    )
+                }
                 composable(PageRoutes.OpenConcert.route) { OpenConcertPage(navController = navController)}
                 composable(PageRoutes.ArtistQuit.route) { ArtistQuitPage(navController = navController) }
                 composable(PageRoutes.UserQuit.route) { UserQuitPage(navController = navController) }

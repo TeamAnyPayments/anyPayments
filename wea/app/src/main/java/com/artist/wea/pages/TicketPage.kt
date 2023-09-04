@@ -23,11 +23,12 @@ import com.artist.wea.components.PageTopBar
 import com.artist.wea.components.SponsorshipDetails
 import com.artist.wea.components.Ticket
 import com.artist.wea.components.sidemenu.GoogleAdItem
-import com.artist.wea.data.TicketInfo
-import java.time.LocalDateTime
+import com.artist.wea.constants.DummyValues
 
 @Composable
-fun TicketPage( navController: NavHostController
+fun TicketPage(
+    navController: NavHostController,
+    ticketId:String
 ) {
     Column(
         modifier = Modifier
@@ -54,21 +55,12 @@ fun TicketPage( navController: NavHostController
                     .wrapContentHeight()
                     .padding(16.dp, 12.dp)
             ) {
-                Ticket(
-                    ticketInfo = TicketInfo(
-                        serialNo = "1234-5678-1234",
-                        concertName = "무슨무슨 버스킹",
-                        teamName = "버스킹과 아이들",
-                        concertImgList = listOf(
-                            "https://img.hankyung.com/photo/202206/AKR20220622048100051_01_i_P4.jpg",
-                            "https://img.khan.co.kr/news/2022/05/13/l_20220513010016444001511313.jpg",
-                            "https://img.khan.co.kr/news/2022/05/13/l_2022051301001644400151132.jpg",
-                            "https://blog.kakaocdn.net/dn/lvIrz/btrSqGWAmW3/4D1zPsA9vcYOCroUHfKkM0/img.png"),
-                        dateTime = LocalDateTime.now(),
-                        location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞",
+                // TODO... 서버와의 통신으로 티켓정보 받아오는 로직 구현
+                DummyValues().ticketInfoList[ticketId]?.let {
+                    Ticket(
+                        ticketInfo = it
                     )
-                )
-
+                }
                 Spacer(modifier = Modifier.height(32.dp))
                 SponsorshipDetails()
                 Spacer(modifier = Modifier.height(32.dp))

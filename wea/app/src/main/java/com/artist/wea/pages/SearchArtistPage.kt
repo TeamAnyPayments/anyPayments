@@ -33,7 +33,7 @@ fun SearchArtistPage(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val artistInfoList = DummyValues().aritstSearchList
+        val artistInfoList = DummyValues().aritstSearchList.values
 
         //  arrayOf<ArtistInfo>
 
@@ -58,9 +58,8 @@ fun SearchArtistPage(
                 .verticalScroll(scrollState),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            artistInfoList.forEachIndexed{index, artistInfo ->
+            artistInfoList.forEach{ artistInfo ->
                 ArtistInfoItem(
-                    id = artistInfo.id,
                     navController = navController,
                     artistInfo = artistInfo,
                     modifier = Modifier

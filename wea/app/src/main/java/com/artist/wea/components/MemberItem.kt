@@ -14,14 +14,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.artist.wea.data.ConcertInfo
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get14TextStyle
+import com.artist.wea.data.ArtistInfo
 
 @Composable
 fun MemberItem(
     navController: NavHostController,
-    content: ConcertInfo = ConcertInfo(),
+    content: ArtistInfo = ArtistInfo(),
     modifier: Modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()
@@ -43,7 +43,7 @@ fun MemberItem(
         ) {
 
             WeaIconImage(
-                imgUrl = content.imgURL,
+                imgUrl = content.profileImgURL,
                 size = 64.dp,
                 isClip = true
             )

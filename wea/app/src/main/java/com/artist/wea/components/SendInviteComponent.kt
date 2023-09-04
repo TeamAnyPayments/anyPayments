@@ -21,7 +21,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
-import com.artist.wea.data.ConcertInfo
+import com.artist.wea.constants.DummyValues
 
 @Composable
 fun SendInviteComponent(navController: NavHostController,
@@ -33,23 +33,7 @@ fun SendInviteComponent(navController: NavHostController,
         verticalArrangement = Arrangement.Top
     ) {
         SearchBar()
-        val memberList = arrayOf<ConcertInfo>(
-            ConcertInfo(
-                imgURL = "https://www.pinkvilla.com/images/2023-01/167366856_ariana-grande-1_1280*720.jpg",
-                userId = "tired_cat",
-                email = "tired_cat@naver.com"
-            ),
-            ConcertInfo(
-                imgURL = "https://ichef.bbci.co.uk/news/1536/cpsprodpb/98B4/production/_130129093_winner.png",
-                userId = "swag_cat",
-                email = "swag_cat@gmail.com"
-            ),
-            ConcertInfo(
-                imgURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8jKhRZVaPp-lAxLEiHwl7CBosQM1G2HXrqA&usqp=CAU",
-                userId = "sad_cat",
-                email = "sad_cat@daum.net"
-            )
-        )
+        val memberList = DummyValues().crewList
 
         val context = LocalContext.current
         // list..
