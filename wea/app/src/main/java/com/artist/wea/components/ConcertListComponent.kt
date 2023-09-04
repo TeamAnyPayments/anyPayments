@@ -28,7 +28,7 @@ fun ConcertListComponent(
             searchOptions = arrayOf("선택안함", "거리순", "최신순", "인기순")
         )
 
-        val concertList = DummyValues().concertList
+        val concertList = DummyValues().concertList.values
 
         // list..
         val scrollState = rememberScrollState()
@@ -43,7 +43,8 @@ fun ConcertListComponent(
                     item ->
                 ConcertSearchItem(
                     navController = navController,
-                    content = item
+                    content = item,
+                    isActive = item.concertId == DummyValues().defConcertInfo.concertId // TODO 지우기 .. temp..
                 )
             }
         }

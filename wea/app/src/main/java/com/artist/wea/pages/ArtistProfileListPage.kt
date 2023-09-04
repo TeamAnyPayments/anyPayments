@@ -18,8 +18,8 @@ import com.artist.wea.R
 import com.artist.wea.components.Badge
 import com.artist.wea.components.PageTopBar
 import com.artist.wea.components.ProfileItem
+import com.artist.wea.constants.DummyValues
 import com.artist.wea.constants.PageRoutes
-import com.artist.wea.data.ConcertInfo
 
 @Composable
 fun ArtistProfileListPage(
@@ -37,23 +37,7 @@ fun ArtistProfileListPage(
             pageTitle = "아티스트 프로필 편집"
         )
 
-        val memberList = arrayOf<ConcertInfo>(
-            ConcertInfo(
-                imgURL = "https://www.pinkvilla.com/images/2023-01/167366856_ariana-grande-1_1280*720.jpg",
-                userId = "tired_cat",
-                email = "tired_cat@naver.com"
-            ),
-            ConcertInfo(
-                imgURL = "https://ichef.bbci.co.uk/news/1536/cpsprodpb/98B4/production/_130129093_winner.png",
-                userId = "swag_cat",
-                email = "swag_cat@gmail.com"
-            ),
-            ConcertInfo(
-                imgURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8jKhRZVaPp-lAxLEiHwl7CBosQM1G2HXrqA&usqp=CAU",
-                userId = "sad_cat",
-                email = "sad_cat@daum.net"
-            )
-        )
+        val memberList = DummyValues().crewList
 
         // list..
         val scrollState = rememberScrollState()

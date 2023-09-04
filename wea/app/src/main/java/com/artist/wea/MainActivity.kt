@@ -123,16 +123,15 @@ class MainActivity : ComponentActivity() {
 
                     )
                 }
-                composable(PageRoutes.ConcertInfo.route,
-                    // "/{id}"
-//                    arguments = listOf(navArgument("id"){
-//                        type = NavType.StringType
-//                        defaultValue = "1"
-//                    })
+                composable(PageRoutes.ConcertInfo.route+"/{concertId}",
+                    arguments = listOf(navArgument("concertId"){
+                        type = NavType.StringType
+                        defaultValue = "0000-0000-0000"
+                    })
                 ) { navBackStackEntry ->
                     ConcertInfoPage(
                         navController = navController,
-                        id = navBackStackEntry.arguments?.getString("id")?:""
+                        concertId = navBackStackEntry.arguments?.getString("id")?:""
                     )
                 }
                 composable(PageRoutes.MyArtist.route) { MyArtistPage(navController = navController) }

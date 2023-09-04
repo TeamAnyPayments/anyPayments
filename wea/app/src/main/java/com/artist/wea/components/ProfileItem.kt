@@ -23,12 +23,12 @@ import com.artist.wea.R
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get12TextStyle
 import com.artist.wea.constants.get14TextStyle
-import com.artist.wea.data.ConcertInfo
+import com.artist.wea.data.ArtistInfo
 
 @Composable
 fun ProfileItem(
     navController: NavHostController,
-    content: ConcertInfo = ConcertInfo(),
+    content: ArtistInfo = ArtistInfo(),
     modifier: Modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()
@@ -52,7 +52,7 @@ fun ProfileItem(
         ) {
 
             WeaIconImage(
-                imgUrl = content.imgURL,
+                imgUrl = content.profileImgURL,
                 size = 64.dp,
                 isClip = true
             )

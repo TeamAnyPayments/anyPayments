@@ -49,7 +49,6 @@ import com.artist.wea.constants.DummyValues
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.data.ArtistInfo
-import com.artist.wea.data.ConcertInfo
 import com.artist.wea.util.PhotoSelector
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -306,45 +305,7 @@ fun ArtistInfoModifyPage(
         )
 
         // 공연 이력
-        val concertList = arrayOf<ConcertInfo>(
-            ConcertInfo(
-                imgURL = "https://www.pinkvilla.com/images/2023-01/167366856_ariana-grande-1_1280*720.jpg",
-                artistName = "무슨무슨 아티스트",
-                concertIntroduce = "우리는 모두 이번 생은 처음이니까 지금이..",
-                location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞"
-            ),
-            ConcertInfo(
-                imgURL = "https://ichef.bbci.co.uk/news/1536/cpsprodpb/98B4/production/_130129093_winner.png",
-                artistName = "블라블라 아티스트",
-                concertIntroduce = "Drippin Your Self!, 감성 힙합 공연",
-                location = "서울 서대문구 신촌역로 17 GS 25 앞"
-            ),
-            ConcertInfo(
-                imgURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8jKhRZVaPp-lAxLEiHwl7CBosQM1G2HXrqA&usqp=CAU",
-                artistName = "울라울라 아티스트",
-                concertIntroduce = "무더운 밤 잠이 오지 않는 그대를 위한 감성 힐링콘...",
-                location = "서울 마포구 와우산로21길 19-3 홍익문화공원"
-            ),
-            ConcertInfo(
-                imgURL = "https://www.pinkvilla.com/images/2023-01/167366856_ariana-grande-1_1280*720.jpg",
-                artistName = "무슨무슨 아티스트",
-                concertIntroduce = "우리는 모두 이번 생은 처음이니까 지금이..",
-                location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞"
-            ),
-            ConcertInfo(
-                imgURL = "https://ichef.bbci.co.uk/news/1536/cpsprodpb/98B4/production/_130129093_winner.png",
-                artistName = "블라블라 아티스트",
-                concertIntroduce = "Drippin Your Self!, 감성 힙합 공연",
-                location = "서울 서대문구 신촌역로 17 GS 25 앞"
-            ),
-            ConcertInfo(
-                imgURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8jKhRZVaPp-lAxLEiHwl7CBosQM1G2HXrqA&usqp=CAU",
-                artistName = "울라울라 아티스트",
-                concertIntroduce = "무더운 밤 잠이 오지 않는 그대를 위한 감성 힐링콘...",
-                location = "서울 마포구 와우산로21길 19-3 홍익문화공원"
-            )
-        )
-
+        val concertList = DummyValues().concertLogList
 
         // History
         InfoUnit(

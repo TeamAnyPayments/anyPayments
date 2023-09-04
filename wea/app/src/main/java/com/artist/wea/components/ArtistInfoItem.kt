@@ -28,7 +28,7 @@ import com.artist.wea.data.ArtistInfo
 
 @Composable
 fun ArtistInfoItem(
-    id:Int = -1,
+    userId:String = "-1",
     navController: NavHostController,
     artistInfo: ArtistInfo = ArtistInfo(),
     modifier: Modifier = Modifier,
@@ -40,7 +40,7 @@ fun ArtistInfoItem(
         .wrapContentHeight()
         .clickable {
             if (isActive) {
-                navController.navigate(PageRoutes.ArtistInfo.route+"/$id")
+                navController.navigate(PageRoutes.ArtistInfo.route+"/$userId")
             }
         }
     ){

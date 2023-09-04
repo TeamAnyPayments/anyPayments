@@ -60,7 +60,7 @@ fun SearchArtistPage(
         ) {
             artistInfoList.forEachIndexed{index, artistInfo ->
                 ArtistInfoItem(
-                    id = artistInfo.id,
+                    userId = artistInfo.userId,
                     navController = navController,
                     artistInfo = artistInfo,
                     modifier = Modifier
