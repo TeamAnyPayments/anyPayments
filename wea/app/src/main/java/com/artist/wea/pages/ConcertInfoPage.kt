@@ -1,5 +1,7 @@
 package com.artist.wea.pages
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -23,11 +25,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
+import com.artist.wea.activity.PaymentsActivity
 import com.artist.wea.components.ArtistInfoItem
 import com.artist.wea.components.Badge
 import com.artist.wea.components.CompleteTicketDialog
@@ -48,6 +52,7 @@ fun ConcertInfoPage(
 ){
     // TODO navController를 통해서 공연 데이터를 추출해서 렌더링 하도록 설계
     val concertInfo =  DummyValues().concertItems[concertId]?:DummyValues().defConcertInfo
+    val context = LocalContext.current
 
     val modalVisibleState = remember { mutableStateOf(false) }
     CompleteTicketDialog(
@@ -214,11 +219,16 @@ fun ConcertInfoPage(
                     .padding(8.dp)
                     .align(Alignment.BottomEnd),
                 buttonAction = {
-                    modalVisibleState.value = true
+                    // modalVisibleState.value = true
+                    showPayments(context = context)
+
                 }
             )
         }
-
-
     }
+}
+
+fun showPayments(context: Context){
+    val intent = Intent(context, PaymentsActivity::class.java)
+    context.startActivity(intent)
 }

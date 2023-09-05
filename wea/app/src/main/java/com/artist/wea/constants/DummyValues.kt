@@ -13,7 +13,7 @@ import com.artist.wea.components.data.ArtistRankData
 import com.artist.wea.data.ArtistInfo
 import com.artist.wea.data.ConcertInfo
 import com.artist.wea.data.ConcertListInfo
-import com.artist.wea.data.PaymentInfo
+import com.artist.wea.data.PaymentItemInfo
 import com.artist.wea.data.TicketInfo
 import java.time.LocalDateTime
 
@@ -215,12 +215,12 @@ class DummyValues {
         )
     }
 
-    val paymentInfoList = listOf<PaymentInfo>(
-        PaymentInfo(
+    val paymentInfoList = listOf<PaymentItemInfo>(
+        PaymentItemInfo(
             name = "카카오 페이",
             paymentImgURL = "https://play-lh.googleusercontent.com/Ob9Ys8yKMeyKzZvl3cB9JNSTui1lJwjSKD60IVYnlvU2DsahysGENJE-txiRIW9_72Vd"
         ),
-        PaymentInfo(
+        PaymentItemInfo(
             name = "네이버 페이",
             paymentImgURL = "https://mir-s3-cdn-cf.behance.net/project_modules/1400/3393f738210507.575900b317fb4.png"
         ),

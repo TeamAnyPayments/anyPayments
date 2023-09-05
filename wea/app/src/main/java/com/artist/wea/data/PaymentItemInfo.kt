@@ -1,6 +1,6 @@
 package com.artist.wea.data
 
-data class PaymentInfo(
+data class PaymentItemInfo(
     val name:String = "",
     val paymentImgURL: String?,
 )
