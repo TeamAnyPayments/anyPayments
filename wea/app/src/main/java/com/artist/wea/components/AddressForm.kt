@@ -6,18 +6,20 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -35,6 +37,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.artist.wea.R
+import com.artist.wea.constants.get12TextStyle
+import com.artist.wea.constants.getDefTextFiledStyle
 import com.artist.wea.data.AddressInfo
 import com.google.gson.Gson
 
@@ -50,13 +54,17 @@ fun AddressForm(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp, 16.dp)
+            .padding(8.dp, 16.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         var isVisible by remember { mutableStateOf(false) }
         
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .wrapContentHeight(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             if (isVisible) {
                 CustomAlertDialog(
@@ -68,6 +76,7 @@ fun AddressForm(
                         modifier = Modifier
                             .fillMaxWidth()
                             .wrapContentHeight()
+                            .padding(top = 16.dp, bottom = 16.dp)
                             .clip(RoundedCornerShape(12.dp))
                             .background(color = colorResource(id = R.color.mono50)),
                         verticalArrangement = Arrangement.Center,
@@ -124,39 +133,85 @@ fun AddressForm(
                     }
                 }
             }
+            // 우편번호
             TextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .weight(5f),
+                colors = getDefTextFiledStyle(),
                 value = addressInfo?.postalCode ?: "",
                 onValueChange = { },
-                readOnly = true
-            )
-            Button(
-                onClick = {
-                    isVisible = true
+                readOnly = true,
+                placeholder = {
+                    Text(
+                        text = "우편번호",
+                        style = get12TextStyle().copy(
+                            color = colorResource(id = R.color.mono300)
+                        )
+                    )
                 }
-            ) {
+            )
+            Box(
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .wrapContentHeight()
+                    .border(1.dp, colorResource(id = R.color.mono300))
+                    .weight(1.5f)
+            ){
                 Text(
                     modifier = Modifier
-                        .fillMaxWidth(),
-                    text = "우편번호 찾기"
+                        .wrapContentWidth()
+                        .wrapContentHeight()
+                        .align(Alignment.Center)
+                        .padding(16.dp, 12.dp)
+                        .clickable {
+                            isVisible = true
+                        },
+                    text = "주소 찾기",
+                    style = get12TextStyle()
+                        .copy(
+                            color = colorResource(id = R.color.black)
+                        )
                 )
             }
         }
         TextField(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .wrapContentHeight(),
+            colors = getDefTextFiledStyle(),
             value = addressInfo?.address ?: "",
             onValueChange = { },
-            readOnly = true
+            readOnly = true,
+            placeholder = {
+                Text(
+                    text = "주소를 입력해주세요",
+                    style = get12TextStyle().copy(
+                        color = colorResource(id = R.color.mono300)
+                    )
+                )
+            }
         )
         TextField(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .wrapContentHeight(),
+            colors = getDefTextFiledStyle(),
             value = addressInfo?.addressDetail ?: "",
             onValueChange = {
                 addressInfo = addressInfo?.copy(
                     addressDetail = it
                 )
             },
+            placeholder = {
+                Text(
+                    text = "상세 주소를 입력해주세요",
+                    style = get12TextStyle().copy(
+                        color = colorResource(id = R.color.mono300)
+                    )
+                )
+            }
         )
     }
     return addressInfo
