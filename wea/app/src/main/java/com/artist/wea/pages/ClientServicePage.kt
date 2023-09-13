@@ -1,6 +1,6 @@
 package com.artist.wea.pages
 
-import android.widget.Toast
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,15 +20,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
 import com.artist.wea.R
 import com.artist.wea.components.ClientGuideBanner
 import com.artist.wea.components.PageTopBar
 import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.constants.getOutlinedTextFieldColors
+import com.artist.wea.model.RegisterViewModel
+import com.artist.wea.repository.RegisterRepository
+import com.artist.wea.util.ToastManager.Companion.shortToast
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,17 +46,39 @@ fun ClientServicePage(
         .background(color = colorResource(id = R.color.mono50)))
     {
         var text by remember { mutableStateOf("") }
+        val sendCompleteText = stringResource(R.string.text_complete_sumbmit_cs) // 코드 전송 성공
+        val sendFailText = stringResource(R.string.text_fail_sumbmit_cs) // 코드 전송 실패
+
+        // 비동기 통신을 위한 기본 객체 settings
         val context = LocalContext.current;
-        val sendCompleteText = stringResource(R.string.text_complete_sumbmit_cs)
+        val mOwner = LocalLifecycleOwner.current
+        val repository = RegisterRepository()
+        val viewModel = RegisterViewModel(repository)
 
         PageTopBar(
             navController = navController,
             pageTitle = stringResource(R.string.text_pgname_cs),
             rightMenuText = "전송",
             rightMenuAction = {
-                Toast.makeText(context,
-                    sendCompleteText, Toast.LENGTH_SHORT).show()
-                navController.popBackStack()
+                // TODO... 유저 로그인 정보를 통해 이메일 정보 가져오기
+                val email = "test@test.com" // Dummy...
+                val content = text
+
+                if(content.isEmpty()){
+                    shortToast(context, sendFailText)
+                }else {
+                    val inquiryMap = mapOf(
+                        "email" to email,
+                        Pair("content", content)
+                    )
+                    viewModel.sendInquiry(inquiryMap)
+                    viewModel.sendInquiryRes.observe(mOwner, Observer {
+                        shortToast(context, sendCompleteText)
+                        Log.d("FIND_PWD_RES:::", "${it.toString()}")
+                    })
+
+                    // navController.popBackStack()
+                }
             }
         )
         // guide Banner

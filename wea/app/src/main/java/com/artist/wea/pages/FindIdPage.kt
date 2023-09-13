@@ -31,6 +31,7 @@ import com.artist.wea.components.LargeButton
 import com.artist.wea.components.PageTopBar
 import com.artist.wea.components.TitleInputForm
 import com.artist.wea.constants.getDefTextStyle
+import com.artist.wea.data.FindIdData
 import com.artist.wea.model.RegisterViewModel
 import com.artist.wea.repository.RegisterRepository
 import com.artist.wea.util.WeaRegex
@@ -106,9 +107,12 @@ fun FindIdPage(
             LargeButton(
                 btnText = stringResource(R.string.text_btn_find_id),
                 buttonAction = {
-                    val name = nameInputText.value
-                    val email = emailInputText.value
-                    viewModel.findUserId(name = name, email = email)
+                    // 사용자 이름과 이메일 정보를 받는다.
+                    val findIdData = FindIdData(
+                        name = nameInputText.value,
+                        email = emailInputText.value
+                    )
+                    viewModel.findUserId(findIdData)
                     viewModel.findUserIdRes.observe(mOwner, Observer {
                         if(!it){
                            Toast.makeText(context,

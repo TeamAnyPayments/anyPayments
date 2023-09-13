@@ -1,7 +1,6 @@
 package com.artist.wea.pages
 
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -106,10 +105,10 @@ fun HomePage(
                 Log.d("HOME_PAGE:::", "서버 >>> ${profileJson.value}")
             }else {
                 Log.d("PROFILE_PAGE:::", "토큰 만료")
-                Toast.makeText(context, expirationUserText, Toast.LENGTH_SHORT).show()
-                navController.navigate(PageRoutes.Login.route){
-                    popUpTo(0)
-                }
+//                Toast.makeText(context, expirationUserText, Toast.LENGTH_SHORT).show()
+//                navController.navigate(PageRoutes.Login.route){
+//                    popUpTo(0)
+//                }
             }
         })
     }else {

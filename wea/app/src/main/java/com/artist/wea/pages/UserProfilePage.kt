@@ -232,8 +232,11 @@ fun UserProfilePage(
                             style = get14TextStyle(),
                             modifier = Modifier.clickable {
                                 if(prefs.clearAll()){
+                                    // TODO.. prefs를 통해 토큰 값 꺼내서 바인딩, 서버와 통신 후 로그아웃 처리
                                     Toast.makeText(context, "로그아웃이 완료되었습니다.", Toast.LENGTH_SHORT).show()
-                                    viewModel.logout()
+                                    val tokenMap= mapOf(Pair("token", "")) // 현재 사용중인 토큰
+                                    viewModel.logout(tokenMap);
+
                                     viewModel.loginUserRes.observe(mOwner, Observer {
                                         Log.d("LOGOUT_RESULT....", "${it.toString()}")
                                     })
