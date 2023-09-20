@@ -1,6 +1,7 @@
 package com.artist.wea.pages
 
 import android.app.Activity
+import android.content.Context
 import android.graphics.Bitmap
 import android.util.Log
 import android.widget.Toast
@@ -22,6 +23,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -31,10 +33,12 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
 import com.artist.wea.R
 import com.artist.wea.components.InfoUnit
+import com.artist.wea.components.LogOutAlert
 import com.artist.wea.components.PageTopBar
 import com.artist.wea.components.ShowProfileDialog
 import com.artist.wea.components.WeaIconImage
@@ -42,6 +46,7 @@ import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.data.UserProfile
+import com.artist.wea.instance.Retrofit
 import com.artist.wea.model.RegisterViewModel
 import com.artist.wea.repository.RegisterRepository
 import com.artist.wea.util.JSONParser
@@ -69,16 +74,13 @@ fun UserProfilePage(
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data?.data?.let { uri ->
-
                     // Log.d("IMAGE:::", "${uri.toString()}")
-
                     photoSelector.setImageToVariable(
                         context = context,
                         uri = uri,
                         imageSource = profileBitmap,
                         fileName = "user_profile"
                     )
-
                 } ?: run {
                     Toast.makeText(context, "이미지를 불러오던 중 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
                 }
@@ -110,9 +112,9 @@ fun UserProfilePage(
             }else {
                 Log.d("PROFILE_PAGE:::", "토큰 만료")
                 Toast.makeText(context, "회원 정보가 만료되었습니다.", Toast.LENGTH_SHORT).show()
-//                navController.navigate(PageRoutes.Login.route){
-//                    popUpTo(0)
-//                }
+                navController.navigate(PageRoutes.Login.route){
+                    popUpTo(0)
+                }
             }
         })
     }else {
@@ -122,8 +124,9 @@ fun UserProfilePage(
         userProfile.value = jParser.parseJsonToUserProfile(json)
     }
 
-    val modalVisibleState = remember { mutableStateOf(false) }
-    ShowProfileDialog(
+    // 사용자 프로필 페이지에서 이미지를 미리 보기를 위한 커스텀 다이얼로그 창
+    val modalVisibleState = remember { mutableStateOf(false) } // 표시 여부 결정할 변수
+    ShowProfileDialog( // 사용자 이미지 다이얼로그
         visible = modalVisibleState.value,
         defaultImageURL = userProfile.value.profileURL,
         localImgBitmap = profileBitmap.value,
@@ -131,6 +134,25 @@ fun UserProfilePage(
             modalVisibleState.value = false
         })
 
+    // 로그아웃 시 사용자에게 표시할 경고 창
+    val logOutVisibleState = remember { mutableStateOf(false) }
+    LogOutAlert(
+        visible = logOutVisibleState.value,
+        onDismissRequest = {
+            logOutVisibleState.value = false
+        },
+        logOutAction = {
+            // 사용자 로그아웃 처리는 모달창에서 수행!
+            userLogOut(
+                context = context,
+                navController = navController,
+                prefs = prefs,
+                viewModel = viewModel,
+                mOwner = mOwner,
+                logOutVisibleState = logOutVisibleState
+            )
+        }
+    )
 
     val scrollState = rememberScrollState()
     Column(
@@ -231,20 +253,10 @@ fun UserProfilePage(
                             text = stringResource(R.string.text_menu_logout),
                             style = get14TextStyle(),
                             modifier = Modifier.clickable {
-                                if(prefs.clearAll()){
-                                    Toast.makeText(context, "로그아웃이 완료되었습니다.", Toast.LENGTH_SHORT).show()
-                                    viewModel.logout()
-                                    viewModel.loginUserRes.observe(mOwner, Observer {
-                                        Log.d("LOGOUT_RESULT....", "${it.toString()}")
-                                    })
-                                    navController.navigate(PageRoutes.Login.route){
-                                        popUpTo(0)
-                                    }
-                                }
-
+                                logOutVisibleState.value = true // 로그아웃 모달창 ON
                             }
                         )
-                        // 로그아웃
+                        // 회원 탈퇴
                         Text(
                             text = stringResource(R.string.text_menu_user_quit),
                             style = get14TextStyle()
@@ -252,6 +264,7 @@ fun UserProfilePage(
                                     color = colorResource(id = R.color.red500)
                                 ),
                             modifier = Modifier.clickable {
+                                // 회원 탈퇴는 회원 탈퇴 양식을 작성하도록 페이지 이동
                                 navController.navigate(PageRoutes.UserQuit.route)
                             }
                         )
@@ -260,4 +273,40 @@ fun UserProfilePage(
             )
         }
    }
+}
+
+// 사용자 로그아웃 함수
+fun userLogOut(
+    context:Context, // context
+    navController: NavHostController,
+    prefs:PreferenceUtil, // prefs Util..
+    viewModel: RegisterViewModel, // 로그아웃 처리를 담당할 뷰모델
+    mOwner:LifecycleOwner, // 뷰모델의 값 변환을 감지할 라이플 사이클 오너
+    logOutVisibleState:MutableState<Boolean> // 로그아웃 성공 시 모달창을 함께 종료하기 위해, 노출 여부를 관리할 MutableState를 가져온다.
+){
+    val lgTag = "LOGOUT_ACTION:::"
+    val tokenMap= mapOf(Pair("token", prefs.getString("token", ""))) // 현재 사용중인 토큰 정보를 꺼냄
+    Log.d(lgTag, "로그아웃 시도 >> $tokenMap")
+
+    if(prefs.clearAll()){ // SharedPreference에서 관리중이던 모든 정보를 초기화 시킴
+        Log.d(lgTag, "prefs 초기화 시도");
+        Log.d(lgTag, "값 점검 [token] : ${prefs.getString("token", "null")}")
+        Log.d(lgTag, "값 점검 [profile_json] : ${prefs.getString("profile_json", "null")}")
+
+        // prefs를 통해 토큰 값 꺼내서 바인딩, 서버와 통신 후 로그아웃 처리
+        viewModel.logout(tokenMap);
+        viewModel.logoutRes.observe(mOwner, Observer {
+            Log.d(lgTag, "서버 로그아웃 시도 >> ${it.toString()}")
+            if(!it){ // 서버와의 로그아웃 시도가 정상적으로 이루어졌을 경우, 최종 로그아웃 처리
+                Retrofit.token.value = "" // 초기화
+                logOutVisibleState.value = false;
+                Toast.makeText(context,
+                    context.getString(R.string.text_logout_ok), Toast.LENGTH_SHORT).show()
+                navController.navigate(PageRoutes.Login.route){
+                    popUpTo(0)
+                }
+            }
+        })
+
+    }
 }

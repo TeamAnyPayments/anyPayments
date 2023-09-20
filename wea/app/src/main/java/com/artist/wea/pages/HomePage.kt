@@ -1,7 +1,6 @@
 package com.artist.wea.pages
 
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -65,6 +64,7 @@ import com.artist.wea.model.RegisterViewModel
 import com.artist.wea.repository.RegisterRepository
 import com.artist.wea.util.JSONParser
 import com.artist.wea.util.PreferenceUtil
+import com.artist.wea.util.ToastManager
 import org.json.JSONObject
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -92,30 +92,37 @@ fun HomePage(
     val jParser = JSONParser() // json parser
     val expirationUserText = stringResource(R.string.text_expiration_user)
 
-    // 홈페이지 렌더링 시 사용자 정보를 가져옴
+    // Recomposition을 막기 위한 카운트 계수
+    val recompCnt = remember { mutableStateOf(0) }
 
-    if(profileJson.value.isEmpty()){
-        viewModel.getUserInfo()
-        viewModel.getUserInfoRes.observe(mOwner, Observer {
-            if(it != null ){
-                Log.d("GET_USER_INFO:::", "${it.toString()}")
-                val jsonString = it.toString()
-                prefs.setString("profile_json", "$jsonString") // prefs 저장
-                profileJson.value = jsonString // 현재 상태에도 저장
-                userProfile.value = jParser.parseJsonToUserProfile(it)
-                Log.d("HOME_PAGE:::", "서버 >>> ${profileJson.value}")
-            }else {
-                Log.d("PROFILE_PAGE:::", "토큰 만료")
-                Toast.makeText(context, expirationUserText, Toast.LENGTH_SHORT).show()
-                navController.navigate(PageRoutes.Login.route){
-                    popUpTo(0)
+    if(recompCnt.value == 0){ // 컴포저블 내에서 값을 가져오는 상황이어서 Recomposition이 발생하게 되고, 이를 막기 위한 조건절
+        // 홈페이지 렌더링 시 사용자 정보를 가져옴
+        if(profileJson.value.isEmpty()){
+            viewModel.getUserInfo()
+            viewModel.getUserInfoRes.observe(mOwner, Observer {
+                if(it != null ){
+                    Log.d("GET_USER_INFO:::", "${it.toString()}")
+                    val jsonString = it.toString()
+                    prefs.setString("profile_json", "$jsonString") // prefs 저장
+                    profileJson.value = jsonString // 현재 상태에도 저장
+                    userProfile.value = jParser.parseJsonToUserProfile(it)
+                    Log.d("HOME_PAGE:::", "서버 >>> ${profileJson.value}")
+                }else {
+                    Log.d("PROFILE_PAGE:::", "토큰 만료")
+                    ToastManager.shortToast(context, expirationUserText);
+                    recompCnt.value = 0;
+                    navController.navigate(PageRoutes.Login.route){
+                        popUpTo(0)
+                    }
                 }
-            }
-        })
-    }else {
-        Log.d("HOME_PAGE:::", "캐싱 >>> ${profileJson.value}")
-        val json = JSONObject(profileJson.value)
-        userProfile.value = jParser.parseJsonToUserProfile(json)
+            })
+        } else {
+            Log.d("HOME_PAGE:::", "캐싱 >>> ${profileJson.value}")
+            Log.d("HOME_PAGE:::", "토큰 >>> ${prefs.getString("token", "")}")
+            recompCnt.value++
+            val json = JSONObject(profileJson.value)
+            userProfile.value = jParser.parseJsonToUserProfile(json)
+        }
     }
 
     //

@@ -34,8 +34,10 @@ import com.artist.wea.components.PageTopBar
 import com.artist.wea.components.TitleInputForm
 import com.artist.wea.components.VerifyInputForm
 import com.artist.wea.constants.getDefTextStyle
+import com.artist.wea.data.FindPwdData
 import com.artist.wea.model.RegisterViewModel
 import com.artist.wea.repository.RegisterRepository
+import com.artist.wea.util.ToastManager.Companion.shortToast
 import com.artist.wea.util.WeaRegex
 import java.util.regex.Pattern
 
@@ -169,17 +171,26 @@ fun FindPwdPage(
                     })
             }
             Spacer(modifier = Modifier.height(32.dp))
+            val verifyAlertText = stringResource(R.string.text_alert_verify_email)
             LargeButton(
                 btnText = stringResource(R.string.text_btn_find_pwd),
                 buttonAction = {
-                    val name = nameInputText.value
-                    val id = idInputText.value
-                    val email = emailCodeText.value
-                    viewModel.findUserPassword(name = name, email = email, id = id)
-                    viewModel.findUserPasswordRes.observe(mOwner, Observer {
-                        Log.d("FIND_PWD_RES:::", "${it.toString()}")
-                    })
-
+                    // 코드 인증이 됐는지 먼저 점검하고 유효할 경우에만 서버에 비밀번호 찾기 요청
+                    if(codeVerifyResult.value){
+                        // 비밀번호 찾기 요청 데이터
+                        val findPwdData = FindPwdData(
+                            name = nameInputText.value,
+                            id = idInputText.value,
+                            email = emailInputText.value
+                        )
+                        // TODO.. 서버와 통신하며 기능 완성
+                        viewModel.findUserPassword(findPwdData)
+                        viewModel.findUserPasswordRes.observe(mOwner, Observer {
+                            Log.d("FIND_PWD_RES:::", "${it.toString()}")
+                        })
+                    }else {
+                        shortToast(context, verifyAlertText)
+                    }
                 }
             )
         }
