@@ -141,5 +141,9 @@
     <string name="text_use_id_impossiible">사용할 수 없는 아이디 입니다.</string>
     <string name="text_alert_verify_email">이메일 인증을 먼저 진행해주세요!</string>
     <string name="text_fail_sumbmit_cs">문의 사항을 입력해주세요 😊</string>
+    <string name="text_logout_ok">로그아웃이 완료되었습니다.</string>
+    <string name="text_logout_guide">로그아웃 하시겠어요?</string>
+    <string name="text_login_success">로그인에 성공하였습니다.</string>
+    <string name="text_login_fail">로그인에 실패하였습니다...</string>
 
 </resources>

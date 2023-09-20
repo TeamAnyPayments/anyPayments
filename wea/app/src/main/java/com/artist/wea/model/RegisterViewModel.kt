@@ -83,7 +83,7 @@ class RegisterViewModel(val repository: RegisterRepository): ViewModel() {
     }
 
     // combined with 로그아웃 API
-    val logoutRes:MutableLiveData<Any> = MutableLiveData() // 로그아웃 결과
+    val logoutRes:MutableLiveData<Boolean> = MutableLiveData() // 로그아웃 결과
     // 로그아웃 메서드
     fun logout(tokenMap : Map<String, String>){
         viewModelScope.launch(exceptionHandler) {
@@ -92,11 +92,10 @@ class RegisterViewModel(val repository: RegisterRepository): ViewModel() {
             Log.d(RLOG, "res = ${response.toString()}")
 
             if(!response.isSuccessful) { // 통신 예외 처리
-                // checkEmailByCodeRes.value = false;
                 throw Exception();
             }
             val jsonObject = jParser.parseToJson(response)
-            logoutRes.value = jsonObject
+            logoutRes.value = !jsonObject.get("status").equals("OK")
         }
     }
 

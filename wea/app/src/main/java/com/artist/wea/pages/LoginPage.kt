@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -38,6 +37,7 @@ import com.artist.wea.instance.Retrofit
 import com.artist.wea.model.RegisterViewModel
 import com.artist.wea.repository.RegisterRepository
 import com.artist.wea.util.PreferenceUtil
+import com.artist.wea.util.ToastManager.Companion.shortToast
 
 @Composable
 fun LoginPage(
@@ -100,7 +100,10 @@ fun LoginPage(
         Spacer(modifier = Modifier
             .fillMaxWidth()
             .height(16.dp))
-        
+
+        // 로그인 결과에 따른 토스트 메세지용 문자열
+        val loginSuccess = stringResource(R.string.text_login_success)
+        val loginFail = stringResource(R.string.text_login_fail)
         // 로그인 버튼들
         LargeButton(
             btnText = stringResource(R.string.text_login_btn),
@@ -109,18 +112,21 @@ fun LoginPage(
                     id = idText.value,
                     password = pwdText.value
                 )
+
                 viewModel.loginUser(loginUser);
                 // 로그인 결과
                 viewModel.loginUserRes.observe(mOwner, Observer {
                     if(it.isNotEmpty()){
                         Log.d("LOGIN RES:::", it.toString())
                         token.value = it.toString()
-                        prefs.setString("token", token.value)
-                        Retrofit.token.value = it.toString()
+                        prefs.setString("token", token.value) // 다른 화면에서 활용할 수 있도록 토큰 정보를 저장
+                        Retrofit.token.value = it.toString() // 로그인 성공 시 레트로핏 인스턴스 헤더에 토큰을 붙여준다.
+                        shortToast(context, loginSuccess)
                         navController.navigate(PageRoutes.Home.route){
                             popUpTo(0)
                         }
-
+                    }else {
+                        shortToast(context, loginFail)
                     }
                 })
 
@@ -153,11 +159,10 @@ fun LoginPage(
             .fillMaxWidth()
             .height(8.dp))
 
-
-        Button(onClick = {
-            navController.navigate(PageRoutes.Home.route) }) {
-            Text("홈페이지 이동")
-        }
+//        Button(onClick = {
+//            navController.navigate(PageRoutes.Home.route) }) {
+//            Text("홈페이지 이동")
+//        }
 
     }
 
