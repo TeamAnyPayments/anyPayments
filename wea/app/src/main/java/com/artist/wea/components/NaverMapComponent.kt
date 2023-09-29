@@ -15,6 +15,7 @@ import androidx.navigation.NavHostController
 import com.naver.maps.map.MapView
 import kotlinx.coroutines.launch
 
+// 네이버 맵 컴포저블
 @Composable
 fun NaverMapComponent(
     navController: NavHostController,

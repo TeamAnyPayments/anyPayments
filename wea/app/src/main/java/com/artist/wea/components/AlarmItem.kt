@@ -22,11 +22,12 @@ import androidx.navigation.NavHostController
 import com.artist.wea.components.data.AlarmData
 import com.artist.wea.constants.get14TextStyle
 
+// 알람 정보를 표시할 때 사용되는 컴포저블 아이템
 @Composable
 fun AlarmItem(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    alarmData: AlarmData
+    alarmData: AlarmData // 알람의 표시에 필요한 데이터를 담은 데이터 클래스
 ){
     Row(
         modifier = modifier
@@ -39,14 +40,13 @@ fun AlarmItem(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ){
+        // 알림의 아이콘
         Icon(
             alarmData.iconImg,
             contentDescription = "icon",
             modifier = Modifier
                 .size(36.dp)
-                .padding(start = 8.dp)
-                // .weight(1f)
-            ,
+                .padding(start = 8.dp),
             tint = alarmData.contentColor
         )
 
@@ -63,7 +63,7 @@ fun AlarmItem(
                     .copy(
                         color = alarmData.contentColor
                     ),
-                modifier = Modifier.weight(if(alarmData.isChek) 3f else 5f)
+                modifier = Modifier.weight(if(alarmData.isChek) 3f else 5f) // 알람에서 체크를 해야될 경우 레이아웃 옵션을 다르게 함
             )
             Row(
                 modifier = Modifier

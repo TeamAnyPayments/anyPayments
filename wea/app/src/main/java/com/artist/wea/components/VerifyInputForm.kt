@@ -26,18 +26,20 @@ import com.artist.wea.R
 import com.artist.wea.constants.getButtonColor
 import com.artist.wea.constants.getDefTextStyle
 
+// 이메일 인증 시에 사용하는 인증 컴포저블
 @Composable
 fun VerifyInputForm(
-    verifyText:String = stringResource(id = R.string.empty_text),
+    verifyText:String = stringResource(id = R.string.empty_text), // 인증 코드
     hintText:String = stringResource(id = R.string.text_input_guide),
     btnText:String = stringResource(id = R.string.text_value_verify),
-    buttonActions:() -> Unit = {},
+    buttonActions:() -> Unit = {}, // 인증 함수
     isDisable:Boolean = false,
-    second:Int = 300
+    second:Int = 300 // 유효 시간
 ):String{
 
     var inputText = remember { mutableStateOf("") }
     val context = LocalContext.current; // context
+    val timerEndText = stringResource(R.string.text_end_of_timer) // 유효시간 만료 텍스트
 
     Column(
         modifier = Modifier
@@ -53,7 +55,6 @@ fun VerifyInputForm(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
         ) {
-            val timerEndText = stringResource(R.string.text_end_of_timer)
             Text(
                 text = verifyText,
                 style = if(!isDisable) getDefTextStyle()

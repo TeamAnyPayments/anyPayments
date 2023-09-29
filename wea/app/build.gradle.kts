@@ -1,4 +1,7 @@
+
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 
 plugins {
     id("com.android.application")
@@ -14,7 +17,7 @@ android {
         minSdk = 26
         targetSdk = 33
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -23,7 +26,29 @@ android {
 
         manifestPlaceholders["NAVER_CLIENT_ID"] =  "NAVER_CLIENT_ID"
         buildConfigField("String", "NAVER_CLIENT_ID", getApiKey("NAVER_CLIENT_ID"))
+
+        android.applicationVariants.all { variant ->
+            // 릴리즈 apk 파일을 생성할 때 파일명에 규칙을 주도록 하자.
+            if (variant.buildType.name == "release" || variant.buildType.name == "debug") {
+                variant.outputs.all { output ->
+                    val date = LocalDateTime.now()
+                    val formattedDate = SimpleDateFormat("yyyy_MM_dd").format(date)
+
+                    // apk 파일명에 규칙 주기
+                    if (output.outputFile != null && output.outputFile.name.endsWith(".aab")) {
+                        val appPrefix = "wea"
+                        val versionName = variant.versionName
+                        val buildType = variant.buildType.name
+                        val alignedFileName = "${appPrefix}_${buildType}_${formattedDate}-${versionName}.aab"
+                        output.outputFile.renameTo(File(alignedFileName))
+                    }
+                    true
+                }
+            }
+            variant.buildType.name == "release" || variant.buildType.name == "debug"
+        }
     }
+
 
     buildTypes {
 

@@ -57,6 +57,7 @@ import com.artist.wea.components.sidemenu.PocketMenu
 import com.artist.wea.components.sidemenu.ProfileItem
 import com.artist.wea.components.sidemenu.SettingMenu
 import com.artist.wea.components.sidemenu.TicketMenu
+import com.artist.wea.constants.DummyValues
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.data.UserProfile
@@ -67,6 +68,7 @@ import com.artist.wea.util.PreferenceUtil
 import com.artist.wea.util.ToastManager
 import org.json.JSONObject
 
+// 메인 페이지
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomePage(
@@ -300,14 +302,8 @@ fun homePage(
         ) {
             // 무한 스크롤 배너
             InfiniteLoopPager(
-                list = listOf(
-                    "https://thumbs.dreamstime.com/b/login-banner-template-ribbon-label-sign-177646419.jpg",
-                    "https://blog.kakaocdn.net/dn/HUGVj/btrJloRg451/mctRUnHYAgTKvocX1HxXiK/img.jpg",
-                    "https://as1.ftcdn.net/v2/jpg/04/86/66/48/1000_F_486664896_TxOuOR9WcKdvle5uG4kCZVnL80QyWp1t.jpg",
-                    "https://img.freepik.com/free-vector/best-sale-abstract-horizontal-banner-design_1017-31300.jpg",
-                    "https://png.pngtree.com/png-vector/20220530/ourmid/pngtree-photo-camera-horizontal-banner-png-image_4762429.png")
-            )
-
+                list = DummyValues().defImgList)
+            // 타일 메뉴의 이미지 사이트 변수
             val imgSize = 64.dp
             val height = 128.dp
             // 메인 메뉴, main Menu

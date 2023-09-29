@@ -34,6 +34,7 @@ import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.data.UserProfile
 
+// 회원 탈퇴 페이지
 @Composable
 fun UserQuitPage(
     navController: NavHostController

@@ -1,6 +1,5 @@
 package com.artist.wea.pages
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,7 +27,9 @@ import com.artist.wea.components.PageTopBar
 import com.artist.wea.components.PaymentItem
 import com.artist.wea.constants.DummyValues
 import com.artist.wea.constants.getDefTextStyle
+import com.artist.wea.util.ToastManager.Companion.shortToast
 
+// 결제수단 관리 페이지
 @Composable
 fun PaymentsManagePage(
     navController: NavHostController
@@ -56,7 +57,7 @@ fun PaymentsManagePage(
             titleTextStyle = getDefTextStyle(),
             rightMenuIcon = Icons.Rounded.AddCircle,
             rightMenuAction = {
-                Toast.makeText(context, "간편결제 등록...", Toast.LENGTH_SHORT).show()
+                shortToast(context, "간편결제 등록...");
             },
             screen = {
                 Spacer(modifier = Modifier.height(16.dp))

@@ -1,6 +1,5 @@
 package com.artist.wea.pages
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -42,7 +41,9 @@ import com.artist.wea.constants.DummyValues
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.getBtnColorByIdx
 import com.artist.wea.constants.getMenuItemColors
+import com.artist.wea.util.ToastManager.Companion.shortToast
 
+// 아티스트 멤버 관리 페이지
 @Composable
 fun MemberManagePage(
     navController: NavHostController
@@ -63,7 +64,7 @@ fun MemberManagePage(
             singleIcon = Icons.Filled.Add,
             rightMenuText = "저장",
             rightMenuAction = {
-                Toast.makeText(context, completeSaveText, Toast.LENGTH_SHORT).show()
+                shortToast(context = context, text = completeSaveText)
             }
         )
         // 멤버 관리

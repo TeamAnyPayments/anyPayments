@@ -31,12 +31,12 @@ import com.artist.wea.constants.get12TextStyle
 import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.constants.getDefTextStyle
 
+// 티켓 발급 성공 시 완료를 알려주기 위한 알람창 용 컴포저블
 @Composable
 fun CompleteTicketDialog(
-    visible: Boolean,
-    onDismissRequest: () -> Unit,
+    visible: Boolean, // Dialog 표시 여부
+    onDismissRequest: () -> Unit, // 알람창 닫기 함수 (visible의 상태를 변경할 함수가 주어져야 함)
 ){
-
     if (visible) {
         CustomAlertDialog(onDismissRequest = { onDismissRequest() }) {
             // CUSTOM VIEW...
@@ -50,6 +50,7 @@ fun CompleteTicketDialog(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                // 티켓 발급 성공 시 표현할 레이아웃들...!
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -68,7 +69,6 @@ fun CompleteTicketDialog(
                         tint = colorResource(id = R.color.mono600)
                     )
                 }
-
                 // 제목
                 Text(
                    text = stringResource(R.string.text_complete_create_ticket),
@@ -90,7 +90,6 @@ fun CompleteTicketDialog(
                     size = 144.dp,
                     isClip = false
                 )
-
                 Text(
                     text = stringResource(id = R.string.text_complete_ticket_greet),
                     style = get14TextStyle()
@@ -102,7 +101,6 @@ fun CompleteTicketDialog(
                         .wrapContentHeight()
                         .padding(start = 16.dp, end = 16.dp)
                 )
-
                 Text(
                     text = stringResource(R.string.text_tickt_guide1),
                     style = get12TextStyle()
@@ -115,7 +113,6 @@ fun CompleteTicketDialog(
                         .wrapContentHeight()
                         .padding(start = 16.dp, end = 16.dp)
                 )
-
                 Text(
                     text = stringResource(R.string.text_tickt_guide2),
                     style = get12TextStyle()
@@ -128,7 +125,6 @@ fun CompleteTicketDialog(
                         .wrapContentHeight()
                         .padding(start = 16.dp, end = 16.dp)
                 )
-
                 Spacer(modifier = Modifier.height(16.dp))
             }
         }

@@ -30,11 +30,11 @@ import com.artist.wea.components.PageTopBar
 import com.artist.wea.components.VerifyInputForm
 import com.artist.wea.constants.getDefTextStyle
 
+// 이메일 변경 페이지
 @Composable
 fun ChangeEmailPage(
     navController: NavHostController,
 ) {
-
     val scrollState = rememberScrollState()
 
     Column(modifier = Modifier

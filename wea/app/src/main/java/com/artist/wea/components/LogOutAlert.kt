@@ -26,9 +26,9 @@ import com.artist.wea.constants.getDefTextStyle
 // 로그아웃 시 경고창, LogOutAlert
 @Composable
 fun LogOutAlert(
-    visible: Boolean,
+    visible: Boolean, // 표시 여부
     onDismissRequest: () -> Unit,
-    logOutAction: () -> Unit
+    logOutAction: () -> Unit // 로그아웃 함수 실행을 위한 파라미터
 ) {
     if (visible) {
         CustomAlertDialog(onDismissRequest = { onDismissRequest() }) {
@@ -90,6 +90,7 @@ fun LogOutAlert(
                             .fillMaxHeight()
                             .weight(1f)
                             .background(colorResource(id = R.color.dark_orange300))
+                            // 여기서 로그아웃 메서드가 실행됨!
                             .clickable {
                                 logOutAction()
                             }

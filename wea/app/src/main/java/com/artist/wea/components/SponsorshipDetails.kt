@@ -22,6 +22,7 @@ import com.artist.wea.util.LDTParser
 import java.time.LocalDateTime
 import java.util.Locale
 
+// 후원 금액 총액을 표시할 컴포저블
 @Composable
 fun SponsorshipDetails(
     modifier: Modifier = Modifier

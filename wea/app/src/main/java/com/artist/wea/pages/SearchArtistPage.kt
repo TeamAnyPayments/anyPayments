@@ -23,6 +23,7 @@ import com.artist.wea.components.PageTopBar
 import com.artist.wea.components.SearchBar
 import com.artist.wea.constants.DummyValues
 
+// 아티스트 검색 페이지
 @Composable
 fun SearchArtistPage(
     navController: NavHostController

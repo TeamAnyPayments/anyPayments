@@ -1,7 +1,6 @@
 package com.artist.wea.pages
 
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -41,6 +40,7 @@ import com.artist.wea.util.ToastManager.Companion.shortToast
 import com.artist.wea.util.WeaRegex
 import java.util.regex.Pattern
 
+// 비밀번호 찾기 페이지
 @Composable
 fun FindPwdPage(
     navController: NavHostController,
@@ -134,11 +134,11 @@ fun FindPwdPage(
                         // 이메일 전송 결과
                         viewModel.sendCodeToEmailRes.observe(mOwner, Observer {
                             if(!it){
-                                Toast.makeText(context,sendCodeText, Toast.LENGTH_SHORT).show()
+                                shortToast(context, text = sendCodeText)
                             }
                         })
                     } else { // 이메일이 유효하지 않을 경우
-                        Toast.makeText(context, WeaRegex.emailGuideText, Toast.LENGTH_SHORT).show()
+                        shortToast(context, WeaRegex.emailGuideText)
                     }
                 },
                 isDisable = !codeVerifyResult.value
@@ -163,9 +163,9 @@ fun FindPwdPage(
                         viewModel.checkEmailByCodeRes.observe(mOwner, Observer {
                             if (!it) {
                                 codeVerifyResult.value = !it // 코드 인증 처리
-                                Toast.makeText(context, verifySuccess, Toast.LENGTH_SHORT).show()
+                                shortToast(context, verifySuccess);
                             }else {
-                                Toast.makeText(context, verifyRejected, Toast.LENGTH_SHORT).show()
+                                shortToast(context, verifyRejected);
                             }
                         })
                     })

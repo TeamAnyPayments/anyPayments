@@ -32,17 +32,18 @@ import com.artist.wea.constants.getCardDefColors
 import com.artist.wea.constants.getCardDefElevation
 import com.artist.wea.constants.getDefTextStyle
 
+// 홈 페이지의 사이드 메뉴에서 사용할 메뉴 컴포저블
 @Composable
 fun HomeMenuBox(
     modifier: Modifier = Modifier,
-    menuTitle:String = stringResource(id = R.string.empty_text),
-    tagName:String = stringResource(id = R.string.empty_text),
-    tagTextStyle:TextStyle = getDefTextStyle(colorResource(id = R.color.white)),
-    badgeColor: Color = colorResource(id = R.color.sky_blue300),
-    imgPainter:Painter = painterResource(id = R.drawable.ic_launcher_background),
-    imgSize: Dp = 48.dp,
-    imgPadVer:Dp = 8.dp,
-    imgPadHor:Dp = 8.dp
+    menuTitle:String = stringResource(id = R.string.empty_text), // 메뉴 이름
+    tagName:String = stringResource(id = R.string.empty_text), // 태그 명
+    tagTextStyle:TextStyle = getDefTextStyle(colorResource(id = R.color.white)), // 태그 글자 색상
+    badgeColor: Color = colorResource(id = R.color.sky_blue300), // 뱃지 색상
+    imgPainter:Painter = painterResource(id = R.drawable.ic_launcher_background), // TODO.. 기본 배경으로 바꾸기
+    imgSize: Dp = 48.dp, // 아이콘의 크기
+    imgPadVer:Dp = 8.dp, // 이미지의 패딩(수직)
+    imgPadHor:Dp = 8.dp //  이미지의 패딩(수평)
 ){
 
     Card(
@@ -107,8 +108,5 @@ fun HomeMenuBox(
                 )
             }
         }
-
     }
-
-
 }

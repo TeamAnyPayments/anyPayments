@@ -21,6 +21,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import com.artist.wea.R
 
+// 프로필 이미지를 보여줄 다이얼로그 컴포저블
 // CustomDilog를 통한 커스텀 모달창 다이얼로그
 @Composable
 fun ShowProfileDialog(

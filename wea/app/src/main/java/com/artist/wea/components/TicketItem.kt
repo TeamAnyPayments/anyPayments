@@ -25,12 +25,13 @@ import com.artist.wea.data.TicketInfo
 import com.artist.wea.util.LDTParser
 import java.util.Locale
 
+// 티켓 리스트 페이지에서 사용될 컨테이너형 컴포저블
 @Composable
 fun TicketItem(
     modifier: Modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight(),
-    ticketInfo: TicketInfo
+    ticketInfo: TicketInfo // 티켓 정보 데이터 클래스
 ){
     Column(
         modifier = modifier

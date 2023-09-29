@@ -19,12 +19,14 @@ import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.constants.getDefTextStyle
 
+// 아티스트일 경우 표시 할 메인페이지 우측 사이드 메뉴 컴포저블
 @Composable
 fun ArtistMenu(
-    navController: NavHostController,
+    navController: NavHostController, // 하위 컴포저블에 네비게이션 컨트롤러를 전달하기 위해 파라미터로 받음
     modifier: Modifier,
-    korTextStyle: TextStyle = getDefTextStyle(),
-    menuTextStyle:TextStyle = get14TextStyle()
+    // 사이드 메뉴의 제목과 실제 메뉴의 텍스트 속성을 편집하기 위한 파라미터들
+    menuTextStyle:TextStyle = get14TextStyle(), // 하위 메뉴들의 텍스트 속성
+    korTextStyle: TextStyle = getDefTextStyle() // 메뉴 제목의 한글 텍스트 속성
 ){
     Column(
         modifier = modifier,
@@ -37,6 +39,7 @@ fun ArtistMenu(
             .wrapContentHeight()
             .padding(start = 4.dp)
 
+        // 사이드 메뉴의 헤더
         SideMenuHeader(
             korMenuText = "작업실",
             korTextStyle = korTextStyle,
@@ -53,7 +56,7 @@ fun ArtistMenu(
                     navController.navigate(PageRoutes.ArtistProfileList.route)
                 }
         )
-        //
+        // 아티스트가 공연 관리할 때 메뉴
         Text(
             text = "공연 관리",
             style = menuTextStyle,
@@ -62,7 +65,7 @@ fun ArtistMenu(
                     // navController.navigate(PageRoutes.Home.route)
                 }
         )
-        // 공연 수익
+        // 공연 수익 메뉴, TODO 토스 결제 기능 완성 시, 아티스트 별 총 결제액을 산정해야함!
         Text(
             text = "공연 수익",
             style = menuTextStyle,

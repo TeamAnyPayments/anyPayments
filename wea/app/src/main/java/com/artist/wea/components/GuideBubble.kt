@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.artist.wea.R
 import com.artist.wea.constants.get12TextStyle
 
+// 공연 정보에서 하단에 버블 모양으로 가이드 제공랄 컴포저블
 @Composable
 fun GuideBubble(
     guideText:String = stringResource(R.string.text_concert_notify),

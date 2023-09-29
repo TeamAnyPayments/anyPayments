@@ -26,6 +26,7 @@ import com.artist.wea.components.Ticket
 import com.artist.wea.components.sidemenu.GoogleAdItem
 import com.artist.wea.constants.DummyValues
 
+// 티켓 정보를 볼 페이지
 @Composable
 fun TicketPage(
     navController: NavHostController,

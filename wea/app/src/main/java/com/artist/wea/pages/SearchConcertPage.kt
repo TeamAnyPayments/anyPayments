@@ -32,6 +32,7 @@ import com.artist.wea.components.PageTopBar
 import com.artist.wea.components.data.TabItem
 import kotlinx.coroutines.launch
 
+// 콘서트 검색 페이지
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SearchConcertPage(

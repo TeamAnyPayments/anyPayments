@@ -40,7 +40,7 @@ fun ArtistQuitPage(
     navController: NavHostController
 ) {
 
-    // TODO prefs를 통해서 아티스트 데이터를 추출해서 렌더링 하도록 설계
+    // TODO... prefs를 통해서 아티스트 데이터를 추출해서 렌더링 하도록 설계
     val artistInfo = ArtistInfo(
         profileImgURL = "https://image.kmib.co.kr/online_image/2014/1015/201410152053_61170008765071_1.jpg",
         bgImgURL = "https://img.hankyung.com/photo/202205/01.29843403.1.jpg",

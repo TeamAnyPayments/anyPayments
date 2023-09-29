@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -52,9 +51,10 @@ import com.artist.wea.repository.RegisterRepository
 import com.artist.wea.util.JSONParser
 import com.artist.wea.util.PhotoSelector
 import com.artist.wea.util.PreferenceUtil
+import com.artist.wea.util.ToastManager.Companion.shortToast
 import org.json.JSONObject
 
-
+// 사용자 프로필 페이지
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun UserProfilePage(
@@ -82,7 +82,8 @@ fun UserProfilePage(
                         fileName = "user_profile"
                     )
                 } ?: run {
-                    Toast.makeText(context, "이미지를 불러오던 중 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                    shortToast(context,
+                        text = "이미지를 불러오던 중 오류가 발생했습니다.")
                 }
             } else if (result.resultCode != Activity.RESULT_CANCELED) {
                 // ??
@@ -111,7 +112,7 @@ fun UserProfilePage(
 
             }else {
                 Log.d("PROFILE_PAGE:::", "토큰 만료")
-                Toast.makeText(context, "회원 정보가 만료되었습니다.", Toast.LENGTH_SHORT).show()
+                shortToast(context, text = "회원 정보가 만료되었습니다.")
                 navController.navigate(PageRoutes.Login.route){
                     popUpTo(0)
                 }
@@ -300,8 +301,7 @@ fun userLogOut(
             if(!it){ // 서버와의 로그아웃 시도가 정상적으로 이루어졌을 경우, 최종 로그아웃 처리
                 Retrofit.token.value = "" // 초기화
                 logOutVisibleState.value = false;
-                Toast.makeText(context,
-                    context.getString(R.string.text_logout_ok), Toast.LENGTH_SHORT).show()
+                shortToast(context, text = context.getString(R.string.text_logout_ok)) // 로그아웃 toast 알림
                 navController.navigate(PageRoutes.Login.route){
                     popUpTo(0)
                 }

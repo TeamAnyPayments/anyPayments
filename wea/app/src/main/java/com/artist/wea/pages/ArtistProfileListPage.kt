@@ -15,9 +15,9 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
+import com.artist.wea.components.ArtistProfileItem
 import com.artist.wea.components.Badge
 import com.artist.wea.components.PageTopBar
-import com.artist.wea.components.ProfileItem
 import com.artist.wea.constants.DummyValues
 import com.artist.wea.constants.PageRoutes
 
@@ -50,7 +50,7 @@ fun ArtistProfileListPage(
         ) {
             memberList.forEachIndexed{
                     idx, item ->
-                ProfileItem(
+                ArtistProfileItem(
                     navController = navController,
                     content = item,
                     destination = {

@@ -29,20 +29,20 @@ import androidx.compose.ui.unit.dp
 import com.artist.wea.R
 import com.artist.wea.constants.getMenuItemColors
 
+// 검색 바 컴포저블
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()
         .padding(16.dp),
-    searchOptions:Array<String> = arrayOf()
+    searchOptions:Array<String> = arrayOf() // 검색 옵션
 ) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Row(
-            // modifier = modifier,
             verticalAlignment = Alignment.CenterVertically,
         ){
             InputForm(
@@ -65,7 +65,6 @@ fun SearchBar(
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.End,
-                // verticalArrangement = Arrangement.
             ) {
                 val sortOpt = remember { mutableStateOf(searchOptions[0]) }
                 val isExpended = remember { mutableStateOf(false) }
@@ -83,6 +82,7 @@ fun SearchBar(
                         contentDescription = "drop down",
                         modifier = Modifier.size(16.dp)
                     )
+                    // 컴포저블의 기본 드롭다운 메뉴
                     DropdownMenu(
                         modifier = Modifier
                             .wrapContentSize()

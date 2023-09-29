@@ -20,12 +20,13 @@ import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.data.UserProfile
 
+// 우측 사이드 메뉴에서 사용자 프로필을 표시하기 위한 메뉴!
 @Composable
 fun ProfileItem(
-    navController: NavHostController,
+    navController: NavHostController, // 하위 컴포저블에 네비게이션 컨트롤러를 전달하기 위해 파라미터로 받음
     modifier: Modifier,
-    userProfile: UserProfile,
-    textStyle:TextStyle = get14TextStyle()
+    userProfile: UserProfile, // 사용자 프로필 데이터 클래스르 기반으로 데이터 렌더링함!
+    textStyle:TextStyle = get14TextStyle() // 사용자 프로필 정보의 텍스트 스타일
 ){
 
     Row(
@@ -36,25 +37,27 @@ fun ProfileItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
 
-
+        // 사용자 프로필 이미지
+        // 아이콘, 프로필 등으로 사용하기에 최적화시킨 WeaIconImage 컴포저블 재활용
         WeaIconImage(
-            imgUrl = userProfile.profileURL,
-            size = 56.dp,
-            isClip = true
+            imgUrl = userProfile.profileURL, // 이미지 주소
+            size = 56.dp, // 사이즈
+            isClip = true // 이미지에 라운딩을 줄 지 여부
         )
-
-
-        // user text information
+        
+        // 사용자 정보 표시 부분
         Column(
             Modifier
                 .fillMaxWidth()
                 .wrapContentHeight(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ){
+            // 유저 이름
             Text(
                 text = userProfile.name+"님",
                 style = textStyle
             )
+            // 유저 환영 인사글
             Text(
                 text = stringResource(R.string.text_user_greeting),
                 style = textStyle

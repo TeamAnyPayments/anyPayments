@@ -28,6 +28,7 @@ import com.artist.wea.components.SendInviteComponent
 import com.artist.wea.components.data.TabItem
 import kotlinx.coroutines.launch
 
+// 아티스트 멤버 추가 페이지
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MemberAddPage(

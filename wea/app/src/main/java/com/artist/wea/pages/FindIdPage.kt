@@ -1,6 +1,5 @@
 package com.artist.wea.pages
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -34,9 +33,11 @@ import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.data.FindIdData
 import com.artist.wea.model.RegisterViewModel
 import com.artist.wea.repository.RegisterRepository
+import com.artist.wea.util.ToastManager.Companion.shortToast
 import com.artist.wea.util.WeaRegex
 import java.util.regex.Pattern
 
+// 아이디 찾기 페이지
 @Composable
 fun FindIdPage(
     navController: NavHostController,
@@ -115,11 +116,12 @@ fun FindIdPage(
                     viewModel.findUserId(findIdData)
                     viewModel.findUserIdRes.observe(mOwner, Observer {
                         if(!it){
-                           Toast.makeText(context,
-                               sendEmailText, Toast.LENGTH_SHORT).show()
+                            // 이메일 전송 성공 Toast
+                            shortToast(context, sendEmailText)
                             navController.popBackStack()
                         }else {
-                            Toast.makeText(context, errorEmailText, Toast.LENGTH_SHORT).show()
+                            // 이메일 전송 실패 Toast
+                            shortToast(context, errorEmailText)
                         }
                     })
                 }

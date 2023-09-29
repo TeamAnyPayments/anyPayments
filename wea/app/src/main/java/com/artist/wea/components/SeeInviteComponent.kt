@@ -23,10 +23,14 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
 import com.artist.wea.constants.DummyValues
+import com.artist.wea.data.ArtistInfo
 
+// 멤버 초대 컴포저블
 @Composable
-fun SeeInviteComponent(navController: NavHostController,
-                       modifier: Modifier = Modifier
+fun SeeInviteComponent(
+    navController: NavHostController,
+    modifier: Modifier = Modifier,
+    memberList:List<ArtistInfo> = DummyValues().crewList // 아티스트 리스트
 ) {
     Column(
         modifier = modifier.fillMaxSize(),
@@ -34,7 +38,6 @@ fun SeeInviteComponent(navController: NavHostController,
         verticalArrangement = Arrangement.Top
     ) {
 
-        val memberList = DummyValues().crewList
         val context = LocalContext.current
         // list..
         val scrollState = rememberScrollState()

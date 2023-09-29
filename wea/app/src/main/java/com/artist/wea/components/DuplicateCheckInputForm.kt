@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,12 +16,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,13 +36,13 @@ fun DuplicateCheckInputForm( // 중복체크, 코드전송에 쓰일 양식용 �
     modifier: Modifier = Modifier, // modifier
     isError:Boolean = false, // 에러인가?
     errorText:String = stringResource(id = R.string.empty_text), // 가이드 텍스트
-    isDisable:Boolean = true,
-    buttonAction: () -> Unit = {},
-    isSuccess:Boolean = false,
-    successText:String = stringResource(id = R.string.empty_text),
-    failText:String = stringResource(id = R.string.empty_text),
+    isDisable:Boolean = true, // 비활성화 여부
+    buttonAction: () -> Unit = {}, // 버튼 누를 때 동작할 액션
+    isSuccess:Boolean = false, // 중복 체크 확인 여부
+    successText:String = stringResource(id = R.string.empty_text), // 성공시 가이드 텍스트
+    failText:String = stringResource(id = R.string.empty_text), // 실패시 가이드 텍스트
     btnFlag:Int = 0,
-    onTextChange: () -> Unit = {}
+    onTextChange: () -> Unit = {} // 입력값 모니터링 메서드
 ):String{
 
     val context = LocalContext.current;

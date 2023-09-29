@@ -25,11 +25,11 @@ import com.artist.wea.components.PageTopBar
 import com.artist.wea.constants.DummyValues
 import com.artist.wea.constants.get14TextStyle
 
+// 아티스트 찜목록 페이지
 @Composable
 fun MyArtistPage(
     navController: NavHostController
 ){
-
     Column(
         modifier = Modifier
             .fillMaxSize()
