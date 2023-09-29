@@ -23,10 +23,15 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
 import com.artist.wea.constants.DummyValues
+import com.artist.wea.data.ArtistInfo
 
+// 초대 보낸 사용자의 정보 컴포저블
 @Composable
-fun SendInviteComponent(navController: NavHostController,
-                        modifier: Modifier = Modifier
+fun SendInviteComponent(
+    navController: NavHostController,
+    modifier: Modifier = Modifier,
+    memberList:List<ArtistInfo> = DummyValues().crewList
+
 ) {
     Column(
         modifier = modifier.fillMaxSize(),
@@ -34,7 +39,6 @@ fun SendInviteComponent(navController: NavHostController,
         verticalArrangement = Arrangement.Top
     ) {
         SearchBar()
-        val memberList = DummyValues().crewList
 
         val context = LocalContext.current
         // list..

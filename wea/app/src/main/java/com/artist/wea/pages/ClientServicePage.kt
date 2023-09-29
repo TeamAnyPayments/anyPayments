@@ -35,6 +35,7 @@ import com.artist.wea.model.RegisterViewModel
 import com.artist.wea.repository.RegisterRepository
 import com.artist.wea.util.ToastManager.Companion.shortToast
 
+// 고객 문의사항 접수 페이지 (CS)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ClientServicePage(
@@ -76,8 +77,6 @@ fun ClientServicePage(
                         shortToast(context, sendCompleteText)
                         Log.d("FIND_PWD_RES:::", "${it.toString()}")
                     })
-
-                    // navController.popBackStack()
                 }
             }
         )
@@ -115,9 +114,5 @@ fun ClientServicePage(
                     .copy(colorResource(id = R.color.mono700))
             )
         }
-
-
-
     }
-
 }

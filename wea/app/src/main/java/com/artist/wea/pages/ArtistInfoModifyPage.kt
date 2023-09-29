@@ -50,7 +50,9 @@ import com.artist.wea.constants.GlobalState.Companion.currentArtistInfo
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.util.PhotoSelector
+import com.artist.wea.util.ToastManager.Companion.shortToast
 
+// 아티스트 정보 수정 페이지
 @Composable
 fun ArtistInfoModifyPage(
     navController: NavHostController
@@ -85,20 +87,20 @@ fun ArtistInfoModifyPage(
                     )
 
                 } ?: run {
-                    Toast.makeText(context, errorText, Toast.LENGTH_SHORT).show()
+                    shortToast(context, text = errorText);
                 }
             } else if (result.resultCode != Activity.RESULT_CANCELED) {
                 // ??
             }
         }
 
-    val mArtistName = remember { mutableStateOf(artistInfo.artistName) }
-    val mComment = remember { mutableStateOf(artistInfo.comment) }
-    val mMainIntroduce = remember { mutableStateOf(artistInfo.mainIntroduce) }
+    val mArtistName = remember { mutableStateOf(artistInfo.artistName) } // 변경할 아티스트 명
+    val mComment = remember { mutableStateOf(artistInfo.comment) } // 아티스트 한줄 소개
+    val mMainIntroduce = remember { mutableStateOf(artistInfo.mainIntroduce) } // 아티스트 소개
 
     // String values
-    val notifyChooseBgImg = stringResource(id = R.string.text_notify_choose_bg_img)
-    val notifyChooseProfImg = stringResource(R.string.text_notify_choose_profile_img)
+    val notifyChooseBgText = stringResource(id = R.string.text_notify_choose_bg_img)
+    val notifyChooseProfText = stringResource(R.string.text_notify_choose_profile_img)
 
     val scrollState = rememberScrollState()
     val height = 164.dp;
@@ -162,7 +164,7 @@ fun ArtistInfoModifyPage(
                         Toast
                             .makeText(
                                 context,
-                                notifyChooseBgImg,
+                                notifyChooseBgText,
                                 Toast.LENGTH_SHORT
                             )
                             .show()
@@ -217,7 +219,7 @@ fun ArtistInfoModifyPage(
                         .align(Alignment.BottomEnd)
                         .clickable {
                             Toast
-                                .makeText(context, notifyChooseProfImg, Toast.LENGTH_SHORT)
+                                .makeText(context, notifyChooseProfText, Toast.LENGTH_SHORT)
                                 .show()
                             // 이미지 가져오기
                             currentIdx.value = 1 // index 변경

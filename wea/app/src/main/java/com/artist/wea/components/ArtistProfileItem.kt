@@ -25,18 +25,19 @@ import com.artist.wea.constants.get12TextStyle
 import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.data.ArtistInfo
 
+// 아티스트 프로필 정보
 @Composable
-fun ProfileItem(
+fun ArtistProfileItem(
     navController: NavHostController,
-    content: ArtistInfo = ArtistInfo(),
+    content: ArtistInfo = ArtistInfo(), // 아티스트 정보를 담은 데이터 클래스
     modifier: Modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()
         .padding(8.dp, 4.dp),
-    isActive:Boolean = true,
-    destination:()->Unit = {navController.navigate(PageRoutes.MemberManage.route)},
-    rightComposable: @Composable () -> Unit,
-    memberCnt:Int = 1
+    isActive:Boolean = true, // 네비게이션 활성화 여부
+    destination:()->Unit = {navController.navigate(PageRoutes.MemberManage.route)}, // 네비게이션 함수
+    rightComposable: @Composable () -> Unit, // 우측에 표시할 컴포저블
+    memberCnt:Int = 1 // 멤버 수
 ) {
     Box(
         modifier = modifier.clickable {

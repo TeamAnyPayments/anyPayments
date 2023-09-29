@@ -17,6 +17,7 @@ import com.artist.wea.R
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get14TextStyle
 
+// 아이디찾기, 회원가입, 비밀번호 찾기 등에 사용할 메뉴 컴포저블
 @Composable
 fun UserInfoManageMenu(
     navController: NavController,

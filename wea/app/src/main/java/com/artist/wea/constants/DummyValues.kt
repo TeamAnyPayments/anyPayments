@@ -526,4 +526,13 @@ class DummyValues {
         )
     )
 
+    // 기본 무한 스크롤 배너 이미지 리스트
+    val defImgList = listOf(
+        "https://thumbs.dreamstime.com/b/login-banner-template-ribbon-label-sign-177646419.jpg",
+        "https://blog.kakaocdn.net/dn/HUGVj/btrJloRg451/mctRUnHYAgTKvocX1HxXiK/img.jpg",
+        "https://as1.ftcdn.net/v2/jpg/04/86/66/48/1000_F_486664896_TxOuOR9WcKdvle5uG4kCZVnL80QyWp1t.jpg",
+        "https://img.freepik.com/free-vector/best-sale-abstract-horizontal-banner-design_1017-31300.jpg",
+        "https://png.pngtree.com/png-vector/20220530/ourmid/pngtree-photo-camera-horizontal-banner-png-image_4762429.png"
+    )
+
 }

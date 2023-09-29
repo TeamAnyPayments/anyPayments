@@ -1,7 +1,6 @@
 package com.artist.wea.pages
 
 // import com.artist.wea.util.WeaTimer
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -41,13 +40,14 @@ import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.data.JoinUser
 import com.artist.wea.model.RegisterViewModel
 import com.artist.wea.repository.RegisterRepository
+import com.artist.wea.util.ToastManager.Companion.shortToast
 import com.artist.wea.util.WeaRegex
 import com.artist.wea.util.WeaRegex.Companion.parseToTimeString
 import kotlinx.coroutines.delay
 import java.util.regex.Pattern
 import kotlin.time.Duration.Companion.seconds
 
-
+// 회원 가입 페이지
 @Composable
 fun UserRegisterPage(
     navController: NavHostController,
@@ -180,11 +180,11 @@ fun UserRegisterPage(
                             // 이메일 전송 결과
                             viewModel.sendCodeToEmailRes.observe(mOwner, Observer {
                                 if(!it){
-                                    Toast.makeText(context,sendCodeText, Toast.LENGTH_SHORT).show()
+                                    shortToast(context, text = sendCodeText)
                                 }
                             })
                         } else { // 이메일이 유효하지 않을 경우
-                            Toast.makeText(context, WeaRegex.emailGuideText, Toast.LENGTH_SHORT).show()
+                            shortToast(context, WeaRegex.emailGuideText)
                         }
                     },
                     isDisable = !codeVerifyResult.value
@@ -209,9 +209,9 @@ fun UserRegisterPage(
                             viewModel.checkEmailByCodeRes.observe(mOwner, Observer {
                                 if (!it) {
                                     codeVerifyResult.value = !it // 코드 인증 처리
-                                    Toast.makeText(context, completeText, Toast.LENGTH_SHORT).show()
+                                    shortToast(context, text = completeText);
                                 }else {
-                                    Toast.makeText(context, rejectText, Toast.LENGTH_SHORT).show()
+                                    shortToast(context, rejectText);
                                 }
                             })
                         },
@@ -271,14 +271,14 @@ fun UserRegisterPage(
                         viewModel.joinUser(jUser)
                         viewModel.joinUserRes.observe(mOwner, Observer {
                             if(!it){
-                                Toast.makeText(context, WeaRegex.joinSuccessGuideText, Toast.LENGTH_SHORT).show()
+                                shortToast(context, WeaRegex.joinSuccessGuideText)
                                 navController.navigate(PageRoutes.Login.route)
                             }else {
-                                Toast.makeText(context, WeaRegex.joinFailGuideText, Toast.LENGTH_SHORT).show()
+                                shortToast(context, WeaRegex.joinFailGuideText)
                             }
                         })
                     }else {
-                        Toast.makeText(context, WeaRegex.joinRejectGuideText, Toast.LENGTH_SHORT).show()
+                        shortToast(context, WeaRegex.joinRejectGuideText)
                     }
                 }
             )

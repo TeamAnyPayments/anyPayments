@@ -45,6 +45,7 @@ import com.artist.wea.constants.DummyValues
 import com.artist.wea.constants.get12TextStyle
 import com.artist.wea.constants.getDefTextStyle
 
+// 콘서트 정보 페이지
 @Composable
 fun ConcertInfoPage(
     navController: NavHostController,

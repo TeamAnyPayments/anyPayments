@@ -16,11 +16,12 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 
+// 구글 광고를 다룰 컨테이너 용 컴포저블
 @Composable
 fun GoogleAdItem(
     modifier: Modifier = Modifier,
     isMaxHeight:Boolean = false,
-    height: Dp = 50.dp // 32, 50, 90
+    height: Dp = 50.dp // 광고 아이템의 height 사이즈는 3종류 (32, 50, 90 ) (dp)
 ){
 
     val boxModifier =
@@ -28,13 +29,13 @@ fun GoogleAdItem(
         .height(height)
         else modifier.fillMaxHeight()
 
-    // 구글 광고 올 부분 todo...
+    // 구글 광고 올 부분 TODO...
     Box(
         modifier =  boxModifier
             .fillMaxWidth()
-            //.background(color = colorResource(id = R.color.mono900))
     ) {
 
+        // 구글 광고 표시하는 부분
         val adId = stringResource(id = R.string.sample_banner_id)
         val adRequest = AdRequest.Builder().build()
         AndroidView(
@@ -42,9 +43,9 @@ fun GoogleAdItem(
                 .fillMaxSize(),
             factory = {
                 context -> AdView(context).apply {
-                    setAdSize(AdSize.BANNER)
-                    adUnitId = adId
-                    loadAd(adRequest)
+                    setAdSize(AdSize.BANNER) // 광고 사이즈의 옵션
+                    adUnitId = adId // 광고 아이디
+                    loadAd(adRequest) // 광고 주세요~ 요청 보내는 부분
                 }
             },
             update = {

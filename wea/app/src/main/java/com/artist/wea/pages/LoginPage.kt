@@ -39,6 +39,7 @@ import com.artist.wea.repository.RegisterRepository
 import com.artist.wea.util.PreferenceUtil
 import com.artist.wea.util.ToastManager.Companion.shortToast
 
+// 로그인 페이지
 @Composable
 fun LoginPage(
     navController: NavController) {

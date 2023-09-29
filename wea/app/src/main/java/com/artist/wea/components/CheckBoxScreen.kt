@@ -34,9 +34,7 @@ fun CheckBoxScreen(
     // 각 항목별 레이아웃
     val (checked1, setChecked1) = remember { mutableStateOf(false) }
     val (checked2, setChecked2) = remember { mutableStateOf(false) }
-    // var (checked3, setChecked3) = mutableStateOf<Boolean>(false);
     val allChecked = checked1 && checked2 // 전체 동의 여부
-            //&& checked3;
 
     Column(verticalArrangement = Arrangement.Center) {
         CheckBoxRow(
@@ -46,11 +44,9 @@ fun CheckBoxScreen(
                 if (allChecked) {
                     setChecked1(false)
                     setChecked2(false)
-                    // setChecked3(false)
                 } else {
                     setChecked1(true)
                     setChecked2(true)
-                    // setChecked3(true)
                 }
             },
         )

@@ -23,6 +23,7 @@ import com.artist.wea.constants.DummyValues
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get12TextStyle
 
+// 티켓 정보들 리스트로 볼 페이지
 @Composable
 fun TicketListPage(
     navController: NavHostController

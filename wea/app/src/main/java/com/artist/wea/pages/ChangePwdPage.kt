@@ -28,6 +28,7 @@ import com.artist.wea.components.PageTopBar
 import com.artist.wea.components.TitleInputForm
 import com.artist.wea.constants.getDefTextStyle
 
+// 비밀번호 변경 페이지
 @Composable
 fun ChangePwdPage(
     navController: NavHostController,

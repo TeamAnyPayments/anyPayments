@@ -28,14 +28,15 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+// 홈페이지 등에서 사용할 무한 스크롤 배너 컴포저블
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun InfiniteLoopPager(
     modifier: Modifier = Modifier,
-    list: List<String> = listOf(),
-    height:Dp = 144.dp,
-    posIdx:Int = 0,
-    delay:Long = 2500L
+    list: List<String> = listOf(), // 표시할 이미지 리스트 URL 목록
+    height:Dp = 144.dp, // height
+    posIdx:Int = 0, // 인디케이터 포지션 타입
+    delay:Long = 3300L // 반복 시간
 ) {
     val pagerState = rememberPagerState()
 
@@ -104,15 +105,16 @@ fun InfiniteLoopPager(
     }
 }
 
+// 이미지의 인디케이터 컴포저블 (원형!)
 @Composable
 fun PagerIndicator(
     modifier: Modifier = Modifier,
     count: Int,
-    dotSize: Dp,
-    currentPage: Int,
-    selectedColor: Color,
-    unSelectedColor: Color,
-    posIdx:Int = 0,
+    dotSize: Dp, // 점 크기
+    currentPage: Int, // 현재 페이지 인덱스
+    selectedColor: Color, // 현재 페이지의 인디케이터 색상
+    unSelectedColor: Color, // 다른 페이지의 인디케이터 색상
+    posIdx:Int = 0, // 인디케이터 포지션 타입
 ) {
     val pos:Arrangement.Horizontal = when (posIdx) {
         1 -> Arrangement.Start

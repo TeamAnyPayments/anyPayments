@@ -27,13 +27,13 @@ import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.constants.getToggleButtonColors
 
-
+// 환경 설정 아이템
 @Composable
 fun SettingItem(
-    optionName:String = stringResource(id = R.string.empty_text),
-    description:String = stringResource(id = R.string.empty_text),
+    optionName:String = stringResource(id = R.string.empty_text), // 설정 명
+    description:String = stringResource(id = R.string.empty_text), // 설명
     modifier: Modifier = Modifier,
-    versionText:String = stringResource(id = R.string.empty_text),
+    versionText:String = stringResource(id = R.string.empty_text), // 버전 정보
 ):Boolean{
     var checked = remember { mutableStateOf(true) } // toggle btn flag
     Row(

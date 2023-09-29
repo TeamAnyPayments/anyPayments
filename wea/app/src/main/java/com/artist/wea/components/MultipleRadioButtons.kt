@@ -23,6 +23,8 @@ import com.artist.wea.R
 import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.constants.getRadioButtonColors
 
+// 탈퇴 접수 시 라디오 버튼으로 사유를 선택할 라디오 버튼 컴포저블
+// 리턴 값으로 String을 줌
 @Composable
 fun MultipleRadioButtons(
     modifier: Modifier = Modifier
@@ -33,7 +35,6 @@ fun MultipleRadioButtons(
     val selectedValue = remember { mutableStateOf("") }
     val isSelectedItem: (String) -> Boolean = { selectedValue.value == it }
     val onChangeState: (String) -> Unit = { selectedValue.value = it }
-    val currentIndex = remember { mutableStateOf(-1) }
 
     Column(
         modifier = modifier,
@@ -48,7 +49,6 @@ fun MultipleRadioButtons(
                     fontWeight = FontWeight.Bold
                 )
         )
-        // Text(text = "Selected value: ${selectedValue.value.ifEmpty { "NONE" }}")
         selectOptions.forEach { item ->
             Row(
                 modifier = Modifier

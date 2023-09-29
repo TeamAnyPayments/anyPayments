@@ -20,11 +20,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.artist.wea.BuildConfig
 import com.artist.wea.R
 import com.artist.wea.components.PageTopBar
 import com.artist.wea.components.SettingItem
 import com.artist.wea.constants.getDefTextStyle
 
+// 환경 설정 페이지
 @Composable
 fun SettingPage(
     navController: NavHostController,
@@ -67,7 +69,7 @@ fun SettingPage(
             SettingItem(
                 optionName = stringResource(R.string.text_title_opt_version),
                 description = stringResource(R.string.text_hint_opt_version),
-                versionText = "1.0.0" // TODO... 앱 내 버전으로..!
+                versionText = BuildConfig.VERSION_NAME.toString() // 현재 앱 버전
             )
             // 이용약관
             Row(modifier = Modifier

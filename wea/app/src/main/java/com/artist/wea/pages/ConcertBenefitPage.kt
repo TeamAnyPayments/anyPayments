@@ -28,10 +28,12 @@ import com.artist.wea.constants.get12TextStyle
 import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.constants.getDefTextStyle
 
+// 공연 수익 페이지
 @Composable
 fun ConcertBenefitPage(
     navController: NavHostController
 ){
+    // TODO... 결제 기능 완성 시 토스 api를 사용하여 결제 금액 가져오기
     val artistName = "무슨무슨 아티스트"
     val benefitCount = 1950000
 

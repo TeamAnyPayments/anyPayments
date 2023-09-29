@@ -22,6 +22,7 @@ import com.artist.wea.R
 import com.artist.wea.constants.get12TextStyle
 import com.artist.wea.constants.get14TextStyle
 
+// CS 메뉴 에서 상단 배너 부분을 표시할 컴포저블
 @Composable
 fun ClientGuideBanner(
     modifier: Modifier = Modifier
@@ -30,8 +31,7 @@ fun ClientGuideBanner(
         .fillMaxWidth()
         .wrapContentHeight()
         .background(color = colorResource(id = R.color.mono600))
-        .padding(16.dp)
-        ,
+        .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ){
@@ -49,10 +49,7 @@ fun ClientGuideBanner(
                 .wrapContentHeight()
                 .weight(6f)
         ) {
-            /*
-            서비스를 사용하시면서 불편한 점이 있으셨나요?
-             */
-            // 페이지 명
+            // 안내 사항들...
             Text(
                 text = stringResource(R.string.text_cs_guide_header),
                 style = get14TextStyle()

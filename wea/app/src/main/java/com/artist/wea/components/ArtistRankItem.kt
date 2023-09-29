@@ -28,11 +28,12 @@ import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.constants.getCardDefColors
 import com.artist.wea.constants.getCardDefElevation
 
+// 아티스트 순위 정보 조회 시 화면 렌더링에 사용하는 컨테이너 성 컴포저블
 @Composable
 fun ArtistRankItem(
-    navController: NavHostController,
+    navController: NavHostController, // 하위 컴포저블에 네비게이션 컨트롤러를 전달하기 위해 파라미터로 받음
     modifier: Modifier = Modifier,
-    artistRankData: ArtistRankData =
+    artistRankData: ArtistRankData = // 아티스트 정보를 담은 담은 데이터 클래스
         ArtistRankData(
             no = -1,
             artistName = "",
@@ -40,6 +41,7 @@ fun ArtistRankItem(
             artistImgURL = ""
         )
 ){
+    // Card 컴포저블 사용하여 UI를 구성
     Card(
         modifier= modifier.clickable {
             navController.navigate(PageRoutes.ArtistInfo.route)
@@ -66,6 +68,7 @@ fun ArtistRankItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ){
+                // 아이콘
                 WeaIconImage(
                     imgUrl = artistRankData.artistImgURL,
                     size = 64.dp,
@@ -78,6 +81,7 @@ fun ArtistRankItem(
                         .padding(top = 16.dp, bottom = 16.dp),
                     verticalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
+                    // 아티스트 명
                     Text(
                         text = artistRankData.artistName,
                         style = get14TextStyle()
@@ -95,7 +99,7 @@ fun ArtistRankItem(
                             modifier = Modifier.size(24.dp),
                             tint = colorResource(id = R.color.red400)
                         )
-
+                        // 아티스트 활동 주소!
                         Text(
                             text = artistRankData.artistAddress,
                             style = get14TextStyle()
@@ -103,6 +107,7 @@ fun ArtistRankItem(
                     }
                 }
             }
+            // 아티스트 순위!
             Text(
                 text = artistRankData.no.toString(),
                 style = get14TextStyle(),
@@ -111,6 +116,5 @@ fun ArtistRankItem(
                     .weight(1f)
             )
         }
-
     }
 }

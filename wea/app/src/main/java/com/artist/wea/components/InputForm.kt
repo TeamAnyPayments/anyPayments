@@ -38,10 +38,10 @@ fun InputForm(
             .wrapContentHeight(),
     isError:Boolean = false,
     errorText:String = stringResource(id = R.string.empty_text), // 가이드 텍스트
-    isPassword:Boolean = false,
-    isDisable:Boolean = true,
-    isNumber:Boolean = false,
-    onTextChange: () -> Unit = {}
+    isPassword:Boolean = false, // 입력값이 패스워드로 표시해야할 지 여부
+    isDisable:Boolean = true, // 활성화 옵션
+    isNumber:Boolean = false, // 입력 값이 숫자인지 여부
+    onTextChange: () -> Unit = {} // 입력 값의 모니터링 함수
 ):String{
 
     var text by remember { mutableStateOf(defaultText) }
@@ -55,8 +55,8 @@ fun InputForm(
 //            imeAction = ImeAction.Done
         )
     }
-    ///
-    
+
+
     Column(
         modifier = modifier
     ){

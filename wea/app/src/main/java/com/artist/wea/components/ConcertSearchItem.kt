@@ -32,17 +32,18 @@ import com.artist.wea.constants.get12TextStyle
 import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.data.ConcertListInfo
 
+// 공연 정보를 표시하는데 사용할 컴포저블
 @Composable
 fun ConcertSearchItem(
     navController: NavHostController,
-    content: ConcertListInfo = ConcertListInfo(),
+    content: ConcertListInfo = ConcertListInfo(), // 콘서트 정보를 담은 데이터 클래스
     modifier: Modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()
         .clip(shape = RoundedCornerShape(4.dp))
         .background(color = colorResource(id = R.color.mono50))
         .padding(8.dp, 4.dp),
-    isActive:Boolean = true,
+    isActive:Boolean = true, // 페이지 이동 여부를 결정할 토클 옵션
 ){
     val context = LocalContext.current
 
@@ -51,6 +52,7 @@ fun ConcertSearchItem(
             if(isActive){
                 navController.navigate(PageRoutes.ConcertInfo.route+"/${content.concertId}")
             }else {
+                // 페이지 이동 안될 경우 toast 메세지 표현
                 Toast.makeText(context, "공연 정보를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show()
                 Log.d(
                     "REJECT_MOVE_PAGE::", "페이지 이동할 수 없음 : ${"${content.concertId} | ${DummyValues().defConcertInfo.concertId}"}"

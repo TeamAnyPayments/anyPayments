@@ -52,11 +52,10 @@ fun ArtistRankPage(
     navController: NavHostController,
     modifier: Modifier =
         Modifier
-            .fillMaxSize()
+            .fillMaxSize(),
+    // 랭크 아이템 리스트
+    rankList: MutableList<ArtistRankData> = DummyValues().rankList
 ){
-
-    // 랭크 아이템 (테스트)
-    val rankList = DummyValues().rankList
 
     // 탭 items
     val tabs = listOf(
@@ -187,13 +186,10 @@ fun RankTabScreen(
             // 랭킹 쪽 컨셉 이미지 뷰어
             GlideImage(
                 imageModel = if(isRealTime) imgList[0] else imgList[1],
-                // Crop, Fit, Inside, FillHeight, FillWidth, None
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.Crop, // 이미지 ContentScale
                 circularReveal = CircularReveal(duration = 100),
-                // shows a placeholder ImageBitmap when loading.
-                placeHolder = painterResource(id = defImgID),
-                // shows an error ImageBitmap when the request failed.
-                error = painterResource(id = defImgID),
+                placeHolder = painterResource(id = defImgID), // place holder
+                error = painterResource(id = defImgID), // 에러 이미지
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(128.dp)

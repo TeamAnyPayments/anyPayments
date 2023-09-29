@@ -34,10 +34,11 @@ import com.artist.wea.constants.getDefCardElevation
 import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.data.TicketInfo
 
+// 티켓 정보를 표현할 컴포저블
 @Composable
 fun Ticket(
     modifier: Modifier = Modifier,
-    ticketInfo: TicketInfo,
+    ticketInfo: TicketInfo, // 티켓 정보를 담은 데이터 클래스
 ){
 
     Card(
@@ -79,7 +80,7 @@ fun Ticket(
                         style = get14TextStyle()
                     )
                 }
-                // 공유 버튼?
+                // 공유 버튼
                 Icon(
                     Icons.Filled.Share,
                     contentDescription = "공유",
@@ -95,6 +96,7 @@ fun Ticket(
                 .fillMaxWidth()
                 .wrapContentHeight()){
                 // 무한 스크롤 배너
+                // 공연 이미지 스크린 샷을 표시함
                 InfiniteLoopPager(
                     modifier = Modifier.align(Alignment.Center),
                     list = ticketInfo.concertImgList,

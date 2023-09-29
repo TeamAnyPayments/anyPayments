@@ -24,20 +24,22 @@ import androidx.compose.ui.unit.sp
 import com.artist.wea.R
 import com.artist.wea.constants.getDefTextStyle
 
+// 아티스트 정보 표현 시 사용할 컨테이너성 컴포저블
+// 헤더(제목) + 컨텐츠의 구조로 되어 있음
 @Composable
 fun InfoUnit(
     modifier: Modifier = Modifier,
-    titleText:String = "",
-    titleTextStyle:TextStyle = getDefTextStyle().copy(fontSize = 20.sp),
-    screen: @Composable () -> Unit = {},
+    titleText:String = "", // 제목
+    titleTextStyle:TextStyle = getDefTextStyle().copy(fontSize = 20.sp), // 제목 텍스트 스타일
+    screen: @Composable () -> Unit = {}, // 표시될 컴포저블 (=화면)
     screenModifier: Modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight(),
+    // 아이템 수정에 활용될 경우 활성화되는 메뉴 옵션들
     icon:ImageVector? = null,
     rightMenuIcon:ImageVector? = null,
-    rightMenuAction:()-> Unit = {}
+    rightMenuAction:()-> Unit = {} // 우측 메뉴 동작 함수
 ){
-
     // 소개
     Column(
         modifier = modifier

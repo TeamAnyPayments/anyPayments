@@ -18,16 +18,17 @@ import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.data.ArtistInfo
 
+// 콘서트 정보의 멤버 정보 표시 컴포저블
 @Composable
 fun MemberItem(
     navController: NavHostController,
-    content: ArtistInfo = ArtistInfo(),
+    content: ArtistInfo = ArtistInfo(), // 다른 아티스트 정보를 담은 데이터 클래스
     modifier: Modifier = Modifier
         .fillMaxWidth()
         .wrapContentHeight()
         .padding(8.dp, 4.dp),
-    isActive:Boolean = true,
-    rightComposable: @Composable () -> Unit,
+    isActive:Boolean = true, // 페이지 라이팅 여부
+    rightComposable: @Composable () -> Unit, // 멤버 초대 등에 활용할 우측 컴포저블
 ) {
     Box(
         modifier = modifier.clickable {

@@ -28,19 +28,20 @@ import com.artist.wea.R
 import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.constants.getDefTextStyle
 
+// 각 페이지 별 액션바를 표시할 컴포저블
 @Composable
 fun PageTopBar(
     navController:NavHostController,
     modifier:Modifier = Modifier,
-    pageTitle:String = stringResource(id = R.string.empty_text),
-    singleIcon:ImageVector? = null,
-    rightMenuText:String = stringResource(id = R.string.empty_text),
-    rightMenuTextStyle:TextStyle = get14TextStyle(),
-    rightMenuAction:()-> Unit = {},
-    disableBack:Boolean = false,
-    hasTransparency:Boolean = false,
-    hasBadge:Boolean = false,
-    badge: @Composable () -> Unit = {},
+    pageTitle:String = stringResource(id = R.string.empty_text), // 페이지 명
+    singleIcon:ImageVector? = null, // 우측 메뉴 아이콘
+    rightMenuText:String = stringResource(id = R.string.empty_text), // 텍스트 메뉴
+    rightMenuTextStyle:TextStyle = get14TextStyle(), // 텍스트 메뉴의 스타일
+    rightMenuAction:()-> Unit = {}, // 우측 메뉴의 동작 함수
+    disableBack:Boolean = false, // 뒤로가기 비활성화 여부
+    hasTransparency:Boolean = false, // 투명도 추가 여부
+    hasBadge:Boolean = false, // 배지 포함 여부
+    badge: @Composable () -> Unit = {}, // 배지 컴포저블
     ){
     // TopBar Area
     Column(

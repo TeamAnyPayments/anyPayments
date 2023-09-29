@@ -32,6 +32,7 @@ import com.artist.wea.components.TitleImageInputForm
 import com.artist.wea.components.TitleInputForm
 import com.artist.wea.constants.getDefTextStyle
 
+// 아티스트 가입 신청 페이지
 @Composable
 fun ArtistJoinPage(
     navController: NavHostController

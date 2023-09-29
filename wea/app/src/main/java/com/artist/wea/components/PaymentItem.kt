@@ -20,10 +20,11 @@ import androidx.compose.ui.unit.dp
 import com.artist.wea.R
 import com.artist.wea.constants.getDefTextStyle
 
+// 결제 수단의 정보를 표시할 아이템
 @Composable
 fun PaymentItem(
-    name:String = "",
-    paymentImgURL: Any?,
+    name:String = "", // 결제수단 명
+    paymentImgURL: Any?, // 결제수단 이미지 링크
 ){
     Row(
         modifier = Modifier
