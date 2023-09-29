@@ -22,14 +22,15 @@ class PaymentsActivity : AppCompatActivity() {
 
         val clientKey = "test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq"
         val secretKey = "test_sk_zXLkKEypNArWmo50nX3lmeaxYG5R"
-        // "7CP_K-knksQZ966GZAfhm"
 
+        // 페이먼츠 위젯에 필요한 기본 속성에 대해 세팅해준다!
         val paymentWidget = PaymentWidget(
             activity = this@PaymentsActivity,
             clientKey = clientKey,
             customerKey = secretKey,
         )
 
+        // 앱 화면에 결제창에 완전히 로딩이 되면 아래의 메세지가 로그에 찍힌다. 꼭 확인 해볼것!
         val paymentMethodWidgetStatusListener = object : PaymentWidgetStatusListener {
             override fun onLoad() {
                 val message = "결제위젯 렌더링 완료"
@@ -37,6 +38,8 @@ class PaymentsActivity : AppCompatActivity() {
             }
         }
 
+        // 페이먼츠 위젯에 결제 방법, 금액 등에 대해 설정할 부분이다.
+        // 지금은 샘플 코드라 대부분의 옵션이 생략되어 있다.
         paymentWidget.run {
             renderPaymentMethods(
                 method = binding.paymentWidget,
@@ -47,10 +50,13 @@ class PaymentsActivity : AppCompatActivity() {
             renderAgreement(binding.agreementWidget)
         }
 
+        // 결제버튼을 누르면 다음 단계로 넘어가게 하는 로직.
+        // 이 부분은 토스가 제공하지 않으므로 스스로 xml에 버튼 추가해서 이벤트 리스너 셋팅해줘야 한다.
         binding.payButton.setOnClickListener {
             paymentWidget.requestPayment(
                 paymentInfo = PaymentMethod.PaymentInfo(orderId = "wBWO9RJXO0UYqJMV4er8J", orderName = "wea"),
                 paymentCallback = object : PaymentCallback {
+                    // 결제 프로세스에 대한 콜백 함수이다.
                     override fun onPaymentSuccess(success: TossPaymentResult.Success) {
                         Log.i("success:::", success.paymentKey)
                         Log.i("success:::", success.orderId)
