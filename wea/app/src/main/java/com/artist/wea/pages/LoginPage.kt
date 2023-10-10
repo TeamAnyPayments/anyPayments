@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -160,10 +161,10 @@ fun LoginPage(
             .fillMaxWidth()
             .height(8.dp))
 
-//        Button(onClick = {
-//            navController.navigate(PageRoutes.Home.route) }) {
-//            Text("홈페이지 이동")
-//        }
+        Button(onClick = {
+            navController.navigate(PageRoutes.Home.route) }) {
+            Text("홈페이지 이동")
+        }
 
     }
 

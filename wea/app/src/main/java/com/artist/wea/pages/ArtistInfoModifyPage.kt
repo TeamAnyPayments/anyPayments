@@ -123,7 +123,7 @@ fun ArtistInfoModifyPage(
             // 상단 바
             PageTopBar(
                 navController = navController,
-                pageTitle = stringResource(R.string.text_pgname_artist_profile_modify),
+                pageTitle = stringResource(R.string.empty_text),
                 modifier = Modifier
                     .align(Alignment.TopStart)
                     .zIndex(2f),
