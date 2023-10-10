@@ -113,9 +113,10 @@ fun HomePage(
                     Log.d("PROFILE_PAGE:::", "토큰 만료")
                     ToastManager.shortToast(context, expirationUserText);
                     recompCnt.value = 0;
-                    navController.navigate(PageRoutes.Login.route){
-                        popUpTo(0)
-                    }
+                    // 토큰정보 만료시 로그인 페이지로 강제 이동하는 메서드
+//                    navController.navigate(PageRoutes.Login.route){
+//                        popUpTo(0)
+//                    }
                 }
             })
         } else {
