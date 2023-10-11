@@ -29,6 +29,12 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/admob_id" />
+        <meta-data
+            android:name="com.toss.pay.TOSS_CLIENT_KEY"
+            android:value="${TOSS_CLIENT_KEY}"/>
+        <meta-data
+            android:name="com.toss.pay.TOSS_SECRET_KEY"
+            android:value="${TOSS_SECRET_KEY}"/>
 
         <activity
             android:name=".MainActivity"

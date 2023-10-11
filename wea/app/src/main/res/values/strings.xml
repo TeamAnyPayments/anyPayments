@@ -145,5 +145,7 @@
     <string name="text_logout_guide">로그아웃 하시겠어요?</string>
     <string name="text_login_success">로그인에 성공하였습니다.</string>
     <string name="text_login_fail">로그인에 실패하였습니다...</string>
+    <string name="txt_pay_complete">결제가 완료되었습니다.</string>
+    <string name="txt_pay_fail">결제에 실패하였습니다.</string>
 
 </resources>
