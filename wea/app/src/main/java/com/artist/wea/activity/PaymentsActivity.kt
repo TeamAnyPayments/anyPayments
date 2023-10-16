@@ -16,7 +16,7 @@ import com.tosspayments.paymentsdk.view.PaymentMethod
 // 확장성 및 레퍼런스 참고의 용이성을 위해 xml 기반의 액티비티 사용함/
 class PaymentsActivity : AppCompatActivity() {
 
-    // 뷰바인딩을 적용하였으므로 XXXBiding 클래스를 통해 뷰바인딩을 할 예정
+    // 뷰바인딩을 적용하였으므로 XXXBiding 클래스를 통해 뷰바인딩
     val binding by lazy {ActivityPaymentsBinding.inflate(layoutInflater)}
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +47,7 @@ class PaymentsActivity : AppCompatActivity() {
         paymentWidget.run {
             renderPaymentMethods(
                 method = binding.paymentWidget,
-                amount = PaymentMethod.Rendering.Amount(10000),
+                amount = PaymentMethod.Rendering.Amount(100),
                 paymentWidgetStatusListener = paymentMethodWidgetStatusListener
             )
 
@@ -65,6 +65,7 @@ class PaymentsActivity : AppCompatActivity() {
                         Log.i("success:::", success.paymentKey)
                         Log.i("success:::", success.orderId)
                         Log.i("success:::", success.amount.toString())
+                        onBackPressed()
                     }
 
                     override fun onPaymentFailed(fail: TossPaymentResult.Fail) {
