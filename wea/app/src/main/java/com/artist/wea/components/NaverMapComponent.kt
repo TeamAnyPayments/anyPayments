@@ -21,9 +21,22 @@ fun NaverMapComponent(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
+
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val coroutineScope = rememberCoroutineScope()
+
+    /*
+     locationSource = rememberFusedLocationSource(),
+    properties = MapProperties(
+        locationTrackingMode = LocationTrackingMode.Follow,
+    ),
+    uiSettings = MapUiSettings(
+        isLocationButtonEnabled = true,
+    )
+
+     */
+
 
     // Lifecycle 이벤트를 수신하기 위해 AndroidView의 밖에서 먼저 선언합니다.
     // recomposition시에도 유지되어야 하기 때문에 remember { } 로 기억합니다.
@@ -31,9 +44,10 @@ fun NaverMapComponent(
         MapView(context).apply {
             getMapAsync { naverMap ->
                 // ... 초기 설정 ...
-            }
+           }
         }
     }
+
 
     // LifecycleEventObserver를 구현하고, 각 이벤트에 맞게 MapView의 Lifecycle 메소드를 호출합니다.
     val lifecycleObserver = remember {
@@ -60,6 +74,7 @@ fun NaverMapComponent(
             lifecycleOwner.lifecycle.removeObserver(lifecycleObserver)
         }
     }
+
 
     // 생성된 MapView 객체를 AndroidView로 Wrapping 합니다.
     AndroidView(

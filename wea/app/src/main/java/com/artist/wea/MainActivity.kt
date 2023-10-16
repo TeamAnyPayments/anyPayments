@@ -1,12 +1,13 @@
 package com.artist.wea
 
+import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -14,7 +15,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.artist.wea.constants.PageRoutes
-import com.artist.wea.instance.Retrofit
 import com.artist.wea.pages.ArtistInfoModifyPage
 import com.artist.wea.pages.ArtistInfoPage
 import com.artist.wea.pages.ArtistJoinPage
@@ -45,41 +45,43 @@ import com.artist.wea.pages.UserProfilePage
 import com.artist.wea.pages.UserQuitPage
 import com.artist.wea.pages.UserRegisterPage
 import com.artist.wea.ui.theme.WeaTheme
-import com.artist.wea.util.PreferenceUtil
+import com.artist.wea.util.CommonUtils.Companion.checkLocationPermission
+import com.artist.wea.util.CommonUtils.Companion.checkLoginInfo
+import com.artist.wea.util.CommonUtils.Companion.requestLocationUpdates
+import com.artist.wea.util.PermissionChecker
+import com.artist.wea.util.ToastManager.Companion.shortToast
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.naver.maps.map.NaverMapSdk
-
 
 class MainActivity : ComponentActivity() {
 
+    private lateinit var permissionChecker:PermissionChecker;
+    private lateinit var fusedLocationClient: FusedLocationProviderClient;
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        permissionChecker = PermissionChecker(this, this);
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this) // 위치 서비스 클라이언트 초기화
+
+        // 위치 권한 확인 및 요청
+        checkLocationPermission(this)
+
+        // 위치 업데이트 요청
+        requestLocationUpdates(this, fusedLocationClient)
+
         setContent {
-            MobileAds.initialize(this) // 구글 광고 ADMOBS INIT...
-            // Use RequestConfiguration.Builder().setTestDeviceIds(Arrays.asList("05E33EEFCCB837287D76B284E267267F")) to get test ads on this device.
-            val androidId = Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)
-            Log.d("MAIN_ACTIVITY:::", "your device ID : $androidId")
-            val testDeviceIds: List<String> = mutableListOf(androidId)
-            val configuration =
-                RequestConfiguration.Builder().setTestDeviceIds(testDeviceIds).build()
-            MobileAds.setRequestConfiguration(configuration)
-
-            // 네이버 지도를 위한 SDK Client 등록!
-            NaverMapSdk.getInstance(this).client =
-                NaverMapSdk.NaverCloudPlatformClient(BuildConfig.NAVER_CLIENT_ID) // local.properties로부터 읽어들임
-
-
-            // 로그인 시 로그인 페이지로 이동하지 않도록, 자동로그인을 위한 변수 /* TODO */
-            val context = LocalContext.current;
-            val prefs = PreferenceUtil(context);
-            val token = prefs.getString("token", "");
-            val isLogin = token.isNotEmpty()
+            // googleADCheck
+            googleADCheck(this) // 구글 광고 환경 체크
+            // naverMapInit
+            naverMapInit(this) // 네이버 맵 init
+            // checkLoginInfo
+            val isLogin = checkLoginInfo(this) // 로그인 여부 체크
             val navController = rememberNavController()
-            if(isLogin){ // temp... : 토큰정보 확인용
-                Log.d("MAIN_ACTIVITY:::", "토큰 정보 있음")
-                Retrofit.token.value = token
-            }
 
             NavHost(
                 navController = navController,
@@ -163,9 +165,44 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+    // 권한 요청 결과 처리
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == permissionChecker.PERMISSION_STATE_CODE) {
+            if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                // 모든 권한이 허용된 경우
+                // 위치 정보를 얻는 작업 수행
+                Log.d(this.javaClass.name, "ALL GRANT OK")
+            } else {
+                // 권한 중 하나라도 거부된 경우
+                // 사용자에게 권한이 필요하다고 알릴 수 있습니다.
+                Log.d(this.javaClass.name, "ALL GRANT IS NOT OK")
+                shortToast(this, "원활한 앱 사용을 위해 권한을 허용해주세요")
+                val result = permissionChecker.requestPermission()
+                // if(!result) permissionChecker.openAppSettings(this)
+
+            }
+        }
+    }
 }
 
-
+// 구글 광고와 네이버 맵 광고 세팅은 메인 액티비티에서 체크해주어야 하므로 메인 액티비티 內 함수로 구현
+fun googleADCheck(context: Context){
+    MobileAds.initialize(context) // 구글 광고 ADMOBS INIT...
+    // Use RequestConfiguration.Builder().setTestDeviceIds(Arrays.asList("05E33EEFCCB837287D76B284E267267F")) to get test ads on this device.
+    val androidId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+    Log.d("MAIN_ACTIVITY:::", "your device ID : $androidId")
+    val testDeviceIds: List<String> = mutableListOf(androidId)
+    val configuration =
+        RequestConfiguration.Builder().setTestDeviceIds(testDeviceIds).build()
+    MobileAds.setRequestConfiguration(configuration)
+}
+fun naverMapInit(context: Context){
+    // 네이버 지도를 위한 SDK Client 등록!
+    NaverMapSdk.getInstance(context).client =
+        NaverMapSdk.NaverCloudPlatformClient(BuildConfig.NAVER_CLIENT_ID) // local.properties로부터 읽어들임
+}
 @Preview(showBackground = true)
 @Composable
 fun MainPreview() {
