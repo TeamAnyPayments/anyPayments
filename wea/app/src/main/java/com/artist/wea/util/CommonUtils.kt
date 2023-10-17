@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.artist.wea.constants.GlobalState
 import com.artist.wea.instance.Retrofit
 import com.google.android.gms.location.FusedLocationProviderClient
 
@@ -33,6 +34,8 @@ class CommonUtils {
                     // 위치 업데이트 수신 및 사용
                     val latitude = location?.latitude
                     val longitude = location?.longitude
+                    GlobalState.lat = latitude ?: 0.0
+                    GlobalState.lon = longitude ?: 0.0
                     Log.d("LOCATION_TOOOLS", "현재 위치 정보 ${latitude}, ${longitude}")
                     // 여기에서 위치 정보를 사용하세요
                 }
