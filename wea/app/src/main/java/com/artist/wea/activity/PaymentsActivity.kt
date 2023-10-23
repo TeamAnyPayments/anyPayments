@@ -21,7 +21,7 @@ import com.tosspayments.paymentsdk.view.PaymentMethod
 // 확장성 및 레퍼런스 참고의 용이성을 위해 xml 기반의 액티비티 사용함/
 class PaymentsActivity : AppCompatActivity() {
 
-    // 뷰바인딩을 적용하였으므로 XXXBiding 클래스를 통해 뷰바인딩을 할 예정
+    // 뷰바인딩을 적용하였으므로 XXXBiding 클래스를 통해 뷰바인딩
     val binding by lazy {ActivityPaymentsBinding.inflate(layoutInflater)}
     var paymentsState:Boolean = false;
 
@@ -67,7 +67,7 @@ class PaymentsActivity : AppCompatActivity() {
         paymentWidget.run {
             renderPaymentMethods(
                 method = binding.paymentWidget,
-                amount = PaymentMethod.Rendering.Amount(payAmount),
+                amount = PaymentMethod.Rendering.Amount(100),
                 paymentWidgetStatusListener = paymentMethodWidgetStatusListener
             )
 
@@ -77,15 +77,16 @@ class PaymentsActivity : AppCompatActivity() {
         // 결제버튼을 누르면 다음 단계로 넘어가게 하는 로직.
         // 이 부분은 토스가 제공하지 않으므로 스스로 xml에 버튼 추가해서 이벤트 리스너 셋팅해줘야 한다.
         binding.payButton.setOnClickListener {
-            if(paymentsState){ // 렌더링 완료시에면 결제 프로세스가 가능하도록!
-                paymentWidget.requestPayment(
-                    paymentInfo = PaymentMethod.PaymentInfo(orderId = "wBWO9RJXO0UYqJMV4er8J", orderName = "wea"),
-                    paymentCallback = object : PaymentCallback {
-                        // 결제 프로세스에 대한 콜백 함수이다.
-                        override fun onPaymentSuccess(success: TossPaymentResult.Success) {
-                            Log.i("success:::", success.paymentKey)
-                            Log.i("success:::", success.orderId)
-                            Log.i("success:::", success.amount.toString())
+            paymentWidget.requestPayment(
+                paymentInfo = PaymentMethod.PaymentInfo(orderId = "wBWO9RJXO0UYqJMV4er8J", orderName = "wea"),
+                paymentCallback = object : PaymentCallback {
+                    // 결제 프로세스에 대한 콜백 함수이다.
+                    override fun onPaymentSuccess(success: TossPaymentResult.Success) {
+                        Log.i("success:::", success.paymentKey)
+                        Log.i("success:::", success.orderId)
+                        Log.i("success:::", success.amount.toString())
+                        onBackPressed()
+                    }
 
                             // 결과를 TossPaySuccess 객체에 저장
                             tossPaySuccess?.paymentKey ?: success.paymentKey;

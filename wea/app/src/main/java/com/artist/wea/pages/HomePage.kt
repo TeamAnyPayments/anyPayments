@@ -1,5 +1,6 @@
 package com.artist.wea.pages
 
+import android.app.Activity
 import android.util.Log
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -64,6 +65,7 @@ import com.artist.wea.data.UserProfile
 import com.artist.wea.model.RegisterViewModel
 import com.artist.wea.repository.RegisterRepository
 import com.artist.wea.util.JSONParser
+import com.artist.wea.util.PermissionChecker
 import com.artist.wea.util.PreferenceUtil
 import com.artist.wea.util.ToastManager
 import org.json.JSONObject
@@ -90,6 +92,7 @@ fun HomePage(
     val profileJson = remember{
         mutableStateOf(prefs.getString("profile_json", ""))
     }
+    // 회원정보 관리
     val userProfile = remember { mutableStateOf(UserProfile()) }
     val jParser = JSONParser() // json parser
     val expirationUserText = stringResource(R.string.text_expiration_user)
@@ -97,7 +100,15 @@ fun HomePage(
     // Recomposition을 막기 위한 카운트 계수
     val recompCnt = remember { mutableStateOf(0) }
 
+    // 권한 체커
+    val permissionChecker = PermissionChecker(context=context, activity = context as Activity)
+
+
     if(recompCnt.value == 0){ // 컴포저블 내에서 값을 가져오는 상황이어서 Recomposition이 발생하게 되고, 이를 막기 위한 조건절
+        
+        // 회원 로그인 정보 체크 완료시 권한요청 하도록 판단할 불리언 변수
+        var isLogin = false;
+
         // 홈페이지 렌더링 시 사용자 정보를 가져옴
         if(profileJson.value.isEmpty()){
             viewModel.getUserInfo()
@@ -109,10 +120,12 @@ fun HomePage(
                     profileJson.value = jsonString // 현재 상태에도 저장
                     userProfile.value = jParser.parseJsonToUserProfile(it)
                     Log.d("HOME_PAGE:::", "서버 >>> ${profileJson.value}")
+                    isLogin = true;
                 }else {
                     Log.d("PROFILE_PAGE:::", "토큰 만료")
                     ToastManager.shortToast(context, expirationUserText);
                     recompCnt.value = 0;
+                    isLogin = false;
                     // 토큰정보 만료시 로그인 페이지로 강제 이동하는 메서드
 //                    navController.navigate(PageRoutes.Login.route){
 //                        popUpTo(0)
@@ -125,6 +138,13 @@ fun HomePage(
             recompCnt.value++
             val json = JSONObject(profileJson.value)
             userProfile.value = jParser.parseJsonToUserProfile(json)
+            isLogin = true;
+        }
+
+        if(isLogin || true){ // 일단 다 허용
+            val activity = context as Activity;
+            // 권한 체크
+            permissionChecker.requestPermission()
         }
     }
 
