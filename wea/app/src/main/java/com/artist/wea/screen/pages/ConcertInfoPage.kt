@@ -31,6 +31,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
+import com.artist.wea.constants.DummyValues
+import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.screen.activity.PaymentsActivity
 import com.artist.wea.screen.components.ArtistInfoItem
 import com.artist.wea.screen.components.Badge
@@ -40,10 +42,8 @@ import com.artist.wea.screen.components.GuideBubble
 import com.artist.wea.screen.components.InfiniteLoopPager
 import com.artist.wea.screen.components.InfoUnit
 import com.artist.wea.screen.components.LargeButton
+import com.artist.wea.screen.components.NaverMapComponent
 import com.artist.wea.screen.components.PageTopBar
-import com.artist.wea.constants.DummyValues
-import com.artist.wea.constants.get12TextStyle
-import com.artist.wea.constants.getDefTextStyle
 
 // 콘서트 정보 페이지
 @Composable
@@ -92,6 +92,7 @@ fun ConcertInfoPage(
                     .fillMaxHeight()
                     .verticalScroll(scrollState),
             ) {
+
                 // 공연 이미지
                 InfiniteLoopPager(
                     list = concertInfo.concertImgList,
@@ -142,16 +143,18 @@ fun ConcertInfoPage(
                                 .height(128.dp)
                                 .background(color = colorResource(id = R.color.mono100))
                             ){
-                                Text(
-                                    text = "네이버 지도",
-                                    style = get12TextStyle(),
-                                    modifier = Modifier.align(Alignment.Center)
+                                NaverMapComponent(
+                                    navController = navController,
+                                    modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+                                    latitude = 37.694402,
+                                    longitude = 126.767834
                                 )
                             }
                         },
                         screenModifier =  screenModifier
                     )
                     Spacer(modifier = Modifier.height(16.dp)) // 여백
+
 
                     // 상세 정보
                     val detailInfoMap:MutableMap<String, String> = mutableMapOf();

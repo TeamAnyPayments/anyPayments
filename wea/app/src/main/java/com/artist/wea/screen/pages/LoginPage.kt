@@ -28,15 +28,15 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import com.artist.wea.R
-import com.artist.wea.screen.components.InputForm
-import com.artist.wea.screen.components.LargeButton
-import com.artist.wea.screen.components.UserInfoManageMenu
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.data.LoginUser
 import com.artist.wea.network.instance.Retrofit
 import com.artist.wea.network.model.RegisterViewModel
 import com.artist.wea.network.repository.RegisterRepository
+import com.artist.wea.screen.components.InputForm
+import com.artist.wea.screen.components.LargeButton
+import com.artist.wea.screen.components.UserInfoManageMenu
 import com.artist.wea.util.PreferenceUtil
 import com.artist.wea.util.ToastManager.Companion.shortToast
 
@@ -138,28 +138,28 @@ fun LoginPage(
             .fillMaxWidth()
             .height(8.dp))
 
-        LargeButton(
-            btnText = stringResource(R.string.text_login_btn_naver),
-            // nextPage = "register/naver",
-            btnIdx = 1, // 네이버
-            buttonAction = {
-
-            }
-        )
-        Spacer(modifier = Modifier
-            .fillMaxWidth()
-            .height(8.dp))
-
-        LargeButton(
-            btnText = stringResource(R.string.text_login_btn_kakao),
-            btnIdx = 2, // 카카오,
-            buttonAction = {
-
-            }
-        )
-        Spacer(modifier = Modifier
-            .fillMaxWidth()
-            .height(8.dp))
+//        LargeButton(
+//            btnText = stringResource(R.string.text_login_btn_naver),
+//            // nextPage = "register/naver",
+//            btnIdx = 1, // 네이버
+//            buttonAction = {
+//
+//            }
+//        )
+//        Spacer(modifier = Modifier
+//            .fillMaxWidth()
+//            .height(8.dp))
+//
+//        LargeButton(
+//            btnText = stringResource(R.string.text_login_btn_kakao),
+//            btnIdx = 2, // 카카오,
+//            buttonAction = {
+//
+//            }
+//        )
+//        Spacer(modifier = Modifier
+//            .fillMaxWidth()
+//            .height(8.dp))
 
         Button(onClick = {
             navController.navigate(PageRoutes.Home.route) }) {

@@ -31,6 +31,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavHostController
 import com.artist.wea.R
+import com.artist.wea.constants.DummyValues
+import com.artist.wea.constants.GlobalState.Companion.currentArtistInfo
+import com.artist.wea.constants.PageRoutes
+import com.artist.wea.constants.get14TextStyle
+import com.artist.wea.constants.getDefTextStyle
+import com.artist.wea.data.ArtistInfo
 import com.artist.wea.screen.components.ArtistInfoItem
 import com.artist.wea.screen.components.ConcertSearchItem
 import com.artist.wea.screen.components.InfoUnit
@@ -38,12 +44,6 @@ import com.artist.wea.screen.components.PageTopBar
 import com.artist.wea.screen.components.ShowProfileDialog
 import com.artist.wea.screen.components.WeaIconImage
 import com.artist.wea.screen.components.WeaWideImage
-import com.artist.wea.constants.DummyValues
-import com.artist.wea.constants.GlobalState.Companion.currentArtistInfo
-import com.artist.wea.constants.PageRoutes
-import com.artist.wea.constants.get14TextStyle
-import com.artist.wea.constants.getDefTextStyle
-import com.artist.wea.data.ArtistInfo
 
 @Composable
 fun ArtistInfoPage(
@@ -51,11 +51,10 @@ fun ArtistInfoPage(
     userId:String,
 ){
     // TODO 현재 사용자가 아티스트 프로필을 수정할 권한이 있는지 판단할 boolean 변수
-    val isEditable = true;
+    val isEditable = false;
 
     val artistInfo = DummyValues().aritstSearchList[userId]?: ArtistInfo()
     currentArtistInfo.value = artistInfo
-
 
     val modalVisibleState = remember { mutableStateOf(false) }
     ShowProfileDialog(
@@ -109,6 +108,7 @@ fun ArtistInfoPage(
             WeaWideImage(
                 modifier = Modifier.align(Alignment.TopStart),
                 imgUrl = artistInfo.bgImgURL,
+                defImgID = R.drawable.bg_def_artist,
                 height = 164.dp
             )
 
@@ -197,22 +197,22 @@ fun ArtistInfoPage(
         )
 
         // 공연 이력
-        val concertList = DummyValues().concertLogList
+        val concert = DummyValues().concertLogList[0]
+        concert.artistName = artistInfo.artistName
 
         // History
         InfoUnit(
             modifier = Modifier.padding(16.dp, 12.dp),
             titleText = "History",
             screen = {
-                concertList.forEach {
-                        item ->
+                repeat(6){
                     ConcertSearchItem(
                         navController = navController,
-                        content = item,
+                        content = concert,
                         modifier = Modifier
                             .fillMaxWidth()
                             .wrapContentHeight(),
-                        isActive = item.concertId == DummyValues().defConcertInfo.concertId // TODO 지우기 .. temp..
+                        isActive = concert.concertId == DummyValues().defConcertInfo.concertId // TODO 지우기 .. temp..
                     )
                 }
             },

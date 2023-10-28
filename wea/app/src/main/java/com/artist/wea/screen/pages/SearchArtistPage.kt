@@ -38,7 +38,7 @@ fun SearchArtistPage(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val artistInfoList = DummyValues().aritstSearchList.values
+        var artistInfoList = DummyValues().aritstSearchList.values
 
         val context = LocalContext.current
         val mOwner = LocalLifecycleOwner.current
@@ -47,12 +47,14 @@ fun SearchArtistPage(
             navController = navController,
             pageTitle = stringResource(R.string.text_pgname_artist_search)
         )
+
+
         SearchBar(
             searchOptions = arrayOf("선택안함","인기순","이름순","등록일순"),
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(8.dp)
+                .padding(8.dp),
         )
 
         // list..
@@ -73,5 +75,6 @@ fun SearchArtistPage(
                 )
             }
         }
+
     }
 }

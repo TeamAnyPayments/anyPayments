@@ -36,7 +36,8 @@ fun SearchBar(
         .fillMaxWidth()
         .wrapContentHeight()
         .padding(16.dp),
-    searchOptions:Array<String> = arrayOf() // 검색 옵션
+    searchOptions:Array<String> = arrayOf(), // 검색 옵션
+    sortAction:Array<()->Unit> = arrayOf({})
 ) {
     Column(
         modifier = modifier,
@@ -97,6 +98,9 @@ fun SearchBar(
                                 onClick = {
                                     sortOpt.value = value
                                     isExpended.value = false
+                                    if(sortAction.size > idx)
+                                        sortAction[idx](); // 함수 동작
+
                                 },
                                 colors = getMenuItemColors()
                             )

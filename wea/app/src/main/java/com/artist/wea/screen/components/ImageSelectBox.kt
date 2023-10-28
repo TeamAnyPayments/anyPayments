@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.TextStyle
 import com.artist.wea.R
 import com.skydoves.landscapist.glide.GlideImage
 
@@ -79,7 +80,7 @@ fun ImageSelectBox(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = "터치해서 이미지 선택")
+                Text(text = "터치해서 이미지 선택", style = TextStyle(colorResource(id = R.color.black)))
             }
         }
     }

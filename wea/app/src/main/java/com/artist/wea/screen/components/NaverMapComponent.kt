@@ -28,7 +28,10 @@ import kotlinx.coroutines.launch
 @Composable
 fun NaverMapComponent(
     navController: NavHostController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    latitude:Double = GlobalState.lat,
+    longitude:Double = GlobalState.lon,
+    showMarker:Boolean = true
 ) {
 
     val context = LocalContext.current
@@ -58,11 +61,13 @@ fun NaverMapComponent(
         MapView(context).apply {
             getMapAsync { naverMap ->
                 // ... 초기 설정 ...
-                val latitude = GlobalState.lat;
-                val longitude = GlobalState.lon;
-                val marker = Marker()
-                marker.position = LatLng(latitude, longitude)
-                marker.map = naverMap
+                // 마커 표시하고자 할 떄
+                if(showMarker){
+                    val marker = Marker()
+                    marker.position = LatLng(latitude, longitude)
+                    marker.map = naverMap
+                }
+
                 // 카메라쪽 설정은 뭔지 모르겠...
                 val cameraUpdate = CameraUpdate.scrollTo(LatLng(latitude, longitude))
                 naverMap.moveCamera(cameraUpdate)

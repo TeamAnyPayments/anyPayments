@@ -4,7 +4,7 @@ package com.artist.wea.data
 data class ConcertListInfo(
     val concertId:String = "",
     val imgURL: String = "",
-    val artistName: String = "-",
+    var artistName: String = "-",
     val concertIntroduce:String = "-",
     val location:String = "-",
     val email:String = "-",

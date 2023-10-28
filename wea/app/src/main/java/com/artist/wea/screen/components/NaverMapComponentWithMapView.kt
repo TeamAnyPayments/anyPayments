@@ -1,5 +1,6 @@
 package com.artist.wea.screen.components
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -11,7 +12,15 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import com.artist.wea.constants.GlobalState
+import com.artist.wea.util.PermissionChecker
+import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.CameraPosition
+import com.naver.maps.map.CameraUpdate
+import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapView
+import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.util.FusedLocationSource
 import kotlinx.coroutines.launch
 
 @Composable
@@ -22,12 +31,36 @@ fun NaverMapComponentWithMapView(
     val lifecycleOwner = LocalLifecycleOwner.current
     val coroutineScope = rememberCoroutineScope()
 
+    // 요청 체크
+    val pc = PermissionChecker(context as Activity, context);
+    val fls = FusedLocationSource(
+        LocalContext.current as Activity,
+        pc.PERMISSION_STATE_CODE
+    )
+
     // Lifecycle 이벤트를 수신하기 위해 AndroidView의 밖에서 먼저 선언합니다.
     // recomposition시에도 유지되어야 하기 때문에 remember { } 로 기억합니다.
     val mapView = remember {
         MapView(context).apply {
             getMapAsync { naverMap ->
                 // ... 초기 설정 ...
+                // ... 초기 설정 ...
+                val latitude = GlobalState.lat;
+                val longitude = GlobalState.lon;
+                val marker = Marker()
+                marker.position = LatLng(latitude, longitude)
+                marker.map = naverMap
+                // 카메라쪽 설정은 뭔지 모르겠...
+                val cameraUpdate = CameraUpdate.scrollTo(LatLng(latitude, longitude))
+                naverMap.moveCamera(cameraUpdate)
+
+                // naverMap.locationSource = fls;
+                naverMap.cameraPosition = CameraPosition(
+                    LatLng(latitude, longitude),
+                    12.5 // why?
+                );
+                naverMap.locationTrackingMode = LocationTrackingMode.Face
+                naverMap.locationSource = fls;
             }
         }
     }
