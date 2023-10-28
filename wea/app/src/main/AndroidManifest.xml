@@ -25,7 +25,7 @@
         tools:targetApi="31">
         <activity
             android:theme="@style/Theme.Wea"
-            android:name=".activity.PaymentsActivity"
+            android:name=".screen.activity.PaymentsActivity"
             android:exported="true" />
 
         <meta-data

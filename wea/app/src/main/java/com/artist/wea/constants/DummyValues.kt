@@ -8,9 +8,9 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.colorResource
 import com.artist.wea.R
-import com.artist.wea.components.data.AlarmData
-import com.artist.wea.components.data.ArtistRankData
+import com.artist.wea.data.AlarmData
 import com.artist.wea.data.ArtistInfo
+import com.artist.wea.data.ArtistRankData
 import com.artist.wea.data.ConcertInfo
 import com.artist.wea.data.ConcertListInfo
 import com.artist.wea.data.PaymentItemInfo

@@ -1,4 +1,4 @@
-package com.artist.wea.components.data
+package com.artist.wea.data
 
 import com.artist.wea.R
 

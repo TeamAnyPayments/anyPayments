@@ -8,7 +8,7 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.artist.wea.constants.GlobalState
-import com.artist.wea.instance.Retrofit
+import com.artist.wea.network.instance.Retrofit
 import com.google.android.gms.location.FusedLocationProviderClient
 
 
