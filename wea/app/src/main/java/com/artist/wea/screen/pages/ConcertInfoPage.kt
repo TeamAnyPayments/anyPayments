@@ -33,6 +33,8 @@ import androidx.navigation.NavHostController
 import com.artist.wea.R
 import com.artist.wea.constants.DummyValues
 import com.artist.wea.constants.getDefTextStyle
+import com.artist.wea.data.ConcertInfo
+import com.artist.wea.data.ConcertReceipt
 import com.artist.wea.screen.activity.PaymentsActivity
 import com.artist.wea.screen.components.ArtistInfoItem
 import com.artist.wea.screen.components.Badge
@@ -224,7 +226,7 @@ fun ConcertInfoPage(
                     .align(Alignment.BottomEnd),
                 buttonAction = {
                     // modalVisibleState.value = true
-                    showPayments(context = context)
+                    showPayments(context = context, concertInfo)
 
                 }
             )
@@ -232,7 +234,19 @@ fun ConcertInfoPage(
     }
 }
 
-fun showPayments(context: Context){
+fun showPayments(context: Context, concertInfo:ConcertInfo){
+
     val intent = Intent(context, PaymentsActivity::class.java)
+
+    val concertReceipt: ConcertReceipt = ConcertReceipt(
+        concertId = concertInfo.concertId,
+        minSupportAccount = concertInfo.minSupportAccount,
+        startDate = concertInfo.startDate,
+        endDate =  concertInfo.endDate,
+        locations = concertInfo.locations.toString()
+    )
+
+    // intent에 객체 추가
+    intent.putExtra("prepareReceipt", concertReceipt)
     context.startActivity(intent)
 }

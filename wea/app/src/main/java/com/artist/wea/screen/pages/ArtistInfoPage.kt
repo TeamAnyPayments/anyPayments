@@ -25,6 +25,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -32,6 +33,7 @@ import androidx.compose.ui.zIndex
 import androidx.navigation.NavHostController
 import com.artist.wea.R
 import com.artist.wea.constants.DummyValues
+import com.artist.wea.constants.GlobalState
 import com.artist.wea.constants.GlobalState.Companion.currentArtistInfo
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get14TextStyle
@@ -44,17 +46,27 @@ import com.artist.wea.screen.components.PageTopBar
 import com.artist.wea.screen.components.ShowProfileDialog
 import com.artist.wea.screen.components.WeaIconImage
 import com.artist.wea.screen.components.WeaWideImage
+import com.artist.wea.util.ToastManager
 
 @Composable
 fun ArtistInfoPage(
     navController: NavHostController,
-    userId:String,
 ){
     // TODO 현재 사용자가 아티스트 프로필을 수정할 권한이 있는지 판단할 boolean 변수
     val isEditable = false;
 
-    val artistInfo = DummyValues().aritstSearchList[userId]?: ArtistInfo()
+    // 라우팅 해서 들어온 아티스트 조회 정보들..
+    // 아티스트 아이디
+    val argument = navController?.currentBackStackEntry?.arguments;
+    val id =  argument?.getString("userId").toString()?:"none"
+    val artistInfo = DummyValues().artistSearchList[id]?: ArtistInfo()
     currentArtistInfo.value = artistInfo
+
+    var isBookMarked = remember {
+        mutableStateOf(GlobalState.bookMarkedArtist[currentArtistInfo.value.userId] != null)
+    }
+    // 토스트 메세지를 위한 context
+    val context = LocalContext.current;
 
     val modalVisibleState = remember { mutableStateOf(false) }
     ShowProfileDialog(
@@ -117,7 +129,7 @@ fun ArtistInfoPage(
                 modifier = Modifier
                     .align(Alignment.Center)
                     .clickable {
-                       modalVisibleState.value = true;
+                        modalVisibleState.value = true;
                     },
                 imgUrl = artistInfo.profileImgURL,
                 size = 144.dp,
@@ -150,8 +162,27 @@ fun ArtistInfoPage(
                     Icon(
                         Icons.Filled.Star, 
                         contentDescription = "북마크",
-                        modifier = Modifier.size(24.dp),
-                        tint = colorResource(id = R.color.kakao_yellow) // TODO 북마크 조건부 분기 처리
+                        modifier = Modifier
+                            .size(24.dp)
+                            .clickable {
+                                if (!isBookMarked.value) {
+                                    GlobalState
+                                        .bookMarkedArtist
+                                        .putIfAbsent(artistInfo.userId, artistInfo)
+                                    isBookMarked.value = true;
+                                    ToastManager.shortToast(context, "북마크에 추가되었습니다.")
+                                } else {
+                                    GlobalState
+                                        .bookMarkedArtist
+                                        .remove(artistInfo.userId)
+                                    isBookMarked.value = false;
+                                    ToastManager.shortToast(context, "북마크를 취소하였습니다.")
+                                }
+                            },
+                        // 북마크 조건부 분기 처리
+                        tint = if(isBookMarked.value)
+                            colorResource(id = R.color.kakao_yellow)
+                            else colorResource(id = R.color.mono100)
                     )
                 }
                 // 아티스트 한줄 소개
@@ -197,8 +228,9 @@ fun ArtistInfoPage(
         )
 
         // 공연 이력
+        DummyValues.name = artistInfo.artistName
+        DummyValues.url = artistInfo.profileImgURL
         val concert = DummyValues().concertLogList[0]
-        concert.artistName = artistInfo.artistName
 
         // History
         InfoUnit(

@@ -1,8 +1,7 @@
 package com.artist.wea.screen.pages
 
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,26 +16,47 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
 import com.artist.wea.R
+import com.artist.wea.constants.GlobalState
+import com.artist.wea.constants.getDefTextStyle
+import com.artist.wea.data.AddressInfo
+import com.artist.wea.data.ArtistJoinForm
+import com.artist.wea.screen.components.AddressForm
 import com.artist.wea.screen.components.PageTopBar
 import com.artist.wea.screen.components.TitleGuideImageInputForm
 import com.artist.wea.screen.components.TitleImageInputForm
 import com.artist.wea.screen.components.TitleInputForm
-import com.artist.wea.constants.getDefTextStyle
+import com.artist.wea.util.ToastManager
 
 // 아티스트 가입 신청 페이지
 @Composable
 fun ArtistJoinPage(
     navController: NavHostController
 ){
+
+    val artistJoinForm: MutableState<ArtistJoinForm> = remember {
+        mutableStateOf(
+            ArtistJoinForm(
+                "",
+                "",
+                "",
+                ""
+            )
+        )
+    }
+
+    val context = LocalContext.current
+
     Column(modifier = Modifier
         .fillMaxSize()
         .background(color = colorResource(id = R.color.mono50)))
@@ -62,12 +82,12 @@ fun ArtistJoinPage(
                 horizontalAlignment = Alignment.Start
             ) {
                 // 아티스트 예명
-                TitleInputForm(
+                artistJoinForm.value.artistName = TitleInputForm(
                     titleText = stringResource(R.string.text_title_artist_name),
                     hintText = stringResource(R.string.text_hint_artist_name)
                 )
                 // 아티스트 한 줄 소개
-                TitleInputForm(
+                artistJoinForm.value.comment = TitleInputForm(
                     titleText = stringResource(R.string.text_title_artist_introduce),
                     hintText = stringResource(R.string.text_hint_artist_introduce)
                 )
@@ -86,17 +106,17 @@ fun ArtistJoinPage(
                 )
 
                 // 아티스트 소개 (긴 소개글)
-                TitleInputForm(
+                artistJoinForm.value.introduce = TitleInputForm(
                     titleText = stringResource(R.string.text_title_artist_full_introduce),
                     hintText = stringResource(R.string.text_hint_artist_full_introduce)
                 )
 
                 // 활동지역
-                LocationInputForm(
+                val lif = LocationInputForm(
                     titleText = stringResource(R.string.text_title_location)
                 )
+                artistJoinForm.value.location = lif.address+lif.addressDetail
                 Spacer(modifier = Modifier.height(64.dp))
-
             }
             // 하단 버튼
             Box(
@@ -112,10 +132,33 @@ fun ArtistJoinPage(
                     modifier = Modifier
                         .padding(16.dp)
                         .align(Alignment.Center)
+                        .clickable {
+                            if (checkJoinform(
+                                    arrayOf(
+                                        artistJoinForm.value.artistName,
+                                        artistJoinForm.value.comment,
+                                        artistJoinForm.value.introduce,
+                                        artistJoinForm.value.location,
+                                    )
+                                )
+                            ) {
+                                GlobalState.isArtist.value = true;
+                                ToastManager.shortToast(context, "아티스트 등록이 완료되었습니다")
+                                navController.popBackStack()
+                            } else {
+                                GlobalState.isArtist.value = false;
+                                ToastManager.shortToast(context, "아티스트 등록 양식을 모두 채워주세요!")
+                            }
+                        }
                 )
             }
         }
     }
+}
+// 양식 다채웠는지 체크하는 메서드
+fun checkJoinform(arg:Array<String>):Boolean{
+    arg.forEach { it -> if(it.isEmpty()) return false }
+    return true
 }
 
 //TODO... 다음의 주소 API를 사용해서 웹뷰로 주소를 요청한다.
@@ -125,7 +168,8 @@ fun LocationInputForm(
         .fillMaxWidth()
         .wrapContentHeight(),
     titleText:String = stringResource(id = R.string.empty_text)
-){
+):AddressInfo{
+    var result:AddressInfo = AddressInfo("", "", "")
     Column(modifier = modifier,
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.Start
@@ -135,21 +179,9 @@ fun LocationInputForm(
             text = titleText,
             style = getDefTextStyle()
         )
-
-        val context = LocalContext.current
-        val webViewClient = WebViewClient()
-        AndroidView(
-            factory = {
-                WebView(context).apply {
-                    this.webViewClient = webViewClient
-                    this.loadUrl("https://www.google.com/") // TODO...
-                }
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(256.dp)
-        )
-
+        //
+        val ai = AddressForm()
+        if(ai != null ) result = ai!!;
     }
-
+    return result
 }

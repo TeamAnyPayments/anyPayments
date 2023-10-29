@@ -2,6 +2,7 @@ package com.artist.wea.screen.components
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
@@ -13,6 +14,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.NavHostController
+import com.artist.wea.constants.DummyValues
 import com.artist.wea.constants.GlobalState
 import com.artist.wea.util.PermissionChecker
 import com.naver.maps.geometry.LatLng
@@ -31,7 +33,8 @@ fun NaverMapComponent(
     modifier: Modifier = Modifier,
     latitude:Double = GlobalState.lat,
     longitude:Double = GlobalState.lon,
-    showMarker:Boolean = true
+    hasMarker:Boolean = true, // 마커를 표시할지
+    hasMarkList:Boolean = false // 여러개의 마커가 존재하는지
 ) {
 
     val context = LocalContext.current
@@ -62,10 +65,24 @@ fun NaverMapComponent(
             getMapAsync { naverMap ->
                 // ... 초기 설정 ...
                 // 마커 표시하고자 할 떄
-                if(showMarker){
+                if(hasMarker){
                     val marker = Marker()
                     marker.position = LatLng(latitude, longitude)
                     marker.map = naverMap
+                }
+
+                if(hasMarkList){
+                    val list = DummyValues.concertList.values;
+                    Log.d(this.javaClass.simpleName, "current [ ${GlobalState.lat} | ${GlobalState.lon} ]")
+
+                    for(it in list){
+                        if(it.latitude == 0.0 || it.longitude == 0.0) continue;
+                        val marker = Marker()
+                        Log.d(this.javaClass.simpleName, "[${it.latitude} | ${it.longitude} ]")
+                        marker.position = LatLng(it.latitude, it.longitude);
+                        marker.map = naverMap;
+                    }
+
                 }
 
                 // 카메라쪽 설정은 뭔지 모르겠...

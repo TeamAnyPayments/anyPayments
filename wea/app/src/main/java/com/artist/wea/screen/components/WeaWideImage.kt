@@ -31,9 +31,10 @@ fun WeaWideImage(
         contentScale = contentScale,
         circularReveal = CircularReveal(duration = 100), // 이미지 렌더링 시 효과
         // 이미지 로딩 전 표시할 place holder 이미지
-        placeHolder = painterResource(id = defImgID),
+        // 이미지 로딩 전 표시할 place holder 이미지
+        placeHolder = painterResource(id = R.drawable.icon_loading),
         // 에러 발생 시 표시할 이미지
-        error = painterResource(id = defImgID),
+        error = painterResource(id = R.drawable.icon_no_image),
         modifier = modifier
             .fillMaxWidth()
             .height(height)

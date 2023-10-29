@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
@@ -20,10 +22,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
+import com.artist.wea.constants.GlobalState.Companion.bookMarkedArtist
+import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.screen.components.ArtistInfoItem
 import com.artist.wea.screen.components.PageTopBar
-import com.artist.wea.constants.DummyValues
-import com.artist.wea.constants.get14TextStyle
+import com.artist.wea.screen.components.ReplaceImage
 
 // 아티스트 찜목록 페이지
 @Composable
@@ -44,7 +47,8 @@ fun MyArtistPage(
         val userName:String = "홍길동" // TODO prefs로부터 사용자 이름 불러오기
 
         // 아티스트 정보
-        val artistInfoList = DummyValues().memberList
+        val artistInfoList = bookMarkedArtist;
+
 
         // list..
         val scrollState = rememberScrollState()
@@ -72,15 +76,36 @@ fun MyArtistPage(
                     modifier = Modifier.align(Alignment.Center)
                 )
             }
-            // 찜 아티스트
-            artistInfoList.forEachIndexed{index, artistInfo ->
-                ArtistInfoItem(
-                    navController = navController,
-                    artistInfo = artistInfo,
-                    modifier = Modifier
-                        .padding(16.dp, 8.dp),
-                    hasLine = false
-                )
+            // TODO.. 북마크한 아티스트들 공백 여부 추가
+            if (bookMarkedArtist.isEmpty()){
+
+                Box(modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(16.dp, 12.dp)
+                ){
+                    ReplaceImage(
+                        imageModel = R.drawable.icon_no_bookmark,
+                        modifier = Modifier
+                            .width(256.dp)
+                            .height(128.dp)
+                            .align(Alignment.Center)
+                    )
+                }
+
+
+            }else {
+                // 찜 아티스트
+                artistInfoList.values.forEach{ artistInfo ->
+                    ArtistInfoItem(
+                        navController = navController,
+                        artistInfo = artistInfo,
+                        modifier = Modifier
+                            .padding(16.dp, 8.dp),
+                        hasLine = false
+                    )
+                }
+
             }
         }
     }

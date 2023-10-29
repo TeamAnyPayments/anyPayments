@@ -31,6 +31,7 @@
                 android:id="@+id/pay_button"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
+                android:text="@string/btn_txt_toss_payments_prepare"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"

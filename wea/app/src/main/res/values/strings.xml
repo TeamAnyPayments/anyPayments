@@ -147,5 +147,8 @@
     <string name="text_login_fail">로그인에 실패하였습니다...</string>
     <string name="txt_pay_complete">결제가 완료되었습니다.</string>
     <string name="txt_pay_fail">결제에 실패하였습니다.</string>
+    <string name="btn_txt_toss_payments_prepare">...</string>
+    <string name="btn_txt_toss_payments_ready">결제하기</string>
+
 
 </resources>

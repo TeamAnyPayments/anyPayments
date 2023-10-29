@@ -2,7 +2,6 @@ package com.artist.wea.screen.pages
 
 import android.app.Activity
 import android.content.Context
-import android.graphics.Bitmap
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -36,11 +35,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
 import com.artist.wea.R
-import com.artist.wea.screen.components.InfoUnit
-import com.artist.wea.screen.components.LogOutAlert
-import com.artist.wea.screen.components.PageTopBar
-import com.artist.wea.screen.components.ShowProfileDialog
-import com.artist.wea.screen.components.WeaIconImage
+import com.artist.wea.constants.GlobalState
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.constants.getDefTextStyle
@@ -48,6 +43,11 @@ import com.artist.wea.data.UserProfile
 import com.artist.wea.network.instance.Retrofit
 import com.artist.wea.network.model.RegisterViewModel
 import com.artist.wea.network.repository.RegisterRepository
+import com.artist.wea.screen.components.InfoUnit
+import com.artist.wea.screen.components.LogOutAlert
+import com.artist.wea.screen.components.PageTopBar
+import com.artist.wea.screen.components.ShowProfileDialog
+import com.artist.wea.screen.components.WeaIconImage
 import com.artist.wea.util.JSONParser
 import com.artist.wea.util.PhotoSelector
 import com.artist.wea.util.PreferenceUtil
@@ -67,7 +67,7 @@ fun UserProfilePage(
     val repository = RegisterRepository()
     val viewModel = RegisterViewModel(repository)
 
-    val profileBitmap = remember { mutableStateOf<Bitmap?>(null) } //
+    // val profileBitmap = remember { GlobalState.profileBitmap }
     // 사진 불러오기 기능
     val photoSelector = PhotoSelector()
     val takePhotoFromAlbumLauncher = // 갤러리에서 사진 가져오기
@@ -78,7 +78,7 @@ fun UserProfilePage(
                     photoSelector.setImageToVariable(
                         context = context,
                         uri = uri,
-                        imageSource = profileBitmap,
+                        imageSource = GlobalState.profileBitmap,
                         fileName = "user_profile"
                     )
                 } ?: run {
@@ -130,7 +130,7 @@ fun UserProfilePage(
     ShowProfileDialog( // 사용자 이미지 다이얼로그
         visible = modalVisibleState.value,
         defaultImageURL = userProfile.value.profileURL,
-        localImgBitmap = profileBitmap.value,
+        localImgBitmap = GlobalState.profileBitmap.value,
         onDismissRequest = {
             modalVisibleState.value = false
         })
@@ -179,7 +179,7 @@ fun UserProfilePage(
             WeaIconImage(
                 imgUrl = userProfile.value.profileURL,
                 size = 144.dp,
-                bitmap = profileBitmap.value,
+                bitmap = GlobalState.profileBitmap.value,
                 isClip = true,
                 modifier = Modifier.combinedClickable(
                     onClick = {

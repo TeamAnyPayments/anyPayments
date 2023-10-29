@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,8 +30,7 @@ fun TitleCapsuleSearchForm(
     var selectList = remember { mutableStateListOf<String>() }
     Column(modifier = Modifier
         .fillMaxWidth()
-        .wrapContentHeight()
-        .padding(8.dp, 8.dp),
+        .wrapContentHeight(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.Start
     ) {

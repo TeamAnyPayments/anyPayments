@@ -1,36 +1,15 @@
 package com.artist.wea.screen.pages
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.Place
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
-import androidx.compose.material3.TabRowDefaults
-import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.artist.wea.R
 import com.artist.wea.screen.components.ConcertListComponent
-import com.artist.wea.screen.components.NaverMapComponent
 import com.artist.wea.screen.components.PageTopBar
-import com.artist.wea.data.TabItem
-import kotlinx.coroutines.launch
 
 // 콘서트 검색 페이지
 @OptIn(ExperimentalFoundationApi::class)
@@ -41,6 +20,7 @@ fun SearchConcertPage(
         Modifier
             .fillMaxSize()
 ){
+    /*
     // 탭 items
     val tabs = listOf(
         TabItem(
@@ -49,7 +29,8 @@ fun SearchConcertPage(
             screen = {
                 NaverMapComponent(
                     navController = navController,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize(),
+                    hasMarkList = true
                 )
             }
         ),
@@ -67,6 +48,8 @@ fun SearchConcertPage(
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
 
+     */
+
     // 지도찾기 페이지 본체
     Column (
         modifier = modifier
@@ -75,6 +58,9 @@ fun SearchConcertPage(
             navController = navController,
             pageTitle = stringResource(R.string.text_pgname_find_concert),
         )
+
+        // 네이버 맵 마커 여러개 찍는 방법을 모르겠어서 일단 하나로 합침
+        /*
         TabRow(
             selectedTabIndex = pagerState.currentPage,
             modifier = Modifier
@@ -107,6 +93,11 @@ fun SearchConcertPage(
         ) {
             tabs[pagerState.currentPage].screen()
         }
+         */
+        ConcertListComponent(
+            navController = navController,
+            modifier = Modifier.fillMaxSize(),
+        )
     }
 
 }

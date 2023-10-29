@@ -27,12 +27,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
 import com.artist.wea.R
-import com.artist.wea.screen.components.ClientGuideBanner
-import com.artist.wea.screen.components.PageTopBar
 import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.constants.getOutlinedTextFieldColors
 import com.artist.wea.network.model.RegisterViewModel
 import com.artist.wea.network.repository.RegisterRepository
+import com.artist.wea.screen.components.ClientGuideBanner
+import com.artist.wea.screen.components.PageTopBar
 import com.artist.wea.util.ToastManager.Companion.shortToast
 
 // 고객 문의사항 접수 페이지 (CS)
@@ -76,6 +76,7 @@ fun ClientServicePage(
                     viewModel.sendInquiryRes.observe(mOwner, Observer {
                         shortToast(context, sendCompleteText)
                         Log.d("FIND_PWD_RES:::", "${it.toString()}")
+                        navController.popBackStack()
                     })
                 }
             }
