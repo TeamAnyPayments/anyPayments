@@ -52,15 +52,22 @@ import com.artist.wea.util.ToastManager
 fun ArtistInfoPage(
     navController: NavHostController,
 ){
-    // TODO 현재 사용자가 아티스트 프로필을 수정할 권한이 있는지 판단할 boolean 변수
-    val isEditable = false;
 
     // 라우팅 해서 들어온 아티스트 조회 정보들..
     // 아티스트 아이디
     val argument = navController?.currentBackStackEntry?.arguments;
     val id =  argument?.getString("userId").toString()?:"none"
-    val artistInfo = DummyValues().artistSearchList[id]?: ArtistInfo()
+    val artistInfoLog = DummyValues.artistSearchList[id]?: ArtistInfo()
+
+    // temp
+    val joinArtist = GlobalState.joinedArtistInfo.value
+    val flag = joinArtist.artistName.isEmpty() || id != joinArtist.userId;
+    val artistInfo = if(flag)  artistInfoLog else joinArtist
     currentArtistInfo.value = artistInfo
+
+    // TODO 현재 사용자가 아티스트 프로필을 수정할 권한이 있는지 판단할 boolean 변수
+    val isEditable = joinArtist.userId == id;
+
 
     var isBookMarked = remember {
         mutableStateOf(GlobalState.bookMarkedArtist[currentArtistInfo.value.userId] != null)
@@ -121,7 +128,8 @@ fun ArtistInfoPage(
                 modifier = Modifier.align(Alignment.TopStart),
                 imgUrl = artistInfo.bgImgURL,
                 defImgID = R.drawable.bg_def_artist,
-                height = 164.dp
+                height = 164.dp,
+                bitmap = artistInfo.bgBitmap
             )
 
             // 아티스트 프로필
@@ -134,6 +142,7 @@ fun ArtistInfoPage(
                 imgUrl = artistInfo.profileImgURL,
                 size = 144.dp,
                 isClip = true,
+                bitmap = artistInfo.profileBitmap
             )
 
             // 아티스트 정보 layer
@@ -211,7 +220,7 @@ fun ArtistInfoPage(
         )
 
         // 멤버 소개
-        val artistInfoList = DummyValues().memberList
+        val artistInfoList = DummyValues.memberList
 
         InfoUnit(
             modifier = Modifier.padding(16.dp, 12.dp),
@@ -230,7 +239,8 @@ fun ArtistInfoPage(
         // 공연 이력
         DummyValues.name = artistInfo.artistName
         DummyValues.url = artistInfo.profileImgURL
-        val concert = DummyValues().concertLogList[0]
+        val concert = DummyValues.concertLogList[0]
+        concert.artistName = artistInfo.artistName
 
         // History
         InfoUnit(
@@ -244,7 +254,7 @@ fun ArtistInfoPage(
                         modifier = Modifier
                             .fillMaxWidth()
                             .wrapContentHeight(),
-                        isActive = concert.concertId == DummyValues().defConcertInfo.concertId // TODO 지우기 .. temp..
+                        isActive = concert.concertId == DummyValues.defConcertInfo.concertId // TODO 지우기 .. temp..
                     )
                 }
             },

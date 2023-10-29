@@ -38,6 +38,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavHostController
 import com.artist.wea.R
+import com.artist.wea.constants.DummyValues
+import com.artist.wea.constants.GlobalState
+import com.artist.wea.constants.PageRoutes
+import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.screen.components.ArtistInfoItem
 import com.artist.wea.screen.components.ConcertSearchItem
 import com.artist.wea.screen.components.InfoUnit
@@ -45,10 +49,6 @@ import com.artist.wea.screen.components.PageTopBar
 import com.artist.wea.screen.components.TitleInputForm
 import com.artist.wea.screen.components.WeaIconImage
 import com.artist.wea.screen.components.WeaWideImage
-import com.artist.wea.constants.DummyValues
-import com.artist.wea.constants.GlobalState.Companion.currentArtistInfo
-import com.artist.wea.constants.PageRoutes
-import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.util.PhotoSelector
 import com.artist.wea.util.ToastManager.Companion.shortToast
 
@@ -60,11 +60,12 @@ fun ArtistInfoModifyPage(
     val context = LocalContext.current
 
     // Companion State 클래스의 값을 통해 현재 보고 있었던 프로필 정보의 값을 init
-    var artistInfo = currentArtistInfo.value
+    // var artistInfo = currentArtistInfo.value
+    var artistInfo = GlobalState.joinedArtistInfo.value
 
     val currentIdx = remember { mutableStateOf<Int>(0) } // 0 or 1
-    val profileBitmap = remember { mutableStateOf<Bitmap?>(null) } // 아티스트 프로필 이미지 >> LOCAL
-    val backgroundBitmap = remember { mutableStateOf<Bitmap?>(null) } // 배경화면 이미지 >> LOCAL
+    val profileBitmap = remember { mutableStateOf<Bitmap?>(artistInfo.profileBitmap) } // 아티스트 프로필 이미지 >> LOCAL
+    val backgroundBitmap = remember { mutableStateOf<Bitmap?>(artistInfo.bgBitmap) } // 배경화면 이미지 >> LOCAL
 
     // 사진 불러오기 기능
     val photoSelector = PhotoSelector()
@@ -76,7 +77,7 @@ fun ArtistInfoModifyPage(
 
                     Log.d("IMAGE:::", "${uri.toString()}")
 
-                    val imgSource = if(currentIdx.value == 0) backgroundBitmap else profileBitmap
+                    val imgSource = if(currentIdx.value == 0)  backgroundBitmap else profileBitmap
                     val fileName = if(currentIdx.value == 0) "artist_background" else "artist_profile"
 
                     photoSelector.setImageToVariable(
@@ -129,7 +130,16 @@ fun ArtistInfoModifyPage(
                     .zIndex(2f),
                 hasTransparency = true,
                 rightMenuText = "저장",
-                rightMenuAction = { navController.popBackStack() },
+                rightMenuAction = {
+
+                    // temp
+                    val modifiedArtistInfo = artistInfo.copy()
+                    modifiedArtistInfo.bgBitmap = backgroundBitmap.value
+                    modifiedArtistInfo.profileBitmap = profileBitmap.value
+                    GlobalState.joinedArtistInfo.value = modifiedArtistInfo
+
+                    navController.popBackStack()
+                },
                 rightMenuTextStyle = get14TextStyle()
                     .copy(color = colorResource(id = R.color.white)),
             )
@@ -271,7 +281,7 @@ fun ArtistInfoModifyPage(
         }
 
         // 멤버 소개
-        val artistInfoList = DummyValues().memberList
+        val artistInfoList = DummyValues.memberList
 
         InfoUnit(
             modifier = Modifier.padding(16.dp, 12.dp),
@@ -293,7 +303,7 @@ fun ArtistInfoModifyPage(
         )
 
         // 공연 이력
-        val concertList = DummyValues().concertLogList
+        val concertList = DummyValues.concertLogList
 
         // History
         InfoUnit(

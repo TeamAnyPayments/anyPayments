@@ -36,7 +36,7 @@ fun TitleGuideImageInputForm(
     guideText:String,
     isWide:Boolean = true,
     size: Dp = 128.dp
-){
+):Bitmap?{
 
     val context = LocalContext.current
     val imageBitmap = remember { mutableStateOf<Bitmap?>(null) } //
@@ -116,4 +116,6 @@ fun TitleGuideImageInputForm(
             )
         }
     }
+
+    return imageBitmap.value
 }

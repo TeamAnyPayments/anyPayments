@@ -30,7 +30,7 @@ import com.artist.wea.data.ArtistInfo
 fun SendInviteComponent(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    memberList:List<ArtistInfo> = DummyValues().crewList
+    memberList:List<ArtistInfo> = DummyValues.crewList
 
 ) {
     Column(

@@ -34,12 +34,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
-import com.artist.wea.screen.components.ArtistRankItem
-import com.artist.wea.screen.components.PageTopBar
-import com.artist.wea.data.ArtistRankData
-import com.artist.wea.data.TabItem
 import com.artist.wea.constants.DummyValues
 import com.artist.wea.constants.get12TextStyle
+import com.artist.wea.data.ArtistRankData
+import com.artist.wea.data.TabItem
+import com.artist.wea.screen.components.ArtistRankItem
+import com.artist.wea.screen.components.PageTopBar
 import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.glide.GlideImage
 import kotlinx.coroutines.launch
@@ -54,7 +54,7 @@ fun ArtistRankPage(
         Modifier
             .fillMaxSize(),
     // 랭크 아이템 리스트
-    rankList: MutableList<ArtistRankData> = DummyValues().rankList
+    rankList: MutableList<ArtistRankData> = DummyValues.rankList
 ){
 
     // 탭 items
