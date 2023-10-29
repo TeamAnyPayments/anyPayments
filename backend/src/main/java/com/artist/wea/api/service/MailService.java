@@ -18,4 +18,7 @@ public interface MailService {
     void findId(String email, String name) throws MessagingException, UnsupportedEncodingException;
 
     String findPass(String email, String name, String userId) throws MessagingException, UnsupportedEncodingException;
+
+    void sendMail(String userEmail, String content) throws UnsupportedEncodingException;
+
 }

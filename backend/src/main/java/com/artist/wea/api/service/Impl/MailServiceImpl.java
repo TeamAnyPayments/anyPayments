@@ -10,6 +10,7 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
@@ -154,6 +155,24 @@ public class MailServiceImpl implements MailService {
         }
 
         return ePw; // 메일로 보냈던 인증 코드를 서버로 반환
+    }
+
+    @Override
+    public void sendMail(String email, String content) throws UnsupportedEncodingException {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo("wea-support@naver.com"); // 관리자 메일 주소
+        message.setSubject("사용자 문의");
+        message.setText("사용자 이메일: " + email + "\n\n" + "문의 내용:\n" + content);
+
+        try {// 예외처리
+            message.setFrom("wea-support@naver.com");// 보내는 사람
+            mailSender.send(message);
+        } catch (MailException es) {
+            es.printStackTrace();
+            throw new IllegalArgumentException();
+        } catch (RuntimeException e) {
+            throw new IllegalArgumentException();
+        }
     }
 
 }

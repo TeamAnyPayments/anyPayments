@@ -53,13 +53,18 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
+    // Tika
+    implementation 'org.apache.tika:tika-core:1.24'
+
     // Spring Boot Devtools
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // Swagger 3
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 
     // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 tasks.named('test') {

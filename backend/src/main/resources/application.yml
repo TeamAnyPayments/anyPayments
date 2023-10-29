@@ -84,3 +84,7 @@ mail:
     ssl:
       trust: ${SMTP_SSL_TRUST}
       enable: ${SMTP_SSL_ENABLE}
+
+# File Configuration
+file:
+  path: ${FILE_PATH}
