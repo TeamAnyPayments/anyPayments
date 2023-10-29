@@ -2,6 +2,7 @@ package com.artist.wea.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.SharedPreferences.Editor
 
 // 토큰과 같은 민감 정보를 저장하고 관리허기 위한
 // SharePreference 객체 도구
@@ -30,7 +31,9 @@ class PreferenceUtil(context: Context) {
     }
 
     fun clearAll():Boolean{
-        editer.clear().commit()
+        val editor: Editor = prefs.edit()
+        editor.clear()
+        editor.commit()
         return true
     }
 

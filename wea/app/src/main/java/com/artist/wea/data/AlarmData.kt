@@ -1,4 +1,4 @@
-package com.artist.wea.components.uidtclass
+package com.artist.wea.data
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
