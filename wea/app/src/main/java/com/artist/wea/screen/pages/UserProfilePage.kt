@@ -266,7 +266,11 @@ fun UserProfilePage(
                                 ),
                             modifier = Modifier.clickable {
                                 // 회원 탈퇴는 회원 탈퇴 양식을 작성하도록 페이지 이동
-                                navController.navigate(PageRoutes.UserQuit.route)
+                                if(GlobalState.isUser.value){
+                                    navController.navigate(PageRoutes.UserQuit.route)
+                                }else {
+                                    shortToast(context, "이미 탈퇴 신청이 접수 되었습니다.")
+                                }
                             }
                         )
                     }

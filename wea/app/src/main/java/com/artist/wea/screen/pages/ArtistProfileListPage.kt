@@ -15,11 +15,11 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
+import com.artist.wea.constants.DummyValues
+import com.artist.wea.constants.PageRoutes
 import com.artist.wea.screen.components.ArtistProfileItem
 import com.artist.wea.screen.components.Badge
 import com.artist.wea.screen.components.PageTopBar
-import com.artist.wea.constants.DummyValues
-import com.artist.wea.constants.PageRoutes
 
 @Composable
 fun ArtistProfileListPage(
@@ -37,7 +37,7 @@ fun ArtistProfileListPage(
             pageTitle = "아티스트 프로필 편집"
         )
 
-        val memberList = DummyValues().crewList
+        val memberList = DummyValues.crewList
 
         // list..
         val scrollState = rememberScrollState()

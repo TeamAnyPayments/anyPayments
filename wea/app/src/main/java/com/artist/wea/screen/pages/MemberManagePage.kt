@@ -34,13 +34,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
-import com.artist.wea.screen.components.LargeButton
-import com.artist.wea.screen.components.MemberItem
-import com.artist.wea.screen.components.PageTopBar
 import com.artist.wea.constants.DummyValues
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.getBtnColorByIdx
 import com.artist.wea.constants.getMenuItemColors
+import com.artist.wea.screen.components.LargeButton
+import com.artist.wea.screen.components.MemberItem
+import com.artist.wea.screen.components.PageTopBar
 import com.artist.wea.util.ToastManager.Companion.shortToast
 
 // 아티스트 멤버 관리 페이지
@@ -76,7 +76,7 @@ fun MemberManagePage(
                 .verticalScroll(scrollState),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            val memberList = DummyValues().crewList
+            val memberList = DummyValues.crewList
 
             val searchOptions = listOf("리더", "멤버") // TODO.. 백엔드 DTO와 함께 분류 구분해야함
             memberList.forEach {
