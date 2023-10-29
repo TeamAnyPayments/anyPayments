@@ -1,11 +1,11 @@
 
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
+
 }
 
 android {
@@ -24,29 +24,15 @@ android {
             useSupportLibrary = true
         }
 
-        manifestPlaceholders["NAVER_CLIENT_ID"] =  "NAVER_CLIENT_ID"
+        manifestPlaceholders["NAVER_CLIENT_ID"] = "NAVER_CLIENT_ID"
         buildConfigField("String", "NAVER_CLIENT_ID", getApiKey("NAVER_CLIENT_ID"))
 
-        android.applicationVariants.all { variant ->
-            // 릴리즈 apk 파일을 생성할 때 파일명에 규칙을 주도록 하자.
-            if (variant.buildType.name == "release" || variant.buildType.name == "debug") {
-                variant.outputs.all { output ->
-                    val date = LocalDateTime.now()
-                    val formattedDate = SimpleDateFormat("yyyy_MM_dd").format(date)
+        manifestPlaceholders["TOSS_CLIENT_KEY"] = "TOSS_CLIENT_KEY"
+        buildConfigField("String", "TOSS_CLIENT_KEY", getApiKey("TOSS_CLIENT_KEY"))
 
-                    // apk 파일명에 규칙 주기
-                    if (output.outputFile != null && output.outputFile.name.endsWith(".aab")) {
-                        val appPrefix = "wea"
-                        val versionName = variant.versionName
-                        val buildType = variant.buildType.name
-                        val alignedFileName = "${appPrefix}_${buildType}_${formattedDate}-${versionName}.aab"
-                        output.outputFile.renameTo(File(alignedFileName))
-                    }
-                    true
-                }
-            }
-            variant.buildType.name == "release" || variant.buildType.name == "debug"
-        }
+        manifestPlaceholders["TOSS_SECRET_KEY"] = "TOSS_SECRET_KEY"
+        buildConfigField("String", "TOSS_SECRET_KEY", getApiKey("TOSS_SECRET_KEY"))
+
     }
 
 
@@ -54,6 +40,8 @@ android {
 
         debug {
             buildConfigField("String", "NAVER_CLIENT_ID", getApiKey("NAVER_CLIENT_ID"))
+            buildConfigField("String", "TOSS_CLIENT_KEY", getApiKey("TOSS_CLIENT_KEY"))
+            buildConfigField("String", "TOSS_SECRET_KEY", getApiKey("TOSS_SECRET_KEY"))
         }
         release {
             isMinifyEnabled = false
@@ -62,6 +50,8 @@ android {
                 "proguard-rules.pro"
             )
             buildConfigField("String", "NAVER_CLIENT_ID", getApiKey("NAVER_CLIENT_ID"))
+            buildConfigField("String", "TOSS_CLIENT_KEY", getApiKey("TOSS_CLIENT_KEY"))
+            buildConfigField("String", "TOSS_SECRET_KEY", getApiKey("TOSS_SECRET_KEY"))
         }
     }
     compileOptions {
@@ -83,6 +73,9 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+    }
+    kotlin {
+        jvmToolchain(8)
     }
 }
 
@@ -127,6 +120,7 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
+
     // Cookie Management
     // implementation("com.github.franmontiel:PersistentCookieJar:v1.0.1'")
     // firebase

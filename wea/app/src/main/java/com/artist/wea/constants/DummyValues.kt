@@ -8,9 +8,9 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.colorResource
 import com.artist.wea.R
-import com.artist.wea.components.data.AlarmData
-import com.artist.wea.components.data.ArtistRankData
+import com.artist.wea.data.AlarmData
 import com.artist.wea.data.ArtistInfo
+import com.artist.wea.data.ArtistRankData
 import com.artist.wea.data.ConcertInfo
 import com.artist.wea.data.ConcertListInfo
 import com.artist.wea.data.PaymentItemInfo
@@ -24,7 +24,7 @@ class DummyValues {
             userId = "abc001",
             profileImgURL = "https://image.kmib.co.kr/online_image/2014/1015/201410152053_61170008765071_1.jpg",
             bgImgURL = "https://img.hankyung.com/photo/202205/01.29843403.1.jpg",
-            artistName = "ENJOY",
+            artistName = "로드 버스킹",
             comment = "안녕하세요, 행복을 노래하는 가수입니다.",
             mainIntroduce = "안녕하세요 Sparrow Spirit!\n" +
                     "\n" +
@@ -44,13 +44,14 @@ class DummyValues {
                     "인스타그램\n" +
                     "@abc_123_heart",
         ),
+
         Pair(
             "abc002",
             ArtistInfo(
                 userId = "abc002",
                 profileImgURL = "https://c8.alamy.com/comp/HYY9TT/profile-of-a-girl-and-crayons-HYY9TT.jpg",
-                artistName = "무슨무슨 아티스트",
-                comment = "이번 생은 처음이라... 모든걸 다 잘할 순 없잖아"
+                artistName = "레트로 레벨 (Retro Level)",
+                comment = "레트로 팝, 디스코, 우리 함께 즐겨볼래요?"
             )
         ),
         Pair(
@@ -58,8 +59,8 @@ class DummyValues {
             ArtistInfo(
                 userId = "abc003",
                 profileImgURL= "https://i.pinimg.com/236x/38/9a/77/389a77c6b7f44bab5d3076365b306527--vektor-scarlett-ohara.jpg",
-                artistName = "쏼라쏼라 아티스트",
-                comment = "무더운 여름 밤, 한강 공원에서 함께 힐링할래요?"
+                artistName = "로보틱 스트라이크 (Robotic Strike)",
+                comment = "Rock & Roll !! 일렉트로닉, 퓨처 베이스의 세계로 당신을 초대합니다."
             )
         ),
         Pair(
@@ -67,7 +68,7 @@ class DummyValues {
             ArtistInfo(
                 userId = "abc004",
                 profileImgURL= "https://images.ctfassets.net/lnhrh9gqejzl/4a2YAZ0WkM4AcsYciUQMWA/15a089fc77c7dc9953ace8a3b23fdcde/2018-03-07.gif?fm=jpg",
-                artistName = "블라블라 아티스트",
+                artistName = "화이어파이트 (Fireflight)",
                 comment = "좋은 음악 함께 공유해요"
             )
         ),
@@ -75,17 +76,17 @@ class DummyValues {
             "abc005",
             ArtistInfo(
                 userId = "abc005",
-                profileImgURL ="https://c8.alamy.com/comp/HYY9TT/profile-of-a-girl-and-crayons-HYY9TT.jpg",
-                artistName = "무슨무슨 아티스트",
-                comment = "이번 생은 처음이라... 모든걸 다 잘할 순 없잖아"
+                profileImgURL ="https://media.istockphoto.com/id/1125877063/photo/mixed-race-woman-singing-and-playing-guitar.jpg?s=612x612&w=0&k=20&c=23unW_Ugni5lUvAY2nccGkxtWQ5FtkiWgRyyN6wZMFs=",
+                artistName = "루미노브스 (Luminovos)",
+                comment = "신스팝, 일렉트로닉의 전도사 입니다."
             )
         ),
         Pair(
             "abc006",
             ArtistInfo(
                 userId = "abc006",
-                profileImgURL= "https://i.pinimg.com/236x/38/9a/77/389a77c6b7f44bab5d3076365b306527--vektor-scarlett-ohara.jpg",
-                artistName = "쏼라쏼라 아티스트",
+                profileImgURL= "https://media.istockphoto.com/id/1297166315/photo/group-of-carefree-friends-having-fun-while-commuting-by-public-transport.jpg?s=612x612&w=0&k=20&c=duvy-w7MbIFsV_pQCSRGB66hcJf-ZgU-aT5tI6ELuUw=",
+                artistName = "에코서클 (Echo Circle)",
                 comment = "무더운 여름 밤, 한강 공원에서 함께 힐링할래요?"
             )
         ),
@@ -93,17 +94,17 @@ class DummyValues {
             "abc007",
             ArtistInfo(
                 userId = "abc007",
-                profileImgURL= "https://images.ctfassets.net/lnhrh9gqejzl/4a2YAZ0WkM4AcsYciUQMWA/15a089fc77c7dc9953ace8a3b23fdcde/2018-03-07.gif?fm=jpg",
-                artistName = "블라블라 아티스트",
-                comment = "좋은 음악 함께 공유해요"
+                profileImgURL= "https://cdn.pixabay.com/photo/2016/01/14/06/09/woman-1139397_640.jpg",
+                artistName = "리프리스트 (Refreest)",
+                comment = "레게, 댄스홀 그리고 당신..."
             )
         ),
         Pair(
             "abc008",
             ArtistInfo(
                 userId = "abc008",
-                profileImgURL= "https://c8.alamy.com/comp/HYY9TT/profile-of-a-girl-and-crayons-HYY9TT.jpg",
-                artistName = "무슨무슨 아티스트",
+                profileImgURL= "https://media.gettyimages.com/id/1221351454/photo/portrait-of-a-japanese-guitar-player-at-home-studio.jpg?s=612x612&w=gi&k=20&c=ecFLVtyehqPqX9w2esmeBhpXbeBxsvUVJY0FibGrutU=",
+                artistName = "블루스피릿 (Bluespirit)",
                 comment = "이번 생은 처음이라... 모든걸 다 잘할 순 없잖아"
             )
         ),
@@ -111,9 +112,9 @@ class DummyValues {
             "abc009",
             ArtistInfo(
                 userId = "abc009",
-                profileImgURL= "https://i.pinimg.com/236x/38/9a/77/389a77c6b7f44bab5d3076365b306527--vektor-scarlett-ohara.jpg",
-                artistName = "쏼라쏼라 아티스트",
-                comment = "무더운 여름 밤, 한강 공원에서 함께 힐링할래요?"
+                profileImgURL= "https://musicindustryhowtoimages.s3.amazonaws.com/wp-content/uploads/2019/09/24183938/become-musician.jpg",
+                artistName = "크리스탈크래프트 (Crystal Craft)",
+                comment = "톡톡 튀는 신스웨이브 & 신스팝의 세계로 당신을 초대합니다."
             )
         )
     )
@@ -121,60 +122,60 @@ class DummyValues {
 
     val memberList = listOf<ArtistInfo>(
         ArtistInfo(
-            userId = "abc001",
-            profileImgURL = "https://images.ctfassets.net/lnhrh9gqejzl/4a2YAZ0WkM4AcsYciUQMWA/15a089fc77c7dc9953ace8a3b23fdcde/2018-03-07.gif?fm=jpg",
-            artistName = "블라블라 아티스트",
-            comment = "좋은 음악 함께 공유해요"
+            userId = "abc005",
+            profileImgURL ="https://media.istockphoto.com/id/1125877063/photo/mixed-race-woman-singing-and-playing-guitar.jpg?s=612x612&w=0&k=20&c=23unW_Ugni5lUvAY2nccGkxtWQ5FtkiWgRyyN6wZMFs=",
+            artistName = "루미노브스 (Luminovos)",
+            comment = "신스팝, 일렉트로닉의 전도사 입니다."
         ),
         ArtistInfo(
-            userId = "abc002",
-            profileImgURL = "https://c8.alamy.com/comp/HYY9TT/profile-of-a-girl-and-crayons-HYY9TT.jpg",
-            artistName = "쏼라쏼라 아티스트",
-            comment = "이번 생은 처음이라... 모든걸 다 잘할 순 없잖아"
+            userId = "abc009",
+            profileImgURL= "https://musicindustryhowtoimages.s3.amazonaws.com/wp-content/uploads/2019/09/24183938/become-musician.jpg",
+            artistName = "크리스탈크래프트 (Crystal Craft)",
+            comment = "톡톡 튀는 신스웨이브 & 신스팝의 세계로 당신을 초대합니다."
         ),
         ArtistInfo(
             userId = "abc003",
-            profileImgURL = "https://i.pinimg.com/236x/38/9a/77/389a77c6b7f44bab5d3076365b306527--vektor-scarlett-ohara.jpg",
-            artistName = "울라울라 아티스트",
-            comment = "무더운 여름 밤, 한강 공원에서 함께 힐링할래요?"
+            profileImgURL= "https://i.pinimg.com/236x/38/9a/77/389a77c6b7f44bab5d3076365b306527--vektor-scarlett-ohara.jpg",
+            artistName = "로보틱 스트라이크 (Robotic Strike)",
+            comment = "Rock & Roll !! 일렉트로닉, 퓨처 베이스의 세계로 당신을 초대합니다."
         )
     )
 
     val rankList = mutableListOf<ArtistRankData>(
         ArtistRankData(
             no = 1,
-            artistName = "무슨무슨 아티스트",
+            artistName = "레트로 레벨 (Retro Level)",
             artistAddress = "경기 고양시 일산서구",
             artistImgURL = "https://cdnimage.dailian.co.kr/news/202002/news_1581993821_869287_m_1.jpeg"
         ),
         ArtistRankData(
             no = 2,
-            artistName = "블라블라 아티스트",
+            artistName = "로보틱 스트라이크 (Robotic Strike)",
             artistAddress = "서울 특별시 강남구",
             artistImgURL = "https://cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/2Z3MD7RDMQIRSUWM5ASEVKSKAY.jpg"
 
         ),
         ArtistRankData(
             no = 3,
-            artistName = "룰라룰라 아티스트",
+            artistName = "화이어파이트 (Fireflight)",
             artistAddress = "인천광역시 서구",
             artistImgURL = "https://www.kyongbuk.co.kr/news/photo/202105/2076224_500129_3236.jpg"
         ),
         ArtistRankData(
             no = 4,
-            artistName = "훌라훌라 아티스트",
+            artistName = "루미노브스 (Luminovos)",
             artistAddress = "경기 안산시 단원구",
             artistImgURL = "https://cdn.dkilbo.com/news/photo/202103/328795_222527_1909.jpg"
         ),
         ArtistRankData(
             no = 5,
-            artistName = "눈누난나 아티스트",
+            artistName = "에코서클 (Echo Circle)",
             artistAddress = "경기 수원시 권선구",
             artistImgURL = "https://news.tbs.seoul.kr/Upload/Image/20221202/00000000000001308345.jpg"
         ),
         ArtistRankData(
             no = 6,
-            artistName = "우리동네 아티스트",
+            artistName = "리프리스트 (Refreest)",
             artistAddress = "서을 특별시 관악구",
             artistImgURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyemqDmEPapQHDeVBwwFuMZeTkp97FvTryJA&usqp=CAU"
         )
@@ -231,7 +232,7 @@ class DummyValues {
         ConcertListInfo(
             concertId = "aaa-000-001",
             imgURL = "https://www.pinkvilla.com/images/2023-01/167366856_ariana-grande-1_1280*720.jpg",
-            artistName = "무슨무슨 아티스트",
+            artistName = " 레트로 레벨 (Retro Level)",
             concertIntroduce = "우리는 모두 이번 생은 처음이니까 지금이..",
             location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞"
         ),
@@ -240,7 +241,7 @@ class DummyValues {
             ConcertListInfo(
                 concertId = "aaa-000-002",
                 imgURL = "https://ichef.bbci.co.uk/news/1536/cpsprodpb/98B4/production/_130129093_winner.png",
-                artistName = "블라블라 아티스트",
+                artistName = "로보틱 스트라이크 (Robotic Strike)",
                 concertIntroduce = "Drippin Your Self!, 감성 힙합 공연",
                 location = "서울 서대문구 신촌역로 17 GS 25 앞"
             )
@@ -249,7 +250,7 @@ class DummyValues {
             ConcertListInfo(
                 concertId = "aaa-000-003",
                 imgURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8jKhRZVaPp-lAxLEiHwl7CBosQM1G2HXrqA&usqp=CAU",
-                artistName = "울라울라 아티스트",
+                artistName = "화이어파이트 (Fireflight)",
                 concertIntroduce = "무더운 밤 잠이 오지 않는 그대를 위한 감성 힐링콘...",
                 location = "서울 마포구 와우산로21길 19-3 홍익문화공원"
             )
@@ -259,17 +260,18 @@ class DummyValues {
             ConcertListInfo(
                 concertId = "aaa-000-004",
                 imgURL = "https://www.pinkvilla.com/images/2023-01/167366856_ariana-grande-1_1280*720.jpg",
-                artistName = "무슨무슨 아티스트",
+                artistName = "루미노브스 (Luminovos)",
                 concertIntroduce = "우리는 모두 이번 생은 처음이니까 지금이..",
                 location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞"
             ),
         ),
+
         Pair(
             "aaa-000-005",
             ConcertListInfo(
                 concertId = "aaa-000-005",
                 imgURL = "https://ichef.bbci.co.uk/news/1536/cpsprodpb/98B4/production/_130129093_winner.png",
-                artistName = "블라블라 아티스트",
+                artistName = "루미노브스 (Luminovos)",
                 concertIntroduce = "Drippin Your Self!, 감성 힙합 공연",
                 location = "서울 서대문구 신촌역로 17 GS 25 앞"
             )
@@ -279,7 +281,7 @@ class DummyValues {
             ConcertListInfo(
                 concertId = "aaa-000-006",
                 imgURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8jKhRZVaPp-lAxLEiHwl7CBosQM1G2HXrqA&usqp=CAU",
-                artistName = "울라울라 아티스트",
+                artistName = "에코서클 (Echo Circle)",
                 concertIntroduce = "무더운 밤 잠이 오지 않는 그대를 위한 감성 힐링콘...",
                 location = "서울 마포구 와우산로21길 19-3 홍익문화공원"
             )
@@ -289,7 +291,7 @@ class DummyValues {
             ConcertListInfo(
                 concertId = "aaa-000-007",
                 imgURL = "https://www.pinkvilla.com/images/2023-01/167366856_ariana-grande-1_1280*720.jpg",
-                artistName = "무슨무슨 아티스트",
+                artistName = "리프리스트 (Refreest)",
                 concertIntroduce = "우리는 모두 이번 생은 처음이니까 지금이..",
                 location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞"
             )
@@ -299,7 +301,7 @@ class DummyValues {
             ConcertListInfo(
                 concertId = "aaa-000-008",
                 imgURL = "https://ichef.bbci.co.uk/news/1536/cpsprodpb/98B4/production/_130129093_winner.png",
-                artistName = "블라블라 아티스트",
+                artistName = "블루스피릿 (Bluespirit)",
                 concertIntroduce = "Drippin Your Self!, 감성 힙합 공연",
                 location = "서울 서대문구 신촌역로 17 GS 25 앞"
             )
@@ -309,7 +311,7 @@ class DummyValues {
             ConcertListInfo(
                 concertId = "aaa-000-009",
                 imgURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8jKhRZVaPp-lAxLEiHwl7CBosQM1G2HXrqA&usqp=CAU",
-                artistName = "울라울라 아티스트",
+                artistName = "크리스탈크래프트 (Crystal Craft)",
                 concertIntroduce = "무더운 밤 잠이 오지 않는 그대를 위한 감성 힐링콘...",
                 location = "서울 마포구 와우산로21길 19-3 홍익문화공원"
             )
@@ -320,7 +322,7 @@ class DummyValues {
     val defConcertInfo: ConcertInfo
         get() = ConcertInfo(
             concertId = "aaa-000-001",
-            concertTitle = "무슨무슨 버스킹",
+            concertTitle = "로드 버스킹",
             concertImgList = listOf(
                 "https://img.khan.co.kr/news/2022/05/13/l_2022051301001644400151139.jpg",
                 "https://i.ytimg.com/vi/udzpnOi63Jg/maxresdefault.jpg",
@@ -412,60 +414,60 @@ class DummyValues {
         )
     )
 
-
     // concert
+    var name = "로드 버스킹"
+    var url = "https://cdn.pixabay.com/photo/2014/05/21/15/18/musician-349790_640.jpg"
     val concertLogList = arrayOf<ConcertListInfo>(
         ConcertListInfo(
             concertId = "aaa-000-001",
-            imgURL = "https://www.pinkvilla.com/images/2023-01/167366856_ariana-grande-1_1280*720.jpg",
-            artistName = "무슨무슨 아티스트",
+            imgURL = url,
+            artistName = name,
             concertIntroduce = "우리는 모두 이번 생은 처음이니까 지금이..",
             location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞"
         ),
         ConcertListInfo(
             concertId = "aaa-000-002",
-            imgURL = "https://ichef.bbci.co.uk/news/1536/cpsprodpb/98B4/production/_130129093_winner.png",
-            artistName = "블라블라 아티스트",
+            imgURL = url,
+            artistName = name,
             concertIntroduce = "Drippin Your Self!, 감성 힙합 공연",
             location = "서울 서대문구 신촌역로 17 GS 25 앞"
         ),
         ConcertListInfo(
             concertId = "aaa-000-003",
-            imgURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8jKhRZVaPp-lAxLEiHwl7CBosQM1G2HXrqA&usqp=CAU",
-            artistName = "울라울라 아티스트",
+            imgURL = url,
+            artistName = name,
             concertIntroduce = "무더운 밤 잠이 오지 않는 그대를 위한 감성 힐링콘...",
             location = "서울 마포구 와우산로21길 19-3 홍익문화공원"
         ),
         ConcertListInfo(
             concertId = "aaa-000-004",
-            imgURL = "https://www.pinkvilla.com/images/2023-01/167366856_ariana-grande-1_1280*720.jpg",
-            artistName = "무슨무슨 아티스트",
+            imgURL = url,
+            artistName = name,
             concertIntroduce = "우리는 모두 이번 생은 처음이니까 지금이..",
             location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞"
         ),
         ConcertListInfo(
             concertId = "aaa-000-005",
-            imgURL = "https://ichef.bbci.co.uk/news/1536/cpsprodpb/98B4/production/_130129093_winner.png",
-            artistName = "블라블라 아티스트",
+            imgURL = url,
+            artistName = name,
             concertIntroduce = "Drippin Your Self!, 감성 힙합 공연",
             location = "서울 서대문구 신촌역로 17 GS 25 앞"
         ),
         ConcertListInfo(
             concertId = "aaa-000-006",
-            imgURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8jKhRZVaPp-lAxLEiHwl7CBosQM1G2HXrqA&usqp=CAU",
-            artistName = "울라울라 아티스트",
+            imgURL = url,
+            artistName = name,
             concertIntroduce = "무더운 밤 잠이 오지 않는 그대를 위한 감성 힐링콘...",
             location = "서울 마포구 와우산로21길 19-3 홍익문화공원"
         )
     )
 
-
     val ticketInfoList = mutableMapOf<String, TicketInfo>(
         "0000-0000-0001" to
                 TicketInfo(
                     serialNo = "0000-0000-0001",
-                    concertName = "무슨무슨 버스킹",
-                    teamName = "버스킹과 아이들",
+                    concertName = "홍대 가을 버스킹",
+                    teamName = "레트로 레벨 (Retro Level)",
                     concertImgList = listOf(
                         "https://img.hankyung.com/photo/202206/AKR20220622048100051_01_i_P4.jpg",
                         "https://img.khan.co.kr/news/2022/05/13/l_20220513010016444001511313.jpg",
@@ -475,12 +477,13 @@ class DummyValues {
                     location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞",
                     isOnAir = true
                 ),
+
         Pair(
             "0000-0000-0002",
             TicketInfo(
                 serialNo = "0000-0000-0002",
-                concertName = "무슨무슨 버스킹",
-                teamName = "버스킹과 아이들",
+                concertName = "로보틱 정기 버스킹",
+                teamName = "로보틱 스트라이크 (Robotic Strike)",
                 dateTime = LocalDateTime.now(),
                 location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞",
             )
@@ -489,8 +492,8 @@ class DummyValues {
             "0000-0000-0003",
             TicketInfo(
                 serialNo = "0000-0000-0003",
-                concertName = "무슨무슨 버스킹",
-                teamName = "버스킹과 아이들",
+                concertName = "신나는 화이어 콘서트",
+                teamName = "화이어파이트 (Fireflight)",
                 dateTime = LocalDateTime.now(),
                 location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞",
             )
@@ -499,8 +502,8 @@ class DummyValues {
             "0000-0000-0004",
             TicketInfo(
                 serialNo = "0000-0000-0004",
-                concertName = "무슨무슨 버스킹",
-                teamName = "버스킹과 아이들",
+                concertName = "루미너스 스페이스",
+                teamName = "루미노브스 (Luminovos)",
                 dateTime = LocalDateTime.now(),
                 location = "경기 고양시 일산서구 경의로 855-13 올리브영 앞",
             )

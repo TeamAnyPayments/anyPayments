@@ -15,35 +15,35 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.artist.wea.constants.PageRoutes
-import com.artist.wea.pages.ArtistInfoModifyPage
-import com.artist.wea.pages.ArtistInfoPage
-import com.artist.wea.pages.ArtistJoinPage
-import com.artist.wea.pages.ArtistProfileListPage
-import com.artist.wea.pages.ArtistQuitPage
-import com.artist.wea.pages.ArtistRankPage
-import com.artist.wea.pages.ChangeEmailPage
-import com.artist.wea.pages.ChangePwdPage
-import com.artist.wea.pages.ClientServicePage
-import com.artist.wea.pages.ConcertBenefitPage
-import com.artist.wea.pages.ConcertInfoPage
-import com.artist.wea.pages.FindIdPage
-import com.artist.wea.pages.FindPwdPage
-import com.artist.wea.pages.HomePage
-import com.artist.wea.pages.LoginPage
-import com.artist.wea.pages.MemberAddPage
-import com.artist.wea.pages.MemberManagePage
-import com.artist.wea.pages.MyArtistPage
-import com.artist.wea.pages.NotifyPage
-import com.artist.wea.pages.OpenConcertPage
-import com.artist.wea.pages.PaymentsManagePage
-import com.artist.wea.pages.SearchArtistPage
-import com.artist.wea.pages.SearchConcertPage
-import com.artist.wea.pages.SettingPage
-import com.artist.wea.pages.TicketListPage
-import com.artist.wea.pages.TicketPage
-import com.artist.wea.pages.UserProfilePage
-import com.artist.wea.pages.UserQuitPage
-import com.artist.wea.pages.UserRegisterPage
+import com.artist.wea.screen.pages.ArtistInfoModifyPage
+import com.artist.wea.screen.pages.ArtistInfoPage
+import com.artist.wea.screen.pages.ArtistJoinPage
+import com.artist.wea.screen.pages.ArtistProfileListPage
+import com.artist.wea.screen.pages.ArtistQuitPage
+import com.artist.wea.screen.pages.ArtistRankPage
+import com.artist.wea.screen.pages.ChangeEmailPage
+import com.artist.wea.screen.pages.ChangePwdPage
+import com.artist.wea.screen.pages.ClientServicePage
+import com.artist.wea.screen.pages.ConcertBenefitPage
+import com.artist.wea.screen.pages.ConcertInfoPage
+import com.artist.wea.screen.pages.FindIdPage
+import com.artist.wea.screen.pages.FindPwdPage
+import com.artist.wea.screen.pages.HomePage
+import com.artist.wea.screen.pages.LoginPage
+import com.artist.wea.screen.pages.MemberAddPage
+import com.artist.wea.screen.pages.MemberManagePage
+import com.artist.wea.screen.pages.MyArtistPage
+import com.artist.wea.screen.pages.NotifyPage
+import com.artist.wea.screen.pages.OpenConcertPage
+import com.artist.wea.screen.pages.PaymentsManagePage
+import com.artist.wea.screen.pages.SearchArtistPage
+import com.artist.wea.screen.pages.SearchConcertPage
+import com.artist.wea.screen.pages.SettingPage
+import com.artist.wea.screen.pages.TicketListPage
+import com.artist.wea.screen.pages.TicketPage
+import com.artist.wea.screen.pages.UserProfilePage
+import com.artist.wea.screen.pages.UserQuitPage
+import com.artist.wea.screen.pages.UserRegisterPage
 import com.artist.wea.ui.theme.WeaTheme
 import com.artist.wea.util.CommonUtils.Companion.checkLocationPermission
 import com.artist.wea.util.CommonUtils.Companion.checkLoginInfo
@@ -104,15 +104,15 @@ class MainActivity : ComponentActivity() {
                 }
                 composable(PageRoutes.FindId.route) { FindIdPage(navController=navController) }
                 composable(PageRoutes.FindPwd.route) { FindPwdPage(navController=navController) }
-                composable(PageRoutes.ChangePwd.route) {ChangePwdPage(navController=navController) }
+                composable(PageRoutes.ChangePwd.route) { ChangePwdPage(navController=navController) }
                 composable(PageRoutes.ChangeEmail.route) { ChangeEmailPage(navController = navController) }
                 composable(PageRoutes.SearchConcert.route){ SearchConcertPage(navController = navController) }
-                composable(PageRoutes.ArtistRank.route) {ArtistRankPage(navController = navController) }
+                composable(PageRoutes.ArtistRank.route) { ArtistRankPage(navController = navController) }
                 composable(PageRoutes.Notify.route) { NotifyPage(navController = navController) }
                 composable(PageRoutes.Setting.route) { SettingPage(navController = navController) }
                 composable(PageRoutes.ClientService.route) { ClientServicePage(navController = navController) }
                 composable(PageRoutes.ConcertBenefit.route) { ConcertBenefitPage(navController = navController) }
-                composable(PageRoutes.SearchArtist.route) { SearchArtistPage(navController = navController)}
+                composable(PageRoutes.SearchArtist.route) { SearchArtistPage(navController = navController) }
                 composable(PageRoutes.ArtistInfo.route+"/{userId}",
                     arguments = listOf(navArgument("userId"){
                         type = NavType.StringType
@@ -158,7 +158,7 @@ class MainActivity : ComponentActivity() {
                                         getString(R.string.text_default_ticket_no)
                     )
                 }
-                composable(PageRoutes.OpenConcert.route) { OpenConcertPage(navController = navController)}
+                composable(PageRoutes.OpenConcert.route) { OpenConcertPage(navController = navController) }
                 composable(PageRoutes.ArtistQuit.route) { ArtistQuitPage(navController = navController) }
                 composable(PageRoutes.UserQuit.route) { UserQuitPage(navController = navController) }
                 composable(PageRoutes.ArtistJoin.route) { ArtistJoinPage(navController = navController) }
