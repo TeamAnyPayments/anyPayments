@@ -49,10 +49,9 @@ import com.artist.wea.screen.pages.UserProfilePage
 import com.artist.wea.screen.pages.UserQuitPage
 import com.artist.wea.screen.pages.UserRegisterPage
 import com.artist.wea.ui.theme.WeaTheme
-import com.artist.wea.util.CommonUtils.Companion.checkLocationPermission
+import com.artist.wea.util.CommonUtils
 import com.artist.wea.util.CommonUtils.Companion.checkLoginInfo
 import com.artist.wea.util.CommonUtils.Companion.getSerializable
-import com.artist.wea.util.CommonUtils.Companion.requestLocationUpdates
 import com.artist.wea.util.PermissionChecker
 import com.artist.wea.util.ToastManager.Companion.shortToast
 import com.google.android.gms.ads.MobileAds
@@ -77,11 +76,6 @@ class MainActivity : ComponentActivity() {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this) // 위치 서비스 클라이언트 초기화
 
-        // 위치 권한 확인 및 요청
-        checkLocationPermission(this)
-
-        // 위치 업데이트 요청
-        requestLocationUpdates(this, fusedLocationClient)
 
         setContent {
             // googleADCheck
@@ -91,6 +85,13 @@ class MainActivity : ComponentActivity() {
             // checkLoginInfo
             val isLogin = checkLoginInfo(this) // 로그인 여부 체크
             val navController = rememberNavController()
+            // 위치 업데이트 요청
+            if(isLogin){
+                // 위치 권한 확인 및 요청
+                CommonUtils.checkLocationPermission(this)
+                CommonUtils.requestLocationUpdates(this, fusedLocationClient)
+            }
+
 
             NavHost(
                 navController = navController,
