@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <!-- 외부 저장소 사용을 위한 권한 설정 -->
+    <!-- 인터넷 사용 권한 설정 -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 외부 저장소 사용을 위한 권한 설정 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- 휴대폰 정보 읽기 설정 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 휴대폰 위치 정보 읽기를 위한 권한 설정 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -17,13 +23,26 @@
         android:theme="@style/Theme.Wea"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:theme="@style/Theme.Wea"
+            android:name=".screen.activity.PaymentsActivity"
+            android:exported="true" />
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="${NAVER_CLIENT_ID}" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/admob_id" />
+        <meta-data
+            android:name="com.toss.pay.TOSS_CLIENT_KEY"
+            android:value="${TOSS_CLIENT_KEY}"/>
+        <meta-data
+            android:name="com.toss.pay.TOSS_SECRET_KEY"
+            android:value="${TOSS_SECRET_KEY}"/>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".screen.activity.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Wea">

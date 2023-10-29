@@ -49,11 +49,12 @@ public class Artist {
     private ArtistBgImg artistBgImg;
 
     @Builder
-    public Artist(String name, String simple, String introduce, String area){
+    public Artist(String name, String simple, String introduce, String area, boolean activated) {
         this.name = name;
         this.simple = simple;
         this.introduce = introduce;
         this.area = area;
+        this.activated = activated;
     }
 
 }

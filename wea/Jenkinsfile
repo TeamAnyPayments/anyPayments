@@ -8,6 +8,8 @@ pipeline {
     environment {
         NAVER_CLIENT_ID = credentials('NAVER_CLIENT_ID')
         WEBHOOK_URL = credentials('DISCORD_WEBHOOK_URL')
+        TOSS_CLIENT_KEY = credentials('TOSS_CLIENT_KEY')
+        TOSS_SECRET_KEY = credentials('TOSS_SECRET_KEY')
     }
 
     stages {
@@ -25,7 +27,9 @@ pipeline {
         stage('build-with-gradle') {
             steps {
                 dir ('wea') {
-                    sh('echo NAVER_CLIENT_ID=$NAVER_CLIENT_ID > local.properties')
+                    sh('echo NAVER_CLIENT_ID=$NAVER_CLIENT_ID >> local.properties')
+                    sh('echo TOSS_CLIENT_KEY=$TOSS_CLIENT_KEY >> local.properties')
+                    sh('echo TOSS_SECRET_KEY=$TOSS_SECRET_KEY >> local.properties')
                     sh('chmod +x gradlew')
                     sh('./gradlew clean assemble') // 일반 APK 빌드
                     // sh('./gradlew clean app:assembleDebug') // DEBUG APK 빌드

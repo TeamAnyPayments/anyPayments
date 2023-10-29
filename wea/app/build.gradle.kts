@@ -1,8 +1,11 @@
+
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
+
 }
 
 android {
@@ -14,21 +17,31 @@ android {
         minSdk = 26
         targetSdk = 33
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
 
-        manifestPlaceholders["NAVER_CLIENT_ID"] =  "NAVER_CLIENT_ID"
+        manifestPlaceholders["NAVER_CLIENT_ID"] = "NAVER_CLIENT_ID"
         buildConfigField("String", "NAVER_CLIENT_ID", getApiKey("NAVER_CLIENT_ID"))
+
+        manifestPlaceholders["TOSS_CLIENT_KEY"] = "TOSS_CLIENT_KEY"
+        buildConfigField("String", "TOSS_CLIENT_KEY", getApiKey("TOSS_CLIENT_KEY"))
+
+        manifestPlaceholders["TOSS_SECRET_KEY"] = "TOSS_SECRET_KEY"
+        buildConfigField("String", "TOSS_SECRET_KEY", getApiKey("TOSS_SECRET_KEY"))
+
     }
+
 
     buildTypes {
 
         debug {
             buildConfigField("String", "NAVER_CLIENT_ID", getApiKey("NAVER_CLIENT_ID"))
+            buildConfigField("String", "TOSS_CLIENT_KEY", getApiKey("TOSS_CLIENT_KEY"))
+            buildConfigField("String", "TOSS_SECRET_KEY", getApiKey("TOSS_SECRET_KEY"))
         }
         release {
             isMinifyEnabled = false
@@ -37,6 +50,8 @@ android {
                 "proguard-rules.pro"
             )
             buildConfigField("String", "NAVER_CLIENT_ID", getApiKey("NAVER_CLIENT_ID"))
+            buildConfigField("String", "TOSS_CLIENT_KEY", getApiKey("TOSS_CLIENT_KEY"))
+            buildConfigField("String", "TOSS_SECRET_KEY", getApiKey("TOSS_SECRET_KEY"))
         }
     }
     compileOptions {
@@ -49,6 +64,7 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
+        viewBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
@@ -57,6 +73,9 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+    }
+    kotlin {
+        jvmToolchain(8)
     }
 }
 
@@ -72,6 +91,10 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     implementation("com.google.android.material:material:1.9.0")
+    implementation("com.google.android.gms:play-services-ads-lite:22.3.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -97,6 +120,7 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
+
     // Cookie Management
     // implementation("com.github.franmontiel:PersistentCookieJar:v1.0.1'")
     // firebase
@@ -104,6 +128,17 @@ dependencies {
 //    implementation("platform('com.google.firebase:firebase-bom:32.0.0')")
 //    implementation("com.google.firebase:firebase-analytics-ktx")
 //    implementation("com.google.firebase:firebase-messaging:21.1.0")
+
+    val toss_version = "0.1.11"
+    val constraint_version = "2.1.4"
+
+    // admobs
+    implementation("com.google.android.gms:play-services-ads:22.3.0")
+    // toss payments sdk
+    implementation ("com.github.tosspayments:payment-sdk-android:$toss_version")
+
+    // constraint layout
+    implementation ("androidx.constraintlayout:constraintlayout:$constraint_version")
 
 }
 

@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Map;
 
 @Tag(name = "아티스트 API")
 @RequiredArgsConstructor
@@ -46,18 +47,58 @@ public class ArtistController {
      */
     @Operation(summary = "아티스트 조회 API")
     @GetMapping
-    public ResponseEntity<ResponseDTO> searchArtist(@RequestParam("name") String artistName){
+    public ResponseEntity<ResponseDTO> searchArtist(@RequestParam("name") String artistName) {
         return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, "아티스트 조회 완료", artistService.searchArtist(artistName)));
     }
 
     /**
-     * 아티스트 등록 해제 API
+     * 아티스트 상세 조회 API
      */
-    @Operation(summary = "아티스트 등록 해제 API")
+    @Operation(summary = "아티스트 상세 조회 API")
+    @GetMapping("/detail")
+    public ResponseEntity<ResponseDTO> searchArtist(@RequestParam("id") Long artistId) {
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, "아티스트 상세 조회 완료", artistService.getOneArtist(artistId)));
+    }
+
+    /**
+     * 아티스트 등록 해제(탈퇴) API
+     */
+    @Operation(summary = "아티스트 등록 해제(탈퇴) API")
     @DeleteMapping
-    public ResponseEntity<?> deleteArtist(@AuthenticationPrincipal UserPrincipal userPrincipal) {
-        artistService.deleteArtist(userPrincipal.getUser());
+    public ResponseEntity<?> deleteArtist(@AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody Map<String, Long> deleteMap) {
+        artistService.deleteArtist(userPrincipal.getUser(), deleteMap.get("artistId"));
         return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, "아티스트 등록 해제"));
+    }
+
+    /**
+     * 아티스트 멤버 초대 API
+     */
+    @Operation(summary = "아티스트 멤버 초대 API")
+    @PostMapping("/member")
+    public ResponseEntity<?> inviteArtist(@AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody Map<String, String> inviteMap) {
+        artistService.inviteArtist(userPrincipal.getUser(), inviteMap.get("userId"));
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, "아티스트 멤버 초대"));
+    }
+
+    /**
+     * 아티스트 멤버 초대 요청 수락 API
+     */
+    @Operation(summary = "아티스트 멤버 초대 요청 수락 API")
+    @PostMapping("/member/invite")
+    public ResponseEntity<?> acceptArtist(@AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody Map<String, Long> acceptMap) {
+        // 어떤 아티스트 초대 요청을 수락할 지 받아야함.
+        artistService.acceptArtist(userPrincipal.getUser(), acceptMap.get("artistId"));
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, "아티스트 멤버 초대 요청 수락"));
+    }
+
+    /**
+     * 아티스트 멤버 초대 요청 거절 API
+     */
+    @Operation(summary = "아티스트 멤버 초대 요청 거절 API")
+    @DeleteMapping("/member/invite")
+    public ResponseEntity<?> refuseArtist(@AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody Map<String, Long> refuseMap) {
+        artistService.refuseArtist(userPrincipal.getUser(), refuseMap.get("artistId"));
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, "아티스트 멤버 초대 요청 거절"));
     }
 
     /**
