@@ -4,14 +4,12 @@ import com.artist.wea.api.service.MailService;
 import com.artist.wea.api.service.UserService;
 import com.artist.wea.config.security.UserPrincipal;
 import com.artist.wea.config.security.filter.JwtFilter;
-import com.artist.wea.db.dto.request.user.JoinPostReqDTO;
-import com.artist.wea.db.dto.request.user.LoginPostReqDTO;
+import com.artist.wea.db.dto.request.user.*;
 import com.artist.wea.db.dto.util.ResponseDTO;
 import com.artist.wea.db.entity.User;
 import com.artist.wea.db.entity.UserImg;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -23,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -82,8 +81,8 @@ public class UserController {
      */
     @Operation(summary = "아이디 찾기 API")
     @PostMapping("/id/find")
-    public ResponseEntity<ResponseDTO> findId(@RequestParam("email") String email, @RequestParam("name") String name) throws Exception {
-        mailService.findId(email, name);
+    public ResponseEntity<ResponseDTO> findId(@RequestBody FindIdPostReqDTO findIdPostReqDTO) throws Exception {
+        mailService.findId(findIdPostReqDTO.getEmail(), findIdPostReqDTO.getName());
         return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, "아이디 찾기 완료"));
     }
 
@@ -103,8 +102,8 @@ public class UserController {
      */
     @Operation(summary = "비밀번호 찾기 API")
     @PostMapping("/pass/find")
-    public ResponseEntity<ResponseDTO> findPass(@RequestParam("email") String email, @RequestParam("name") String name, @RequestParam("id") String userId) throws Exception {
-        mailService.findPass(email, name, userId);
+    public ResponseEntity<ResponseDTO> findPass(@RequestBody FindPassPostReqDTO findPassPostReqDTO) throws Exception {
+        mailService.findPass(findPassPostReqDTO.getEmail(), findPassPostReqDTO.getName(), findPassPostReqDTO.getId());
         return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, "입력한 회원 정보 일치"));
     }
 
@@ -112,9 +111,9 @@ public class UserController {
      * 비밀번호 변경 API
      */
     @Operation(summary = "비밀번호 변경 API")
-    @PatchMapping("/pass/change")
-    public ResponseEntity<ResponseDTO> changePass(@RequestParam("id") String userId, @RequestParam("password") String password, @RequestParam("passCheck") String passCheck) throws Exception {
-        userService.changePass(userId, password, passCheck);
+    @PutMapping("/pass/change")
+    public ResponseEntity<ResponseDTO> changePass(@RequestBody ChangePassPutReqDTO changePassPutReqDTO) throws Exception {
+        userService.changePass(changePassPutReqDTO.getId(), changePassPutReqDTO.getPass(), changePassPutReqDTO.getPassCheck());
         return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, "비밀번호 변경 완료"));
     }
 
@@ -123,8 +122,8 @@ public class UserController {
      */
     @Operation(summary = "비밀번호 확인 API")
     @PostMapping("/pass/check")
-    public ResponseEntity<ResponseDTO> checkPass(@AuthenticationPrincipal UserPrincipal userPrincipal, @RequestParam("password") String password) throws Exception {
-        userService.checkPass(userPrincipal.getPassword(), password);
+    public ResponseEntity<ResponseDTO> checkPass(@AuthenticationPrincipal UserPrincipal userPrincipal, @RequestBody Map<String, String> passMap) throws Exception {
+        userService.checkPass(userPrincipal.getPassword(), passMap.get("password"));
         return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, "비밀번호 일치"));
     }
 
@@ -156,7 +155,7 @@ public class UserController {
     @GetMapping("/image")
     public ResponseEntity<?> getImage(@AuthenticationPrincipal UserPrincipal userPrincipal) throws IOException {
         UserImg userImg = userService.getImage(userPrincipal.getUsername());
-        if(userImg == null) return ResponseEntity.ok(ResponseDTO.of(HttpStatus.OK, "등록된 프로필 이미지가 없습니다."));
+        if (userImg == null) return ResponseEntity.ok(ResponseDTO.of(HttpStatus.OK, "등록된 프로필 이미지가 없습니다."));
 
         Resource resource = new FileSystemResource(userImg.getFileUrl());
         HttpHeaders header = new HttpHeaders();
@@ -206,7 +205,17 @@ public class UserController {
     @DeleteMapping("/image")
     public ResponseEntity<?> deleteImage(@AuthenticationPrincipal UserPrincipal userPrincipal) {
         userService.deleteImage(userPrincipal.getUsername());
-        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK,  "프로필 이미지 삭제 성공"));
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, "프로필 이미지 삭제 성공"));
+    }
+
+    /**
+     * 사용자 문의 등록 API
+     */
+    @Operation(summary = "사용자 문의 등록 API")
+    @PostMapping("/inquiry")
+    public ResponseEntity<?> sendInquiry(@RequestBody Map<String, String> inquiryMap) throws UnsupportedEncodingException {
+        mailService.sendMail(inquiryMap.get("email"), inquiryMap.get("content"));
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, "사용자 문의 등록 성공"));
     }
 
 }

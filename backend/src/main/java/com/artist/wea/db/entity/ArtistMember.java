@@ -28,9 +28,13 @@ public class ArtistMember {
     @JoinColumn(name = "artist_id")
     private Artist artist;
 
-    public ArtistMember(User user, Artist artist){
+    @Column(name = "artist_member_activated", nullable = false)
+    private Boolean activated;
+
+    public ArtistMember(User user, Artist artist, Boolean activated){
         this.user = user;
         this.artist = artist;
+        this.activated = activated;
     }
 
 }
