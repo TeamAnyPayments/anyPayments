@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import com.artist.wea.R
+import com.artist.wea.constants.GlobalState
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.data.LoginUser
@@ -161,9 +162,12 @@ fun LoginPage(
 //            .fillMaxWidth()
 //            .height(8.dp))
 
-        Button(onClick = {
+        Button(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = {
             navController.navigate(PageRoutes.Home.route) }) {
             Text("홈페이지 이동")
+            GlobalState.isLogin = true
         }
 
     }

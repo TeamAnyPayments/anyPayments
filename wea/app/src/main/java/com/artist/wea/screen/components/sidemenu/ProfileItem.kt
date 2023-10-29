@@ -15,10 +15,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
-import com.artist.wea.screen.components.WeaIconImage
+import com.artist.wea.constants.GlobalState
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.data.UserProfile
+import com.artist.wea.screen.components.WeaIconImage
 
 // 우측 사이드 메뉴에서 사용자 프로필을 표시하기 위한 메뉴!
 @Composable
@@ -40,7 +41,8 @@ fun ProfileItem(
         // 사용자 프로필 이미지
         // 아이콘, 프로필 등으로 사용하기에 최적화시킨 WeaIconImage 컴포저블 재활용
         WeaIconImage(
-            imgUrl = userProfile.profileURL, // 이미지 주소
+            // imgUrl = userProfile.profileURL, // 이미지 주소
+            bitmap = GlobalState.profileBitmap.value ,
             size = 56.dp, // 사이즈
             isClip = true // 이미지에 라운딩을 줄 지 여부
         )

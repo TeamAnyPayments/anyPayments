@@ -22,11 +22,11 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
-import com.artist.wea.data.ArtistRankData
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get14TextStyle
 import com.artist.wea.constants.getCardDefColors
 import com.artist.wea.constants.getCardDefElevation
+import com.artist.wea.data.ArtistRankData
 
 // 아티스트 순위 정보 조회 시 화면 렌더링에 사용하는 컨테이너 성 컴포저블
 @Composable
@@ -36,6 +36,7 @@ fun ArtistRankItem(
     artistRankData: ArtistRankData = // 아티스트 정보를 담은 담은 데이터 클래스
         ArtistRankData(
             no = -1,
+            artistId = "",
             artistName = "",
             artistAddress = "",
             artistImgURL = ""
@@ -44,7 +45,8 @@ fun ArtistRankItem(
     // Card 컴포저블 사용하여 UI를 구성
     Card(
         modifier= modifier.clickable {
-            navController.navigate(PageRoutes.ArtistInfo.route)
+            //navController.navigate(PageRoutes.ArtistInfo.route)
+            navController.navigate(PageRoutes.ArtistInfo.route+"/${artistRankData.artistId}")
         },
         colors = getCardDefColors(),
         elevation = getCardDefElevation(dpSize = 8.dp),

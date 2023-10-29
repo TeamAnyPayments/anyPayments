@@ -37,8 +37,10 @@ fun SearchBar(
         .wrapContentHeight()
         .padding(16.dp),
     searchOptions:Array<String> = arrayOf(), // 검색 옵션
-    sortAction:Array<()->Unit> = arrayOf({})
-) {
+    sortAction:Array<()->Unit> = arrayOf({}),
+    searchAction:()->Unit = {}
+):String {
+    val searchText = remember { mutableStateOf<String>("") }
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -46,12 +48,13 @@ fun SearchBar(
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ){
-            InputForm(
+            searchText.value = InputForm(
                 hintText = "검색어를 입력해보세요",
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
                     .weight(6f),
+                onTextChange = {searchAction()}
             )
             Icon(
                 Icons.Filled.Search,
@@ -62,7 +65,7 @@ fun SearchBar(
             )
         }
 
-        if(searchOptions.size > 0){
+        if(searchOptions.isNotEmpty()){
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.End,
@@ -110,4 +113,5 @@ fun SearchBar(
             }
         }
     }
+    return searchText.value
 }

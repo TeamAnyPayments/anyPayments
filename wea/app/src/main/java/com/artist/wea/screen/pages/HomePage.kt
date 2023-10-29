@@ -47,6 +47,13 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
 import com.artist.wea.R
+import com.artist.wea.constants.DummyValues
+import com.artist.wea.constants.GlobalState
+import com.artist.wea.constants.PageRoutes
+import com.artist.wea.constants.getDefTextStyle
+import com.artist.wea.data.UserProfile
+import com.artist.wea.network.model.RegisterViewModel
+import com.artist.wea.network.repository.RegisterRepository
 import com.artist.wea.screen.components.HomeMenuBox
 import com.artist.wea.screen.components.InfiniteLoopPager
 import com.artist.wea.screen.components.sidemenu.ArtistMenu
@@ -58,12 +65,6 @@ import com.artist.wea.screen.components.sidemenu.PocketMenu
 import com.artist.wea.screen.components.sidemenu.ProfileItem
 import com.artist.wea.screen.components.sidemenu.SettingMenu
 import com.artist.wea.screen.components.sidemenu.TicketMenu
-import com.artist.wea.constants.DummyValues
-import com.artist.wea.constants.PageRoutes
-import com.artist.wea.constants.getDefTextStyle
-import com.artist.wea.data.UserProfile
-import com.artist.wea.network.model.RegisterViewModel
-import com.artist.wea.network.repository.RegisterRepository
 import com.artist.wea.util.JSONParser
 import com.artist.wea.util.PermissionChecker
 import com.artist.wea.util.PreferenceUtil
@@ -79,7 +80,7 @@ fun HomePage(
     val menuOpen = remember { mutableStateOf(false) } // 메뉴 상태를 기억하는 변수
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp // 디바이스 스크린 width
     val menuOffset = animateDpAsState(if (menuOpen.value) 0.dp else screenWidth, label = "") // 애니메이션 상태
-    val isArtist = remember { mutableStateOf(true) }; // 아티스트인지 여부를 판단할 변수
+    val isArtist = remember { GlobalState.isArtist }; // 아티스트인지 여부를 판단할 변수
 
     // 비동기 통신을 위한 기본 객체 settings
     val context = LocalContext.current;
@@ -120,16 +121,16 @@ fun HomePage(
                     profileJson.value = jsonString // 현재 상태에도 저장
                     userProfile.value = jParser.parseJsonToUserProfile(it)
                     Log.d("HOME_PAGE:::", "서버 >>> ${profileJson.value}")
-                    isLogin = true;
+                    GlobalState.isLogin = true;
                 }else {
                     Log.d("PROFILE_PAGE:::", "토큰 만료")
                     ToastManager.shortToast(context, expirationUserText);
                     recompCnt.value = 0;
-                    isLogin = false;
+                    GlobalState.isLogin = false;
                     // 토큰정보 만료시 로그인 페이지로 강제 이동하는 메서드
-//                    navController.navigate(PageRoutes.Login.route){
-//                        popUpTo(0)
-//                    }
+                    navController.navigate(PageRoutes.Login.route){
+                        popUpTo(0)
+                    }
                 }
             })
         } else {
@@ -138,10 +139,10 @@ fun HomePage(
             recompCnt.value++
             val json = JSONObject(profileJson.value)
             userProfile.value = jParser.parseJsonToUserProfile(json)
-            isLogin = true;
+            GlobalState.isLogin = true;
         }
 
-        if(isLogin || true){ // 일단 다 허용
+        if(GlobalState.isLogin){ // 일단 다 허용
             val activity = context as Activity;
             // 권한 체크
             permissionChecker.requestPermission()
@@ -307,7 +308,7 @@ fun homePage(
 
                 },
                 onLongClick = {
-                    isArtist.value = !isArtist.value
+                    GlobalState.isArtist.value = !GlobalState.isArtist.value
                 }
             )
         ,

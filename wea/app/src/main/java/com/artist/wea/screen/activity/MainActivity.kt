@@ -1,5 +1,6 @@
-package com.artist.wea
+package com.artist.wea.screen.activity
 
+import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -14,7 +15,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.artist.wea.BuildConfig
+import com.artist.wea.R
 import com.artist.wea.constants.PageRoutes
+import com.artist.wea.data.ConcertReceipt
 import com.artist.wea.screen.pages.ArtistInfoModifyPage
 import com.artist.wea.screen.pages.ArtistInfoPage
 import com.artist.wea.screen.pages.ArtistJoinPage
@@ -47,6 +51,7 @@ import com.artist.wea.screen.pages.UserRegisterPage
 import com.artist.wea.ui.theme.WeaTheme
 import com.artist.wea.util.CommonUtils.Companion.checkLocationPermission
 import com.artist.wea.util.CommonUtils.Companion.checkLoginInfo
+import com.artist.wea.util.CommonUtils.Companion.getSerializable
 import com.artist.wea.util.CommonUtils.Companion.requestLocationUpdates
 import com.artist.wea.util.PermissionChecker
 import com.artist.wea.util.ToastManager.Companion.shortToast
@@ -62,6 +67,10 @@ class MainActivity : ComponentActivity() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient;
 
 
+    override fun onResume() {
+        super.onResume()
+        detectPaymentsResult(this) // intent 결과 수신
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         permissionChecker = PermissionChecker(this, this);
@@ -114,16 +123,15 @@ class MainActivity : ComponentActivity() {
                 composable(PageRoutes.ConcertBenefit.route) { ConcertBenefitPage(navController = navController) }
                 composable(PageRoutes.SearchArtist.route) { SearchArtistPage(navController = navController) }
                 composable(PageRoutes.ArtistInfo.route+"/{userId}",
-                    arguments = listOf(navArgument("userId"){
-                        type = NavType.StringType
-                        defaultValue = "abc000"
-                    })
+                    arguments = listOf(
+                        navArgument("userId"){
+                            type = NavType.StringType
+                            defaultValue = "abc000"
+                         })
                     ) {
                         navBackStackEntry ->
                     ArtistInfoPage(
                         navController = navController,
-                        userId = navBackStackEntry.arguments?.getString("userId")?:"abc000"
-
                     )
                 }
                 composable(PageRoutes.ConcertInfo.route+"/{concertId}",
@@ -184,6 +192,18 @@ class MainActivity : ComponentActivity() {
 
             }
         }
+    }
+}
+
+// 결제완료 후 데이터를 받는 함수
+fun detectPaymentsResult(activity:Activity){
+    // intent로 부터 데이터 수신
+    try {
+        val concertReceipt =
+            getSerializable(activity, "completeReceipt", ConcertReceipt::class.java)
+        Log.d(activity.javaClass.simpleName, "데이터 수신 >>> $concertReceipt");
+    }catch (e:Exception){
+        Log.e(activity.javaClass.simpleName, "데이터 수신 실패... ${ConcertReceipt::class.java.simpleName}")
     }
 }
 
