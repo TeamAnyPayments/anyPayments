@@ -2,7 +2,6 @@ package com.artist.wea.screen.components
 
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
@@ -72,20 +71,18 @@ fun NaverMapComponent(
                 }
 
                 if(hasMarkList){
+                    // 마커 리스트를 가지고 있을 경우..?
                     val list = DummyValues.concertList.values;
-                    Log.d(this.javaClass.simpleName, "current [ ${GlobalState.lat} | ${GlobalState.lon} ]")
-
                     for(it in list){
                         if(it.latitude == 0.0 || it.longitude == 0.0) continue;
                         val marker = Marker()
-                        Log.d(this.javaClass.simpleName, "[${it.latitude} | ${it.longitude} ]")
                         marker.position = LatLng(it.latitude, it.longitude);
                         marker.map = naverMap;
                     }
 
                 }
 
-                // 카메라쪽 설정은 뭔지 모르겠...
+                // 네이버맵 카메라(=포지션) 설정
                 val cameraUpdate = CameraUpdate.scrollTo(LatLng(latitude, longitude))
                 naverMap.moveCamera(cameraUpdate)
 

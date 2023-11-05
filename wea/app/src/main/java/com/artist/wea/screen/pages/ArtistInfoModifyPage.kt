@@ -2,7 +2,6 @@ package com.artist.wea.screen.pages
 
 import android.app.Activity
 import android.graphics.Bitmap
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -74,8 +73,6 @@ fun ArtistInfoModifyPage(
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data?.data?.let { uri ->
-
-                    Log.d("IMAGE:::", "${uri.toString()}")
 
                     val imgSource = if(currentIdx.value == 0)  backgroundBitmap else profileBitmap
                     val fileName = if(currentIdx.value == 0) "artist_background" else "artist_profile"

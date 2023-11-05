@@ -1,6 +1,5 @@
 package com.artist.wea.screen.pages
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -118,7 +117,7 @@ fun LoginPage(
                 // 로그인 결과
                 viewModel.loginUserRes.observe(mOwner, Observer {
                     if(it.isNotEmpty()){
-                        Log.d("LOGIN RES:::", it.toString())
+                        // 로그인 결과 파싱
                         token.value = it.toString()
                         prefs.setString("token", token.value) // 다른 화면에서 활용할 수 있도록 토큰 정보를 저장
                         Retrofit.token.value = it.toString() // 로그인 성공 시 레트로핏 인스턴스 헤더에 토큰을 붙여준다.

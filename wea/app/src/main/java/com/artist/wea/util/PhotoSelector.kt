@@ -43,13 +43,11 @@ class PhotoSelector {
                 val imageUri: Uri? =
                     resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
                 fos = imageUri?.let { resolver.openOutputStream(it) }
-                Log.d("FILE_LOCATION...", "$imageUri")
             }
         } else {
             val imagesDir =
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
             val image = File(imagesDir, filename)
-            Log.d("FILE_LOCATION...", "$imagesDir")
             fos = FileOutputStream(image)
         }
         fos?.use {
