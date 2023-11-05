@@ -167,10 +167,88 @@
 
 ## 👀 서비스 화면 (동영상)
 
+### screen 1. 사용자 회원가입 및 로그인
+<video width="180" height="360" controls>
+  <source src="./assets/wea_login.mp4" type="video/mp4">
+  wea_login
+</video>
+
+### screen 2. 아티스트 랭킹 페이지
+<video width="180" height="360" controls>
+  <source src="./assets/wea_rank.mp4" type="video/mp4">
+  wea_rank
+</video>
+
+### screen 3. 아티스트 검색 페이지
+
+<video width="180" height="360" controls>
+  <source src="./assets/wea_artist_search.mp4" type="video/mp4">
+  wea_artist_search
+</video>
 
 
+### screen 4. 콘서트 검색 페이지
+
+<video width="180" height="360" controls>
+  <source src="./assets/wea_concert_search.mp4" type="video/mp4">
+  wea_concert_search
+</video>
 
 
+### screen 5. 티켓 조회 페이지
+
+<video width="180" height="360" controls>
+  <source src="./assets/wea_tickets.mp4" type="video/mp4">
+  wea_tickets
+</video>
+
+
+### screen 6. 아티스트 북마크 페이지
+
+<video width="180" height="360" controls>
+  <source src="./assets/wea_book_mark.mp4" type="video/mp4">
+  wea_book_mark
+</video>
+
+
+### screen 7. 고객 서비스(cs) 접수 페이지
+
+<video width="180" height="360" controls>
+  <source src="./assets/we_cs.mp4" type="video/mp4">
+  we_cs
+</video>
+
+
+### screen 8. 사용자 프로필 편집
+
+<video width="180" height="360" controls>
+  <source src="./assets/wea_profile_edit.mp4" type="video/mp4">
+  wea_profile_edit
+</video>
+
+
+### screen 9. 아티스트 신청 페이지
+
+<video width="180" height="360" controls>
+  <source src="./assets/wea_become_artist.mp4" type="video/mp4">
+  wea_become_artist
+</video>
+
+
+### screen 10. 아티스트 프로필 편집 페이지
+
+<video width="180" height="360" controls>
+  <source src="./assets/wea_edit_artist_profile.mp4" type="video/mp4">
+  wea_edit_artist_profile
+</video>
+
+
+### screen 11. 공연 개설 페이지
+
+<video width="180" height="360" controls>
+  <source src="./assets/wea_create_concert.mp4" type="video/mp4">
+  wea_create_concert
+</video>
 
 ### Project Member
 - 조원희 (Team Leader, Android Developer)
