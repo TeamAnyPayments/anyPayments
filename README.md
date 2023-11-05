@@ -114,8 +114,8 @@
 ### 3. 프로젝트 워크스페이스(노션, Notion)
 [프로젝트 워크스페이스 보러가기](https://secret-nebula-014.notion.site/WE-A-152d47344b7d449290d44811aee37d5a?pvs=4)
 
-![프로젝트 워크스페이스1](./assets/work1.png)
-![프로젝트 워크스페이스2](./assets/work2.png)
+![프로젝트 워크스페이스1](./assets/work1.PNG)
+![프로젝트 워크스페이스2](./assets/work2.PNG)
 
 
 ### 4. 요구사항 명세서
