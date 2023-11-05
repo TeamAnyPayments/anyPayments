@@ -48,7 +48,7 @@ fun SearchArtistPage(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        var artistInfoList = DummyValues().artistSearchList.values
+        var artistInfoList = DummyValues.artistSearchList.values
         val popList = artistInfoList.sortedByDescending { it.userId }
         val nameList = artistInfoList.sortedBy { it.artistName }
         val dateList = artistInfoList.sortedBy { it.location }

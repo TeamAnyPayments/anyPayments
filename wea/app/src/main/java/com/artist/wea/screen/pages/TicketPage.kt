@@ -20,11 +20,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
+import com.artist.wea.constants.DummyValues
 import com.artist.wea.screen.components.PageTopBar
 import com.artist.wea.screen.components.SponsorshipDetails
 import com.artist.wea.screen.components.Ticket
 import com.artist.wea.screen.components.sidemenu.GoogleAdItem
-import com.artist.wea.constants.DummyValues
 
 // 티켓 정보를 볼 페이지
 @Composable
@@ -58,7 +58,7 @@ fun TicketPage(
                     .padding(16.dp, 12.dp)
             ) {
                 // TODO... 서버와의 통신으로 티켓정보 받아오는 로직 구현
-                DummyValues().ticketInfoList[ticketId]?.let {
+                DummyValues.ticketInfoList[ticketId]?.let {
                     Ticket(
                         ticketInfo = it
                     )

@@ -1,12 +1,9 @@
 package com.artist.wea.network.instance
 
-import android.content.Context
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.mutableStateOf
 import com.artist.wea.network.service.ArtistService
 import com.artist.wea.network.service.RegisterService
-import com.artist.wea.util.PreferenceUtil
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -37,11 +34,6 @@ class Retrofit : AppCompatActivity() {
                 val newRequest = request().newBuilder()
                     .addHeader("Authorization", "Bearer ${token.value}")
                     .build()
-                Log.d("REQUEST:::", newRequest.toString())
-                Log.d("REQUEST:::", newRequest.method.toString())
-                Log.d("REQUEST:::", newRequest.body.toString())
-                Log.d("REQUEST:::", newRequest.headers.toString())
-                Log.d("REQUEST:::", newRequest.headers.value(0))
                 proceed(newRequest)
             }
         }

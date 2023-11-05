@@ -53,8 +53,8 @@ class PaymentsActivity : AppCompatActivity() {
         // 앱 화면에 결제창에 완전히 로딩이 되면 아래의 메세지가 로그에 찍힌다. 꼭 확인 해볼것!
         val paymentMethodWidgetStatusListener = object : PaymentWidgetStatusListener {
             override fun onLoad() {
-                val message = "결제위젯 렌더링 완료"
-                Log.d(this.javaClass.simpleName, message)
+                // 결제 완료시 동작하는 메서드
+                // 결제완료 시 버튼 텍스트 변경
                 binding.payButton.text = getString(R.string.btn_txt_toss_payments_ready)
             }
         }

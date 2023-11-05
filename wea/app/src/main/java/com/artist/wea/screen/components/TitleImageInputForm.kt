@@ -2,6 +2,7 @@ package com.artist.wea.screen.components
 
 import android.app.Activity
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -26,6 +27,7 @@ import com.artist.wea.R
 import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.util.PhotoSelector
 
+
 @Composable
 fun TitleImageInputForm(
     modifier: Modifier = Modifier
@@ -34,19 +36,23 @@ fun TitleImageInputForm(
     titleText:String,
     isWide:Boolean = false,
     size: Dp = 128.dp
-){
+):Bitmap?{
 
     val context = LocalContext.current
-    val imageBitmap = remember { mutableStateOf<Bitmap?>(null) } //
     val errorText = stringResource(R.string.text_err_load_img)
+    val icon = BitmapFactory.decodeResource(
+        context.resources,
+        R.drawable.icon_def_user_img
+    )
+    val imageBitmap = remember { mutableStateOf<Bitmap?>(icon) } //
+
+
     // 사진 불러오기 기능
     val photoSelector = PhotoSelector()
     val takePhotoFromAlbumLauncher = // 갤러리에서 사진 가져오기
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data?.data?.let { uri ->
-
-                    // Log.d("IMAGE:::", "${uri.toString()}")
 
                     photoSelector.setImageToVariable(
                         context = context,
@@ -109,4 +115,5 @@ fun TitleImageInputForm(
         }
     }
 
+    return imageBitmap.value
 }

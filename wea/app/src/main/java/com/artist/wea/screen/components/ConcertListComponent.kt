@@ -108,7 +108,7 @@ fun ConcertListComponent(
                         navController = navController,
                         content = concertInfo,
                         // 더미데이터 하나에 대해서만 조회 되도록 잠시 막아둠!
-                        isActive = concertInfo.concertId == DummyValues().defConcertInfo.concertId // TODO... ANR 이슈 해결하고 지우기!
+                        isActive = concertInfo.concertId == DummyValues.defConcertInfo.concertId // TODO... ANR 이슈 해결하고 지우기!
                     )
                 }
             }else {
@@ -117,7 +117,7 @@ fun ConcertListComponent(
                         navController = navController,
                         content = concertInfo,
                         // 더미데이터 하나에 대해서만 조회 되도록 잠시 막아둠!
-                        isActive = concertInfo.concertId == DummyValues().defConcertInfo.concertId // TODO... ANR 이슈 해결하고 지우기!
+                        isActive = concertInfo.concertId == DummyValues.defConcertInfo.concertId // TODO... ANR 이슈 해결하고 지우기!
                     )
                 }
             }

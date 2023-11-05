@@ -1,6 +1,5 @@
 package com.artist.wea.network.model
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -28,8 +27,6 @@ class RegisterViewModel(val repository: RegisterRepository): ViewModel() {
         viewModelScope.launch(exceptionHandler) {
             val response = repository.getUserInfo()
 
-            Log.d(RLOG, "${response.toString()}")
-
             if(!response.isSuccessful) { // 통신 예외 처리
                 getUserInfoRes.value = null
                 throw Exception();
@@ -40,8 +37,6 @@ class RegisterViewModel(val repository: RegisterRepository): ViewModel() {
             if(resJsObject.has("value")){
                 userInfoJson.value = jParser.parseToJson(value = resJsObject.get("value").toString())
             }
-            Log.d(RLOG,"${userInfoJson.value}")
-
             getUserInfoRes.value = userInfoJson.value
         }
     }
@@ -51,9 +46,7 @@ class RegisterViewModel(val repository: RegisterRepository): ViewModel() {
     // 회원가입 메서드
     fun joinUser(joinUser: JoinUser){
         viewModelScope.launch(exceptionHandler) {
-            // Log.d(RLOG, joinUser.toString())
             val response = repository.joinUser(joinUser);
-            Log.d(RLOG, "res = ${response.toString()}")
 
             if(!response.isSuccessful) { // 통신 예외 처리
                 // checkEmailByCodeRes.value = false;
@@ -71,7 +64,6 @@ class RegisterViewModel(val repository: RegisterRepository): ViewModel() {
     fun loginUser(loginUser: LoginUser){
         viewModelScope.launch(exceptionHandler){
             val response = repository.loginUser(loginUser)
-            Log.d(RLOG, "${response.toString()}")
 
             if(!response.isSuccessful) { // 통신 예외 처리
                 throw Exception();
@@ -89,8 +81,6 @@ class RegisterViewModel(val repository: RegisterRepository): ViewModel() {
         viewModelScope.launch(exceptionHandler) {
             val response = repository.logout(tokenMap)
 
-            Log.d(RLOG, "res = ${response.toString()}")
-
             if(!response.isSuccessful) { // 통신 예외 처리
                 throw Exception();
             }
@@ -105,7 +95,6 @@ class RegisterViewModel(val repository: RegisterRepository): ViewModel() {
     fun findUserId(findIdData : FindIdData){
         viewModelScope.launch(exceptionHandler) {
             val response = repository.findUserId(findIdData);
-            Log.d(RLOG, "${response.toString()}")
 
             if(!response.isSuccessful) { // 통신 예외 처리
                 findUserIdRes.value = true
@@ -140,8 +129,6 @@ class RegisterViewModel(val repository: RegisterRepository): ViewModel() {
         viewModelScope.launch(exceptionHandler){
             val response = repository.findUserPassword(findPwdData)
 
-            Log.d(RLOG, "res = ${response.toString()}")
-
             if(!response.isSuccessful) { // 통신 예외 처리
                 // checkEmailByCodeRes.value = false;
                 throw Exception();
@@ -156,8 +143,6 @@ class RegisterViewModel(val repository: RegisterRepository): ViewModel() {
     fun changeUserPassword(changePwdData : ChangePwdData) {
         viewModelScope.launch(exceptionHandler) {
             val response = repository.changeUserPassword(changePwdData)
-
-            Log.d(RLOG, "res = ${response.toString()}")
 
             if(!response.isSuccessful) { // 통신 예외 처리
                 // checkEmailByCodeRes.value = false;
@@ -212,7 +197,6 @@ class RegisterViewModel(val repository: RegisterRepository): ViewModel() {
     fun getUserImg(){
         viewModelScope.launch(exceptionHandler){
             val response = repository.getUserImg()
-            Log.d(RLOG, "res = ${response.toString()}")
 
             if(!response.isSuccessful) { // 통신 예외 처리
                 // checkEmailByCodeRes.value = false;
@@ -232,7 +216,6 @@ class RegisterViewModel(val repository: RegisterRepository): ViewModel() {
     ){
         viewModelScope.launch(exceptionHandler){
             val response = repository.uploadUserImg()
-            Log.d(RLOG, "res = ${response.toString()}")
 
             if(!response.isSuccessful) { // 통신 예외 처리
                 // checkEmailByCodeRes.value = false;
@@ -252,7 +235,6 @@ class RegisterViewModel(val repository: RegisterRepository): ViewModel() {
     ){
         viewModelScope.launch(exceptionHandler){
             val response = repository.editUserImg()
-            Log.d(RLOG, "res = ${response.toString()}")
 
             if(!response.isSuccessful) { // 통신 예외 처리
                 // checkEmailByCodeRes.value = false;
@@ -271,8 +253,6 @@ class RegisterViewModel(val repository: RegisterRepository): ViewModel() {
         viewModelScope.launch(exceptionHandler){
             val response = repository.deleteUserImg()
 
-            Log.d(RLOG, "res = ${response.toString()}")
-
             if(!response.isSuccessful) { // 통신 예외 처리
                 // checkEmailByCodeRes.value = false;
                 throw Exception();
@@ -289,8 +269,6 @@ class RegisterViewModel(val repository: RegisterRepository): ViewModel() {
         viewModelScope.launch(exceptionHandler) {
             val response = repository.sendInquiry(inquiryMap)
 
-            Log.d(RLOG, "res = ${response.toString()}")
-
             if(!response.isSuccessful) { // 통신 예외 처리
                 // checkEmailByCodeRes.value = false;
                 throw Exception();
@@ -305,12 +283,6 @@ class RegisterViewModel(val repository: RegisterRepository): ViewModel() {
 
     // 코루틴 에러 핸들러 >> coroutine exception Handelr
     private val exceptionHandler = CoroutineExceptionHandler{ i, exception ->
-        Log.d("ERR ::::", "에러 발생.... $i");
     }
-
-    companion object{
-        val RLOG = "REGISTER_VIEWMODEL :::: "
-    }
-
 
 }
