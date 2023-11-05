@@ -1,6 +1,7 @@
 package com.artist.wea.screen.pages
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,6 +21,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -27,43 +29,29 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavHostController
 import com.artist.wea.R
+import com.artist.wea.constants.DummyValues
+import com.artist.wea.constants.GlobalState
+import com.artist.wea.constants.get14TextStyle
+import com.artist.wea.constants.getDefTextStyle
+import com.artist.wea.data.UserProfile
 import com.artist.wea.screen.components.CheckBoxRow
 import com.artist.wea.screen.components.MultipleRadioButtons
 import com.artist.wea.screen.components.PageTopBar
-import com.artist.wea.constants.get14TextStyle
-import com.artist.wea.constants.getDefTextStyle
-import com.artist.wea.data.ArtistInfo
-import com.artist.wea.data.UserProfile
+import com.artist.wea.util.ToastManager
 
 @Composable
 fun ArtistQuitPage(
     navController: NavHostController
 ) {
 
+    val context = LocalContext.current
+    val isCheckReason = remember { mutableStateOf(false) }
+    val isAgreePolicy = remember { mutableStateOf(false) }
+
     // TODO... prefs를 통해서 아티스트 데이터를 추출해서 렌더링 하도록 설계
-    val artistInfo = ArtistInfo(
-        profileImgURL = "https://image.kmib.co.kr/online_image/2014/1015/201410152053_61170008765071_1.jpg",
-        bgImgURL = "https://img.hankyung.com/photo/202205/01.29843403.1.jpg",
-        artistName = "ENJOY",
-        comment = "안녕하세요, 행복을 노래하는 가수입니다.",
-        mainIntroduce = "안녕하세요 Sparrow Spirit!\n" +
-                "\n" +
-                "홍대 스트릿 버스커 그룹 로드 버스킹입니다.\n" +
-                "\n" +
-                "어디서든 관객 여러분과 특별한 추억을 쌓아가기 위하여 여러 지역에서 버스킹을 하고 있습니다.\n" +
-                "\n" +
-                "음악을 사랑한다는 마음 하나라면,\n" +
-                "우리가 있는 이 곳의 온도는 뜨거울 거에요.\n" +
-                "\n" +
-                "창립일\n" +
-                "2013. 01. 16.\n" +
-                "\n" +
-                "자주 출몰하는 장소\n" +
-                "홍대입구 2번 출구, 강남역 3번 출구\n" +
-                "\n" +
-                "인스타그램\n" +
-                "@abc_123_heart",
-    )
+    val joinArtist = GlobalState.joinedArtistInfo.value
+    val flag = GlobalState.isArtist.value
+    val artistInfo = if(flag) joinArtist else DummyValues.artistSearchList["abc001"]
 
     val userProfile = remember { mutableStateOf(UserProfile(
         userId = "test0001",
@@ -159,7 +147,7 @@ fun ArtistQuitPage(
                             color = colorResource(id = R.color.mono300)
                         )
                         Text(
-                            text = "${artistInfo.artistName}\n" +
+                            text = "${artistInfo?.artistName}\n" +
                                     "${userProfile.value.userId}\n" +
                                     "${userProfile.value.email}",
                             style = get14TextStyle(),
@@ -204,6 +192,7 @@ fun ArtistQuitPage(
                     val quitReason = MultipleRadioButtons(
                         selectOptions = selectOptions
                     ) // 탈퇴사유 받음
+                    isCheckReason.value = quitReason.isNotEmpty()
 
                     Spacer(modifier = Modifier.height(96.dp))
                 }
@@ -236,17 +225,30 @@ fun ArtistQuitPage(
                         isAgreement.value = !isAgreement.value
                     },
                 )
+                isAgreePolicy.value = isAgreement.value // 탈퇴 체크
+
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentHeight()
                 ){
+                    val errTxt = stringResource(id = R.string.txt_quit_err)
+                    val sucessTxt = stringResource(R.string.txt_quit_success)
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .wrapContentHeight()
                             .weight(1f)
-                            .background(color = colorResource(id = R.color.red300)),
+                            .background(color = colorResource(id = R.color.red300))
+                            .clickable {
+                                if (isCheckReason.value && isAgreePolicy.value) {
+                                    ToastManager.shortToast(context, sucessTxt)
+                                    GlobalState.isArtist.value = false;
+                                    navController.popBackStack()
+                                } else {
+                                    ToastManager.shortToast(context, errTxt)
+                                }
+                            },
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center
                     ){
@@ -254,7 +256,8 @@ fun ArtistQuitPage(
                             text =  "탈퇴 신청",
                             style = get14TextStyle()
                                 .copy(colorResource(id = R.color.white)),
-                            modifier = Modifier.padding(16.dp)
+                            modifier = Modifier
+                                .padding(16.dp)
                         )
                     }
                     Row(
@@ -262,7 +265,10 @@ fun ArtistQuitPage(
                             .fillMaxWidth()
                             .wrapContentHeight()
                             .weight(1f)
-                            .background(color = colorResource(id = R.color.mono300)),
+                            .background(color = colorResource(id = R.color.mono300))
+                            .clickable {
+                                navController.popBackStack()
+                            },
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center
                     ){
@@ -270,7 +276,8 @@ fun ArtistQuitPage(
                             text =  "취소",
                             style = get14TextStyle()
                                 .copy(colorResource(id = R.color.white)),
-                            modifier = Modifier.padding(16.dp)
+                            modifier = Modifier
+                                .padding(16.dp)
                         )
                     }
                 }

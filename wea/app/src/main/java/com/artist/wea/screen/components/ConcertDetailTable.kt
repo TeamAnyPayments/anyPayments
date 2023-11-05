@@ -54,7 +54,8 @@ fun ConcertDetailTable(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     // 데이터 맵에서 꺼낸 데이터 中 구분자로 UI를 다르게 표시함
-                    if(item.key.contains("$")){ // hover info를 표시해야할 경우!
+                    // TODO... 잠시 비활성화..
+                    if(false && item.key.contains("$")){ // hover info를 표시해야할 경우!
                         Text(
                             text = item.key.replace("$", ""),
                             style = getDefTextStyle()

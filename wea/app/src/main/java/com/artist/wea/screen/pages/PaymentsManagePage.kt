@@ -22,11 +22,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
+import com.artist.wea.constants.DummyValues
+import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.screen.components.InfoUnit
 import com.artist.wea.screen.components.PageTopBar
 import com.artist.wea.screen.components.PaymentItem
-import com.artist.wea.constants.DummyValues
-import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.util.ToastManager.Companion.shortToast
 
 // 결제수단 관리 페이지
@@ -49,7 +49,7 @@ fun PaymentsManagePage(
 
         val context = LocalContext.current;
         val scrollState = rememberScrollState()
-        val paymentInfoList = DummyValues().paymentInfoList
+        val paymentInfoList = DummyValues.paymentInfoList
 
         InfoUnit(
             modifier = Modifier.padding(16.dp, 12.dp),

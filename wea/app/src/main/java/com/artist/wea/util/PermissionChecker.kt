@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.Settings
-import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
@@ -26,7 +25,6 @@ class PermissionChecker(private val activity: Activity, private val context: Con
         if (checkAllPermissions()) {
             // 모든 권한이 허용되어 있음
             // 위치 정보를 얻는 작업 수행
-            Log.d(this.javaClass.name, "모든 권한이 허용됨")
             return true;
         } else {
             // 하나 이상의 권한이 허용되지 않음

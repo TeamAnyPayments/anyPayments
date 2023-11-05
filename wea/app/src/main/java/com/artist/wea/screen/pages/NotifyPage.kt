@@ -11,10 +11,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
+import com.artist.wea.constants.DummyValues
+import com.artist.wea.data.AlarmData
 import com.artist.wea.screen.components.AlarmItem
 import com.artist.wea.screen.components.PageTopBar
-import com.artist.wea.data.AlarmData
-import com.artist.wea.constants.DummyValues
 
 // 알림 페이지
 @Composable
@@ -23,7 +23,7 @@ fun NotifyPage(
     modifier: Modifier =
         Modifier
             .fillMaxSize(),
-    alarmList: MutableList<AlarmData> = DummyValues().getAlarmList() // 테스트용 더미데이터
+    alarmList: MutableList<AlarmData> = DummyValues.getAlarmList() // 테스트용 더미데이터
 ){
 
     val scrollState = rememberScrollState()

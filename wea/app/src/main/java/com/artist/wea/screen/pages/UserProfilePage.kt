@@ -2,7 +2,6 @@ package com.artist.wea.screen.pages
 
 import android.app.Activity
 import android.content.Context
-import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -74,7 +73,6 @@ fun UserProfilePage(
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data?.data?.let { uri ->
-                    // Log.d("IMAGE:::", "${uri.toString()}")
                     photoSelector.setImageToVariable(
                         context = context,
                         uri = uri,
@@ -103,15 +101,12 @@ fun UserProfilePage(
         viewModel.getUserInfo()
         viewModel.getUserInfoRes.observe(mOwner, Observer {
             if(it != null ){
-                Log.d("PROFILE_PAGE:::", "${it.toString()}")
                 val jsonString = it.toString()
                 prefs.setString("profile_json", "$jsonString") // prefs 저장
                 profileJson.value = jsonString // 현재 상태에도 저장
                 userProfile.value = jParser.parseJsonToUserProfile(it)
-                Log.d("PROFILE_PAGE:::", "서버 >>> ${profileJson.value}")
 
             }else {
-                Log.d("PROFILE_PAGE:::", "토큰 만료")
                 shortToast(context, text = "회원 정보가 만료되었습니다.")
                 navController.navigate(PageRoutes.Login.route){
                     popUpTo(0)
@@ -119,8 +114,6 @@ fun UserProfilePage(
             }
         })
     }else {
-        Log.d("PROFILE_PAGE:::", "캐싱 >>> ${profileJson.value}")
-
         val json = JSONObject(profileJson.value)
         userProfile.value = jParser.parseJsonToUserProfile(json)
     }
@@ -266,7 +259,11 @@ fun UserProfilePage(
                                 ),
                             modifier = Modifier.clickable {
                                 // 회원 탈퇴는 회원 탈퇴 양식을 작성하도록 페이지 이동
-                                navController.navigate(PageRoutes.UserQuit.route)
+                                if(GlobalState.isUser.value){
+                                    navController.navigate(PageRoutes.UserQuit.route)
+                                }else {
+                                    shortToast(context, "이미 탈퇴 신청이 접수 되었습니다.")
+                                }
                             }
                         )
                     }
@@ -285,19 +282,12 @@ fun userLogOut(
     mOwner:LifecycleOwner, // 뷰모델의 값 변환을 감지할 라이플 사이클 오너
     logOutVisibleState:MutableState<Boolean> // 로그아웃 성공 시 모달창을 함께 종료하기 위해, 노출 여부를 관리할 MutableState를 가져온다.
 ){
-    val lgTag = "LOGOUT_ACTION:::"
     val tokenMap= mapOf(Pair("token", prefs.getString("token", ""))) // 현재 사용중인 토큰 정보를 꺼냄
-    Log.d(lgTag, "로그아웃 시도 >> $tokenMap")
 
     if(prefs.clearAll()){ // SharedPreference에서 관리중이던 모든 정보를 초기화 시킴
-        Log.d(lgTag, "prefs 초기화 시도");
-        Log.d(lgTag, "값 점검 [token] : ${prefs.getString("token", "null")}")
-        Log.d(lgTag, "값 점검 [profile_json] : ${prefs.getString("profile_json", "null")}")
-
         // prefs를 통해 토큰 값 꺼내서 바인딩, 서버와 통신 후 로그아웃 처리
         viewModel.logout(tokenMap);
         viewModel.logoutRes.observe(mOwner, Observer {
-            Log.d(lgTag, "서버 로그아웃 시도 >> ${it.toString()}")
             if(!it){ // 서버와의 로그아웃 시도가 정상적으로 이루어졌을 경우, 최종 로그아웃 처리
                 Retrofit.token.value = "" // 초기화
                 logOutVisibleState.value = false;

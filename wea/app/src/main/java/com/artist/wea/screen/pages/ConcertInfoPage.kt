@@ -46,6 +46,7 @@ import com.artist.wea.screen.components.InfoUnit
 import com.artist.wea.screen.components.LargeButton
 import com.artist.wea.screen.components.NaverMapComponent
 import com.artist.wea.screen.components.PageTopBar
+import java.time.format.DateTimeFormatter
 
 // 콘서트 정보 페이지
 @Composable
@@ -54,7 +55,7 @@ fun ConcertInfoPage(
     concertId:String
 ){
     // TODO navController를 통해서 공연 데이터를 추출해서 렌더링 하도록 설계
-    val concertInfo =  DummyValues().concertItems[concertId]?:DummyValues().defConcertInfo
+    val concertInfo =  DummyValues.concertItems[concertId]?:DummyValues.defConcertInfo
     val context = LocalContext.current
 
     val modalVisibleState = remember { mutableStateOf(false) }
@@ -157,15 +158,18 @@ fun ConcertInfoPage(
                     )
                     Spacer(modifier = Modifier.height(16.dp)) // 여백
 
+                    val Formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
                     // 상세 정보
                     val detailInfoMap:MutableMap<String, String> = mutableMapOf();
                     detailInfoMap["장르"] = concertInfo.genre
-                    detailInfoMap["시작일"] = concertInfo.startDate.toString()
-                    detailInfoMap["종료일"] = concertInfo.endDate.toString()
+                    detailInfoMap["시작일"] = concertInfo.startDate.format(Formatter).toString()
+                    detailInfoMap["종료일"] = concertInfo.endDate.format(Formatter).toString()
                     detailInfoMap["공연 시간"] = concertInfo.concertTime.toString()
-                    detailInfoMap["최소 후원금$"] = concertInfo.minSupportAccount.toString()+" 원"
-                    detailInfoMap["누적 관람객$"] = concertInfo.cumulativeAudience.toString()
+//                    detailInfoMap["최소 후원금$"] = concertInfo.minSupportAccount.toString()+" 원"
+//                    detailInfoMap["누적 관람객$"] = concertInfo.cumulativeAudience.toString()
+                    detailInfoMap["최소 후원금"] = concertInfo.minSupportAccount.toString()+" 원"
+                    detailInfoMap["누적 관람객"] = concertInfo.cumulativeAudience.toString()
 
                     ConcertDetailTable(
                         modifier = Modifier

@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
-import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.artist.wea.constants.GlobalState
@@ -47,10 +46,9 @@ class CommonUtils {
                     val latitude = location?.latitude
                     val longitude = location?.longitude
 
+                    // 현재 위치정보 init
                     GlobalState.lat = latitude ?: 0.0
                     GlobalState.lon = longitude ?: 0.0
-                    Log.d("LOCATION_TOOOLS", "현재 위치 정보 ${latitude}, ${longitude}")
-
                 }
             }
         }
@@ -70,8 +68,8 @@ class CommonUtils {
             val context = context;
             val prefs = PreferenceUtil(context);
             val token = prefs.getString("token", "");
-            if(token.isNotEmpty()){ // temp... : 토큰정보 확인용
-                Log.d("MAIN_ACTIVITY:::", "토큰 정보 있음")
+            if(token.isNotEmpty()){
+                // 토큰정보 확인 은 여기서...
                 Retrofit.token.value = token
                 return true; // 로그인 성공시 true 리턴
             }

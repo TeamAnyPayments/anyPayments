@@ -1,6 +1,5 @@
 package com.artist.wea.network.model
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -22,20 +21,10 @@ class ArtistViewModel(val repository: ArtistRepository): ViewModel() {
         viewModelScope.launch(exceptionHandler) {
             val response = repository.joinArtist(joinArtist)
 
-            Log.d(ALOG, "${response.toString()}")
-
             if(!response.isSuccessful) { // 통신 예외 처리
                 joinArtistRes.value = null
                 throw Exception();
             }
-
-//            val resJsObject = jParser.parseToJson(response)
-//            // 예기치 못한 에러 상황에 대응
-//            val jsonData = mutableStateOf(JSONObject())
-//            if(resJsObject.has("value")){
-//                jsonData.value = jParser.parseToJson(value = resJsObject.get("value").toString())
-//            }
-//            Log.d(ArtistViewModel.ALOG,"${jsonData.value}")
 
             joinArtistRes.value = true
 
@@ -48,23 +37,12 @@ class ArtistViewModel(val repository: ArtistRepository): ViewModel() {
         viewModelScope.launch(exceptionHandler) {
             val response = repository. getArtistInfo(name)
 
-            Log.d(ALOG, "${response.toString()}")
-
             if(!response.isSuccessful) { // 통신 예외 처리
                 artistInfoRes.value = null
                 throw Exception();
             }
 
-//            val resJsObject = jParser.parseToJson(response)
-//            // 예기치 못한 에러 상황에 대응
-//            val jsonData = mutableStateOf(JSONObject())
-//            if(resJsObject.has("value")){
-//                jsonData.value = jParser.parseToJson(value = resJsObject.get("value").toString())
-//            }
-//            Log.d(ArtistViewModel.ALOG,"${jsonData.value}")
-
             artistInfoRes.value = true
-
         }
     }
 
@@ -74,25 +52,13 @@ class ArtistViewModel(val repository: ArtistRepository): ViewModel() {
         viewModelScope.launch(exceptionHandler) {
             val response = repository.getArtistDetail(artistId)
 
-            Log.d(ALOG, "${response.toString()}")
-
             if(!response.isSuccessful) { // 통신 예외 처리
                 artistDetailRes.value = null
                 throw Exception();
             }
-
-//            val resJsObject = jParser.parseToJson(response)
-//            // 예기치 못한 에러 상황에 대응
-//            val jsonData = mutableStateOf(JSONObject())
-//            if(resJsObject.has("value")){
-//                jsonData.value = jParser.parseToJson(value = resJsObject.get("value").toString())
-//            }
-//            Log.d(ArtistViewModel.ALOG,"${jsonData.value}")
-
             artistDetailRes.value = true
 
         }
-
     }
 
     // combined with 아티스트 등록 해제(탈퇴) API
@@ -101,20 +67,10 @@ class ArtistViewModel(val repository: ArtistRepository): ViewModel() {
         viewModelScope.launch(exceptionHandler) {
             val response = repository.quitArtist(deleteMap)
 
-            Log.d(ALOG, "${response.toString()}")
-
             if(!response.isSuccessful) { // 통신 예외 처리
                 quitArtistRes.value = null
                 throw Exception();
             }
-
-//            val resJsObject = jParser.parseToJson(response)
-//            // 예기치 못한 에러 상황에 대응
-//            val jsonData = mutableStateOf(JSONObject())
-//            if(resJsObject.has("value")){
-//                jsonData.value = jParser.parseToJson(value = resJsObject.get("value").toString())
-//            }
-//            Log.d(ArtistViewModel.ALOG,"${jsonData.value}")
 
             quitArtistRes.value = true
 
@@ -127,20 +83,10 @@ class ArtistViewModel(val repository: ArtistRepository): ViewModel() {
         viewModelScope.launch(exceptionHandler) {
             val response = repository.inviteMember(inviteMap)
 
-            Log.d(ALOG, "${response.toString()}")
-
             if(!response.isSuccessful) { // 통신 예외 처리
                 inviteMemberRes.value = null
                 throw Exception();
             }
-
-//            val resJsObject = jParser.parseToJson(response)
-//            // 예기치 못한 에러 상황에 대응
-//            val jsonData = mutableStateOf(JSONObject())
-//            if(resJsObject.has("value")){
-//                jsonData.value = jParser.parseToJson(value = resJsObject.get("value").toString())
-//            }
-//            Log.d(ArtistViewModel.ALOG,"${jsonData.value}")
 
             inviteMemberRes.value = true
 
@@ -153,20 +99,10 @@ class ArtistViewModel(val repository: ArtistRepository): ViewModel() {
         viewModelScope.launch(exceptionHandler) {
             val response = repository.acceptInvite(acceptMap)
 
-            Log.d(ALOG, "${response.toString()}")
-
             if(!response.isSuccessful) { // 통신 예외 처리
                 acceptInviteRes.value = null
                 throw Exception();
             }
-
-//            val resJsObject = jParser.parseToJson(response)
-//            // 예기치 못한 에러 상황에 대응
-//            val jsonData = mutableStateOf(JSONObject())
-//            if(resJsObject.has("value")){
-//                jsonData.value = jParser.parseToJson(value = resJsObject.get("value").toString())
-//            }
-//            Log.d(ArtistViewModel.ALOG,"${jsonData.value}")
 
             acceptInviteRes.value = true
 
@@ -179,20 +115,10 @@ class ArtistViewModel(val repository: ArtistRepository): ViewModel() {
         viewModelScope.launch(exceptionHandler) {
             val response = repository.rejectInvite(refuseMap)
 
-            Log.d(ALOG, "${response.toString()}")
-
             if(!response.isSuccessful) { // 통신 예외 처리
                 rejectInviteRes.value = null
                 throw Exception();
             }
-
-//            val resJsObject = jParser.parseToJson(response)
-//            // 예기치 못한 에러 상황에 대응
-//            val jsonData = mutableStateOf(JSONObject())
-//            if(resJsObject.has("value")){
-//                jsonData.value = jParser.parseToJson(value = resJsObject.get("value").toString())
-//            }
-//            Log.d(ArtistViewModel.ALOG,"${jsonData.value}")
 
             rejectInviteRes.value = true
 
@@ -206,20 +132,10 @@ class ArtistViewModel(val repository: ArtistRepository): ViewModel() {
         viewModelScope.launch(exceptionHandler) {
             val response = repository.editArtistInfo(modifyArtist)
 
-            Log.d(ALOG, "${response.toString()}")
-
             if(!response.isSuccessful) { // 통신 예외 처리
                 editArtistInfoRes.value = null
                 throw Exception();
             }
-
-//            val resJsObject = jParser.parseToJson(response)
-//            // 예기치 못한 에러 상황에 대응
-//            val jsonData = mutableStateOf(JSONObject())
-//            if(resJsObject.has("value")){
-//                jsonData.value = jParser.parseToJson(value = resJsObject.get("value").toString())
-//            }
-//            Log.d(ArtistViewModel.ALOG,"${jsonData.value}")
 
             editArtistInfoRes.value = true
         }
@@ -231,20 +147,10 @@ class ArtistViewModel(val repository: ArtistRepository): ViewModel() {
         viewModelScope.launch(exceptionHandler) {
             val response = repository.getArtistImage()
 
-            Log.d(ALOG, "${response.toString()}")
-
             if(!response.isSuccessful) { // 통신 예외 처리
                 getArtistImageRes.value = null
                 throw Exception();
             }
-
-//            val resJsObject = jParser.parseToJson(response)
-//            // 예기치 못한 에러 상황에 대응
-//            val jsonData = mutableStateOf(JSONObject())
-//            if(resJsObject.has("value")){
-//                jsonData.value = jParser.parseToJson(value = resJsObject.get("value").toString())
-//            }
-//            Log.d(ArtistViewModel.ALOG,"${jsonData.value}")
 
             getArtistImageRes.value = true
         }
@@ -256,20 +162,10 @@ class ArtistViewModel(val repository: ArtistRepository): ViewModel() {
         viewModelScope.launch(exceptionHandler) {
             val response = repository.uploadArtistImage()
 
-            Log.d(ALOG, "${response.toString()}")
-
             if(!response.isSuccessful) { // 통신 예외 처리
                 uploadArtistImageRes.value = null
                 throw Exception();
             }
-
-//            val resJsObject = jParser.parseToJson(response)
-//            // 예기치 못한 에러 상황에 대응
-//            val jsonData = mutableStateOf(JSONObject())
-//            if(resJsObject.has("value")){
-//                jsonData.value = jParser.parseToJson(value = resJsObject.get("value").toString())
-//            }
-//            Log.d(ArtistViewModel.ALOG,"${jsonData.value}")
 
             uploadArtistImageRes.value = true
         }
@@ -281,21 +177,10 @@ class ArtistViewModel(val repository: ArtistRepository): ViewModel() {
         viewModelScope.launch(exceptionHandler) {
             val response = repository.updateArtistImage()
 
-            Log.d(ALOG, "${response.toString()}")
-
             if(!response.isSuccessful) { // 통신 예외 처리
                 updateArtistImageRes.value = null
                 throw Exception();
             }
-
-//            val resJsObject = jParser.parseToJson(response)
-//            // 예기치 못한 에러 상황에 대응
-//            val jsonData = mutableStateOf(JSONObject())
-//            if(resJsObject.has("value")){
-//                jsonData.value = jParser.parseToJson(value = resJsObject.get("value").toString())
-//            }
-//            Log.d(ArtistViewModel.ALOG,"${jsonData.value}")
-
             updateArtistImageRes.value = true
         }
     }
@@ -306,20 +191,10 @@ class ArtistViewModel(val repository: ArtistRepository): ViewModel() {
         viewModelScope.launch(exceptionHandler) {
             val response = repository.deleteArtistImage()
 
-            Log.d(ALOG, "${response.toString()}")
-
             if(!response.isSuccessful) { // 통신 예외 처리
                 deleteArtistImageRes.value = null
                 throw Exception();
             }
-
-//            val resJsObject = jParser.parseToJson(response)
-//            // 예기치 못한 에러 상황에 대응
-//            val jsonData = mutableStateOf(JSONObject())
-//            if(resJsObject.has("value")){
-//                jsonData.value = jParser.parseToJson(value = resJsObject.get("value").toString())
-//            }
-//            Log.d(ArtistViewModel.ALOG,"${jsonData.value}")
 
             deleteArtistImageRes.value = true
         }
@@ -327,10 +202,6 @@ class ArtistViewModel(val repository: ArtistRepository): ViewModel() {
 
     // 코루틴 에러 핸들러 >> coroutine exception Handelr
     private val exceptionHandler = CoroutineExceptionHandler{ i, exception ->
-        Log.d("ERR ::::", "에러 발생.... $i");
     }
 
-    companion object{
-        val ALOG = "ARTIST_VIEWMODEL :::: "
-    }
 }

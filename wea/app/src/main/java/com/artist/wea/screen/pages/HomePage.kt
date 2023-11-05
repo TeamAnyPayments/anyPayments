@@ -1,7 +1,6 @@
 package com.artist.wea.screen.pages
 
 import android.app.Activity
-import android.util.Log
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -115,15 +114,16 @@ fun HomePage(
             viewModel.getUserInfo()
             viewModel.getUserInfoRes.observe(mOwner, Observer {
                 if(it != null ){
-                    Log.d("GET_USER_INFO:::", "${it.toString()}")
+                    // 서버로부터 통신
                     val jsonString = it.toString()
                     prefs.setString("profile_json", "$jsonString") // prefs 저장
                     profileJson.value = jsonString // 현재 상태에도 저장
                     userProfile.value = jParser.parseJsonToUserProfile(it)
-                    Log.d("HOME_PAGE:::", "서버 >>> ${profileJson.value}")
+                    // global..
+                    GlobalState.userProfile.value = userProfile.value
                     GlobalState.isLogin = true;
                 }else {
-                    Log.d("PROFILE_PAGE:::", "토큰 만료")
+                    //
                     ToastManager.shortToast(context, expirationUserText);
                     recompCnt.value = 0;
                     GlobalState.isLogin = false;
@@ -134,11 +134,12 @@ fun HomePage(
                 }
             })
         } else {
-            Log.d("HOME_PAGE:::", "캐싱 >>> ${profileJson.value}")
-            Log.d("HOME_PAGE:::", "토큰 >>> ${prefs.getString("token", "")}")
+            // 서버 통신에 실패 하더라도 토큰 정보 가지고 있는지 체크
             recompCnt.value++
             val json = JSONObject(profileJson.value)
             userProfile.value = jParser.parseJsonToUserProfile(json)
+            // global..
+            GlobalState.userProfile.value = userProfile.value
             GlobalState.isLogin = true;
         }
 
@@ -324,7 +325,7 @@ fun homePage(
         ) {
             // 무한 스크롤 배너
             InfiniteLoopPager(
-                list = DummyValues().defImgList)
+                list = DummyValues.defImgList)
             // 타일 메뉴의 이미지 사이트 변수
             val imgSize = 64.dp
             val height = 128.dp
