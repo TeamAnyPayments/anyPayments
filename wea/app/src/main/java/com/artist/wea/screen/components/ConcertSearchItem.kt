@@ -1,6 +1,5 @@
 package com.artist.wea.screen.components
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,7 +25,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
-import com.artist.wea.constants.DummyValues
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get12TextStyle
 import com.artist.wea.constants.get14TextStyle
@@ -54,9 +52,6 @@ fun ConcertSearchItem(
             }else {
                 // 페이지 이동 안될 경우 toast 메세지 표현
                 Toast.makeText(context, "공연 정보를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show()
-                Log.d(
-                    "REJECT_MOVE_PAGE::", "페이지 이동할 수 없음 : ${"${content.concertId} | ${DummyValues.defConcertInfo.concertId}"}"
-                )
             }
         }
     ){

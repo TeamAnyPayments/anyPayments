@@ -47,8 +47,6 @@ fun TitleGuideImageInputForm(
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data?.data?.let { uri ->
 
-                    // Log.d("IMAGE:::", "${uri.toString()}")
-
                     photoSelector.setImageToVariable(
                         context = context,
                         uri = uri,

@@ -1,6 +1,5 @@
 package com.artist.wea.screen.pages
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,15 +26,15 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Observer
 import androidx.navigation.NavHostController
 import com.artist.wea.R
+import com.artist.wea.constants.getDefTextStyle
+import com.artist.wea.data.FindPwdData
+import com.artist.wea.network.model.RegisterViewModel
+import com.artist.wea.network.repository.RegisterRepository
 import com.artist.wea.screen.components.DuplicateCheckInputForm
 import com.artist.wea.screen.components.LargeButton
 import com.artist.wea.screen.components.PageTopBar
 import com.artist.wea.screen.components.TitleInputForm
 import com.artist.wea.screen.components.VerifyInputForm
-import com.artist.wea.constants.getDefTextStyle
-import com.artist.wea.data.FindPwdData
-import com.artist.wea.network.model.RegisterViewModel
-import com.artist.wea.network.repository.RegisterRepository
 import com.artist.wea.util.ToastManager.Companion.shortToast
 import com.artist.wea.util.WeaRegex
 import java.util.regex.Pattern
@@ -186,7 +185,6 @@ fun FindPwdPage(
                         // TODO.. 서버와 통신하며 기능 완성
                         viewModel.findUserPassword(findPwdData)
                         viewModel.findUserPasswordRes.observe(mOwner, Observer {
-                            Log.d("FIND_PWD_RES:::", "${it.toString()}")
                         })
                     }else {
                         shortToast(context, verifyAlertText)
