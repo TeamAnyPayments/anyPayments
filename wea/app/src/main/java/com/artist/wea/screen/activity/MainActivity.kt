@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
@@ -49,10 +48,9 @@ import com.artist.wea.screen.pages.UserProfilePage
 import com.artist.wea.screen.pages.UserQuitPage
 import com.artist.wea.screen.pages.UserRegisterPage
 import com.artist.wea.ui.theme.WeaTheme
-import com.artist.wea.util.CommonUtils.Companion.checkLocationPermission
+import com.artist.wea.util.CommonUtils
 import com.artist.wea.util.CommonUtils.Companion.checkLoginInfo
 import com.artist.wea.util.CommonUtils.Companion.getSerializable
-import com.artist.wea.util.CommonUtils.Companion.requestLocationUpdates
 import com.artist.wea.util.PermissionChecker
 import com.artist.wea.util.ToastManager.Companion.shortToast
 import com.google.android.gms.ads.MobileAds
@@ -77,11 +75,6 @@ class MainActivity : ComponentActivity() {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this) // 위치 서비스 클라이언트 초기화
 
-        // 위치 권한 확인 및 요청
-        checkLocationPermission(this)
-
-        // 위치 업데이트 요청
-        requestLocationUpdates(this, fusedLocationClient)
 
         setContent {
             // googleADCheck
@@ -91,6 +84,13 @@ class MainActivity : ComponentActivity() {
             // checkLoginInfo
             val isLogin = checkLoginInfo(this) // 로그인 여부 체크
             val navController = rememberNavController()
+            // 위치 업데이트 요청
+            if(isLogin){
+                // 위치 권한 확인 및 요청
+                CommonUtils.checkLocationPermission(this)
+                CommonUtils.requestLocationUpdates(this, fusedLocationClient)
+            }
+
 
             NavHost(
                 navController = navController,
@@ -181,11 +181,9 @@ class MainActivity : ComponentActivity() {
             if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
                 // 모든 권한이 허용된 경우
                 // 위치 정보를 얻는 작업 수행
-                Log.d(this.javaClass.name, "ALL GRANT OK")
             } else {
                 // 권한 중 하나라도 거부된 경우
                 // 사용자에게 권한이 필요하다고 알릴 수 있습니다.
-                Log.d(this.javaClass.name, "ALL GRANT IS NOT OK")
                 shortToast(this, "원활한 앱 사용을 위해 권한을 허용해주세요")
                 val result = permissionChecker.requestPermission()
                 // if(!result) permissionChecker.openAppSettings(this)
@@ -201,18 +199,14 @@ fun detectPaymentsResult(activity:Activity){
     try {
         val concertReceipt =
             getSerializable(activity, "completeReceipt", ConcertReceipt::class.java)
-        Log.d(activity.javaClass.simpleName, "데이터 수신 >>> $concertReceipt");
     }catch (e:Exception){
-        Log.e(activity.javaClass.simpleName, "데이터 수신 실패... ${ConcertReceipt::class.java.simpleName}")
     }
 }
 
 // 구글 광고와 네이버 맵 광고 세팅은 메인 액티비티에서 체크해주어야 하므로 메인 액티비티 內 함수로 구현
 fun googleADCheck(context: Context){
     MobileAds.initialize(context) // 구글 광고 ADMOBS INIT...
-    // Use RequestConfiguration.Builder().setTestDeviceIds(Arrays.asList("05E33EEFCCB837287D76B284E267267F")) to get test ads on this device.
     val androidId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
-    Log.d("MAIN_ACTIVITY:::", "your device ID : $androidId")
     val testDeviceIds: List<String> = mutableListOf(androidId)
     val configuration =
         RequestConfiguration.Builder().setTestDeviceIds(testDeviceIds).build()

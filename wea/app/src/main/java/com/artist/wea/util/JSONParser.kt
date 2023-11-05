@@ -1,6 +1,5 @@
 package com.artist.wea.util
 
-import android.util.Log
 import com.artist.wea.data.UserProfile
 import okhttp3.ResponseBody
 import org.json.JSONObject
@@ -13,12 +12,10 @@ class JSONParser {
     fun parseToJson(response: Response<ResponseBody>): JSONObject {
         val jsonString = response.body()?.string()
         val jsonObject = JSONObject(jsonString)
-        Log.d(LOG, "${jsonObject.toString()}") // 로그!
         return jsonObject
     }
     fun parseToJson(value:String): JSONObject {
         val jsonObject = JSONObject(value)
-        Log.d(LOG, "STR JSON >>> ${jsonObject.toString()}") // 로그!
         return  jsonObject
     }
 

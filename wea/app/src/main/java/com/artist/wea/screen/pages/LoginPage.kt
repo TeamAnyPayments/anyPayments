@@ -1,6 +1,5 @@
 package com.artist.wea.screen.pages
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -28,7 +26,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import com.artist.wea.R
-import com.artist.wea.constants.GlobalState
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.data.LoginUser
@@ -120,7 +117,7 @@ fun LoginPage(
                 // 로그인 결과
                 viewModel.loginUserRes.observe(mOwner, Observer {
                     if(it.isNotEmpty()){
-                        Log.d("LOGIN RES:::", it.toString())
+                        // 로그인 결과 파싱
                         token.value = it.toString()
                         prefs.setString("token", token.value) // 다른 화면에서 활용할 수 있도록 토큰 정보를 저장
                         Retrofit.token.value = it.toString() // 로그인 성공 시 레트로핏 인스턴스 헤더에 토큰을 붙여준다.
@@ -162,13 +159,13 @@ fun LoginPage(
 //            .fillMaxWidth()
 //            .height(8.dp))
 
-        Button(
-            modifier = Modifier.fillMaxWidth(),
-            onClick = {
-            navController.navigate(PageRoutes.Home.route) }) {
-            Text("홈페이지 이동")
-            GlobalState.isLogin = true
-        }
+//        Button(
+//            modifier = Modifier.fillMaxWidth(),
+//            onClick = {
+//            navController.navigate(PageRoutes.Home.route) }) {
+//            Text("홈페이지 이동")
+//            GlobalState.isLogin = true
+//        }
 
     }
 

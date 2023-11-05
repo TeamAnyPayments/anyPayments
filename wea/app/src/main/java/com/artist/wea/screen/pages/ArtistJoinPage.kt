@@ -27,9 +27,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
+import com.artist.wea.constants.DummyValues
 import com.artist.wea.constants.GlobalState
 import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.data.AddressInfo
+import com.artist.wea.data.ArtistInfo
 import com.artist.wea.data.ArtistJoinForm
 import com.artist.wea.screen.components.AddressForm
 import com.artist.wea.screen.components.PageTopBar
@@ -93,13 +95,13 @@ fun ArtistJoinPage(
                 )
 
                 // 프로필 등록
-                TitleImageInputForm(
+                artistJoinForm.value.artistProfileImage = TitleImageInputForm(
                     titleText = stringResource(R.string.text_title_artist_profile_img),
                     size = 128.dp
                 )
 
                 // 배경 이미지 등록
-                TitleGuideImageInputForm(
+                artistJoinForm.value.artistBackBitmap = TitleGuideImageInputForm(
                     titleText = stringResource(R.string.text_title_artist_backrground_img),
                     guideText = stringResource(R.string.text_guide_artist_backrground),
                     size = 144.dp
@@ -124,6 +126,41 @@ fun ArtistJoinPage(
                     .fillMaxSize()
                     .wrapContentHeight()
                     .background(color = colorResource(id = R.color.dark_orange300))
+                    .clickable {
+                        val artistInput = artistJoinForm.value;
+                        if (checkJoinform(
+                                arrayOf(
+                                    artistInput.artistName,
+                                    artistInput.comment,
+                                    artistInput.introduce,
+                                    artistInput.location,
+                                )
+                            )
+                        ) {
+
+                            val id = "abc002"
+                            val newArtistInfo = ArtistInfo(
+                                userId = id,
+                                profileBitmap = artistInput.artistProfileImage,
+                                bgBitmap = artistInput.artistBackBitmap,
+                                artistName = artistInput.artistName,
+                                location = artistInput.location,
+                                comment = artistInput.comment,
+                                mainIntroduce = artistInput.introduce,
+                                email = "wea1234@wea.com"
+                            )
+
+                            DummyValues.artistSearchList.replace(id, newArtistInfo)
+                            GlobalState.joinedArtistInfo.value = newArtistInfo
+
+                            GlobalState.isArtist.value = true;
+                            ToastManager.shortToast(context, "아티스트 등록이 완료되었습니다")
+                            navController.popBackStack()
+                        } else {
+                            GlobalState.isArtist.value = false;
+                            ToastManager.shortToast(context, "아티스트 등록 양식을 모두 채워주세요!")
+                        }
+                    }
             ){
                 Text(
                     text = "아티스트 등록 신청하기",
@@ -132,24 +169,6 @@ fun ArtistJoinPage(
                     modifier = Modifier
                         .padding(16.dp)
                         .align(Alignment.Center)
-                        .clickable {
-                            if (checkJoinform(
-                                    arrayOf(
-                                        artistJoinForm.value.artistName,
-                                        artistJoinForm.value.comment,
-                                        artistJoinForm.value.introduce,
-                                        artistJoinForm.value.location,
-                                    )
-                                )
-                            ) {
-                                GlobalState.isArtist.value = true;
-                                ToastManager.shortToast(context, "아티스트 등록이 완료되었습니다")
-                                navController.popBackStack()
-                            } else {
-                                GlobalState.isArtist.value = false;
-                                ToastManager.shortToast(context, "아티스트 등록 양식을 모두 채워주세요!")
-                            }
-                        }
                 )
             }
         }

@@ -34,12 +34,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
-import com.artist.wea.screen.components.ArtistRankItem
-import com.artist.wea.screen.components.PageTopBar
-import com.artist.wea.data.ArtistRankData
-import com.artist.wea.data.TabItem
 import com.artist.wea.constants.DummyValues
 import com.artist.wea.constants.get12TextStyle
+import com.artist.wea.data.ArtistRankData
+import com.artist.wea.data.TabItem
+import com.artist.wea.screen.components.ArtistRankItem
+import com.artist.wea.screen.components.PageTopBar
 import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.glide.GlideImage
 import kotlinx.coroutines.launch
@@ -54,7 +54,7 @@ fun ArtistRankPage(
         Modifier
             .fillMaxSize(),
     // 랭크 아이템 리스트
-    rankList: MutableList<ArtistRankData> = DummyValues().rankList
+    rankList: MutableList<ArtistRankData> = DummyValues.rankList
 ){
 
     // 탭 items
@@ -180,8 +180,8 @@ fun RankTabScreen(
         ) {
             val defImgID = R.drawable.default_image
             val imgList = arrayOf(
-                "https://www.nps.or.kr/html/main_2022/images/photo/main/banner8.png",
-                "https://d1orkkc34keaka.cloudfront.net/images/2021/08/24/1629783028_8DwfsnNsREK8LxQR5BfDasucDAUaFtsaMMR1cp0u.jpeg"
+                "https://www.wevity.com/upload/contest/20220810154219_bd24179e.jpg",
+                "https://tr.xza.kr/imgdata/tr_xza_kr/202308/20230813135503-5792.jpg"
             )
             // 랭킹 쪽 컨셉 이미지 뷰어
             GlideImage(

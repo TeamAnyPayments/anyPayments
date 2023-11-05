@@ -17,11 +17,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.artist.wea.R
-import com.artist.wea.screen.components.PageTopBar
-import com.artist.wea.screen.components.TicketItem
 import com.artist.wea.constants.DummyValues
 import com.artist.wea.constants.PageRoutes
 import com.artist.wea.constants.get12TextStyle
+import com.artist.wea.screen.components.PageTopBar
+import com.artist.wea.screen.components.TicketItem
 
 // 티켓 정보들 리스트로 볼 페이지
 @Composable
@@ -59,7 +59,7 @@ fun TicketListPage(
             )
         }
 
-        val ticketInfoList = DummyValues().ticketInfoList.values
+        val ticketInfoList = DummyValues.ticketInfoList.values
 
         ticketInfoList.forEach{ ticketInfo ->
             TicketItem(

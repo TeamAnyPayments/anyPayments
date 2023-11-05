@@ -1,6 +1,5 @@
 package com.artist.wea.screen.pages
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -75,7 +74,6 @@ fun ClientServicePage(
                     viewModel.sendInquiry(inquiryMap)
                     viewModel.sendInquiryRes.observe(mOwner, Observer {
                         shortToast(context, sendCompleteText)
-                        Log.d("FIND_PWD_RES:::", "${it.toString()}")
                         navController.popBackStack()
                     })
                 }

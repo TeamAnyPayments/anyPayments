@@ -1,6 +1,7 @@
 package com.artist.wea.screen.pages
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,6 +21,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -27,25 +29,25 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavHostController
 import com.artist.wea.R
+import com.artist.wea.constants.GlobalState
+import com.artist.wea.constants.get14TextStyle
+import com.artist.wea.constants.getDefTextStyle
 import com.artist.wea.screen.components.CheckBoxRow
 import com.artist.wea.screen.components.MultipleRadioButtons
 import com.artist.wea.screen.components.PageTopBar
-import com.artist.wea.constants.get14TextStyle
-import com.artist.wea.constants.getDefTextStyle
-import com.artist.wea.data.UserProfile
+import com.artist.wea.util.ToastManager
 
 // 회원 탈퇴 페이지
 @Composable
 fun UserQuitPage(
     navController: NavHostController
 ) {
-    // TODO prefs로부터 저장된 json 사용자 정보 불러와 렌더링하기
-    val userProfile = remember { mutableStateOf(
-        UserProfile(
-            name = "홍길동",
-            userId = "test0001",
-            email = "test1234@test.com"
-            ))}
+    val context = LocalContext.current
+
+    // 회원정보 관리
+    val userProfile = remember { mutableStateOf(GlobalState.userProfile.value) }
+    val isCheckReason = remember { mutableStateOf(false) }
+    val isAgreePolicy = remember { mutableStateOf(false) }
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -177,6 +179,7 @@ fun UserQuitPage(
                     val quitReason = MultipleRadioButtons(
                         selectOptions = selectOptions
                     ) // 탈퇴사유 받음
+                    isCheckReason.value = quitReason.isNotEmpty()
 
                     Spacer(modifier = Modifier.height(96.dp))
                 }
@@ -209,17 +212,30 @@ fun UserQuitPage(
                         isAgreement.value = !isAgreement.value
                     },
                 )
+                isAgreePolicy.value = isAgreement.value
+
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentHeight()
                 ){
+                    val errTxt = stringResource(id = R.string.txt_quit_err)
+                    val sucessTxt = stringResource(R.string.txt_quit_success)
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .wrapContentHeight()
                             .weight(1f)
-                            .background(color = colorResource(id = R.color.red300)),
+                            .background(color = colorResource(id = R.color.red300))
+                            .clickable {
+                                if (isCheckReason.value && isAgreePolicy.value) {
+                                    ToastManager.shortToast(context,sucessTxt)
+                                    GlobalState.isUser.value = false
+                                    navController.popBackStack()
+                                } else {
+                                    ToastManager.shortToast(context, errTxt)
+                                }
+                            },
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center
                     ){
@@ -235,7 +251,10 @@ fun UserQuitPage(
                             .fillMaxWidth()
                             .wrapContentHeight()
                             .weight(1f)
-                            .background(color = colorResource(id = R.color.mono300)),
+                            .background(color = colorResource(id = R.color.mono300))
+                            .clickable {
+                                navController.popBackStack()
+                            },
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center
                     ){

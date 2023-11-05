@@ -36,7 +36,7 @@ fun TitleGuideImageInputForm(
     guideText:String,
     isWide:Boolean = true,
     size: Dp = 128.dp
-){
+):Bitmap?{
 
     val context = LocalContext.current
     val imageBitmap = remember { mutableStateOf<Bitmap?>(null) } //
@@ -46,8 +46,6 @@ fun TitleGuideImageInputForm(
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data?.data?.let { uri ->
-
-                    // Log.d("IMAGE:::", "${uri.toString()}")
 
                     photoSelector.setImageToVariable(
                         context = context,
@@ -116,4 +114,6 @@ fun TitleGuideImageInputForm(
             )
         }
     }
+
+    return imageBitmap.value
 }

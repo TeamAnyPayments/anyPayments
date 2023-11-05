@@ -30,7 +30,7 @@ import com.artist.wea.data.ArtistInfo
 fun SeeInviteComponent(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    memberList:List<ArtistInfo> = DummyValues().crewList // 아티스트 리스트
+    memberList:List<ArtistInfo> = DummyValues.crewList // 아티스트 리스트
 ) {
     Column(
         modifier = modifier.fillMaxSize(),
