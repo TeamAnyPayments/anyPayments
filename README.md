@@ -167,40 +167,7 @@
 
 ## 👀 서비스 화면 (동영상)
 
-### screen 1. 사용자 회원가입 및 로그인
-[![사용자 회원가입 및 로그인](./assets/wea_login.mp4)](./assets/wea_login.mp4vt5fpE0bzSY)
-
-### screen 2. 아티스트 랭킹 페이지
-[![아티스트 랭킹 페이지](./assets/wea_rank.mp4)](./assets/wea_rank.mp4)
-
-### screen 3. 아티스트 검색 페이지
-[![아티스트 검색 페이지](./assets/wea_artist_search.mp4)](./assets/wea_artist_search.mp4)
-
-### screen 4. 콘서트 검색 페이지
-
-### screen 5. 티켓 조회 페이지
-[![티켓 조회 페이지](./assets/wea_tickets.mp4)](./assets/wea_tickets.mp4)
-
-### screen 6. 아티스트 북마크 페이지
-[![아티스트 북마크 페이지](./assets/wea_book_mark.mp4)](./assets/wea_book_mark.mp4)
-
-### screen 7. 고객 서비스(cs) 접수 페이지
-[![고객 서비스(cs) 접수 페이지](./assets/we_cs.mp4)](./assets/we_cs.mp4)
-
-### screen 8. 사용자 프로필 편집
-[![사용자 프로필 편집](./assets/wea_profile_edit.mp4)](./assets/wea_profile_edit.mp4)
-
-### screen 9. 아티스트 신청 페이지
-[![아티스트 신청 페이지](./assets/wea_become_artist.mp4)](./assets/wea_become_artist.mp4)
-
-
-### screen 10. 아티스트 프로필 편집 페이지
-[![아티스트 프로필 편집 페이지](./assets/wea_edit_artist_profile.mp4)](./assets/wea_edit_artist_profile.mp4)
-
-
-### screen 11. 공연 개설 페이지
-[![공연 개설 페이지](./assets/wea_create_concert.mp4)](./assets/wea_create_concert.mp4)
-
+유튜브 첨부...
 
 ### Project Member
 - 조원희 (Team Leader, Android Developer)
