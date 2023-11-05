@@ -172,7 +172,7 @@
 
 
 
-### Project Member - 이산가족
+### Project Member
 - 조원희 (Team Leader, Android Developer)
 - 김성태(Android Developer, CI/CD)
 - 조은서(BackEnd, Backend Leader),
