@@ -7,9 +7,9 @@
 
 ### **_나랑 같이 우리 동네 공연보러 갈래?_**
 
-**WE:A(We are Artist)** 는 지역 공연 예술가들의 활동을 지원하고, 관객과 아티스트 간의 연결을 강화하는 인디 공연 앱 플랫폼입니다. 이 애플리케이션은 사용자에게 주변 지역의 다양한 공연 및 문화 이벤트 정보를 손쉽게 찾아보고, 참여하고 후원할 수 있는 기회를 제공합니다.
-
-소중한 사람과 함께 공연을 보러 가고 싶을 때, WE:A를 한번 사용해보는건 어떨까요?
+- **WE:A(We are Artist)** 는 지역 공연 예술가들의 활동을 지원하고, 관객과 아티스트 간의 연결을 강화하는 인디 공연 앱 플랫폼입니다. 
+- WE:A는 사용자에게 주변 지역의 다양한 공연 및 문화 이벤트 정보를 손쉽게 찾아보고, 참여하고 후원할 수 있습니다.
+- 나만을 위한 비대면 공연 플랫폼, WE:A로 당신을 초대합니다.
 
 <br/>
 
@@ -38,64 +38,38 @@
 
 **Back-end : Spring Boot**
 ```
-- Springboot x.x.x
+- Java 17
+- SpringBoot
 - Spring Data JPA
 - Spring Security
-- db?
+- MYSQL
+- Redis
+- Json Webtoken
+- Lombok
+- Tika
+- gradle
 ```
 
 **Android**
 
 ```
-## 빌드 도구 : gradle(KOTLIN DSL)
-## Programming Settings
-- Kotlin 1.9.0-release-358
-- Gradle 8.1
-- compileSdk 33
-- minSdk  26
-- targetSdk 33
-- Java 8
-
-## develop kit settings
-### ui develop kits
-- androidx.core:core-ktx:1.9.0
-- androidx.lifecycle:lifecycle-runtime-ktx:2.6.1
-- androidx.activity:activity-compose:1.7.0
-- androidx.navigation:navigation-compose:2.5.3
-### constraintlayout for toss payments layout
-- androidx.constraintlayout:constraintlayout:2.1.4
-
-## asynchronous communication tools
-### retrofit2 and okhttp
-- com.squareup.retrofit2:retrofit:2.9.0
-- com.squareup.retrofit2:converter-gson:2.9.0
-- com.squareup.okhttp3:okhttp-urlconnection:4.9.1
-- com.squareup.okhttp3:logging-interceptor:4.9.1
-- com.squareup.okhttp3:okhttp:4.9.3
-- com.squareup.okhttp3:logging-interceptor:4.9.3
-
-### Coroutines
-- org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0
-
-### glide compose
-- com.github.skydoves:landscapist-glide:1.4.7
-
-
-## APIs, other develop kits
-### naver map sdk
-- com.naver.maps:map-sdk:3.17.0
-
-### 구글 광고, admobs
-- com.google.android.gms:play-services-ads:22.3.0
-
-### toss-api, 간편 결제 api
-- com.github.tosspayments:payment-sdk-android:0.1.11
+Java 8
+Jetpack Compose
+Compose navigation
+Retrofit2
+okHttp3
+Compose Glide (com.github.skydoves:landscapist-glide:1.4.7)
+Naver Map SDK
+Tosspayments SDK
+gradle(Kotlin DSL, kts)
 ```
 
 **CI/CD**
 
 ```
-- 
+Jenkins
+Dokcer
+Docker compose
 ```
 
 <br/>
@@ -164,10 +138,6 @@
 ![사용자 화면](./assets/user_interface.png)
 
 ---
-
-## 👀 서비스 화면 (동영상)
-
-유튜브 첨부...
 
 ### Project Member
 - 조원희 (Team Leader, Android Developer)
