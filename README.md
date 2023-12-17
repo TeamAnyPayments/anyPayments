@@ -53,23 +53,23 @@
 **Android**
 
 ```
-Java 8
-Jetpack Compose
-Compose navigation
-Retrofit2
-okHttp3
-Compose Glide (com.github.skydoves:landscapist-glide:1.4.7)
-Naver Map SDK
-Tosspayments SDK
-gradle(Kotlin DSL, kts)
+- Java 8
+- Jetpack Compose
+- Compose navigation
+- Retrofit2
+- okHttp3
+- Compose Glide (com.github.skydoves:landscapist-glide:1.4.7)
+- Naver Map SDK
+- Tosspayments SDK
+- gradle(Kotlin DSL, kts)
 ```
 
 **CI/CD**
 
 ```
-Jenkins
-Dokcer
-Docker compose
+- Jenkins
+- Dokcer
+- Docker compose
 ```
 
 <br/>
